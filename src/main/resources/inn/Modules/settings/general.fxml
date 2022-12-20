@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.General">
+   <effect>
+      <DropShadow height="27.64" radius="9.33" spread="0.04" width="11.68">
+         <color>
+            <Color red="0.35087719559669495" green="0.3400476574897766" blue="0.3400476574897766" />
+         </color>
+      </DropShadow>
+   </effect>
+   <children>
+      <Pane layoutX="34.0" layoutY="119.0" prefHeight="433.0" prefWidth="966.0" style="-fx-border-radius: 8px; -fx-border-color: #ccc;" />
+      <Label fx:id="dateLabel" layoutX="769.0" layoutY="153.0" text="Eestablished Date Is Empty" textFill="RED" visible="false">
+         <font>
+            <Font name="Roboto Bold" size="14.0" />
+         </font>
+      </Label>
+      <GridPane layoutX="52.0" layoutY="141.0" prefHeight="402.0" prefWidth="905.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="121.33332316080728" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="362.6667124430338" minWidth="10.0" prefWidth="276.0000406901042" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="362.6667124430338" minWidth="10.0" prefWidth="161.99997965494788" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="362.6667124430338" minWidth="10.0" prefWidth="346.0000203450521" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="110.33334350585938" minHeight="10.0" prefHeight="109.00003051757812" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="44.66667683919269" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="29.0" prefWidth="126.0" text="Business Name" textFill="#ab0303" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label prefHeight="29.0" prefWidth="168.0" text="Phone Number" textFill="#ab0303" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label prefHeight="29.0" prefWidth="126.0" text="Other Number" textFill="#ab0303" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label prefHeight="29.0" prefWidth="151.0" text="Digital Address" textFill="#ab0303" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label prefHeight="29.0" prefWidth="126.0" text="Email Address" textFill="#ab0303" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="businessNameField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#OnkeyPressed" prefHeight="29.0" prefWidth="270.0" promptText="Business Name" style="-fx-text-fill: #ef4545;" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </TextField>
+            <TextField fx:id="businessNumberField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#checkNumberLength" onKeyReleased="#validateBusinessNumberField" onKeyTyped="#OnkeyPressed" prefHeight="29.0" prefWidth="270.0" promptText="Phone Number" style="-fx-text-fill: #ef4545;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </TextField>
+            <TextField fx:id="otherNumberField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#checkOtherNumberLength" onKeyReleased="#validateOtherNumberField" onKeyTyped="#OnkeyPressed" prefHeight="29.0" prefWidth="270.0" promptText="Other Number" style="-fx-text-fill: #ef4545;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </TextField>
+            <TextField fx:id="digitalAddressField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#OnkeyPressed" prefHeight="29.0" prefWidth="270.0" promptText="Digital Address" style="-fx-text-fill: #ef4545;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </TextField>
+            <TextField fx:id="emailAddressField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#OnkeyPressed" prefHeight="29.0" prefWidth="270.0" promptText="Email Address" style="-fx-text-fill: #ef4545;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </TextField>
+            <DatePicker fx:id="datePickerField" prefHeight="27.0" prefWidth="149.0" style="-fx-background-color: #fff; -fx-font-size: 14px; -fx-font-family: roboto; fx-font-weight: bold; -fx-border-color: #ccc; -fx-text-fill: #ef4545;" GridPane.columnIndex="3" />
+            <TextArea fx:id="descriptionField" onKeyTyped="#OnkeyPressed" prefHeight="111.0" prefWidth="270.0" promptText="Input Business Description Here" style="-fx-text-fill: #ef4545; -fx-border-color: #ccc; -fx-border-width: 1px;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Roboto Black" size="17.0" />
+               </font>
+            </TextArea>
+            <TextField fx:id="managerNameField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#OnkeyPressed" prefHeight="29.0" prefWidth="270.0" promptText="Manager's Name" style="-fx-text-fill: #ef4545;" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </TextField>
+            <TextField fx:id="managerEmailField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#OnkeyPressed" prefHeight="29.0" prefWidth="270.0" promptText="Manager's Email" style="-fx-text-fill: #ef4545;" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </TextField>
+            <TextField fx:id="managerNumberField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#checkMangNumberLength" onKeyReleased="#validateManagerNumberField" onKeyTyped="#OnkeyPressed" prefHeight="29.0" prefWidth="270.0" promptText="Manager's Phone Number" style="-fx-text-fill: #ef4545;" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </TextField>
+            <TextField fx:id="totalWorkersField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#validateWorkersField" onKeyTyped="#OnkeyPressed" prefHeight="29.0" prefWidth="270.0" promptText="Number Of Workers" style="-fx-text-fill: #ef4545;" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </TextField>
+            <Label prefHeight="29.0" prefWidth="126.0" text="Established Date" textFill="#ab0303" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
+            <Label prefHeight="29.0" prefWidth="136.0" text="Manager's Name" textFill="#ab0303" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
+            <Label prefHeight="29.0" prefWidth="126.0" text="Manager's Email" textFill="#ab0303" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
+            <Label prefHeight="29.0" prefWidth="141.0" text="Manager's Number" textFill="#ab0303" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
+            <Label prefHeight="29.0" prefWidth="126.0" text="Total Workers" textFill="#ab0303" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
+            <Label prefHeight="29.0" prefWidth="126.0" text="Description" textFill="#ab0303" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+               <font>
+                  <Font name="Fira Sans SemiBold Italic" size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="updateButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="31.0" prefWidth="224.0" style="-fx-background-color: #ef4545;" text="UPDATE " textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
+      <Pane layoutX="335.0" layoutY="67.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #ffdbdb;" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0303" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0" />
+      <Text fill="WHITE" layoutX="152.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SYSTEM SETTINGS" wrappingWidth="542.803352355957">
+         <font>
+            <Font name="Transformers Movie" size="50.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="50.0" fitWidth="70.0" layoutX="42.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/settings%20copy.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="338.0" layoutY="69.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #fcb5b5;">
+         <children>
+            <Label layoutX="22.0" layoutY="8.0" prefHeight="29.0" prefWidth="268.0" text="UPDATE BUSINESS INFORMATION">
+               <font>
+                  <Font name="Gentium Book Basic Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

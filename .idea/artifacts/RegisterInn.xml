@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="RegisterInn">
+    <output-path>$PROJECT_DIR$/out/artifacts/RegisterInn</output-path>
+    <root id="archive" name="RegisterInn.jar">
+      <element id="archive" name="RegisterInn.jar">
+        <element id="module-output" name="RegisterInn" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <effect>
+      <DropShadow height="27.64" radius="9.33" spread="0.04" width="11.68">
+         <color>
+            <Color red="0.35087719559669495" green="0.3400476574897766" blue="0.3400476574897766" />
+         </color>
+      </DropShadow>
+   </effect>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5c03ab" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0" />
+      <Text fill="WHITE" layoutX="151.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SYSTEM REPORTS" wrappingWidth="434.80335235595703">
+         <font>
+            <Font name="Transformers Movie" size="50.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="37.0" fitWidth="67.0" layoutX="43.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/marketing-analysis-icon-32%20copy.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="294.0" layoutY="105.0" prefHeight="200.0" prefWidth="200.0" />
+      <TabPane layoutX="27.0" layoutY="61.0" prefHeight="496.0" prefWidth="974.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab style="-fx-background-color: orange; -fx-color: blue; -fx-font-size: 15px; -fx-padding: 5px 20px; -fx-font-weight: bold;" text="Booking Reports">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="293.0" prefWidth="617.0" style="-fx-background-color: rgb(255, 232, 188);" />
+            </content>
+          </Tab>
+            <Tab style="-fx-background-color: lightblue; -fx-font-size: 15px; -fx-padding: 5px 20px; -fx-font-weight: bold; -fx-color: blue;" text="Sales Reports">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="293.0" prefWidth="617.0" style="-fx-background-color: rgb(182, 216, 255);" />
+               </content>
+            </Tab>
+            <Tab style="-fx-color: red; -fx-background-color: violet; -fx-font-color: blue; -fx-font-size: 15px; -fx-padding: 5px 20px; -fx-font-weight: bold;" text="User Logs">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="293.0" prefWidth="900.0" style="-fx-background-color: #ffdffa;" />
+               </content>
+            </Tab>
+            <Tab style="-fx-background-color: white; -fx-font-size: 15px; -fx-padding: 5px 20px; -fx-font-weight: bold; -fx-text-fill: white;" text="Financial Reports">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="293.0" prefWidth="617.0" style="-fx-background-color: #dddd; -fx-text-fill: red;" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

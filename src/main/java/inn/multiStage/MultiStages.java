@@ -1,0 +1,128 @@
+package inn.multiStage;
+
+import inn.StartInn;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.io.IOException;
+
+public class MultiStages {
+
+    public void Homepage() throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/dashboard/homepage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Homepage");
+        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.sizeToScene();
+        stage.setTitle("HOMEPAGE");
+        stage.isFullScreen();
+        stage.setResizable(false);
+        stage.getScene().getWindow().setOnCloseRequest(windowEvent -> {
+            windowEvent.consume();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "you can only log out with the signout button");
+            alert.setTitle("Close Button Clicked");
+            alert.setHeaderText("LOGOUT BY CLICKING THE SIGNOUT BUTTON.");
+            alert.showAndWait();
+        });
+        stage.show();
+    }
+
+    public DialogPane pane() {
+        DialogPane pane = new DialogPane();
+        pane.setMaxWidth(200);
+        pane.isVisible();
+        return pane;
+    }
+
+    public void DisplayPrompt() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("prompt.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.setResizable(false);
+        stage.setTitle("Confirm Action");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public void showSuccessPrompt() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("prompts/success.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.setResizable(false);
+        stage.setTitle("Successful");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+        stage.onCloseRequestProperty().get();
+    }
+
+    public void showFailedPrompt() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("prompts/failed.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.setResizable(false);
+        stage.setTitle("Failed Action");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public void LoginForm() throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("index.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Login");
+        stage.setResizable(false);
+        stage.initStyle(StageStyle.UNDECORATED);
+        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.show();
+    }
+
+    public void UpdateLoginDetails() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/settings/updateUserLogin.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 472, 503);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Update Login Info");
+        stage.setResizable(false);
+        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public void resetPassword()throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/Settings/resetPassword.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Reset Password");
+        stage.setResizable(false);
+        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+
+
+}//END OF CLASS

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <effect>
+      <DropShadow height="8.855" radius="4.63375" spread="0.04" width="11.68">
+         <color>
+            <Color red="0.8157894611358643" green="0.8157894611358643" blue="0.8157894611358643" />
+         </color>
+      </DropShadow>
+   </effect>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0383" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0" />
+      <Text fill="WHITE" layoutX="151.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DASHBOARD" wrappingWidth="342.80338287353516">
+         <font>
+            <Font name="Transformers Movie" size="50.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="44.0" fitWidth="49.0" layoutX="56.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Dashboard.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="51.0" layoutY="105.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: orange; -fx-background-radius: 10px;">
+         <effect>
+            <DropShadow height="15.57" radius="7.67" spread="0.14" width="17.11">
+               <color>
+                  <Color red="0.7543859481811523" green="0.7543859481811523" blue="0.7543859481811523" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label layoutX="14.0" prefHeight="35.0" prefWidth="170.0" text="Occupied Rooms" textFill="#e2e1e1">
+               <font>
+                  <Font name="Tahoma Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="occupiedRoomsLabel" layoutX="14.0" layoutY="32.0" prefHeight="35.0" prefWidth="122.0" text="1000" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="35.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="136.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/house.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="293.0" layoutY="106.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #200887; -fx-background-radius: 10px;">
+         <effect>
+            <DropShadow height="12.83" radius="4.55" width="7.37">
+               <color>
+                  <Color red="0.7280701994895935" green="0.7190816402435303" blue="0.7190816402435303" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label layoutX="21.0" prefHeight="35.0" prefWidth="170.0" text="Available Rooms" textFill="#e2e1e1">
+               <font>
+                  <Font name="Tahoma Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="availableRoomsLabel" layoutX="19.0" layoutY="28.0" prefHeight="35.0" prefWidth="122.0" text="1000" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="35.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="139.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/house.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="539.0" layoutY="105.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #11951d; -fx-background-radius: 10px;">
+         <effect>
+            <DropShadow height="15.57" radius="7.67" spread="0.14" width="17.11">
+               <color>
+                  <Color red="0.7543859481811523" green="0.7543859481811523" blue="0.7543859481811523" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label fx:id="TodaySalesLabel" layoutX="19.0" prefHeight="35.0" prefWidth="170.0" text="Today's Sales" textFill="#e2e1e1">
+               <font>
+                  <Font name="Tahoma Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="salesLabel" layoutX="17.0" layoutY="28.0" prefHeight="35.0" prefWidth="122.0" text="1000" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="35.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="137.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/payment%20icon%20copy.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="774.0" layoutY="105.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: brown; -fx-background-radius: 10px;">
+         <effect>
+            <DropShadow height="12.83" radius="4.55" width="7.37">
+               <color>
+                  <Color red="0.7280701994895935" green="0.7190816402435303" blue="0.7190816402435303" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label fx:id="TodaySalesLabel1" layoutX="14.0" layoutY="2.0" prefHeight="35.0" prefWidth="170.0" text="Out Of Stocks" textFill="#e2e1e1">
+               <font>
+                  <Font name="Tahoma Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="stockLabel" layoutX="12.0" layoutY="30.0" prefHeight="35.0" prefWidth="122.0" text="1000" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="35.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="62.0" fitWidth="87.0" layoutX="134.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/stock%20copy.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <TableView layoutX="76.0" layoutY="230.0" prefHeight="325.0" prefWidth="858.0" style="-fx-background-color: #fff;">
+        <columns>
+          <TableColumn prefWidth="76.66666412353516" text="ID" />
+          <TableColumn prefWidth="133.33335876464844" text="ROOM NO." />
+            <TableColumn prefWidth="120.66668701171875" text="CATEGORY" />
+            <TableColumn prefWidth="127.33340454101562" text="CHECK IN AT" />
+            <TableColumn prefWidth="130.66665649414062" text="CHECK OUT AT" />
+            <TableColumn prefWidth="149.33331298828125" text="STATUS" />
+            <TableColumn editable="false" prefWidth="120.6666259765625" text="BOOKED BY" />
+        </columns>
+      </TableView>
+   </children>
+   <opaqueInsets>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </opaqueInsets>
+</AnchorPane>

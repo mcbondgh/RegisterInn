@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<?import com.gluonhq.charm.glisten.control.CardPane?>-->
+<!--<?import com.gluonhq.charm.glisten.control.TextField?>-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.HumanResource">
+   <effect>
+      <DropShadow height="27.64" radius="9.33" spread="0.04" width="11.68">
+         <color>
+            <Color red="0.35087719559669495" green="0.3400476574897766" blue="0.3400476574897766" />
+         </color>
+      </DropShadow>
+   </effect>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.9700000286102295" green="0.6729844212532043" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="0.886274516582489" blue="0.1411764770746231" opacity="0.9900000095367432" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill></Rectangle>
+      <Text fill="WHITE" layoutX="136.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="manage employees" wrappingWidth="542.803352355957">
+         <font>
+            <Font name="Transformers Movie" size="50.0" />
+         </font>
+      </Text>
+      <TabPane fx:id="tabPane" layoutX="8.0" layoutY="54.0" prefHeight="502.0" prefWidth="1023.0" style="-fx-background-color: orange;" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="viewTab" style="-fx-width: 150px; -fx-font-size: 14px; -fx-font-family: tahoma; -fx-font-weight: bold; -fx-text-base-color: #00428d; -fx-cursor: hand; -fx-background-color: #ffe224; -fx-padding: 5px;" text="VIEW EMPLOYEES">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="455.0" prefWidth="1023.0" style="-fx-background-color: #eee;">
+                     <children>
+                        <TableView fx:id="EmployeesTableView" cache="true" cacheHint="QUALITY" depthTest="ENABLE" layoutX="24.0" layoutY="6.0" prefHeight="385.0" prefWidth="975.0" scaleX="1.04" scaleY="1.04" scaleZ="1.04" style="-fx-background-color: #fff; -fx-alignment: CENTER; -fx-font-size: 16px;">
+                           <columns>
+                              <TableColumn fx:id="fullnameColumn" maxWidth="1.7976931348623157E308" prefWidth="213.9999942779541" style="-fx-alignment: CENTER;" text="FULL NAME" />
+                              <TableColumn fx:id="numberColumn" maxWidth="1.7976931348623157E308" prefWidth="154.00001525878906" style="-fx-alignment: CENTER;" text="MOBILE NUMBER" />
+                              <TableColumn fx:id="addressColumn" maxWidth="1.7976931348623157E308" prefWidth="112.00006103515625" style="-fx-alignment: CENTER;" text="ADDRESS" />
+                              <TableColumn fx:id="dateJoinedColumn" maxWidth="1.7976931348623157E308" prefWidth="122.6666259765625" style="-fx-alignment: CENTER;" text="JOINED DATE" />
+                              <TableColumn fx:id="designationColumn" maxWidth="1.7976931348623157E308" prefWidth="125.0" style="-fx-alignment: CENTER;" text="DESIGNATION" />
+                              <TableColumn fx:id="statusColumn" prefWidth="80.23077392578125" style="-fx-font-size: 14px; -fx-alignment: CENTER; -fx-text-fill: green; -fx-font-weight: bold;" text="STATUS" />
+                              <TableColumn fx:id="salaryColumn" maxWidth="97.10247802734375" prefWidth="88.3590087890625" style="-fx-font-size: 14px; -fx-alignment: CENTER; -fx-text-fill: #ff0000; -fx-font-weight: bold;" text="SALARY(GH)" />
+                              <TableColumn fx:id="removeColumn" maxWidth="86.87188720703125" minWidth="56.6666259765625" prefWidth="84.3077392578125" resizable="false" style="-fx-font-size: 14px; -fx-alignment: CENTER; -fx-text-fill: red;" text="REMOVE " />
+                           </columns>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TableView>
+                        <Button layoutX="772.0" layoutY="420.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #0cb700;" text="Save" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button layoutX="858.0" layoutY="420.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #ff0000;" text="Deselect" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="addEmployeeTab" style="-fx-width: 150px; -fx-font-size: 14px; -fx-font-family: tahoma; -fx-font-weight: bold; -fx-text-base-color: #00428d; -fx-cursor: hand; -fx-background-color: #ffe224; -fx-padding: 5px;" text="ADD NEW EMPLOYEE">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" onMouseMoved="#keyTypeEventAll" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #fff;">
+                     <children>
+                        <GridPane layoutX="38.0" layoutY="60.0" prefHeight="197.0" prefWidth="913.0">
+                          <columnConstraints>
+                            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints maxHeight="35.999999999999986" minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" />
+                            <RowConstraints maxHeight="35.999999999999986" minHeight="10.0" prefHeight="67.0" valignment="TOP" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="35.999999999999986" minHeight="10.0" prefHeight="28.0" valignment="BOTTOM" />
+                            <RowConstraints maxHeight="35.999999999999986" minHeight="5.0" percentHeight="0.0" prefHeight="35.999999999999986" valignment="TOP" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="35.999999999999986" minHeight="10.0" prefHeight="31.333333333333343" valignment="BOTTOM" />
+                              <RowConstraints maxHeight="35.999999999999986" minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TextField fx:id="firstNameField" prefHeight="34.0" prefWidth="200.0" promptText="Firstname" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="lastNameField" prefHeight="34.0" prefWidth="200.0" promptText="Lastname" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="numberField" onKeyReleased="#CheckPhoneNumberValue" prefHeight="34.0" prefWidth="200.0" promptText="Phone" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="emailField" onKeyTyped="#validateEmail" prefHeight="34.0" prefWidth="200.0" promptText="Email Address" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <ComboBox fx:id="idTypeBox" prefHeight="31.0" prefWidth="200.0" style="-fx-font-size: 14;" visibleRowCount="5" GridPane.rowIndex="3" />
+                              <TextField fx:id="idNumberField" prefHeight="34.0" prefWidth="200.0" promptText="GH-123455898" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <ComboBox fx:id="genderBox" prefHeight="27.0" prefWidth="200.0" style="-fx-font-size: 14;" visibleRowCount="5" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <DatePicker fx:id="joinedDate" editable="false" onShowing="#keyTypeEventAll" prefHeight="31.0" prefWidth="200.0" style="-fx-font-size: 14px;" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                              <TextField fx:id="addressField" prefHeight="34.0" prefWidth="200.0" promptText="AS-2332-1133" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <ComboBox fx:id="designationBox" prefHeight="29.0" prefWidth="200.0" style="-fx-font-size: 14;" visibleRowCount="5" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="salaryField" onKeyReleased="#CheckSalaryValue" prefHeight="34.0" prefWidth="200.0" promptText="1000.02" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Label fx:id="emailLabel" prefHeight="18.0" prefWidth="195.0" text="EMAIL" textFill="#726f6f" GridPane.columnIndex="3">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="numberLabel" text="PHONE" textFill="#726f6f" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lastnameLabel" text="LASTNAME" textFill="#726f6f" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="firstnameLabel" text="FIRSTNAME" textFill="#726f6f">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="idTypeLabel" prefHeight="20.0" prefWidth="69.0" text="ID TYPE" textFill="#726f6f" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="salaryLabel" prefHeight="20.0" prefWidth="108.0" text="SALARY" textFill="#726f6f" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="joinedDateLabel" prefHeight="20.0" prefWidth="130.0" text="DATE JOINED" textFill="#726f6f" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="idNumberLabel" prefHeight="20.0" prefWidth="108.0" text="ID NUMBER" textFill="#726f6f" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="genderLabel" prefHeight="20.0" prefWidth="108.0" text="GENDER" textFill="#726f6f" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="addressLabel" text="DITIGAL ADDRESS" textFill="#726f6f" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="desigLabel" prefHeight="20.0" prefWidth="108.0" text="DESIGNATION" textFill="#726f6f" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="*" textFill="RED">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="80.0" />
+                                 </GridPane.margin>
+                              </Label>
+                           </children>
+                        </GridPane>
+                        <Label layoutX="405.0" layoutY="465.0" text="Powered by MC's Republic | Copyright (c) 2023" textFill="#808080" />
+                        <Pane layoutX="11.0" layoutY="11.0" prefHeight="37.0" prefWidth="957.0" style="-fx-background-color: #ffe224; -fx-background-radius: 5px;">
+                           <children>
+                              <Label layoutX="22.0" layoutY="1.0" prefHeight="29.0" prefWidth="262.0" text="BASIC INFORMATION" textFill="#00428d">
+                                 <font>
+                                    <Font name="BebasNeueBold" size="31.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Button fx:id="saveButton" defaultButton="true" disable="true" layoutX="373.0" layoutY="300.0" mnemonicParsing="false" onAction="#SaveButtonClicked" prefHeight="29.0" prefWidth="122.0" style="-fx-background-radius: 8px; -fx-background-color: #0cb700;" text="SAVE" textFill="WHITE">
+                           <font>
+                              <Font name="Roboto Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="cancelButton" cancelButton="true" layoutX="512.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#CancelButtonClicked" prefHeight="29.0" prefWidth="122.0" style="-fx-background-radius: 8px; -fx-background-color: red;" text="CANCEL" textFill="WHITE">
+                           <font>
+                              <Font name="Roboto Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Pane layoutX="799.0" layoutY="356.0" prefHeight="89.0" prefWidth="209.0" style="-fx-background-color: #eee; -fx-background-radius: 5px;">
+                           <children>
+                              <ComboBox fx:id="userRoleBox" disable="true" layoutX="14.0" layoutY="55.0" prefHeight="29.0" prefWidth="184.0" style="-fx-font-size: 14;" visibleRowCount="5" />
+                              <CheckBox fx:id="EnableField" layoutX="17.0" layoutY="10.0" mnemonicParsing="false" onAction="#EnableFieldsOnClick" text="Set Employee As A User." textFill="#e40000">
+                                 <font>
+                                    <Font name="Roboto Black Italic" size="12.0" />
+                                 </font>
+                              </CheckBox>
+                              <Label fx:id="roleLabel" layoutX="61.0" layoutY="34.0" prefHeight="20.0" prefWidth="86.0" text="USER ROLE" textFill="#726f6f">
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="updateTab" style="-fx-width: 150px; -fx-font-size: 14px; -fx-font-family: tahoma; -fx-font-weight: bold; -fx-text-base-color: #00428d; -fx-cursor: hand; -fx-background-color: #ffe224; -fx-padding: 5px;" text="ARCHIVED EMPLOYEES">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #fff;" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <ImageView fitHeight="50.0" fitWidth="81.0" layoutX="34.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/multi-users.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

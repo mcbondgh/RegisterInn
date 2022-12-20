@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.UserProfile">
+   <effect>
+      <DropShadow height="27.64" radius="9.33" spread="0.04" width="11.68">
+         <color>
+            <Color red="0.35087719559669495" green="0.3400476574897766" blue="0.3400476574897766" />
+         </color>
+      </DropShadow>
+   </effect>
+   <children>
+      <Pane layoutX="13.0" layoutY="132.0" prefHeight="427.0" prefWidth="1006.0" style="-fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 5px;">
+         <children>
+            <FlowPane prefHeight="57.0" prefWidth="261.0" style="-fx-border-color: #ccc; -fx-border-radius: 5px; -fx-background-color: #ff111d3;">
+               <children>
+                  <ComboBox fx:id="employeeBox" prefHeight="36.0" prefWidth="235.0" promptText="Select Employee Here" style="-fx-font-size: 16px; -fx-background-color: #03a7ab; -fx-text-base-color: white;">
+                     <FlowPane.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </FlowPane.margin>
+                  </ComboBox>
+               </children>
+            </FlowPane>
+            <GridPane layoutX="281.0" layoutY="19.0" prefHeight="318.0" prefWidth="721.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.33331298828125" minWidth="10.0" prefWidth="101.66666666666669" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="259.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0000203450521" minWidth="10.0" prefWidth="126.33" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0000203450521" minWidth="10.0" prefWidth="208.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Firstname" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Lastname" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Gender" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="firstnameField" prefHeight="30.0" prefWidth="220.0" promptText="Firstname" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Gentium Book Basic Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <TextField fx:id="lastnameField" prefHeight="30.0" prefWidth="220.0" promptText="Lastname" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Gentium Book Basic Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <ComboBox fx:id="genderComboBox" prefHeight="25.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Email" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="25.0" prefWidth="134.0" text="Phone Number" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="25.0" prefWidth="127.0" text="Digital Address" GridPane.rowIndex="6">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="25.0" prefWidth="136.0" text="Id Type" wrapText="true" GridPane.rowIndex="7">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="emailField" prefHeight="30.0" prefWidth="220.0" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Gentium Book Basic Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <TextField fx:id="mobileField" prefHeight="30.0" prefWidth="220.0" promptText="0240000001" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Gentium Book Basic Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="25.0" prefWidth="99.0" text="Id Number" GridPane.rowIndex="8">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="25.0" prefWidth="129.0" text="Joined Date" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Label>
+                  <Label prefHeight="25.0" prefWidth="97.0" text="Designation" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Salary" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Added By" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="25.0" prefWidth="106.0" text="Last Updated" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="addressField" prefHeight="30.0" prefWidth="220.0" promptText="AS-1000-100" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="Gentium Book Basic Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <ComboBox fx:id="idTypeBox" prefHeight="25.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="idNumberField" prefHeight="30.0" prefWidth="220.0" promptText="GH-100000001-10" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                     <font>
+                        <Font name="Gentium Book Basic Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <DatePicker fx:id="dateField" style="-fx-font-size: 14;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <TextField fx:id="designitionField" prefHeight="30.0" prefWidth="220.0" promptText="Receptionist" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Gentium Book Basic Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <TextField fx:id="salaryField" prefHeight="30.0" prefWidth="220.0" promptText="1000.00" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Gentium Book Basic Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <TextField fx:id="addedByField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="Admin" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Gentium Book Basic Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <TextField fx:id="updatedDate" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="12/04/2022" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Gentium Book Basic Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+               </children>
+            </GridPane>
+            <Button fx:id="updateProfileBtn" alignment="CENTER" layoutX="461.0" layoutY="359.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="98.0" style="-fx-background-color: #03a7ab;" text="Update" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="updateProfileBtn1" alignment="CENTER" layoutX="586.0" layoutY="358.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="98.0" style="-fx-background-color: #ff0000;" text="Delete" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="uploadImageBtn" alignment="CENTER" layoutX="73.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#UploadProfileImage" prefHeight="36.0" prefWidth="136.0" style="-fx-background-color: #3cb0fd;" text="Upload Image" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <TextField fx:id="imageName" editable="false" layoutX="29.0" layoutY="326.0" prefHeight="25.0" prefWidth="223.0" promptText="Image Name" />
+            <ImageView fx:id="uploadProfile" fitHeight="237.0" fitWidth="237.0" layoutX="21.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+               <image>
+                  <Image url="@images/users.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#03a7ab" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0" />
+      <Text fill="WHITE" layoutX="123.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER PROFILE" wrappingWidth="346.80338287353516">
+         <font>
+            <Font name="Transformers Movie" size="50.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="45.0" fitWidth="66.0" layoutX="45.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/users.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="349.0" layoutY="61.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #05c8cc;" />
+      <Pane layoutX="351.0" layoutY="63.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #03a7ab;">
+         <children>
+            <Label layoutX="41.0" layoutY="6.0" prefHeight="29.0" prefWidth="223.0" text="UPDATE USER INFOMATION" textFill="WHITE">
+               <font>
+                  <Font name="Gentium Book Basic Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

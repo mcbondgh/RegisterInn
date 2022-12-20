@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="SetUserRoles" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <effect>
+      <DropShadow height="27.64" radius="9.33" spread="0.04" width="11.68">
+         <color>
+            <Color red="0.35087719559669495" green="0.3400476574897766" blue="0.3400476574897766" />
+         </color>
+      </DropShadow>
+   </effect>
+   <children>
+      <Pane layoutX="18.0" layoutY="83.0" prefHeight="455.0" prefWidth="292.0" style="-fx-border-color: #ddd; -fx-border-radius: 5px;">
+         <children>
+            <TextField fx:id="idTypeField" layoutX="22.0" layoutY="49.0" prefHeight="34.0" prefWidth="179.0" promptText="Add New Id Type">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font></TextField>
+            <Button fx:id="saveButton" layoutX="22.0" layoutY="90.0" mnemonicParsing="false" onAction="#idButtonClicked" prefHeight="19.0" prefWidth="52.0" style="-fx-background-color: #037dab; -fx-text-fill: #fff;" text="Add" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <TextField fx:id="roleTypeField" layoutX="20.0" layoutY="168.0" prefHeight="34.0" prefWidth="179.0" promptText="User Role Type">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font></TextField>
+            <TextArea fx:id="noteField" layoutX="21.0" layoutY="209.0" prefHeight="70.0" prefWidth="257.0" promptText="Type A Note Here" wrapText="true">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" />
+               </padding>
+            </TextArea>
+            <Button fx:id="saveButton2" layoutX="24.0" layoutY="287.0" mnemonicParsing="false" onAction="#roleButtonClicked" prefHeight="14.0" prefWidth="52.0" style="-fx-background-color: #037dab; -fx-text-fill: #fff;" text="Add" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Pane prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: #037dab;">
+               <children>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ESSENTIALS" wrappingWidth="144.0">
+                     <font>
+                        <Font name="Transformers Movie" size="26.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <TextField fx:id="designitionField" layoutX="22.0" layoutY="358.0" prefHeight="34.0" prefWidth="179.0" promptText="Add New Designation">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+            </TextField>
+            <Button fx:id="saveButton21" layoutX="24.0" layoutY="398.0" mnemonicParsing="false" onAction="#desigButtonClicked" prefHeight="14.0" prefWidth="52.0" style="-fx-background-color: #037dab; -fx-text-fill: #fff;" text="Add" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Line endX="177.66665649414062" endY="1.52587890625E-5" layoutX="93.0" layoutY="138.0" startX="-78.00001525878906" stroke="#c0c0c0" />
+            <Line endX="178.00003051757812" layoutX="94.0" layoutY="348.0" startX="-78.00001525878906" stroke="#c0c0c0" />
+            <Label fx:id="idLabel" layoutX="22.0" layoutY="133.0" prefHeight="13.0" prefWidth="214.0" text="Id Type Field Is Empty, Please Fill." textFill="RED" visible="false">
+               <font>
+                  <Font name="Times New Roman Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="roleLabel" layoutX="22.0" layoutY="327.0" prefHeight="14.0" prefWidth="257.0" text="User Role/Comment Fields Is Empty. Please Fill" textFill="RED" visible="false">
+               <font>
+                  <Font name="Times New Roman Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="designitionLabel" layoutX="22.0" layoutY="438.0" prefHeight="13.0" prefWidth="214.0" text="Designition Field Is Empety, Please Fill" textFill="RED" visible="false">
+               <font>
+                  <Font name="Times New Roman Bold Italic" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#037dab" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0" />
+      <Text fill="WHITE" layoutX="152.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="seT user roles" wrappingWidth="542.803352355957">
+         <font>
+            <Font name="Transformers Movie" size="50.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="50.0" fitWidth="70.0" layoutX="42.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #fff;">
+         <image>
+            <Image url="@images/multi-users.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="330.0" layoutY="83.0" prefHeight="455.0" prefWidth="679.0" style="-fx-border-color: #ddd; -fx-border-radius: 5px;">
+         <children>
+            <Pane prefHeight="34.0" prefWidth="305.0" style="-fx-background-color: #037dab;">
+               <children>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user permissions" wrappingWidth="306.1366653442383">
+                     <font>
+                        <Font name="Transformers Movie" size="33.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Button fx:id="saveButton1" layoutX="515.0" layoutY="401.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="126.0" style="-fx-background-color: #037dab; -fx-text-fill: #fff;" text="Save">
+               <font>
+                  <Font name="Tahoma" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <GridPane layoutX="52.0" layoutY="70.0" prefHeight="144.0" prefWidth="360.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <ComboBox fx:id="userTypeBox" layoutX="515.0" layoutY="8.0" prefHeight="29.0" prefWidth="150.0" />
+            <Label layoutX="352.0" layoutY="11.0" prefHeight="24.0" prefWidth="144.0" text="SELECT USER TYPE" textFill="RED">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
