@@ -150,9 +150,13 @@ public class DbConnection {
 
     //THIS METHOD WHEN INVOKED RETURNS ALL COLUMNS FORM THE employees table.
     public ArrayList<Object> fetchFullEmployeeDetails() {
+        ArrayList<Object> employees = new ArrayList<>();
 
 
-    }
+
+
+        return employees;
+   }
 
 
     //FETCHES THE name COLUMN FROM THE id_type TABLE
