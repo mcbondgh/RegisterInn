@@ -115,7 +115,6 @@ public class DbConnection {
 
     //THIS METHOD WHEN INVOKED TAKES A role_name AS AN ARGUMENT AND RETURNS THE id ASSOCIATED WITH SAME.
     public int fetchUserRoleID(String userRole) throws SQLException {
-        //ARRAYLIST TO STORE ALL NAMES OF roles IN THE roles TABLE e,g Admin, Receptionist, Manager etc.
         int role_id = 0;
         try {
             String selectQuery = "SELECT id FROM roles WHERE name = '"+ userRole +"';";
@@ -128,6 +127,31 @@ public class DbConnection {
             e.printStackTrace();
         }
         return role_id;
+    }
+
+    //FETCH EMPLOYEE NAMES ONLY FROM THE employees TABLE.
+    public ObservableList<String> fetchEmployeeFullnames() {
+        ObservableList<String> Employees = FXCollections.observableArrayList();
+        try {
+            String selectQuery = "SELECT firstname, lastname FROM employees ORDER BY lastname ASC;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+                String firstname = result.getString(1);
+                String lastname = result.getString(2);
+                String fullname = lastname + " " + firstname;
+                Employees.add(fullname);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Employees;
+    }
+
+    //THIS METHOD WHEN INVOKED RETURNS ALL COLUMNS FORM THE employees table.
+    public ArrayList<Object> fetchFullEmployeeDetails() {
+
+
     }
 
 
@@ -179,5 +203,72 @@ public class DbConnection {
         }
         return usernames;
     }
+
+    /** THIS METHOD WHEN CALLED RETURNS AN INTEGER OF THE TOTAL ROW COUNT OF ALL EMPLOYEES FROM THE employees Table*/
+    public int countTotalEmployees() {
+        int countValue = 0;
+        try {
+            String selectQuery = "SELECT COUNT(id) FROM employees;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+                countValue += result.getInt(1);
+            }
+            CONNECTOR().close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return countValue;
+    }
+
+    /** THIS METHOD WHEN CALLED RETURNS AN INTEGER OF THE TOTAL ROW COUNT OF ONLY ACTIVE ie status=1 EMPLOYEES FROM THE employees Table*/
+    public int countActiveEmployees() {
+        int countValue = 0;
+        try {
+            String selectQuery = "SELECT COUNT(id) FROM employees WHERE(status = 1);";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+                countValue += result.getInt(1);
+            }
+            CONNECTOR().close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return countValue;
+    }
+
+    /** THIS METHOD WHEN CALLED RETURNS AN INTEGER OF THE TOTAL ROW COUNT OF ONLY inactive ie status=0 EMPLOYEES FROM THE employees Table*/
+    public int countInactiveEmployees() {
+        int countValue = 0;
+        try {
+            String selectQuery = "SELECT COUNT(id) FROM employees WHERE(status = 0);";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+                countValue += result.getInt(1);
+            }
+            CONNECTOR().close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return countValue;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }//END OF CLASS

@@ -3,10 +3,12 @@ package inn.tableViews;
 import javafx.scene.control.CheckBox;
 
 public class EmployeesTable {
+    private int empId;
    private String fullname, phoneNumber, joinedDate,  address, designation , status, salary;
-   private CheckBox checkBox;
+   private CheckBox archiveButton;
 
-    public EmployeesTable(String fullname, String phoneNumber,  String address,String joinedDate, String designation, String status, String salary, CheckBox checkBox) {
+    public EmployeesTable(int empId, String fullname, String phoneNumber,  String address,String joinedDate, String designation, String status, String salary, CheckBox archiveButton) {
+        this.empId = empId;
         this.fullname = fullname;
         this.phoneNumber = phoneNumber;
         this.joinedDate = joinedDate;
@@ -14,7 +16,21 @@ public class EmployeesTable {
         this.designation = designation;
         this.status = status;
         this.salary = salary;
-        this.checkBox = new CheckBox();
+        this.archiveButton = archiveButton;
+        archiveButton.setText("🚮");;
+        archiveButton.setStyle("-fx-text-fill:#fff; -fx-background-color: #ff0000; -fx-font-weight:bold");
+        archiveButton.setMaxWidth(45.00);
+    }
+
+
+
+
+    public int getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(int empId) {
+        this.empId = empId;
     }
 
     public String getFullname() {
@@ -73,11 +89,11 @@ public class EmployeesTable {
         this.salary = salary;
     }
 
-    public CheckBox getCheckBox() {
-        return checkBox;
+    public CheckBox getArchiveButton() {
+        return archiveButton;
     }
 
-    public void setCheckBox(CheckBox checkBox) {
-        this.checkBox = checkBox;
+    public void setArchiveButton(CheckBox archiveButton) {
+        this.archiveButton = archiveButton;
     }
 }//END OF CLASS

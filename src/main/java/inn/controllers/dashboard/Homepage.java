@@ -58,6 +58,13 @@ public class Homepage implements Initializable {
 
 
     /*******************************************************************************************************************
+     SPECIAL METHODS IMPLEMENTATION*/
+    public void FlipView(String fxmlFileName) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource(fxmlFileName));
+        displayContainer.setCenter(fxmlLoader.load());
+    }
+
+    /*******************************************************************************************************************
      ACTION EVENT METHODS IMPLEMENTATION*/
     public void dashboadBtnAction() throws IOException {
         FlipView("Modules/dashboard/admin-dashboard.fxml");
@@ -82,21 +89,16 @@ public class Homepage implements Initializable {
     public void manageRolesBtnAction() throws IOException {
         FlipView("Modules/settings/user-roles.fxml");
     }
-    public void updateBtnAction() throws IOException {
-        multiStages.UpdateLoginDetails();
-    }
+
     public void humanResourceBtnAction() throws IOException {
         FlipView("Modules/settings/humanResource.fxml");
     }
 
-
-
-    /*******************************************************************************************************************
-     SPECIAL METHODS IMPLEMENTATION*/
-    public void FlipView(String fxmlFileName) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource(fxmlFileName));
-        displayContainer.setCenter(fxmlLoader.load());
+    public void employeeProfileBtnOnAction() throws IOException {
+        FlipView("Modules/settings/employeeProfile.fxml");
     }
+
+
 
     public void signoutBtnAction() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -110,6 +112,12 @@ public class Homepage implements Initializable {
             multiStages.LoginForm();
         }
     }
+    public void updateBtnAction() throws IOException {
+        multiStages.UpdateLoginDetails();
+    }
+
+
+
 
 
 

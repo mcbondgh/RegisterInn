@@ -1,6 +1,7 @@
 package inn.models;
 
 import inn.database.DbConnection;
+import inn.tableViews.ArchivedTable;
 import inn.tableViews.EmployeesTable;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
@@ -9,11 +10,10 @@ import javafx.scene.control.CheckBox;
 
 import java.sql.Date;
 
-public class ResourceModel extends DbConnection {
+public class ResourceModel extends DbConnection{
 
     //DEFAULT CONSTRUCTOR
     public ResourceModel() {super();}
-
 
     /**
      * THIS METHOD WHEN INVOKED WILL INSERT CURRENT RECORDS COLLECTED INTO THE employees TABLE
@@ -58,7 +58,6 @@ public class ResourceModel extends DbConnection {
 
     /**
      * THIS METHOD WHEN CALLED WILL RETURN ONLY EMPLOYEES WHO'S STATUS == 1 ie ACTIVE EMPLOYEES. AND STORE THE RESULT IN AN OBSERVABLE LIST ;
-     *
      */
     public ObservableList<EmployeesTable> activeEmployees = FXCollections.observableArrayList();
     public void fetchActiveEmployees() {
@@ -67,6 +66,7 @@ public class ResourceModel extends DbConnection {
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
+                int id = result.getInt("id");
                 String firstname = result.getString("firstname");
                 String lastname = result.getString("lastname");
                 String fullname = firstname+ " " + lastname;
@@ -81,8 +81,8 @@ public class ResourceModel extends DbConnection {
                     currentStatus = "Active";
                 }
                 String desig = result.getString("designation");
-                CheckBox checkBox = new CheckBox();
-                activeEmployees.add(new EmployeesTable(fullname, number, address , date, desig, currentStatus, salary, checkBox));
+                CheckBox archiveButton = new CheckBox();
+                activeEmployees.add(new EmployeesTable(id, fullname, number, address , date, desig, currentStatus, salary, archiveButton));
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -92,13 +92,14 @@ public class ResourceModel extends DbConnection {
     /**
      * THIS METHOD WHEN CALLED WILL RETURN ALL EMPLOYEES WHO'S STATUS = 0 ie INACTIVE EMPLOYEES (ARCHIVED) AND STORE THE RESULT IN AN OBSERVABLE LIST;
      * */
-    public ObservableList<EmployeesTable> inActiveEmployees = FXCollections.observableArrayList();
+    public ObservableList<ArchivedTable> inActiveEmployees = FXCollections.observableArrayList();
     public void fetchInactiveEmployees() {
         try {
             String selectQuery = "SELECT * FROM employees WHERE status = 0 ORDER BY lastname ASC;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
+                int id = result.getInt("id");
                 String firstname = result.getString("firstname");
                 String lastname = result.getString("lastname");
                 String fullname = firstname+ " " + lastname;
@@ -113,14 +114,42 @@ public class ResourceModel extends DbConnection {
                     currentStatus = "Inactive";
                 }
                 String desig = result.getString("designation");
-                CheckBox checkBox = new CheckBox();
-                inActiveEmployees.add(new EmployeesTable(fullname, number, address , date, desig, currentStatus, salary, checkBox));
+                CheckBox restoreButton = new CheckBox();
+                inActiveEmployees.add(new ArchivedTable(id, fullname, number, address , date, desig, currentStatus, salary, restoreButton));
             }
         }catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /** THIS METHOD WHEN INVOKED TAKES AN EMPLOYEE ID PARAMETER AS AN ARGUMENT THEN UPDATES status=1 OF THE SPECIFIED EMPLOYEE IN THE employees table.*/
+    public void updateEmployeesStatusToActive(int empID) {
+        try{
+            String updateQuery = "UPDATE employees SET status = 1 WHERE(id = ?)";
+            prepare = CONNECTOR().prepareStatement(updateQuery);
+            prepare.setInt(1, empID);
+            prepare.execute();
+            prepare.close();
+            CONNECTOR().close();
+            CONNECTOR().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /** THIS METHOD WHEN INVOKED TAKES AN EMPLOYEE ID PARAMETER AS AN ARGUMENT THEN UPDATES status=0 OF THE SPECIFIED EMPLOYEE IN THE employees table.*/
+    public void updateEmployeesStatusToInactive(int empID) {
+        try{
+            String updateQuery = "UPDATE employees SET status = 0 WHERE(id = ?)";
+            prepare = CONNECTOR().prepareStatement(updateQuery);
+            prepare.setInt(1, empID);
+            prepare.execute();
+            prepare.close();
+            CONNECTOR().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

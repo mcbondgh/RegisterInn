@@ -3,6 +3,7 @@ package inn.Controllers.settings;
 import inn.Controllers.config.DefPassword;
 import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;
+import inn.tableViews.ArchivedTable;
 import inn.tableViews.EmployeesTable;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
@@ -33,11 +34,12 @@ public class HumanResource extends ResourceModel implements Initializable {
     @FXML private DatePicker joinedDate;
     @FXML private CheckBox EnableField;
     @FXML private  Tab addEmployeeTab;
-    @FXML private Button saveButton, cancelButton;
-    @FXML private Label emailLabel;
+    @FXML private Button saveButton, cancelButton, saveEmpToArchive, deselectButton;
+    @FXML private Label emailLabel, totalEmpCountLabel, activeEmpCountLabel, archivedEmpCountLabel;
 
     /************************************ EMPLOYEES TABLEVIEW COLUMN NAMES EJECTED FROM THE FXML FILE.*/
-    @FXML private TableView<EmployeesTable> EmployeesTableView;
+    @FXML public TableView<EmployeesTable> EmployeesTableView;
+    @FXML private  TableColumn<EmployeesTable, Integer> empId;
     @FXML private TableColumn<EmployeesTable, String>  fullnameColumn;
     @FXML private TableColumn<EmployeesTable, String>  numberColumn;
     @FXML private TableColumn<EmployeesTable, String>  addressColumn;
@@ -45,7 +47,20 @@ public class HumanResource extends ResourceModel implements Initializable {
     @FXML private TableColumn<EmployeesTable, String> dateJoinedColumn;
     @FXML private TableColumn<EmployeesTable, String> statusColumn;
     @FXML private TableColumn<EmployeesTable, String> salaryColumn;
-    @FXML private TableColumn<EmployeesTable, String> removeColumn;
+    @FXML private TableColumn<EmployeesTable, Button> removeColumn;
+
+    /************************************ ARCHIVED TABLEVIEW COLUMN NAMES EJECTED FROM THE FXML FILE.*/
+    @FXML private TableView<ArchivedTable> ArchivedTableView;
+    @FXML private  TableColumn<EmployeesTable, Integer> empId1;
+    @FXML private TableColumn<ArchivedTable, String>  fullnameColumn1;
+    @FXML private TableColumn<ArchivedTable, String>  numberColumn1;
+    @FXML private TableColumn<ArchivedTable, String>  addressColumn1;
+    @FXML private TableColumn<ArchivedTable, String> designationColumn1;
+    @FXML private TableColumn<ArchivedTable, String> dateJoinedColumn1;
+    @FXML private TableColumn<ArchivedTable, String> statusColumn1;
+    @FXML private TableColumn<ArchivedTable, String> salaryColumn1;
+    @FXML private TableColumn<ArchivedTable, Button> restoreColumn;
+
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -58,19 +73,20 @@ public class HumanResource extends ResourceModel implements Initializable {
             emptyGender();
             emptyUserRoll();
             populateEmployeesTable();
+            populateArchiveTableView();
+            employeesRowCount();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    /******************************************> CLASS INSTANTIATION FIELD. <****************************************/
+    /******************************************> CLASS INSTANTIATION FIELD. <*******************************************/
     ButtonType YES = ButtonType.YES;
     ButtonType REMOVE = ButtonType.OK;
     MultiStages multiStages = new MultiStages();
     DefPassword defPassword = new DefPassword();
 
-
-    /******************************************> SETTER AND GETTER METHODS <***********************************/
+    /******************************************> SETTER AND GETTER METHODS <********************************************/
 
     public void setFirstNameField(String firstname) {firstNameField.setText(firstname);}
     public String getFirstNameField(){return firstNameField.getText();}
@@ -109,8 +125,9 @@ public class HumanResource extends ResourceModel implements Initializable {
     public boolean getEnableField() {return EnableField.isSelected();}
 
 
-    /*********************************> ACTION EVENT METHODS IMPLEMENTATION <**************************/
-
+    /*******************************************************************************************************************
+                                        * ACTION EVENT METHODS IMPLEMENTATION
+     * <****************************************************************************************************************/
     public void validateEmail() {
         if(invalidEmail()) {
             emailLabel.setStyle("-fx-text-fill:#ff0000;");
@@ -171,10 +188,9 @@ public class HumanResource extends ResourceModel implements Initializable {
             alert.showAndWait();
             e.printStackTrace();
         }
-
     }
 
-    //METHOD TO CHECK IF THE USER HAS AGREED TO SET THE CURRENT EMPLOYEE AS A USER, enable if true else false.
+    //METHOD TO CHECK IF THE SYS ADMIN HAS AGREED TO SET THE CURRENT EMPLOYEE AS A USER, enable if true else false.
     public void EnableFieldsOnClick() {
         if (!(EnableField.isSelected())) {
             userRoleBox.setDisable(true);
@@ -185,7 +201,7 @@ public class HumanResource extends ResourceModel implements Initializable {
         }
     }
 
-    //AUTHENTICATE THE SALARY FIELD TO ACCEPT ONLY double/int values ONLY.
+    //AUTHENTICATE THE SALARY FIELD TO ACCEPT ONLY double/int values.
     public void CheckSalaryValue(@NotNull("not null") KeyEvent event) {
         if (!(event.getCode().isDigitKey() || event.getCode().isArrowKey() || event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.PERIOD)) {
             salaryField.clear();
@@ -201,14 +217,53 @@ public class HumanResource extends ResourceModel implements Initializable {
         }
     }
 
-    public void archiveSaveButtonClicked() {
-        CheckBox result = EmployeesTableView.getSelectionModel().getSelectedItem().getCheckBox();
-
-
-
+    /****************** REFRESH THE ARCHIVED TABLE TO LOAD NEW UPDATES FROM THE DATABASE, IF ANY *****************/
+    @FXML void refreshArchivedTable() {
+        ArchivedTableView.getItems().clear();
+        populateArchiveTableView();
     }
 
-    /************************************> OTHER METHODS IMPLEMENTATION <******************************/
+    /****************** REFRESH THE ACTIVE EMPLOYEES TABLE TO LOAD NEW UPDATES FROM THE DATABASE, IF ANY *****************/
+    @FXML
+    private void refreshActiveEmployeeTable() {
+        EmployeesTableView.getItems().clear();
+        populateEmployeesTable();
+        employeesRowCount();
+    }
+
+    @FXML
+    private int archiveTableRestoreButtonClicked() {
+        ArchivedTable empObject;
+        for (int i = 0; i < ArchivedTableView.getItems().size(); i++) {
+            empObject = ArchivedTableView.getItems().get(i);
+            int id = empObject.getEmpId1();
+            CheckBox checkBox = empObject.getRestoreButton();
+            if (checkBox.isSelected()) {
+                updateEmployeesStatusToActive(id);
+                System.out.println(id + " is restored..");
+            }
+        }
+        return  0;
+    }
+
+    @FXML
+    private int activeTableSaveButtonClicked() {
+            EmployeesTable empObject;
+        for (int i = 0; i < EmployeesTableView.getItems().size(); i++) {
+                empObject = EmployeesTableView.getItems().get(i);
+                int id = empObject.getEmpId();
+                CheckBox checkBox = empObject.getArchiveButton();
+                if (checkBox.isSelected()) {
+                    updateEmployeesStatusToInactive(id);
+                }
+        }
+        return 0;
+    }
+
+
+    /*******************************************************************************************************************
+                                            > OTHER METHODS IMPLEMENTATION <
+     *******************************************************************************************************************/
 
     /**
      * FILL GENDER COMBOBOX WITH DATA.
@@ -262,8 +317,9 @@ public class HumanResource extends ResourceModel implements Initializable {
     }
 
 
-    /************************************> TRUE OR FALSE METHODS IMPLEMENTATION FOR POSSIBLE ERRORS <******************************/
-
+    /*******************************************************************************************************************
+                                        > TRUE OR FALSE METHODS IMPLEMENTATION FOR POSSIBLE ERRORS
+     *<****************************************************************************************************************/
     /**
      * @return true if user did not pick a date.
      */
@@ -327,9 +383,12 @@ public class HumanResource extends ResourceModel implements Initializable {
         }
     }
 
-    /************************************************ EMPLOYEES TABLEVIEW IMPLEMENTATION METHODS **********************/
+    /*******************************************************************************************************************
+                                        EMPLOYEES TABLEVIEW IMPLEMENTATION METHODS
+     *******************************************************************************************************************/
     public void populateEmployeesTable() {
         fetchActiveEmployees();
+        empId.setCellValueFactory(new PropertyValueFactory<>("empId"));
         fullnameColumn.setCellValueFactory(new PropertyValueFactory<>("fullname"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -337,14 +396,34 @@ public class HumanResource extends ResourceModel implements Initializable {
         designationColumn.setCellValueFactory(new PropertyValueFactory<>("designation"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         salaryColumn.setCellValueFactory(new PropertyValueFactory<>("salary"));
-        removeColumn.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+        removeColumn.setCellValueFactory(new PropertyValueFactory<>("archiveButton"));
         EmployeesTableView.setItems(activeEmployees);
-
-
 
     }
 
+    void populateArchiveTableView() {
+        fetchInactiveEmployees();
+        empId1.setCellValueFactory(new PropertyValueFactory<>("empId1"));
+        fullnameColumn1.setCellValueFactory(new PropertyValueFactory<>("fullname1"));
+        numberColumn1.setCellValueFactory(new PropertyValueFactory<>("phoneNumber1"));
+        addressColumn1.setCellValueFactory(new PropertyValueFactory<>("address1"));
+        dateJoinedColumn1.setCellValueFactory(new PropertyValueFactory<>("joinedDate1"));
+        designationColumn1.setCellValueFactory(new PropertyValueFactory<>("designation1"));
+        statusColumn1.setCellValueFactory(new PropertyValueFactory<>("status1"));
+        salaryColumn1.setCellValueFactory(new PropertyValueFactory<>("salary1"));
+        restoreColumn.setCellValueFactory(new PropertyValueFactory<>("restoreButton"));
+        ArchivedTableView.setItems(inActiveEmployees);
+    }
 
+    //THIS METHOD ASSIGNED THE RETURNED COUNT ROWS FROM THE EMPLOYEES TABLE ie total Employees, active Employees and inactive Employees
+    void employeesRowCount() {
+        String first = String.valueOf(countTotalEmployees());
+        String second = String.valueOf(countActiveEmployees());
+        String third = String.valueOf(countInactiveEmployees());
+        totalEmpCountLabel.setText(first);
+        activeEmpCountLabel.setText(second);
+        archivedEmpCountLabel.setText(third);
+    }
 
 
 

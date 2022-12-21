@@ -26,6 +26,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -63,46 +64,7 @@
       </Text>
       <TabPane fx:id="tabPane" layoutX="8.0" layoutY="54.0" prefHeight="502.0" prefWidth="1023.0" style="-fx-background-color: orange;" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="viewTab" style="-fx-width: 150px; -fx-font-size: 14px; -fx-font-family: tahoma; -fx-font-weight: bold; -fx-text-base-color: #00428d; -fx-cursor: hand; -fx-background-color: #ffe224; -fx-padding: 5px;" text="VIEW EMPLOYEES">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="455.0" prefWidth="1023.0" style="-fx-background-color: #eee;">
-                     <children>
-                        <TableView fx:id="EmployeesTableView" cache="true" cacheHint="QUALITY" depthTest="ENABLE" layoutX="24.0" layoutY="6.0" prefHeight="385.0" prefWidth="975.0" scaleX="1.04" scaleY="1.04" scaleZ="1.04" style="-fx-background-color: #fff; -fx-alignment: CENTER; -fx-font-size: 16px;">
-                           <columns>
-                              <TableColumn fx:id="fullnameColumn" maxWidth="1.7976931348623157E308" prefWidth="213.9999942779541" style="-fx-alignment: CENTER;" text="FULL NAME" />
-                              <TableColumn fx:id="numberColumn" maxWidth="1.7976931348623157E308" prefWidth="154.00001525878906" style="-fx-alignment: CENTER;" text="MOBILE NUMBER" />
-                              <TableColumn fx:id="addressColumn" maxWidth="1.7976931348623157E308" prefWidth="112.00006103515625" style="-fx-alignment: CENTER;" text="ADDRESS" />
-                              <TableColumn fx:id="dateJoinedColumn" maxWidth="1.7976931348623157E308" prefWidth="122.6666259765625" style="-fx-alignment: CENTER;" text="JOINED DATE" />
-                              <TableColumn fx:id="designationColumn" maxWidth="1.7976931348623157E308" prefWidth="125.0" style="-fx-alignment: CENTER;" text="DESIGNATION" />
-                              <TableColumn fx:id="statusColumn" prefWidth="80.23077392578125" style="-fx-font-size: 14px; -fx-alignment: CENTER; -fx-text-fill: green; -fx-font-weight: bold;" text="STATUS" />
-                              <TableColumn fx:id="salaryColumn" maxWidth="97.10247802734375" prefWidth="88.3590087890625" style="-fx-font-size: 14px; -fx-alignment: CENTER; -fx-text-fill: #ff0000; -fx-font-weight: bold;" text="SALARY(GH)" />
-                              <TableColumn fx:id="removeColumn" maxWidth="86.87188720703125" minWidth="56.6666259765625" prefWidth="84.3077392578125" resizable="false" style="-fx-font-size: 14px; -fx-alignment: CENTER; -fx-text-fill: red;" text="REMOVE " />
-                           </columns>
-                           <cursor>
-                              <Cursor fx:constant="DEFAULT" />
-                           </cursor>
-                        </TableView>
-                        <Button layoutX="772.0" layoutY="420.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #0cb700;" text="Save" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button layoutX="858.0" layoutY="420.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #ff0000;" text="Deselect" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab fx:id="addEmployeeTab" style="-fx-width: 150px; -fx-font-size: 14px; -fx-font-family: tahoma; -fx-font-weight: bold; -fx-text-base-color: #00428d; -fx-cursor: hand; -fx-background-color: #ffe224; -fx-padding: 5px;" text="ADD NEW EMPLOYEE">
+          <Tab fx:id="addEmployeeTab" style="-fx-width: 150px; -fx-font-size: 14px; -fx-font-family: tahoma; -fx-font-weight: bold; -fx-text-base-color: #00428d; -fx-cursor: hand; -fx-background-color: #fff; -fx-padding: 5px;" text="ADD NEW EMPLOYEE">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" onMouseMoved="#keyTypeEventAll" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #fff;">
                      <children>
@@ -227,11 +189,11 @@
                            </children>
                         </GridPane>
                         <Label layoutX="405.0" layoutY="465.0" text="Powered by MC's Republic | Copyright (c) 2023" textFill="#808080" />
-                        <Pane layoutX="11.0" layoutY="11.0" prefHeight="37.0" prefWidth="957.0" style="-fx-background-color: #ffe224; -fx-background-radius: 5px;">
+                        <Pane layoutX="11.0" layoutY="4.0" prefHeight="31.0" prefWidth="957.0" style="-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #f7ac00 0.0%, #ffe224fc 100.0%); -fx-background-radius: 5px;">
                            <children>
-                              <Label layoutX="22.0" layoutY="1.0" prefHeight="29.0" prefWidth="262.0" text="BASIC INFORMATION" textFill="#00428d">
+                              <Label layoutX="22.0" layoutY="-1.0" prefHeight="34.0" prefWidth="191.0" text="BASIC INFORMATION" textFill="WHITE">
                                  <font>
-                                    <Font name="BebasNeueBold" size="31.0" />
+                                    <Font name="BebasNeueBold" size="28.0" />
                                  </font>
                               </Label>
                            </children>
@@ -270,9 +232,108 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="updateTab" style="-fx-width: 150px; -fx-font-size: 14px; -fx-font-family: tahoma; -fx-font-weight: bold; -fx-text-base-color: #00428d; -fx-cursor: hand; -fx-background-color: #ffe224; -fx-padding: 5px;" text="ARCHIVED EMPLOYEES">
+          <Tab fx:id="viewTab" style="-fx-width: 150px; -fx-font-size: 14px; -fx-font-family: tahoma; -fx-font-weight: bold; -fx-text-base-color: #00428d; -fx-cursor: hand; -fx-background-color: #fff; -fx-padding: 5px;" text="VIEW EMPLOYEES">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#refreshActiveEmployeeTable" prefHeight="493.0" prefWidth="1023.0" style="-fx-background-color: #fff;">
+                     <children>
+                        <Pane layoutX="766.0" layoutY="425.0" prefHeight="37.0" prefWidth="189.0" style="-fx-background-color: #eee; -fx-background-radius: 10px;" />
+                        <Pane layoutX="18.0" layoutY="4.0" prefHeight="50.0" prefWidth="991.0" style="-fx-border-color: #ccc; -fx-border-radius: 8px;">
+                           <children>
+                              <Pane layoutX="501.0" layoutY="12.0" prefHeight="31.0" prefWidth="57.0" style="-fx-background-color: #9eff9e; -fx-background-radius: 5px;" />
+                              <Pane layoutX="723.0" layoutY="12.0" prefHeight="31.0" prefWidth="57.0" style="-fx-background-radius: 5px; -fx-background-color: #ff9999;" />
+                              <Label layoutX="181.0" layoutY="18.0" prefHeight="20.0" prefWidth="116.0" text="Total Employees:" textFill="#00428d">
+                                 <font>
+                                    <Font name="Roboto Black" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="-3.333221435546875" endY="19.0" layoutX="380.0" layoutY="21.0" startX="-3.333221435546875" startY="-6.000007629394531" />
+                              <Pane layoutX="299.0" layoutY="13.0" prefHeight="31.0" prefWidth="57.0" style="-fx-background-color: #a5d7ff; -fx-background-radius: 5px;" />
+                              <Label fx:id="totalEmpCountLabel" layoutX="306.0" layoutY="19.0" prefHeight="17.0" prefWidth="41.0" text="0000" textFill="#0061b1">
+                                 <font>
+                                    <Font name="Roboto Black" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="390.0" layoutY="18.0" prefHeight="20.0" prefWidth="111.0" text="Active Members:" textFill="#2d9a25">
+                                 <font>
+                                    <Font name="Roboto Black" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="activeEmpCountLabel" layoutX="508.0" layoutY="19.0" prefHeight="17.0" prefWidth="41.0" text="0000" textFill="#00c344">
+                                 <font>
+                                    <Font name="Roboto Black" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="597.0" layoutY="18.0" prefHeight="20.0" prefWidth="131.0" text="Archived Members:" textFill="#9f0404">
+                                 <font>
+                                    <Font name="Roboto Black" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="archivedEmpCountLabel" layoutX="731.0" layoutY="18.0" prefHeight="17.0" prefWidth="41.0" text="0000" textFill="#c73200">
+                                 <font>
+                                    <Font name="Roboto Black" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="-3.333221435546875" endY="19.0" layoutX="587.0" layoutY="21.0" startX="-3.333221435546875" startY="-6.000007629394531" />
+                           </children>
+                        </Pane>
+                        <TableView fx:id="EmployeesTableView" cache="true" cacheHint="QUALITY" depthTest="ENABLE" editable="true" layoutX="37.0" layoutY="67.0" prefHeight="345.0" prefWidth="953.0" scaleX="1.04" scaleY="1.04" scaleZ="1.04" style="-fx-background-color: #fff; -fx-alignment: CENTER; -fx-font-size: 13px;" tableMenuButtonVisible="true">
+                           <columns>
+                              <TableColumn fx:id="empId" maxWidth="46.53845679759979" prefWidth="45.0" style="-fx-alignment: CENTER;" text="ID" />
+                              <TableColumn fx:id="fullnameColumn" maxWidth="1.7976931348623157E308" prefWidth="164.79485321044922" style="-fx-alignment: CENTER;" text="FULL NAME" />
+                              <TableColumn fx:id="numberColumn" maxWidth="1.7976931348623157E308" prefWidth="144.3332977294922" style="-fx-alignment: CENTER;" text="MOBILE NUMBER" />
+                              <TableColumn fx:id="addressColumn" maxWidth="1.7976931348623157E308" prefWidth="104.38461303710938" style="-fx-alignment: CENTER;" text="ADDRESS" />
+                              <TableColumn fx:id="dateJoinedColumn" maxWidth="1.7976931348623157E308" prefWidth="118.84609985351562" style="-fx-alignment: CENTER;" text="JOINED DATE" />
+                              <TableColumn fx:id="designationColumn" maxWidth="1.7976931348623157E308" prefWidth="124.8460693359375" style="-fx-alignment: CENTER;" text="DESIGNATION" />
+                              <TableColumn fx:id="statusColumn" prefWidth="78.87176513671875" style="-fx-alignment: CENTER; -fx-text-fill: green; -fx-font-weight: bold;" text="STATUS" />
+                              <TableColumn fx:id="salaryColumn" maxWidth="156.61529541015625" prefWidth="103.15386962890625" style="-fx-alignment: CENTER; -fx-text-fill: #ff0000; -fx-font-weight: bold;" text="SALARY(GH)" />
+                              <TableColumn fx:id="removeColumn" maxWidth="60.0" minWidth="56.6666259765625" prefWidth="64.66664632161462" style="-fx-alignment: CENTER; -fx-text-fill: red;" text="REMOVE" />
+                           </columns>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TableView>
+                        <Button fx:id="saveEmpToArchive" alignment="CENTER" layoutX="823.0" layoutY="431.0" mnemonicParsing="false" onMouseClicked="#activeTableSaveButtonClicked" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #03be13;" text="Save" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="updateTab" style="-fx-width: 150px; -fx-font-size: 14px; -fx-font-family: tahoma; -fx-font-weight: bold; -fx-text-base-color: #00428d; -fx-cursor: hand; -fx-background-color: #fff; -fx-padding: 5px;" text="ARCHIVED EMPLOYEES">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #fff;" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#refreshArchivedTable" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #fff;">
+                     <children>
+                        <Pane layoutX="776.0" layoutY="426.0" prefHeight="37.0" prefWidth="189.0" style="-fx-background-color: #eee; -fx-background-radius: 10px;" />
+                        <TableView fx:id="ArchivedTableView" cache="true" cacheHint="QUALITY" depthTest="ENABLE" editable="true" layoutX="14.0" layoutY="19.0" prefHeight="399.0" prefWidth="995.0" style="-fx-background-color: #fff; -fx-alignment: CENTER; -fx-font-size: 14px;" tableMenuButtonVisible="true">
+                           <columns>
+                              <TableColumn fx:id="empId1" maxWidth="45.0" prefWidth="75.0" style="-fx-alignment: center;" text="ID" />
+                              <TableColumn fx:id="fullnameColumn1" maxWidth="1.7976931348623157E308" prefWidth="166.66661834716797" style="-fx-alignment: CENTER;" text="FULL NAME" />
+                              <TableColumn fx:id="numberColumn1" maxWidth="1.7976931348623157E308" prefWidth="170.00001525878906" style="-fx-alignment: CENTER;" text="MOBILE NUMBER" />
+                              <TableColumn fx:id="addressColumn1" maxWidth="1.7976931348623157E308" prefWidth="113.33328247070312" style="-fx-alignment: CENTER;" text="ADDRESS" />
+                              <TableColumn fx:id="dateJoinedColumn1" maxWidth="1.7976931348623157E308" prefWidth="121.99993896484375" style="-fx-alignment: CENTER;" text="JOINED DATE" />
+                              <TableColumn fx:id="designationColumn1" maxWidth="1.7976931348623157E308" prefWidth="126.6666259765625" style="-fx-alignment: CENTER;" text="DESIGNATION" />
+                              <TableColumn fx:id="statusColumn1" prefWidth="68.66668701171875" style="-fx-font-size: 14px; -fx-alignment: CENTER; -fx-text-fill: green; -fx-font-weight: bold;" text="STATUS" />
+                              <TableColumn fx:id="salaryColumn1" maxWidth="128.6666259765625" prefWidth="87.99993896484375" style="-fx-font-size: 14px; -fx-alignment: CENTER; -fx-text-fill: #ff0000; -fx-font-weight: bold;" text="SALARY(GH)" />
+                              <TableColumn fx:id="restoreColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="83.0" resizable="false" style="-fx-font-size: 14px; -fx-alignment: CENTER; -fx-text-fill: red;" text="RESTORE" />
+                           </columns>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TableView>
+                        <Button fx:id="deselectButton" layoutX="835.0" layoutY="431.0" mnemonicParsing="false" onAction="#archiveTableRestoreButtonClicked" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #03be13;" text="Restore" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children></AnchorPane>
                </content>
             </Tab>
         </tabs>

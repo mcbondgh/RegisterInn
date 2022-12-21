@@ -15,7 +15,6 @@ import java.io.IOException;
 public class MultiStages {
 
     public void Homepage() throws IOException {
-
         FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/dashboard/homepage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
