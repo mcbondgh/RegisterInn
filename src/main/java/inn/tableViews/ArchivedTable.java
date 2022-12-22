@@ -7,12 +7,12 @@ public class ArchivedTable {
     private String fullname1, phoneNumber1, joinedDate1, address1, designation1, status1, salary1;
     private CheckBox restoreButton;
 
-    public ArchivedTable(int empId1, String fullname1, String phoneNumber1, String joinedDate1, String address1, String designation1, String status1, String salary1, CheckBox restoreButton) {
+    public ArchivedTable(int empId1, String fullname1, String phoneNumber1, String address1, String joinedDate1, String designation1, String status1, String salary1, CheckBox restoreButton) {
         this.empId1 = empId1;
         this.fullname1 = fullname1;
         this.phoneNumber1 = phoneNumber1;
-        this.joinedDate1 = joinedDate1;
         this.address1 = address1;
+        this.joinedDate1 = joinedDate1;
         this.designation1 = designation1;
         this.status1 = status1;
         this.salary1 = salary1;

@@ -1,6 +1,5 @@
 package inn.Controllers.dashboard;
 
-import inn.Controllers.settings.General;
 import inn.StartInn;
 import inn.database.DbConnection;
 import inn.multiStage.MultiStages;
@@ -14,16 +13,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Homepage implements Initializable {
+public class Homepage extends DbConnection implements Initializable {
 
     /******************************************> OBJECT INSTANTIATION FIELD <*******************************************/
     MultiStages multiStages = new MultiStages();
-    DbConnection connector = new DbConnection();
 
     ButtonType YES = ButtonType.YES;
-    ButtonType NO = ButtonType.NO;
-
-
 
 
     /******************************************> FXML OBJECTS  <*******************************************/
@@ -37,7 +32,7 @@ public class Homepage implements Initializable {
     public static String label;
 
 
-    General general = new General();
+//    General general = new General();
 
     /*******************************************************************************************************************
      IMPLEMENTATION OF INITIALIZER METHOD*/
@@ -125,10 +120,9 @@ public class Homepage implements Initializable {
      OTHER METHODS IMPLEMENTATION*/
 
     public void setDashboardVariables () {
-        String bsi_name = (String) connector.fetchBusinessInfo().get(0);
-        Object about = connector.fetchBusinessInfo().get(7);
+        String bsi_name = (String) fetchBusinessInfo().get(0);
+        Object about = fetchBusinessInfo().get(7);
         setBusinessNameLabel(bsi_name);
         setAboutField((String) about);
     }
-
 }

@@ -182,6 +182,21 @@
                         </DropShadow>
                      </effect>
                   </Button>
+                  <Button fx:id="accountingBtn1" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="16.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#accountingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Message Box" textAlignment="CENTER" textFill="#34098b" textOverrun="LEADING_WORD_ELLIPSIS">
+                     <font>
+                        <Font name="Roboto" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="5.84" offsetX="1.0" radius="2.8025" width="7.37">
+                           <color>
+                              <Color red="0.5526315569877625" green="0.5185185074806213" blue="0.5185185074806213" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
                   <Button fx:id="inventoryBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="242.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inventoryBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Inventory" textAlignment="CENTER" textFill="#34098b" textOverrun="LEADING_WORD_ELLIPSIS">
                      <font>
                         <Font name="Roboto" size="16.0" />
@@ -252,21 +267,6 @@
                         <Image url="@../../images/settings%20copy.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="accountingBtn1" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="16.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#accountingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Message Box" textAlignment="CENTER" textFill="#34098b" textOverrun="LEADING_WORD_ELLIPSIS">
-                     <font>
-                        <Font name="Roboto" size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <effect>
-                        <DropShadow height="5.84" offsetX="1.0" radius="2.8025" width="7.37">
-                           <color>
-                              <Color red="0.5526315569877625" green="0.5185185074806213" blue="0.5185185074806213" />
-                           </color>
-                        </DropShadow>
-                     </effect>
-                  </Button>
                </children>
             </Pane>
          </left>

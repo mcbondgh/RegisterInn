@@ -80,9 +80,9 @@ public class DbConnection {
                 prepare.setString(11, mng_email);
                 prepare.execute();
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
-                success.setTitle("Update Successful");
-                success.setHeaderText("PERFECT, RECORDS UPDATED SUCCESSFULLY");
-                success.showAndWait();
+//                success.setTitle("Update Successful");
+//                success.setHeaderText("PERFECT, RECORDS UPDATED SUCCESSFULLY");
+//                success.showAndWait();
 
             } catch (Exception e) {
                 Alert error = new Alert(Alert.AlertType.ERROR);
@@ -133,28 +133,55 @@ public class DbConnection {
     public ObservableList<String> fetchEmployeeFullnames() {
         ObservableList<String> Employees = FXCollections.observableArrayList();
         try {
-            String selectQuery = "SELECT firstname, lastname FROM employees ORDER BY lastname ASC;";
+            String selectQuery = "SELECT firstname, lastname FROM employees WHERE(status = 1) ORDER BY lastname ASC;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
                 String firstname = result.getString(1);
                 String lastname = result.getString(2);
-                String fullname = lastname + " " + firstname;
+                String fullname = lastname + ' ' + firstname;
                 Employees.add(fullname);
             }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
         }catch (Exception e) {
             e.printStackTrace();
         }
         return Employees;
     }
 
-    //THIS METHOD WHEN INVOKED RETURNS ALL COLUMNS FORM THE employees table.
-    public ArrayList<Object> fetchFullEmployeeDetails() {
+    //THIS METHOD WHEN INVOKED TAKES A CONCATENATED (firstname + lastname) AS AN ARGUMENT AND RETURNS ALL ASSOCIATED RECORDS employees table.
+    public ArrayList<Object> fetchFullEmployeeDetails(@NamedArg("Fullname")String fullname) {
         ArrayList<Object> employees = new ArrayList<>();
-
-
-
-
+        try {
+            String selectQuery = "SELECT * FROM employees WHERE(status = 1 AND CONCAT(lastname,' ', firstname) = '"+ fullname +"');";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+                int id = result.getInt("id");//0
+                String firstname = result.getString("firstname");//1
+                String lastname = result.getString("lastname");//2
+                String gender = result.getString("gender");//3
+                String email = result.getString("email");//4
+                String phone = result.getString("phone");//5
+                String address = result.getString("digital_address");//6
+                String idType = result.getString("id_type");//7
+                String idNumber = result.getString("id_number");//8
+                Date empDate = result.getDate("employment_date");//9
+                String desig = result.getString("designation");//10
+                String photo = result.getString("photo");//11
+                double salary = result.getDouble("salary");//12
+                int added_by = result.getInt("added_by");//13
+                Timestamp updatedDate = result.getTimestamp("modified_date");//14
+                Object[] values = {id, firstname, lastname, gender, email, phone, address, idType, idNumber, empDate, desig, photo, salary, added_by, updatedDate };
+                for (int i = 0; i < values.length; i++) {
+                        employees.add(i, values[i]);
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return employees;
    }
 

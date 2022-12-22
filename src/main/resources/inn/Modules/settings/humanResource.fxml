@@ -32,13 +32,6 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.HumanResource">
-   <effect>
-      <DropShadow height="27.64" radius="9.33" spread="0.04" width="11.68">
-         <color>
-            <Color red="0.35087719559669495" green="0.3400476574897766" blue="0.3400476574897766" />
-         </color>
-      </DropShadow>
-   </effect>
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0">
          <fill>
@@ -292,7 +285,7 @@
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
                         </TableView>
-                        <Button fx:id="saveEmpToArchive" alignment="CENTER" layoutX="823.0" layoutY="431.0" mnemonicParsing="false" onMouseClicked="#activeTableSaveButtonClicked" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #03be13;" text="Save" textFill="WHITE">
+                        <Button fx:id="saveEmpToArchive" alignment="CENTER" layoutX="819.0" layoutY="431.0" mnemonicParsing="false" onMouseClicked="#activeTableSaveButtonClicked" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #ff0016;" text="Remove" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="12.0" />
                            </font>
@@ -344,4 +337,11 @@
          </image>
       </ImageView>
    </children>
+   <effect>
+      <DropShadow height="10.27" radius="4.9875" width="11.68">
+         <color>
+            <Color red="0.7368420958518982" green="0.7368420958518982" blue="0.7368420958518982" />
+         </color>
+      </DropShadow>
+   </effect>
 </AnchorPane>

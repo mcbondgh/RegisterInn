@@ -86,6 +86,8 @@ public class HumanResource extends ResourceModel implements Initializable {
     MultiStages multiStages = new MultiStages();
     DefPassword defPassword = new DefPassword();
 
+
+
     /******************************************> SETTER AND GETTER METHODS <********************************************/
 
     public void setFirstNameField(String firstname) {firstNameField.setText(firstname);}
@@ -219,6 +221,9 @@ public class HumanResource extends ResourceModel implements Initializable {
 
     /****************** REFRESH THE ARCHIVED TABLE TO LOAD NEW UPDATES FROM THE DATABASE, IF ANY *****************/
     @FXML void refreshArchivedTable() {
+        if (ArchivedTableView.getItems().size() == 0) {
+            deselectButton.setDisable(true);
+        } else deselectButton.setDisable(false);
         ArchivedTableView.getItems().clear();
         populateArchiveTableView();
     }
@@ -226,6 +231,9 @@ public class HumanResource extends ResourceModel implements Initializable {
     /****************** REFRESH THE ACTIVE EMPLOYEES TABLE TO LOAD NEW UPDATES FROM THE DATABASE, IF ANY *****************/
     @FXML
     private void refreshActiveEmployeeTable() {
+        if (EmployeesTableView.getItems().size() == 0) {
+            saveEmpToArchive.setDisable(true);
+        } else saveEmpToArchive.setDisable(false);
         EmployeesTableView.getItems().clear();
         populateEmployeesTable();
         employeesRowCount();
@@ -240,9 +248,11 @@ public class HumanResource extends ResourceModel implements Initializable {
             CheckBox checkBox = empObject.getRestoreButton();
             if (checkBox.isSelected()) {
                 updateEmployeesStatusToActive(id);
-                System.out.println(id + " is restored..");
+                employeesRowCount();
             }
         }
+        ArchivedTableView.getItems().clear();
+        populateArchiveTableView();
         return  0;
     }
 
@@ -255,8 +265,11 @@ public class HumanResource extends ResourceModel implements Initializable {
                 CheckBox checkBox = empObject.getArchiveButton();
                 if (checkBox.isSelected()) {
                     updateEmployeesStatusToInactive(id);
+                    employeesRowCount();
                 }
         }
+        EmployeesTableView.getItems().clear();
+        populateEmployeesTable();
         return 0;
     }
 

@@ -1,6 +1,7 @@
 package inn.Controllers.settings;
 
 import inn.database.DbConnection;
+import inn.multiStage.MultiStages;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -12,10 +13,12 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class General implements Initializable {
+public class General extends DbConnection implements Initializable {
 
 /************************************ CLASS INSTANTIATION FIELD ***********************************************/
-    DbConnection connect = new DbConnection();
+    MultiStages multiStagesOBJ = new MultiStages();
+
+
 
 
 /************************************ FXML OBJECTS EJECTION ***********************************************/
@@ -29,7 +32,6 @@ public class General implements Initializable {
 
 
 
-
 /************************************ INITIALIZER METHOD IMPLEMENTATION ***********************************************/
     public void initialize(URL location, ResourceBundle resourceBundle) {
         try {
@@ -37,8 +39,6 @@ public class General implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 /************************************ GETTER AND SETTER FIELDS ***********************************************/
     public void setBusinessNameField(String businessNameField) {
@@ -120,7 +120,6 @@ public class General implements Initializable {
                     getManagerName().isEmpty() || getManagerEmailField().isEmpty()  || totalWorkersField.getText().isEmpty() ||
                     businessNumberField.getText().isEmpty() || otherNumberField.getText().isEmpty() || totalWorkersField.getText().isEmpty()) {
                 updateButton.setDisable(true);
-
             }
             else updateButton.setDisable(false);
         } catch (Exception e) {
@@ -137,7 +136,6 @@ public class General implements Initializable {
             if(datePickerField.getValue() == null) {
                 dateLabel.setVisible(true);
                 datePickerField.setStyle("-fx-border-width:4px; -fx-border-color:#ff0000;");
-
             } else {
                 dateLabel.setVisible(false);
                 datePickerField.setStyle(null);
@@ -147,12 +145,11 @@ public class General implements Initializable {
                 alert.setTitle("Confirm Update");
                 alert.setHeaderText("ARE YOU SURE YOU WANT TO UPDATE CURRENT RECORDS?");
                 if(!(alert.showAndWait().get() == ButtonType.CANCEL)) {
-                    connect.updateBusinessInfo(getBusinessName(), getEmail(), getAddress(), getBusinessNumber(), getOtherNumberField(), datePickerField.getValue(), getTotalWorkers(), getDescription(), getManagerName(), getManagerNumber(), getManagerEmailField());
-                    alert.setHeaderText("PERFECT, RECORDS UPDATED SUCCESSFULLY");
-
+                    updateBusinessInfo(getBusinessName(), getEmail(), getAddress(), getBusinessNumber(), getOtherNumberField(), datePickerField.getValue(), getTotalWorkers(), getDescription(), getManagerName(), getManagerNumber(), getManagerEmailField());
+//                    alert.setHeaderText("PERFECT, RECORDS UPDATED SUCCESSFULLY");
+                    multiStagesOBJ.showSuccessPrompt();
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -193,18 +190,18 @@ public class General implements Initializable {
 
     //THIS METHOD FILLS THE TEXT FIELDS OF THE FORM WITH DATE RETURNED FROM THE DATABASE.
     public void fillAllFields() {
-        setBusinessNameField((String) connect.fetchBusinessInfo().get(0));
-        setEmail((String) connect.fetchBusinessInfo().get(1));
-        setDigitalAddressField((String) connect.fetchBusinessInfo().get(2));
-        setBusinessNumberField((Integer) connect.fetchBusinessInfo().get(3));
-        setOtherNumberField((Integer) connect.fetchBusinessInfo().get(4));
-        Date date = (Date) connect.fetchBusinessInfo().get(5);
+        setBusinessNameField((String) fetchBusinessInfo().get(0));
+        setEmail((String) fetchBusinessInfo().get(1));
+        setDigitalAddressField((String) fetchBusinessInfo().get(2));
+        setBusinessNumberField((Integer) fetchBusinessInfo().get(3));
+        setOtherNumberField((Integer) fetchBusinessInfo().get(4));
+        Date date = (Date) fetchBusinessInfo().get(5);
         datePickerField.setValue((date.toLocalDate()));
-        setTotalWorkersField((Integer) connect.fetchBusinessInfo().get(6));
-        setDescriptionField((String) connect.fetchBusinessInfo().get(7));
-        setManagerNameField((String) connect.fetchBusinessInfo().get(8));
-        setManagerNumberField((Integer) connect.fetchBusinessInfo().get(9));
-        setManagerEmailField((String) connect.fetchBusinessInfo().get(10));
+        setTotalWorkersField((Integer) fetchBusinessInfo().get(6));
+        setDescriptionField((String)fetchBusinessInfo().get(7));
+        setManagerNameField((String) fetchBusinessInfo().get(8));
+        setManagerNumberField((Integer) fetchBusinessInfo().get(9));
+        setManagerEmailField((String) fetchBusinessInfo().get(10));
     }
 
 

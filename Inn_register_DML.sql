@@ -4,14 +4,19 @@
 	SELECT * FROM users;
 	SELECT * FROM employees;
     SELECT * FROM roles;
+    UPDATE employees 
+    SET added_by = 1;
     
     SELECT r.name,  r.id, u.username FROM roles as r
     LEFT JOIN users as u
     ON r.id = u.role_id;
     
-	SELECT concat(lastname, " ", firstname) as fullname, gender FROM employees ORDER BY lastname ;
-	SELECT * FROM roles;
-
+	SELECT concat(lastname,' ', firstname) as fullname, gender FROM employees ORDER BY lastname ;
+	
+    SELECT * FROM employees WHERE(status = 1 AND CONCAT(lastname,' ', firstname) = lower('MCBOND EMELIA'));
+    SELECT * FROM employees WHERE(status = 1 AND CONCAT(lastname,' ', firstname) = 'MCBOND EMELIA');
+    
+    SELECT * FROM roles;
 
 -- TRUNCATE TABLE STATEMENTS ONLY; 
 	TRUNCATE TABLE employees;

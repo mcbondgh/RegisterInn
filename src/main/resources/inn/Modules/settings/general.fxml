@@ -21,13 +21,6 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.General">
-   <effect>
-      <DropShadow height="27.64" radius="9.33" spread="0.04" width="11.68">
-         <color>
-            <Color red="0.35087719559669495" green="0.3400476574897766" blue="0.3400476574897766" />
-         </color>
-      </DropShadow>
-   </effect>
    <children>
       <Pane layoutX="34.0" layoutY="119.0" prefHeight="433.0" prefWidth="966.0" style="-fx-border-radius: 8px; -fx-border-color: #ccc;" />
       <Label fx:id="dateLabel" layoutX="769.0" layoutY="153.0" text="Eestablished Date Is Empty" textFill="RED" visible="false">
@@ -132,7 +125,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </TextField>
-            <DatePicker fx:id="datePickerField" prefHeight="27.0" prefWidth="149.0" style="-fx-background-color: #fff; -fx-font-size: 14px; -fx-font-family: roboto; fx-font-weight: bold; -fx-border-color: #ccc; -fx-text-fill: #ef4545;" GridPane.columnIndex="3" />
+            <DatePicker fx:id="datePickerField" editable="false" prefHeight="27.0" prefWidth="149.0" style="-fx-background-color: #fff; -fx-font-size: 14px; -fx-font-family: roboto; fx-font-weight: bold; -fx-border-color: #ccc; -fx-text-fill: #ef4545;" GridPane.columnIndex="3" />
             <TextArea fx:id="descriptionField" onKeyTyped="#OnkeyPressed" prefHeight="111.0" prefWidth="270.0" promptText="Input Business Description Here" style="-fx-text-fill: #ef4545; -fx-border-color: #ccc; -fx-border-width: 1px;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="Roboto Black" size="17.0" />
@@ -234,7 +227,7 @@
       </Text>
       <ImageView fitHeight="50.0" fitWidth="70.0" layoutX="42.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/settings%20copy.png" />
+            <Image url="@../../images/settings%20copy.png" />
          </image>
       </ImageView>
       <Pane layoutX="338.0" layoutY="69.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #fcb5b5;">
@@ -247,4 +240,11 @@
          </children>
       </Pane>
    </children>
+   <effect>
+      <DropShadow height="10.27" radius="4.9875" width="11.68">
+         <color>
+            <Color red="0.8156862854957581" green="0.8156862854957581" blue="0.8156862854957581" />
+         </color>
+      </DropShadow>
+   </effect>
 </AnchorPane>

@@ -31,7 +31,7 @@
       </Text>
       <ImageView fitHeight="44.0" fitWidth="49.0" layoutX="56.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/Dashboard.png" />
+            <Image url="@../../images/Dashboard.png" />
          </image>
       </ImageView>
       <Pane layoutX="51.0" layoutY="105.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: orange; -fx-background-radius: 10px;">

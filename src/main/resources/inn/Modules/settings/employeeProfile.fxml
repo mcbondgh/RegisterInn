@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -17,22 +18,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.EmployeeProfile">
-   <effect>
-      <DropShadow height="27.64" radius="9.33" spread="0.04" width="11.68">
-         <color>
-            <Color red="0.35087719559669495" green="0.3400476574897766" blue="0.3400476574897766" />
-         </color>
-      </DropShadow>
-   </effect>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#checkForEmptyFields" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.EmployeeProfile">
    <children>
-      <Pane layoutX="13.0" layoutY="120.0" prefHeight="427.0" prefWidth="1006.0" style="-fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 5px;">
+      <Pane layoutX="13.0" layoutY="119.0" prefHeight="452.0" prefWidth="1006.0" style="-fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 5px;">
          <children>
-            <FlowPane layoutX="15.0" layoutY="63.0" prefHeight="256.0" prefWidth="246.0" style="-fx-border-color: #ccc; -fx-border-radius: 5px; -fx-background-color: #ff111d3;">
+            <FlowPane layoutX="28.0" layoutY="52.0" prefHeight="233.0" prefWidth="220.0" style="-fx-border-color: #ccc; -fx-border-radius: 5px; -fx-background-color: #ff111d3;">
                <effect>
                   <DropShadow blurType="GAUSSIAN" height="0.0" radius="1.3425" spread="0.26" width="7.37">
                      <color>
@@ -41,233 +36,8 @@
                   </DropShadow>
                </effect>
             </FlowPane>
-            <ComboBox fx:id="employeeBox" layoutX="15.0" layoutY="18.0" prefHeight="36.0" prefWidth="246.0" promptText="Select Employee Here" style="-fx-font-size: 16px; -fx-background-color: #03a7ab; -fx-text-base-color: white;" visibleRowCount="5" />
-            <GridPane layoutX="300.0" layoutY="18.0" prefHeight="332.0" prefWidth="663.0" style="-fx-font-family: carlito;">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.33331298828125" minWidth="10.0" prefWidth="145.0" />
-                <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="197.66668701171875" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0000203450521" minWidth="10.0" prefWidth="145.0" />
-                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="228.0000203450521" minWidth="10.0" prefWidth="198.00004069010419" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label prefHeight="25.0" prefWidth="89.0" text="Firstname" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="25.0" prefWidth="89.0" text="Lastname" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="25.0" prefWidth="89.0" text="Gender" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="firstnameField" prefHeight="30.0" prefWidth="220.0" promptText="Firstname" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <TextField fx:id="lastnameField" prefHeight="30.0" prefWidth="220.0" promptText="Lastname" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <ComboBox fx:id="genderBox" prefHeight="25.0" prefWidth="220.0" style="-fx-font-size: 15px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label prefHeight="25.0" prefWidth="89.0" text="Email" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="25.0" prefWidth="134.0" text="Phone Number" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="25.0" prefWidth="127.0" text="Digital Address" GridPane.rowIndex="6">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="25.0" prefWidth="136.0" text="Id Type" wrapText="true" GridPane.rowIndex="7">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="emailField" prefHeight="30.0" prefWidth="220.0" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <TextField fx:id="mobileField" prefHeight="30.0" prefWidth="220.0" promptText="0240000001" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <Label prefHeight="25.0" prefWidth="99.0" text="Id Number" GridPane.rowIndex="8">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </Label>
-                  <Label prefHeight="25.0" prefWidth="129.0" text="Joined Date" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                     <padding>
-                        <Insets left="20.0" />
-                     </padding>
-                  </Label>
-                  <Label prefHeight="25.0" prefWidth="97.0" text="Designation" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label prefHeight="25.0" prefWidth="89.0" text="Salary" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label prefHeight="25.0" prefWidth="89.0" text="Added By" textFill="#000000e3" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label prefHeight="25.0" prefWidth="106.0" text="Last Updated" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="addressField" prefHeight="30.0" prefWidth="220.0" promptText="AS-1000-100" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <ComboBox fx:id="idTypeBox" prefHeight="25.0" prefWidth="220.0" style="-fx-font-size: 15px;" visibleRowCount="4" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <TextField fx:id="idNumberField" prefHeight="30.0" prefWidth="220.0" promptText="GH-100000001-10" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <DatePicker fx:id="dateField" prefHeight="29.0" prefWidth="153.0" style="-fx-font-size: 16px;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <TextField fx:id="designationField" prefHeight="30.0" prefWidth="220.0" promptText="Receptionist" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <TextField fx:id="salaryField" prefHeight="30.0" prefWidth="220.0" promptText="1000.00" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <TextField fx:id="addedByField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="Admin" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <TextField fx:id="updatedDate" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="12/04/2022" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <TextField fx:id="idField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="0001" GridPane.columnIndex="3" GridPane.rowIndex="6">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <Label prefHeight="25.0" prefWidth="99.0" text="Employee Id" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                     <font>
-                        <Font name="Carlito" size="18.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Button fx:id="updateProfileBtn" alignment="CENTER" disable="true" mnemonicParsing="false" prefHeight="12.0" prefWidth="98.0" style="-fx-background-color: #03a7ab;" text="Update" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="8">
-                     <font>
-                        <Font name="Carlito Bold" size="15.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="deleteProfileBtn" alignment="CENTER" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #ff0000;" text="Delete" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="8">
-                     <font>
-                        <Font name="Carlito Bold" size="15.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <GridPane.margin>
-                        <Insets left="100.0" />
-                     </GridPane.margin>
-                  </Button>
-               </children>
-            </GridPane>
-            <Button fx:id="uploadImageBtn" alignment="CENTER" layoutX="72.0" layoutY="366.0" mnemonicParsing="false" onMouseClicked="#UploadProfileImage" prefHeight="16.0" prefWidth="136.0" style="-fx-background-color: #3cb0fd;" text="Upload Image" textFill="WHITE">
+            <ComboBox fx:id="employeeBox" layoutX="15.0" layoutY="6.0" onAction="#selectEmployeeOnAction" prefHeight="36.0" prefWidth="246.0" promptText="Select Employee Here" style="-fx-font-size: 16px; -fx-background-color: #03a7ab; -fx-text-base-color: white;" visibleRowCount="5" />
+            <Button fx:id="uploadImageBtn" alignment="CENTER" layoutX="82.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#UploadProfileImage" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: #3cb0fd;" text="Browse Image" textFill="WHITE">
                <font>
                   <Font name="Carlito Bold" size="14.0" />
                </font>
@@ -275,12 +45,278 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <TextField fx:id="imageNameField" editable="false" layoutX="42.0" layoutY="330.0" prefHeight="25.0" prefWidth="192.0" promptText="Image Name" />
-            <ImageView fx:id="uploadProfile" fitHeight="213.0" fitWidth="215.0" layoutX="32.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+            <TextField fx:id="imageNameField" editable="false" layoutX="42.0" layoutY="288.0" prefHeight="25.0" prefWidth="192.0" promptText="Image Name" />
+            <ImageView fx:id="uploadProfile" accessibleText="PROFILE_IMAGE" fitHeight="224.0" fitWidth="204.0" layoutX="36.0" layoutY="57.0" pickOnBounds="true">
                <image>
                   <Image url="@../../images/users.jpg" />
                </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
             </ImageView>
+            <GridPane layoutX="300.0" layoutY="18.0" prefHeight="316.0" prefWidth="699.0">
+              <columnConstraints>
+                <ColumnConstraints />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="130.6666259765625" />
+                  <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="222.00002034505212" />
+                <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="141.99997965494788" />
+                  <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="223.00000000000006" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="39.66668701171875" minHeight="10.0" prefHeight="27.66668701171875" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="62.33331298828125" minHeight="10.0" prefHeight="62.33331298828125" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Firstname" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="firstnameField" onKeyTyped="#checkForEmptyFields" prefHeight="30.0" prefWidth="220.0" promptText="Firstname" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Lastname" GridPane.columnIndex="3">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="lastnameField" onKeyTyped="#checkForEmptyFields" prefHeight="30.0" prefWidth="220.0" promptText="Lastname" GridPane.columnIndex="4">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Gender" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <ComboBox fx:id="genderBox" prefHeight="25.0" prefWidth="150.0" style="-fx-font-size: 15px;" visibleRowCount="2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Email" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="emailField" onKeyTyped="#checkForEmptyFields" prefHeight="30.0" prefWidth="220.0" promptText="Email" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="25.0" prefWidth="134.0" text="Phone Number" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="68.0" prefWidth="105.0" text="Digital Address" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="numberField" onKeyReleased="#CheckPhoneNumberValue" onKeyTyped="#checkForEmptyFields" prefHeight="30.0" prefWidth="220.0" promptText="0240000001" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <TextField fx:id="addressField" onKeyTyped="#checkForEmptyFields" prefHeight="30.0" prefWidth="220.0" promptText="AS-1000-100" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="25.0" prefWidth="136.0" text="Id Type" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <ComboBox fx:id="idTypeBox" prefHeight="25.0" prefWidth="150.0" style="-fx-font-size: 15px;" visibleRowCount="4" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label prefHeight="25.0" prefWidth="99.0" text="Id Number" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="idNumberField" onKeyTyped="#checkForEmptyFields" prefHeight="30.0" prefWidth="220.0" promptText="GH-100000001-10" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="25.0" prefWidth="129.0" text="Joined Date" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <DatePicker fx:id="dateField" disable="true" editable="false" prefHeight="29.0" prefWidth="150.0" style="-fx-font-size: 14px;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Label prefHeight="25.0" prefWidth="97.0" text="Designation" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="designationField" onKeyTyped="#checkForEmptyFields" prefHeight="30.0" prefWidth="220.0" promptText="Receptionist" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Salary" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="salaryField" onKeyReleased="#CheckSalaryValue" onKeyTyped="#checkForEmptyFields" prefHeight="30.0" prefWidth="220.0" promptText="1000.00" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="25.0" prefWidth="89.0" text="Added By" textFill="#000000e3" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="addedByField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="Admin" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <TextField fx:id="updatedDate" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="12/04/2022" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="25.0" prefWidth="106.0" text="Last Updated" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="idField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="0001" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="25.0" prefWidth="99.0" text="Employee Id" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Carlito" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+            </GridPane>
+            <Button fx:id="updateProfileBtn" alignment="CENTER" disable="true" layoutX="780.0" layoutY="392.0" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="12.0" prefWidth="98.0" style="-fx-background-color: #03a7ab;" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="Carlito Bold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="deleteProfileBtn" alignment="CENTER" disable="true" layoutX="887.0" layoutY="392.0" mnemonicParsing="false" onMouseClicked="#deleteButtonClicked" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #ff0000;" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="Carlito Bold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Pane layoutX="15.0" layoutY="371.0" prefHeight="63.0" prefWidth="316.0" style="-fx-background-radius: 10px; -fx-border-color: #ff00003a; -fx-border-width: 2px; -fx-border-radius: 10px;">
+               <children>
+                  <Label layoutX="18.0" layoutY="5.0" prefHeight="22.0" prefWidth="89.0" text="User Status">
+                     <font>
+                        <Font name="Carlito Bold Italic" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="userStatusLabel" layoutX="8.0" layoutY="26.0" prefHeight="27.0" prefWidth="130.0" text="Not A User" textFill="#be0000">
+                     <font>
+                        <Font name="Carlito Bold" size="23.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="userRoleBox" disable="true" layoutX="148.0" layoutY="23.0" prefHeight="30.0" prefWidth="150.0" style="-fx-font-size: 15px;" visibleRowCount="4" />
+                  <Line endX="-100.0" endY="-100.00003051757812" layoutX="237.0" layoutY="105.0" startX="-100.0" startY="-45.666656494140625" stroke="#beb5b5" />
+                  <Label layoutX="153.0" layoutY="3.0" prefHeight="22.0" prefWidth="138.0" text="Select A User Role">
+                     <font>
+                        <Font name="Carlito Bold Italic" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
       </Pane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#03a7ab" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0" />
@@ -305,4 +341,11 @@
          </children>
       </Pane>
    </children>
+   <effect>
+      <DropShadow height="10.27" radius="4.9875" width="11.68">
+         <color>
+            <Color red="0.8156862854957581" green="0.8156862854957581" blue="0.8156862854957581" />
+         </color>
+      </DropShadow>
+   </effect>
 </AnchorPane>
