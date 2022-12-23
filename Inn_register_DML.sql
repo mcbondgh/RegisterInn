@@ -2,7 +2,7 @@
 -- SELECT STATEMENTS 
 	SELECT * FROM business_info; 
 	SELECT * FROM users;
-	SELECT * FROM employees;
+	SELECT * FROM employees WHERE status = 1;
     SELECT * FROM roles;
     UPDATE employees 
     SET added_by = 1;
@@ -37,8 +37,10 @@
 
 	DESCRIBE inn_register.employees;
 	
-	SET foreign_key_checks = 1
+	SET foreign_key_checks = 1;
 
 
+UPDATE employees SET modified_date  = DEFAULT 
+WHERE id = 10;
 
 

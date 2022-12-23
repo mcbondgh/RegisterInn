@@ -117,7 +117,7 @@ public class DbConnection {
     public int fetchUserRoleID(String userRole) throws SQLException {
         int role_id = 0;
         try {
-            String selectQuery = "SELECT id FROM roles WHERE name = '"+ userRole +"';";
+            String selectQuery = "SELECT id FROM roles WHERE(name = '"+ userRole +"');";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             if (result.next()) {
@@ -223,7 +223,7 @@ public class DbConnection {
     public ArrayList<String> fetchUsernames(){
         ArrayList<String> usernames = new ArrayList<>();
         try {
-            String selectQuery = "SELECT DISTINCT(username) FROM users;";
+            String selectQuery = "SELECT DISTINCT(lower(username)) FROM users;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while (result.next()) {

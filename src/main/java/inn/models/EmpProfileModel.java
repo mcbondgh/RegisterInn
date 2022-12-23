@@ -23,7 +23,7 @@ public class EmpProfileModel extends DbConnection {
             prepare.setString(9, desg);
             prepare.setDouble(10, sal);
             prepare.setInt(11, emp_id);
-
+            prepare.executeUpdate();
         }catch (Exception e) {
             Alert alert  = new Alert(Alert.AlertType.ERROR, "update for specified employee failed, please report to the system admin");
             alert.setTitle("FAILED UPDATE");

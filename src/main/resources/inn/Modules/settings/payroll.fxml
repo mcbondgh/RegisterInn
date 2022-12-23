@@ -5,7 +5,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
@@ -20,7 +19,6 @@
             <Font name="Roboto Bold" size="14.0" />
          </font>
       </Label>
-      <Pane layoutX="335.0" layoutY="67.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #ffdbdb;" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0">
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
@@ -48,15 +46,6 @@
             <Image url="@../../images/payment%20icon%20copy.png" />
          </image>
       </ImageView>
-      <Pane layoutX="338.0" layoutY="69.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #fcb5b5;">
-         <children>
-            <Label layoutX="22.0" layoutY="8.0" prefHeight="29.0" prefWidth="268.0" text="UPDATE BUSINESS INFORMATION">
-               <font>
-                  <Font name="Gentium Book Basic Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
    </children>
    <effect>
       <DropShadow height="10.27" radius="4.9875" width="11.68">

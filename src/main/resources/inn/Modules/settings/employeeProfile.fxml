@@ -23,9 +23,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#checkForEmptyFields" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.EmployeeProfile">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.EmployeeProfile">
    <children>
-      <Pane layoutX="13.0" layoutY="119.0" prefHeight="452.0" prefWidth="1006.0" style="-fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 5px;">
+      <Pane layoutX="13.0" layoutY="119.0" prefHeight="445.0" prefWidth="1006.0" style="-fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 5px;">
          <children>
             <FlowPane layoutX="28.0" layoutY="52.0" prefHeight="233.0" prefWidth="220.0" style="-fx-border-color: #ccc; -fx-border-radius: 5px; -fx-background-color: #ff111d3;">
                <effect>
@@ -46,7 +46,7 @@
                </cursor>
             </Button>
             <TextField fx:id="imageNameField" editable="false" layoutX="42.0" layoutY="288.0" prefHeight="25.0" prefWidth="192.0" promptText="Image Name" />
-            <ImageView fx:id="uploadProfile" accessibleText="PROFILE_IMAGE" fitHeight="224.0" fitWidth="204.0" layoutX="36.0" layoutY="57.0" pickOnBounds="true">
+            <ImageView fx:id="uploadProfile" accessibleText="PROFILE_IMAGE" fitHeight="200.0" fitWidth="200.0" layoutX="37.0" layoutY="70.0" pickOnBounds="true">
                <image>
                   <Image url="@../../images/users.jpg" />
                </image>
@@ -115,7 +115,7 @@
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox fx:id="genderBox" prefHeight="25.0" prefWidth="150.0" style="-fx-font-size: 15px;" visibleRowCount="2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="genderBox" prefHeight="25.0" prefWidth="190.0" style="-fx-font-size: 15px;" visibleRowCount="2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Label prefHeight="25.0" prefWidth="89.0" text="Email" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font name="Carlito" size="18.0" />
@@ -172,7 +172,7 @@
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox fx:id="idTypeBox" prefHeight="25.0" prefWidth="150.0" style="-fx-font-size: 15px;" visibleRowCount="4" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="idTypeBox" prefHeight="25.0" prefWidth="190.0" style="-fx-font-size: 15px;" visibleRowCount="4" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <Label prefHeight="25.0" prefWidth="99.0" text="Id Number" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <font>
                         <Font name="Carlito" size="18.0" />
@@ -197,7 +197,7 @@
                         <Insets />
                      </GridPane.margin>
                   </Label>
-                  <DatePicker fx:id="dateField" disable="true" editable="false" prefHeight="29.0" prefWidth="150.0" style="-fx-font-size: 14px;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <DatePicker fx:id="dateField" editable="false" prefHeight="29.0" prefWidth="150.0" style="-fx-font-size: 14px;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                   <Label prefHeight="25.0" prefWidth="97.0" text="Designation" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <font>
                         <Font name="Carlito" size="18.0" />
@@ -206,14 +206,6 @@
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="designationField" onKeyTyped="#checkForEmptyFields" prefHeight="30.0" prefWidth="220.0" promptText="Receptionist" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="Carlito" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
                   <Label prefHeight="25.0" prefWidth="89.0" text="Salary" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
                         <Font name="Carlito" size="18.0" />
@@ -238,7 +230,7 @@
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="addedByField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="Admin" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                  <TextField fx:id="addedByField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" GridPane.columnIndex="2" GridPane.rowIndex="6">
                      <font>
                         <Font name="Carlito" size="16.0" />
                      </font>
@@ -246,7 +238,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </TextField>
-                  <TextField fx:id="updatedDate" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="12/04/2022" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                  <TextField fx:id="updatedDate" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" GridPane.columnIndex="4" GridPane.rowIndex="6">
                      <font>
                         <Font name="Carlito" size="16.0" />
                      </font>
@@ -262,7 +254,7 @@
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="idField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" text="0001" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                  <TextField fx:id="idField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" GridPane.columnIndex="4" GridPane.rowIndex="5">
                      <font>
                         <Font name="Carlito" size="16.0" />
                      </font>
@@ -278,6 +270,7 @@
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
+                  <ComboBox fx:id="designationBox" layoutX="127.0" layoutY="161.0" prefHeight="32.0" prefWidth="190.0" style="-fx-font-size: 15px;" visibleRowCount="4" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                </children>
             </GridPane>
             <Button fx:id="updateProfileBtn" alignment="CENTER" disable="true" layoutX="780.0" layoutY="392.0" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="12.0" prefWidth="98.0" style="-fx-background-color: #03a7ab;" text="Update" textFill="WHITE">
@@ -288,7 +281,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="deleteProfileBtn" alignment="CENTER" disable="true" layoutX="887.0" layoutY="392.0" mnemonicParsing="false" onMouseClicked="#deleteButtonClicked" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #ff0000;" text="Delete" textFill="WHITE">
+            <Button fx:id="deleteProfileBtn" alignment="CENTER" disable="true" layoutX="887.0" layoutY="392.0" mnemonicParsing="false" onMouseClicked="#deleteButtonClicked" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #ff0000;" text="Delete" textFill="WHITE" visible="false">
                <font>
                   <Font name="Carlito Bold" size="15.0" />
                </font>
@@ -296,21 +289,22 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Pane layoutX="15.0" layoutY="371.0" prefHeight="63.0" prefWidth="316.0" style="-fx-background-radius: 10px; -fx-border-color: #ff00003a; -fx-border-width: 2px; -fx-border-radius: 10px;">
+            <Pane layoutX="327.0" layoutY="361.0" prefHeight="63.0" prefWidth="316.0" style="-fx-background-radius: 10px; -fx-border-color: #ff00003a; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-background-color: #ff00003a;">
                <children>
-                  <Label layoutX="18.0" layoutY="5.0" prefHeight="22.0" prefWidth="89.0" text="User Status">
+                  <Pane layoutX="7.0" layoutY="23.0" prefHeight="34.0" prefWidth="127.0" style="-fx-background-color: #ffff; -fx-background-radius: 2px;" />
+                  <Label layoutX="31.0" layoutY="2.0" prefHeight="22.0" prefWidth="89.0" text="User Status" textFill="#8d0000">
                      <font>
                         <Font name="Carlito Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="userStatusLabel" layoutX="8.0" layoutY="26.0" prefHeight="27.0" prefWidth="130.0" text="Not A User" textFill="#be0000">
+                  <Label fx:id="userStatusLabel" layoutX="12.0" layoutY="26.0" prefHeight="27.0" prefWidth="127.0" textFill="#a30b0b">
                      <font>
                         <Font name="Carlito Bold" size="23.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="userRoleBox" disable="true" layoutX="148.0" layoutY="23.0" prefHeight="30.0" prefWidth="150.0" style="-fx-font-size: 15px;" visibleRowCount="4" />
-                  <Line endX="-100.0" endY="-100.00003051757812" layoutX="237.0" layoutY="105.0" startX="-100.0" startY="-45.666656494140625" stroke="#beb5b5" />
-                  <Label layoutX="153.0" layoutY="3.0" prefHeight="22.0" prefWidth="138.0" text="Select A User Role">
+                  <ComboBox fx:id="userRoleBox" disable="true" layoutX="149.0" layoutY="21.0" prefHeight="30.0" prefWidth="159.0" style="-fx-font-size: 15px; -fx-background-color: #ffff; -fx-border-color: #ffff;" visibleRowCount="4" />
+                  <Line endX="-100.0" endY="-100.00003051757812" layoutX="242.0" layoutY="105.0" startX="-100.0" startY="-45.666656494140625" stroke="#a30b0b" />
+                  <Label layoutX="163.0" layoutY="1.0" prefHeight="22.0" prefWidth="138.0" text="Select A User Role" textFill="#8d0000">
                      <font>
                         <Font name="Carlito Bold Italic" size="14.0" />
                      </font>

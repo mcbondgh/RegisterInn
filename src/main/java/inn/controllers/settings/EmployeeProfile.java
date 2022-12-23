@@ -1,6 +1,9 @@
 package inn.Controllers.settings;
 
+import inn.Controllers.config.DefPassword;
 import inn.models.EmpProfileModel;
+import inn.models.ResourceModel;
+import inn.multiStage.MultiStages;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -22,12 +25,18 @@ import java.util.ResourceBundle;
 
 public class EmployeeProfile extends EmpProfileModel implements Initializable {
 
+    MultiStages multiStagesOBJ = new MultiStages();
+    ResourceModel resourceModelOBJ = new ResourceModel();
+    DefPassword defPasswordOBJ = new DefPassword();
+
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             fillGenderBox();
             fillIdTypeBox();
             fillEmployeeBox();
             fillUserRoleBox();
+            fillDesignationBox();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,7 +49,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
     @FXML
     private ImageView uploadProfile;
     @FXML
-    private ComboBox<String> employeeBox, genderBox, idTypeBox, userRoleBox;
+    private ComboBox<String> employeeBox, genderBox, idTypeBox, userRoleBox, designationBox;
     @FXML
     private DatePicker dateField;
     @FXML
@@ -48,7 +57,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
     @FXML
     private TextField firstnameField, lastnameField, emailField, numberField, imageNameField;
     @FXML
-    private TextField addressField, idNumberField, designationField, salaryField, addedByField, updatedDate, idField;
+    private TextField addressField, idNumberField, salaryField, addedByField, updatedDate, idField;
     @FXML
     private Button updateProfileBtn, uploadImageBtn, deleteProfileBtn;
 
@@ -64,23 +73,31 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
         File file = new File(fileChooser.showOpenDialog(updateProfileBtn.getScene().getWindow()).toURI().toString());
         String fileName  = file.getName();
         imageNameField.setText(fileName);
-        Image image = new Image(file.getAbsolutePath());
+        Image image = new Image(file.getPath());
         uploadProfile.setImage(image);
         FileInputStream inputStream;
 
     }
     @FXML
     void updateButtonClicked() {
+        Alert alert = new Alert(Alert.AlertType.NONE);
         try {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "confirm if you want to execute update employee operation.");
-            ButtonType YES = ButtonType.YES;
-            alert.getButtonTypes().add(YES);
-            alert.getButtonTypes().remove(ButtonType.OK);
-            alert.setTitle("UPDATE RECORDS");
-            alert.setHeaderText("ARE YOU SURE YOU WANT TO UPDATE EMPLOYEE'S RECORDS?");
-            if (alert.showAndWait().get() == YES) {
+           if (checkEmployeeBox()) {
+               alert.setAlertType(Alert.AlertType.WARNING);
+               alert.setTitle("No Employee Selected");
+               alert.setHeaderText("YOU HAVE NOT SELECTED AN EMPLOYEE, DO SO TO UPDATE RECORD");
+               alert.setContentText("make sure you have selected an employee from the 'Select Employee Here' to specify a valid employee");
+               alert.setResult(ButtonType.OK);
+               alert.show();
+            } else {
+               if (!(userRoleBox.isDisabled()) || userRoleBox.getValue() == null) {
+                   System.out.println("Only update employees details only.");
+               } else if (!(userRoleBox.isDisabled()) && userRoleBox.getValue() == null) {
+                   System.out.println("Update and create user at the same time.");
+                   System.out.println(userRoleBox.getValue());
+               }
+           }
 
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,7 +107,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
     void selectEmployeeOnAction() {
         ArrayList<Object> result = fetchFullEmployeeDetails(employeeBox.getValue());
         for (int i = 0; i < result.size(); i++) {
-            idField.setText("00" +result.get(0).toString());
+            idField.setText(result.get(0).toString());
             firstnameField.setText(result.get(1).toString());
             lastnameField.setText(result.get(2).toString());
             genderBox.setValue(result.get(3).toString());
@@ -100,22 +117,22 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
             idTypeBox.setValue(result.get(7).toString());
             idNumberField.setText(result.get(8).toString());
             dateField.setValue(LocalDate.parse(result.get(9).toString()));
-            designationField.setText(result.get(10).toString());
+            designationBox.setValue(result.get(10).toString());
             salaryField.setText(result.get(12).toString());
             addedByField.setText(result.get(13).toString());
             updatedDate.setText(result.get(14).toString());
         }
-        //CHECK IF THE SELECTED EMPLOYEE IS ALREADY A USER. IF true Enable UserRole ComboBox else Disable UserRole ComboBox.
+        //CHECK IF THE SELECTED EMPLOYEE IS ALREADY A USER. IF false Enable UserRole ComboBox else Disable UserRole ComboBox.
         for (int i = 0; i < fetchUsernames().size(); i++) {
             if(Objects.equals(emailField.getText().toLowerCase(), fetchUsernames().get(i))) {
-               userStatusLabel.setText("System User");
+               userStatusLabel.setText("VALID USER");
                userStatusLabel.setStyle("-fx-text-fill: #00bf09");
                userRoleBox.setDisable(true);
             } else {
                 userRoleBox.setDisable(false);
                 userRoleBox.setValue(null);
-                userStatusLabel.setStyle("-fx-text-fill: #be0000");
-                userStatusLabel.setText("Not A User");
+                userStatusLabel.setStyle("-fx-text-fill: #a30b0b");
+                userStatusLabel.setText("NOT A USER");
             }
         }
     }
@@ -159,13 +176,23 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
     @FXML
     boolean checkForEmptyFields() {
         try {
-            if (genderBox.getValue().isEmpty() || idTypeBox.getValue().isEmpty() || firstnameField.getText().isEmpty() || lastnameField.getText().isEmpty() || emailField.getText().isEmpty() ||
-            addressField.getText().isEmpty() || designationField.getText().isEmpty() || salaryField.getText().isEmpty() || numberField.getText().isEmpty() || idNumberField.getText().isEmpty()) {
+            if (checkGenderBox() || checkIdTypeBox() || firstnameField.getText().isEmpty() || lastnameField.getText().isEmpty() || emailField.getText().isEmpty() ||
+                addressField.getText().isEmpty() || checkDesignationBox() || salaryField.getText().isEmpty() || numberField.getText().isEmpty() || idNumberField.getText().isEmpty()) {
                 updateProfileBtn.setDisable(true);
                 deleteProfileBtn.setDisable(true);
-            }else  {
+            }
+            else  {
+                if (validateUsername()) {
+                    userStatusLabel.setText("VALID USER");
+                    userStatusLabel.setStyle("-fx-text-fill: #00bf09");
+                    userRoleBox.setDisable(true);
+                    userRoleBox.setValue(null);
+                }else {
+                    userStatusLabel.setText("NOT A USER");
+                    userStatusLabel.setStyle("-fx-text-fill: #a30b0b");
+                    userRoleBox.setDisable(false);
+                }
                 updateProfileBtn.setDisable(false);
-                deleteProfileBtn.setDisable(false);
             }
 
         }catch (Exception e) {
@@ -193,6 +220,9 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
     void fillUserRoleBox() throws SQLException {
         userRoleBox.setItems(fetchUserRoles());
     }
+    void fillDesignationBox() {
+        designationBox.setItems(fetchDesignation());
+    }
 
 
     /*******************************************************************************************************************
@@ -202,49 +232,65 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
 
     //CHECK IF THE USER HAS SELECTED AN EMPLOYEE FROM THE DROPDOWN BOX. IF YES RETURN true ELSE RETURN false
     public boolean checkEmployeeBox() {
-        boolean selected = false;
-        if(employeeBox.getValue() == null) {
-            selected = true;
-        }
-        return selected;
+        return employeeBox.getValue() == null;
     }
 
     //CHECK IF THE USER HAS SELECTED AN ID TYPE FROM THE DROPDOWN BOX. IF YES RETURN true ELSE RETURN false
     public boolean checkIdTypeBox() {
-        boolean selected = false;
-        if(idTypeBox.getValue() == null) {
-            selected = true;
-        }
-        return selected;
+        return idTypeBox.getValue() == null;
     }
 
     //CHECK IF THE USER HAS SELECTED A GENDER TYPE FROM THE DROPDOWN BOX. IF YES RETURN true ELSE RETURN false
     public boolean checkGenderBox() {
-        boolean selected = false;
-        if(genderBox.getValue() == null) {
-            selected = true;
-        }
-        return selected;
+        return genderBox.getValue() == null;
     }
 
     //CHECK IF THE USER HAS UPLOADED AN IMAGE OR NOT. IF YES RETURN true ELSE RETURN false
     public boolean checkImageName() {
-        boolean selected = false;
-        if(imageNameField.getText() == null) {
-            selected = true;
-        }
-        return selected;
+        return imageNameField.getText() == null;
     }
 
-    //CHECK IF THE USER HAS SELECTED A DATE FROM THE DATE PICKER BOX. IF YES RETURN true ELSE RETURN false
-    public boolean checkDatePicker() {
-        boolean selected = false;
-        if(dateField.getValue() == null) {
-            selected = true;
-        } else {
-            System.out.println(dateField.getValue());
+    //CHECK IF THE USER SELECTED AN EMPLOYEE FROM THE EMPLOYEE DROPDOWN LIST. IF YES RETURN true ELSE RETURN false
+    public boolean checkDesignationBox() {
+        return designationBox.getValue() == null;
+    }
+
+    //CHECK IF THE USER HAS SELECTED A USER ROLE FROM THE DROPDOWN LIST. IF YES RETURN true ELSE RETURN false
+    public boolean checkUserRoleBox() {
+        return userRoleBox.getValue() == null;
+    }
+
+    //CHECK IF THE SELECTED USER IS AN VALID SYSTEM USER. IF YES RETURN true ELSE RETURN false
+    boolean validateUsername() {
+        boolean result = false;
+        for (String item:fetchUsernames()) {
+            if (item.equals(emailField.getText().toLowerCase())) {
+                 result = true;
+            }
         }
-        return selected;
+        return result;
+    }
+
+
+
+
+
+    void clearFields() {
+        firstnameField.clear();
+        lastnameField.clear();
+        genderBox.setValue(null);
+        dateField.setValue(null);
+        idTypeBox.setValue(null);
+        emailField.clear();
+        addressField.clear();
+        designationBox.setValue(null);
+        numberField.clear();
+        salaryField.clear();
+        idNumberField.clear();
+        employeeBox.setValue(null);
+        idField.clear();
+        updatedDate.clear();
+        addedByField.clear();
     }
 
 

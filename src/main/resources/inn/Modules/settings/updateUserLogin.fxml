@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="updateLoginsForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="472.0" style="-fx-background-color: #fff; -fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.UpdateLogins">
+<AnchorPane fx:id="updateLoginsForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="472.0" style="-fx-background-color: #fff; -fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.UpdateLogins">
    <children>
       <Pane layoutX="34.0" layoutY="76.0" prefHeight="410.0" prefWidth="411.0" style="-fx-border-radius: 10px; -fx-border-color: #ccc;">
          <children>
@@ -80,7 +80,7 @@
                </font>
             </Label>
             <ComboBox fx:id="userRoleBox" layoutX="213.0" layoutY="295.0" prefHeight="29.0" prefWidth="126.0" style="-fx-font-size: 14;" visibleRowCount="3" />
-            <Label layoutX="211.0" layoutY="272.0" prefHeight="18.0" prefWidth="59.0" text="Status">
+            <Label layoutX="211.0" layoutY="272.0" prefHeight="18.0" prefWidth="95.0" text="User Role">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
@@ -98,9 +98,9 @@
             </DropShadow>
          </effect>
          <children>
-            <Label layoutX="63.0" layoutY="18.0" prefHeight="26.0" prefWidth="329.0" text="Change Username Or Password" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Label layoutX="63.0" layoutY="18.0" prefHeight="26.0" prefWidth="325.0" text="UPDATE USER DETAILS HERE." textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
-                  <Font name="Tahoma Bold" size="17.0" />
+                  <Font name="Transformers Movie" size="24.0" />
                </font>
             </Label>
          </children>
