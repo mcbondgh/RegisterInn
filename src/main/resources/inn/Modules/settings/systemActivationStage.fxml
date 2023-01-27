@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="625.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.ActivationStatus">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="345.0" layoutX="31.0" layoutY="65.0" stroke="#fffefe" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="20.0" strokeType="OUTSIDE" style="-fx-border-radius: 10px; -fx-background-radius: 10px;" width="566.0">
+         <effect>
+            <DropShadow height="8.6" radius="3.9800000000000004" spread="0.05" width="9.32">
+               <color>
+                  <Color red="0.7894737124443054" green="0.7894737124443054" blue="0.7894737124443054" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Rectangle>
+      <GridPane layoutX="92.0" layoutY="80.0" prefHeight="171.0" prefWidth="448.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.33331298828125" minWidth="10.0" prefWidth="146.66668701171875" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="352.66661071777344" minWidth="10.0" prefWidth="281.33331298828125" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Activation Code" textFill="#777575">
+               <font>
+                  <Font name="Times New Roman" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Activation Date" textFill="#777575" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Times New Roman" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Expiry Date" textFill="#777575" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Times New Roman" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="activationKeyField" accessibleText="readOnly" editable="false" prefHeight="42.0" prefWidth="300.0" promptText="eg. INNR-JJDJF-xdsd-27EE-DJS" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Times New Roman Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="startDateField" accessibleText="readOnly" editable="false" prefHeight="42.0" prefWidth="300.0" promptText="2024-01-10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Times New Roman Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="expiryDateField" accessibleText="readOnly" editable="false" prefHeight="42.0" prefWidth="300.0" promptText="2024-01-10" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Times New Roman Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </TextField>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </GridPane>
+      <Pane layoutX="269.0" layoutY="272.0" prefHeight="115.0" prefWidth="231.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;">
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.9035087823867798" green="0.8588910698890686" blue="0.8588910698890686" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Pane fx:id="daysCounterTextBackground" layoutX="137.0" prefHeight="115.0" prefWidth="95.0" style="-fx-background-color: lightgreen; -fx-background-radius: 0px 5px 5px 0px;">
+               <effect>
+                  <DropShadow height="3.48" radius="1.725" spread="0.08" width="5.42">
+                     <color>
+                        <Color red="0.9035087823867798" green="0.8588910698890686" blue="0.8588910698890686" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <children>
+                  <Label layoutX="8.0" layoutY="17.0" prefHeight="81.0" prefWidth="82.0" text="Day(s) To Expire" textAlignment="CENTER" textFill="#048d3d" wrapText="true">
+                     <font>
+                        <Font name="Roboto Black" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Label fx:id="daysCounterLabel" layoutX="7.0" layoutY="11.0" prefHeight="88.0" prefWidth="128.0" text="365" textFill="#00c274">
+               <font>
+                  <Font name="Roboto Black" size="69.0" />
+               </font>
+               <effect>
+                  <DropShadow height="0.0" offsetX="1.0" offsetY="1.0" radius="0.475" spread="0.05" width="3.9">
+                     <color>
+                        <Color red="0.6578947305679321" green="0.6578947305679321" blue="0.6578947305679321" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="31.0" layoutY="18.0" prefHeight="31.0" prefWidth="329.0" style="-fx-background-color: #ededed; -fx-background-radius: 5px;">
+         <children>
+            <Label layoutX="16.0" layoutY="-2.0" prefHeight="35.0" prefWidth="298.0" text="SYSTEM ACTIVATION STATUS" textFill="#777575">
+               <font>
+                  <Font name="Poppins Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

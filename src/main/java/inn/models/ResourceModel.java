@@ -42,14 +42,15 @@ public class ResourceModel extends DbConnection{
     /**
      * THIS METHOD WHEN INVOKED ACCEPTS x NUMBER OF PARAMETERS AND WILL INSERT INTO THE users TABLE THE CURRENTLY PARSED ARGUMENTS
      */
-    public void registerNewUser(@NamedArg("emailAddress")String email, @NamedArg("password") String password, @NamedArg("ConfirmPassword") String pass2, @NamedArg("role_id") int roleId) {
+    public void registerNewUser(@NamedArg("emailAddress")String email, @NamedArg("password") String password, @NamedArg("ConfirmPassword") String pass2, @NamedArg("emp_id") int emp_id, @NamedArg("role_id") int roleId) {
         try {
-            String insertQuery = "INSERT INTO users(username, password, confirm_password, role_id) VALUES(?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO users(username, password, confirm_password, emp_id, role_id) VALUES(?, ?, ?, ?, ?)";
             prepare = CONNECTOR().prepareStatement(insertQuery);
             prepare.setString(1, email);
             prepare.setString(2, password);
             prepare.setString(3, pass2);
-            prepare.setInt(4, roleId);
+            prepare.setInt(4, emp_id);
+            prepare.setInt(5, roleId);
             prepare.execute();
         }catch (Exception e) {
             e.printStackTrace();
@@ -76,7 +77,7 @@ public class ResourceModel extends DbConnection{
                 String salary = String.valueOf(result.getDouble("salary"));
                 String status = String.valueOf(result.getByte("status"));
                 String currentStatus = null;
-                //SIMPLE IF TO SET STATUS = active ? 1 : 0
+//                SIMPLE IF TO SET STATUS = active ? 1 : 0
                 if ("1".equals(status)) {
                     currentStatus = "Active";
                 }

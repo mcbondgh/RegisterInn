@@ -21,6 +21,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -177,7 +178,8 @@ public class HumanResource extends ResourceModel implements Initializable {
               if(alert2.showAndWait().get() == YES) {
                   registerNewEmployee(getFirstNameField(), getLastNameField(), getGender(), getEmailField(), numberField.getText(), getAddressField(), getIdType(), getIdNumberField(), emp_date, getDesignation(), getSalary() );
                   int userRole = fetchUserRoleID(userRoleBox.getValue());
-                  registerNewUser(getEmailField(),defPassword.defaultPassword(), defPassword.defaultPassword(), userRole);//register a new user.
+
+                  registerNewUser(getEmailField(), defPassword.defaultPassword(), defPassword.defaultPassword(), employeeId(), userRole);//register a new user.
                   multiStages.showSuccessPrompt();
                   resetAll();
               }
@@ -311,6 +313,14 @@ public class HumanResource extends ResourceModel implements Initializable {
         designationBox.setVisibleRowCount(4);
         designationBox.setItems(fetchDesignation());
     }
+
+    /** THIS METHOD RETURNS THE CURRENT ID OF NEWLY REGISTERED empId FROM THE employees TABLE.*/
+    int employeeId() {
+        String fullname = getLastNameField() + " " + getFirstNameField();
+        ArrayList<Object> empId = fetchFullEmployeeDetails(fullname);
+        return (int) empId.get(0);
+    }
+
 
     public void resetAll() {
         firstNameField.clear();

@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.report.Report">
    <effect>
       <DropShadow height="27.64" radius="9.33" spread="0.04" width="11.68">
          <color>
@@ -21,19 +21,14 @@
       </DropShadow>
    </effect>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5c03ab" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0" />
-      <Text fill="WHITE" layoutX="151.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SYSTEM REPORTS" wrappingWidth="434.80335235595703">
-         <font>
-            <Font name="Transformers Movie" size="50.0" />
-         </font>
-      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5c03ab" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1092.0" />
       <ImageView fitHeight="37.0" fitWidth="67.0" layoutX="43.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/marketing-analysis-icon-32%20copy.png" />
+            <Image url="@../../images/marketing-analysis-icon-32%20copy.png" />
          </image>
       </ImageView>
       <Pane layoutX="294.0" layoutY="105.0" prefHeight="200.0" prefWidth="200.0" />
-      <TabPane layoutX="27.0" layoutY="61.0" prefHeight="496.0" prefWidth="974.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="20.0" layoutY="61.0" prefHeight="531.0" prefWidth="1055.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab style="-fx-background-color: orange; -fx-color: blue; -fx-font-size: 15px; -fx-padding: 5px 20px; -fx-font-weight: bold;" text="Booking Reports">
             <content>
@@ -57,5 +52,10 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Text fill="WHITE" layoutX="110.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="APPLICATION REPORTS" wrappingWidth="429.46997833251953">
+         <font>
+            <Font name="Poppins Bold" size="36.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

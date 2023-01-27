@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <effect>
       <DropShadow height="8.855" radius="4.63375" spread="0.04" width="11.68">
          <color>
@@ -21,31 +21,31 @@
       </DropShadow>
    </effect>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1092.0">
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
                   <Stop>
                      <color>
-                        <Color red="0.780701756477356" green="0.6107063293457031" blue="0.18071800470352173" />
+                        <Color red="1.0" green="0.7638888955116272" blue="0.21296297013759613" />
                      </color>
                   </Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color red="1.0" green="0.8027836084365845" />
+                        <Color red="0.7166666388511658" green="1.0" />
                      </color>
                   </Stop>
                </stops>
             </LinearGradient>
          </fill></Rectangle>
-      <Text fill="WHITE" layoutX="151.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACCOUNTING" wrappingWidth="342.80338287353516">
+      <Text fill="WHITE" layoutX="149.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACCOUNTING" wrappingWidth="262.13675689697266">
          <font>
-            <Font name="Transformers Movie" size="50.0" />
+            <Font name="Poppins Bold" size="36.0" />
          </font>
       </Text>
-      <ImageView fitHeight="44.0" fitWidth="49.0" layoutX="56.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="44.0" fitWidth="49.0" layoutX="86.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/payment%20icon%20copy.png" />
+            <Image url="@../../images/payment%20icon%20copy.png" />
          </image>
       </ImageView>
    </children>

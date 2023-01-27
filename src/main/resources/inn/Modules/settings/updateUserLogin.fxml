@@ -2,7 +2,6 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -16,46 +15,39 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="updateLoginsForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="472.0" style="-fx-background-color: #fff; -fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.UpdateLogins">
+<AnchorPane fx:id="updateLoginsForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#validateInputFields" prefHeight="503.0" prefWidth="458.0" style="-fx-background-color: #fff; -fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.UpdateLogins">
    <children>
-      <Pane layoutX="34.0" layoutY="76.0" prefHeight="410.0" prefWidth="411.0" style="-fx-border-radius: 10px; -fx-border-color: #ccc;">
+      <Pane layoutX="24.0" layoutY="76.0" prefHeight="410.0" prefWidth="411.0" style="-fx-border-radius: 10px; -fx-border-color: #ccc;">
          <children>
-            <TextField fx:id="usernameField" layoutX="57.0" layoutY="114.0" prefHeight="32.0" prefWidth="285.0">
+            <ComboBox fx:id="usernameBox" layoutX="61.0" layoutY="32.0" onAction="#FillTextFields" prefHeight="27.0" prefWidth="260.0" style="-fx-background-color: #eee; -fx-background-radius: 5px; -fx-font-size: 18px; -fx-font-family: roboto;" visibleRowCount="5" />
+            <TextField fx:id="usernameField" layoutX="57.0" layoutY="114.0" onKeyTyped="#validateInputFields" prefHeight="32.0" prefWidth="285.0">
                <font>
-                  <Font name="Tahoma" size="16.0" />
+                  <Font name="Carlito" size="16.0" />
                </font></TextField>
             <Label layoutX="57.0" layoutY="92.0" prefHeight="18.0" prefWidth="84.0" text="Username">
                <font>
-                  <Font name="Tahoma Bold" size="14.0" />
+                  <Font name="Carlito Bold" size="14.0" />
                </font>
             </Label>
-            <PasswordField fx:id="passwordField" layoutX="57.0" layoutY="174.0" prefHeight="32.0" prefWidth="285.0">
+            <PasswordField fx:id="passwordField" layoutX="57.0" layoutY="174.0" onKeyTyped="#validateInputFields" prefHeight="32.0" prefWidth="285.0">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font></PasswordField>
-            <PasswordField fx:id="confirmField" layoutX="57.0" layoutY="232.0" prefHeight="32.0" prefWidth="285.0">
+            <PasswordField fx:id="confirmField" layoutX="57.0" layoutY="232.0" onKeyTyped="#validateInputFields" prefHeight="32.0" prefWidth="285.0">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font></PasswordField>
             <Label layoutX="57.0" layoutY="152.0" prefHeight="18.0" prefWidth="126.0" text="New Password">
                <font>
-                  <Font name="Tahoma Bold" size="14.0" />
+                  <Font name="Carlito Bold" size="14.0" />
                </font>
             </Label>
             <Label layoutX="57.0" layoutY="212.0" prefHeight="18.0" prefWidth="148.0" text="Confim Password">
                <font>
-                  <Font name="Tahoma Bold" size="14.0" />
+                  <Font name="Carlito Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="updateButton" layoutX="125.0" layoutY="365.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="148.0" style="-fx-background-color: #ff0000;" text="Update" textFill="WHITE">
-               <font>
-                  <Font name="Tahoma" size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Label layoutX="55.0" layoutY="11.0" prefHeight="18.0" prefWidth="166.0" text="*Select Username Here" textFill="#f80000">
+            <Label layoutX="61.0" layoutY="10.0" prefHeight="18.0" prefWidth="166.0" text="*Select Username Here" textFill="#f80000">
                <font>
                   <Font name="Times New Roman Italic" size="14.0" />
                </font>
@@ -74,22 +66,29 @@
                   <Font name="Tahoma Bold" size="12.0" />
                </font>
             </RadioButton>
-            <Label layoutX="57.0" layoutY="276.0" prefHeight="18.0" prefWidth="59.0" text="Status">
+            <Label layoutX="57.0" layoutY="273.0" prefHeight="18.0" prefWidth="59.0" text="Status">
                <font>
-                  <Font name="Tahoma Bold" size="14.0" />
+                  <Font name="Carlito Bold" size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="userRoleBox" layoutX="213.0" layoutY="295.0" prefHeight="29.0" prefWidth="126.0" style="-fx-font-size: 14;" visibleRowCount="3" />
-            <Label layoutX="211.0" layoutY="272.0" prefHeight="18.0" prefWidth="95.0" text="User Role">
+            <ComboBox fx:id="userRoleBox" layoutX="213.0" layoutY="295.0" prefHeight="29.0" prefWidth="126.0" style="-fx-font-size: 14px; -fx-font-family: poppins; -fx-background-color: #eee; -fx-background-radius: 5px;" visibleRowCount="3" />
+            <Label layoutX="216.0" layoutY="272.0" prefHeight="18.0" prefWidth="95.0" text="User Role">
                <font>
-                  <Font name="Tahoma Bold" size="14.0" />
+                  <Font name="Carlito Bold" size="14.0" />
                </font>
             </Label>
+            <Button fx:id="updateButton" disable="true" layoutX="136.0" layoutY="368.0" mnemonicParsing="false" onAction="#updateButtonOnAction" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: #ff0000;" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             <Line endX="229.33331298828125" endY="-1.52587890625E-5" layoutX="169.0" layoutY="352.0" startX="-154.0" startY="-1.52587890625E-5" stroke="#c7c7c7" />
-            <ChoiceBox fx:id="usernameBox" layoutX="63.0" layoutY="29.0" onMouseReleased="#FillTextFields" prefHeight="41.0" prefWidth="228.0" style="-fx-font-size: 15px;" />
          </children>
       </Pane>
-      <Pane layoutX="18.0" layoutY="7.0" prefHeight="61.0" prefWidth="435.0" style="-fx-background-color: #03a7ab; -fx-background-radius: 10px; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;">
+      <Pane layoutX="26.0" layoutY="7.0" prefHeight="61.0" prefWidth="411.0" style="-fx-background-color: #03a7ab; -fx-background-radius: 10px; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;">
          <effect>
             <DropShadow height="24.9" radius="11.462499999999999" spread="0.35" width="22.95">
                <color>
@@ -98,9 +97,9 @@
             </DropShadow>
          </effect>
          <children>
-            <Label layoutX="63.0" layoutY="18.0" prefHeight="26.0" prefWidth="325.0" text="UPDATE USER DETAILS HERE." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Label layoutX="59.0" layoutY="13.0" prefHeight="35.0" prefWidth="285.0" text="UPDATE USER DETAILS HERE." textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
-                  <Font name="Transformers Movie" size="24.0" />
+                  <Font name="Poppins Bold" size="20.0" />
                </font>
             </Label>
          </children>

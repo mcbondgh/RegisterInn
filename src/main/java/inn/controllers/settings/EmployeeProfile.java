@@ -14,20 +14,25 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.net.URL;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class EmployeeProfile extends EmpProfileModel implements Initializable {
 
     MultiStages multiStagesOBJ = new MultiStages();
     ResourceModel resourceModelOBJ = new ResourceModel();
     DefPassword defPasswordOBJ = new DefPassword();
+
+    File imageFile = null;
+    FileInputStream inputStream = null;
+    String fileName = null;
+    String filePath = null;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,16 +72,30 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
      *******************************************************************************************************************/
     @FXML
     private void UploadProfileImage() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose Employee Image");
-        fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
-        File file = new File(fileChooser.showOpenDialog(updateProfileBtn.getScene().getWindow()).toURI().toString());
-        String fileName  = file.getName();
-        imageNameField.setText(fileName);
-        Image image = new Image(file.getPath());
-        uploadProfile.setImage(image);
-        FileInputStream inputStream;
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose Employee Image");
+            fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+            imageFile = fileChooser.showOpenDialog(updateProfileBtn.getScene().getWindow());
+            fileName = imageFile.getName();
+            filePath = imageFile.getAbsolutePath();
+            Image image = new Image(filePath);
+            uploadProfile.setImage(image);
+            imageNameField.setText(fileName);
+        } catch (NullPointerException e) {
+            System.out.println("No file selected.");
+            Logger.getAnonymousLogger();
+        }
+    }
 
+    //THIS METHOD WILL CONVERTER THE IMAGE OF THE USER UPLOADED INTO THE IMAGE VIEWER. THIS METHOD IS WHAT WILL BE SAVED INTO THE DATABASE.
+    public InputStream userImage() throws IOException {
+        try {
+            inputStream = new FileInputStream(imageFile);
+        } catch (NullPointerException | FileNotFoundException ignored) {
+
+        }
+        return inputStream;
     }
     @FXML
     void updateButtonClicked() {
@@ -89,42 +108,99 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                alert.setContentText("make sure you have selected an employee from the 'Select Employee Here' to specify a valid employee");
                alert.setResult(ButtonType.OK);
                alert.show();
-            } else {
-               if (!(userRoleBox.isDisabled()) || userRoleBox.getValue() == null) {
-                   System.out.println("Only update employees details only.");
-               } else if (!(userRoleBox.isDisabled()) && userRoleBox.getValue() == null) {
-                   System.out.println("Update and create user at the same time.");
-                   System.out.println(userRoleBox.getValue());
+            } if (numberField.getText().isBlank() || firstnameField.getText().isBlank() || lastnameField.getText().isBlank() || emailField.getText().isBlank() || idNumberField.getText().isBlank() || addressField.getText().isBlank()) {
+                alert.setAlertType(Alert.AlertType.WARNING);
+                alert.setTitle("Empty Field(s)");
+                alert.setHeaderText("YOU HAVE ONE OR MORE FIELDS EMPTY, PLEASE FILL OUT ALL FIELDS.");
+                alert.show();
+                updateProfileBtn.setDisable(true);
+                uploadImageBtn.setDisable(true);
+                deleteProfileBtn.setDisable(true);
+           }
+           else {
+               if (userRoleBox.isDisabled() || userRoleBox.getValue() == null) {
+                   alert.setAlertType(Alert.AlertType.CONFIRMATION);
+                   alert.getButtonTypes().add(ButtonType.YES);
+                   alert.getButtonTypes().remove(ButtonType.OK);
+                   alert.setTitle("UPDATE EMPLOYEE INFO");
+                   alert.setHeaderText("ARE YOU SURE YOU WANT TO UPDATE EMPLOYEE'S DETAILS?");
+                   alert.setContentText("please confirm your action to execute else cancel to abort.");
+                   if (alert.showAndWait().get() == ButtonType.YES) {
+                       updateEmployeeRecord(Integer.parseInt(idField.getText()), firstnameField.getText(), lastnameField.getText(), genderBox.getValue(), emailField.getText(), numberField.getText(), addressField.getText(), idTypeBox.getValue(), idNumberField.getText(), designationBox.getValue(), userImage(), Double.parseDouble(salaryField.getText()) );
+                       multiStagesOBJ.showSuccessPrompt();
+                       clearFields();
+                       deleteProfileBtn.setDisable(true);
+                       updateProfileBtn.setDisable(true);
+                       userRoleBox.setDisable(true);
+                       userStatusLabel.setText(null);
+                   }
+               } else if(!(userRoleBox.getValue().isEmpty())) {
+                   //GET roleId from the users table based on the userRole name parsed as an argument to the below method.
+                   int roleId = fetchUserRoleID(userRoleBox.getValue());
+                   String defpass = defPasswordOBJ.defaultPassword();
+
+                   alert.setAlertType(Alert.AlertType.CONFIRMATION);
+                   alert.getButtonTypes().add(ButtonType.YES);
+                   alert.getButtonTypes().remove(ButtonType.OK);
+                   alert.setTitle("CREATE USER & UPDATE EMPLOYEE");
+                   alert.setHeaderText("YOU ARE ABOUT TO UPDATE EMPLOYEE RECORDS AND SET AS A USER AT THE SAME TIME");
+                   alert.setContentText("please confirm your action to execute else cancel to abort.");
+                   if (alert.showAndWait().get() == ButtonType.YES) {
+                       updateEmployeeRecord(Integer.parseInt(idField.getText()), firstnameField.getText(), lastnameField.getText(), genderBox.getValue(), emailField.getText(), numberField.getText(), addressField.getText(), idTypeBox.getValue(), idNumberField.getText(), designationBox.getValue(), userImage(), Double.parseDouble(salaryField.getText()) );
+                       resourceModelOBJ.registerNewUser(emailField.getText(), defpass, defpass, Integer.parseInt(idField.getText()), roleId);
+                       multiStagesOBJ.showSuccessPrompt();
+                       clearFields();
+                       updateProfileBtn.setDisable(true);
+                       deleteProfileBtn.setDisable(true);
+                       uploadImageBtn.setDisable(true);
+                       userRoleBox.setDisable(true);
+                   }
+               } else {
+                   multiStagesOBJ.showFailedPrompt();
                }
            }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void selectEmployeeOnAction() {
+    void selectEmployeeOnAction() throws FileNotFoundException {
         ArrayList<Object> result = fetchFullEmployeeDetails(employeeBox.getValue());
-        for (int i = 0; i < result.size(); i++) {
-            idField.setText(result.get(0).toString());
-            firstnameField.setText(result.get(1).toString());
-            lastnameField.setText(result.get(2).toString());
-            genderBox.setValue(result.get(3).toString());
-            emailField.setText(result.get(4).toString());
-            numberField.setText(result.get(5).toString());
-            addressField.setText(result.get(6).toString());
-            idTypeBox.setValue(result.get(7).toString());
-            idNumberField.setText(result.get(8).toString());
-            dateField.setValue(LocalDate.parse(result.get(9).toString()));
-            designationBox.setValue(result.get(10).toString());
-            salaryField.setText(result.get(12).toString());
-            addedByField.setText(result.get(13).toString());
-            updatedDate.setText(result.get(14).toString());
+        try {
+                idField.setText(result.get(0).toString());
+                firstnameField.setText(result.get(1).toString());
+                lastnameField.setText(result.get(2).toString());
+                genderBox.setValue(result.get(3).toString());
+                emailField.setText(result.get(4).toString());
+                numberField.setText(result.get(5).toString());
+                addressField.setText(result.get(6).toString());
+                idTypeBox.setValue(result.get(7).toString());
+                idNumberField.setText(result.get(8).toString());
+                dateField.setValue(LocalDate.parse(result.get(9).toString()));
+                designationBox.setValue(result.get(10).toString());
+                salaryField.setText(result.get(12).toString());
+                addedByField.setText(result.get(13).toString());
+                updatedDate.setText(result.get(14).toString());
+                Blob imageBlob = (Blob) result.get(11);
+                byte[] imageByte = imageBlob.getBytes(1, (int) imageBlob.length());
+                OutputStream stream = new FileOutputStream("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
+                stream.write(imageByte);
+                Image profileImage = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
+                uploadProfile.setImage(profileImage);
+                stream.close();
+
+        } catch (NullPointerException e) {
+                Image defaultImage = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\users.jpg");
+                uploadProfile.setImage(defaultImage);
+        } catch (SQLException | IOException e) {
+            throw new RuntimeException(e);
+        } catch (IndexOutOfBoundsException index) {
+            throw new IndexOutOfBoundsException();
         }
+
         //CHECK IF THE SELECTED EMPLOYEE IS ALREADY A USER. IF false Enable UserRole ComboBox else Disable UserRole ComboBox.
-        for (int i = 0; i < fetchUsernames().size(); i++) {
-            if(Objects.equals(emailField.getText().toLowerCase(), fetchUsernames().get(i))) {
+            if(validateUsername() || validateEmpId()){
                userStatusLabel.setText("VALID USER");
                userStatusLabel.setStyle("-fx-text-fill: #00bf09");
                userRoleBox.setDisable(true);
@@ -134,7 +210,6 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                 userStatusLabel.setStyle("-fx-text-fill: #a30b0b");
                 userStatusLabel.setText("NOT A USER");
             }
-        }
     }
 
 
@@ -146,8 +221,13 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
             alert.getButtonTypes().add(YES);
             alert.getButtonTypes().remove(ButtonType.OK);
             alert.setTitle("DELETE RECORDS");
-            alert.setHeaderText("ARE YOU SURE YOU WANT TO UPDATE EMPLOYEE'S RECORDS?");
-            alert.showAndWait();
+            alert.setHeaderText("ARE YOU SURE YOU WANT TO PERMANENTLY DELETE EMPLOYEE'S RECORDS?");
+            if (alert.showAndWait().get() == YES) {
+                int emp_id = Integer.parseInt(idField.getText());
+                deleteEmployeeRecord(emp_id);
+                multiStagesOBJ.showSuccessPrompt();
+                clearFields();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -179,10 +259,14 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
             if (checkGenderBox() || checkIdTypeBox() || firstnameField.getText().isEmpty() || lastnameField.getText().isEmpty() || emailField.getText().isEmpty() ||
                 addressField.getText().isEmpty() || checkDesignationBox() || salaryField.getText().isEmpty() || numberField.getText().isEmpty() || idNumberField.getText().isEmpty()) {
                 updateProfileBtn.setDisable(true);
+                uploadImageBtn.setDisable(true);
                 deleteProfileBtn.setDisable(true);
             }
             else  {
-                if (validateUsername()) {
+                updateProfileBtn.setDisable(false);
+                uploadImageBtn.setDisable(false);
+                deleteProfileBtn.setDisable(false);
+                if (validateUsername() || validateEmpId()) {
                     userStatusLabel.setText("VALID USER");
                     userStatusLabel.setStyle("-fx-text-fill: #00bf09");
                     userRoleBox.setDisable(true);
@@ -192,9 +276,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                     userStatusLabel.setStyle("-fx-text-fill: #a30b0b");
                     userRoleBox.setDisable(false);
                 }
-                updateProfileBtn.setDisable(false);
             }
-
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -271,9 +353,15 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
         return result;
     }
 
-
-
-
+    boolean validateEmpId() {
+        boolean result = false;
+        for(int empIds: fetchEmployeeId()) {
+            if(Integer.parseInt(idField.getText()) == empIds) {
+                result = true;
+            }
+        }
+        return result;
+    }
 
     void clearFields() {
         firstnameField.clear();
@@ -287,10 +375,11 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
         numberField.clear();
         salaryField.clear();
         idNumberField.clear();
-        employeeBox.setValue(null);
+        employeeBox.setAccessibleText("Select Employee Here.");
         idField.clear();
         updatedDate.clear();
         addedByField.clear();
+        userRoleBox.setValue(null);
     }
 
 

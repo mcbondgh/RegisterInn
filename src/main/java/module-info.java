@@ -1,7 +1,6 @@
 module inn {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -32,6 +31,8 @@ module inn {
     opens inn.Controllers.accounting;
     opens inn.prompts;
     opens inn.tableViews;
+    exports inn.Controllers.config;
+    opens inn.Controllers.config;
 
 
 }

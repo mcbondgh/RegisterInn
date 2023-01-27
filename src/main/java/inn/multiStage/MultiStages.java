@@ -20,12 +20,14 @@ public class MultiStages {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Homepage");
-        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
         stage.getIcons().add(logo);
         stage.sizeToScene();
         stage.setTitle("HOMEPAGE");
         stage.isFullScreen();
-        stage.setResizable(false);
+        stage.setResizable(true);
+        stage.setMinHeight(1000);
+        stage.setMinHeight(500);
         stage.getScene().getWindow().setOnCloseRequest(windowEvent -> {
             windowEvent.consume();
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "you can only log out with the signout button");
@@ -48,7 +50,7 @@ public class MultiStages {
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setScene(scene);
-        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
         stage.getIcons().add(logo);
         stage.setResizable(false);
         stage.setTitle("Confirm Action");
@@ -61,7 +63,7 @@ public class MultiStages {
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setScene(scene);
-        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
         stage.getIcons().add(logo);
         stage.setResizable(false);
         stage.setTitle("Successful");
@@ -75,7 +77,7 @@ public class MultiStages {
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setScene(scene);
-        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
         stage.getIcons().add(logo);
         stage.setResizable(false);
         stage.setTitle("Failed Action");
@@ -91,19 +93,19 @@ public class MultiStages {
         stage.setTitle("Login");
         stage.setResizable(false);
         stage.initStyle(StageStyle.UNDECORATED);
-        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
         stage.getIcons().add(logo);
         stage.show();
     }
 
     public void UpdateLoginDetails() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/settings/updateUserLogin.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 472, 503);
+        Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Update Login Info");
         stage.setResizable(false);
-        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
         stage.getIcons().add(logo);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
@@ -116,11 +118,69 @@ public class MultiStages {
         stage.setScene(scene);
         stage.setTitle("Reset Password");
         stage.setResizable(false);
-        Image logo = new Image("F:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
         stage.getIcons().add(logo);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
+
+
+    public void systemStatusStage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/Settings/systemActivationStage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("System Status");
+        stage.setResizable(false);
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public void innRegisterActivationStage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/Settings/InnRegisterActivationStage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("System Activation");
+        stage.setResizable(false);
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+
+    public void systemUpdateAlertStage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("prompts/systemActivationPrompt.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.setResizable(false);
+        stage.setTitle("Successfully Activated.");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+
+    public void wrongDateTimeStage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("prompts/wrongDateTime.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.setResizable(false);
+        stage.setTitle("Successfully Activated.");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setAlwaysOnTop(true);
+        stage.show();
+    }
+
 
 
 

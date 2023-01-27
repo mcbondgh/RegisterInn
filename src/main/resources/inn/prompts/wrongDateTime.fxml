@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="379.0" prefWidth="377.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.prompts.UserPrompts">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc000040" height="69.0" stroke="#ffffff00" strokeType="INSIDE" width="377.0" />
+      <Pane layoutX="106.0" layoutY="84.0" prefHeight="112.0" prefWidth="159.0">
+         <children>
+            <ImageView fitHeight="112.0" fitWidth="146.0" layoutX="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/wrong-date-time.jpg" />
+               </image>
+            </ImageView>
+         </children>
+         <effect>
+            <DropShadow height="26.84" radius="14.379999999999999" spread="0.08" width="32.68">
+               <color>
+                  <Color red="0.8421052694320679" green="0.8187134265899658" blue="0.8187134265899658" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Pane>
+      <Text layoutX="30.0" layoutY="235.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your computer's date or time seem to be wrong. Please adjust date and time to suit " wrappingWidth="317.4700622558594">
+         <font>
+            <Font name="Roboto" size="16.0" />
+         </font>
+      </Text>
+      <Text fill="#b50000" layoutX="72.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WRONG DATE OR TIME">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Text>
+      <Line endX="111.50003051757812" endY="-1.52587890625E-5" layoutX="245.0" layoutY="208.0" startX="-225.6666717529297" startY="-1.52587890625E-5" stroke="#ccc7c7" />
+      <Button fx:id="adjustDateTimeCloseBtn" layoutX="245.0" layoutY="333.0" mnemonicParsing="false" onAction="#adjustDateTimeCloseBtnAction" prefHeight="11.0" prefWidth="112.0" style="-fx-background-color: #eee; -fx-border-color: #ddd; -fx-border-radius: 8px; -fx-background-radius: 8px;" text="close">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Text layoutX="36.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CURRENT YEAR  as dd/mm/yyyy" textAlignment="CENTER" wrappingWidth="282.80340576171875">
+         <font>
+            <Font name="Roboto Bold" size="15.0" />
+         </font>
+      </Text>
+      <Line endX="111.50003051757812" endY="-1.52587890625E-5" layoutX="242.0" layoutY="315.0" startX="-225.6666717529297" startY="-1.52587890625E-5" stroke="#ccc7c7" />
+   </children>
+</AnchorPane>

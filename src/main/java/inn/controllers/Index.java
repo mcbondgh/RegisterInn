@@ -27,17 +27,25 @@ public class Index extends Homepage implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setBusinessHero();
+            try {
+                setBusinessHero();
+            } catch (Exception E) {
+                try {
+                    E.printStackTrace();
+                    multiStages.wrongDateTimeStage();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
     }
 
     /*******************************************************************************************************************
                                                         FXML OBJECTS */
     @FXML private Button signinButton, cancelButton;
-    @FXML public Hyperlink resetPassword, activate;
+    @FXML public Hyperlink resetPassword, activateBtn;
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Label businessNameLabel;
-
 
     /*******************************************************************************************************************
                                                     GETTER AND SETTER FIELDS. */
@@ -68,8 +76,8 @@ public class Index extends Homepage implements Initializable {
         setBusinessNameLabel(name);
     }
 
-    public void resetInnRegister() {
-
+    public void resetInnRegister() throws IOException {
+        multiStages.innRegisterActivationStage();
     }
 
 

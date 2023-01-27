@@ -5,6 +5,7 @@ USE inn_register;
 CREATE TABLE business_info (
 	id INT AUTO_INCREMENT NOT NULL,
 	bsi_name VARCHAR(100),
+    alias VARCHAR(10),
     bsi_email VARCHAR(100),
     bsi_address VARCHAR(50),
     bsi_number VARCHAR(50),
@@ -12,6 +13,7 @@ CREATE TABLE business_info (
     bsi_registration_date DATE,
     bsi_workers INT,
     bsi_description VARCHAR(255),
+    hero_image mediumblob,
     mng_name VARCHAR(100),
     mng_number VARCHAR(50),
     mng_email VARCHAR(100),
@@ -41,6 +43,13 @@ CREATE TABLE designtion(
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE roomsCategory(
+	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    `name` VARCHAR(50),
+    `status` TINYINT DEFAULT(1),
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 
 CREATE TABLE employees(
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,6 +65,7 @@ CREATE TABLE employees(
     designation VARCHAR(50),
     photo VARCHAR(100),
     salary DECIMAL(10,2),
+    status TINYINT DEFAULT 1,
     added_by INT,
     date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
     modified_date DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -66,9 +76,11 @@ CREATE TABLE users(
     username VARCHAR(50),
     `password` VARCHAR(50),
     confirm_password VARCHAR(50),
-    `role` VARCHAR(50),
+    emp_id INT, 
     role_id INT,
+    is_default INT DEFAULT 0,
     `status` TINYINT DEFAULT(1),
+    added_by TINYINT,
     date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
     modified_date DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -80,6 +92,34 @@ CREATE TABLE modules(
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE activation_key(
+	id int AUTO_INCREMENT NOT NULL, 
+    activation_code VARCHAR(255),
+    start_date DATETIME DEFAULT NOW(),
+    expiry_date DATE NULL,
+    updated_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE activation_password(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    admin_key VARCHAR(255),
+    date_added DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE rooms(
+	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    roomNo VARCHAR(50),
+    roomCategory VARCHAR(50),
+    `status` TINYINT DEFAULT(1),
+    addedBy VARCHAR(50) DEFAULT('Super Admin'),
+    dateAdded DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
 ALTER TABLE users 
-ADD FOREIGN KEY(role_id) REFERENCES roles(id) ON DELETE SET NULL; 
+ADD FOREIGN KEY(role_id) REFERENCES roles(id) ON DELETE SET NULL;
+
+
 

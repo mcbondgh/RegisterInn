@@ -1,22 +1,21 @@
 package inn.database;
 
+import inn.multiStage.MultiStages;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class DbConnection {
     public DbConnection() {}
-    ButtonType YES = ButtonType.YES;
 
-    protected Statement stmt = null;
-    protected PreparedStatement prepare = null;
-    protected ResultSet result = null;
 
     protected Connection CONNECTOR() throws SQLException {
         String SERVER_NAME = "Druglord";
@@ -25,10 +24,20 @@ public class DbConnection {
         return DriverManager.getConnection(URL, SERVER_NAME, PASSWORD);
     }
 
-  /*
-  ----------------------------------------------------------------------------------------------------------------------
-  ----------------------------------------------------------------------------------------------------------------------
-   */
+
+    /*
+    ----------------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------------------------------------------------
+     */
+    MultiStages multiStagesOBJ = new MultiStages();
+    ButtonType YES = ButtonType.YES;
+
+    protected Statement stmt = null;
+    protected PreparedStatement prepare = null;
+
+    protected ResultSet result = null;
+
+
 
     //THIS METHOD WHEN CALL WILL RETURN ALL COLUMNS FROM THE business_info TABLE;
     public ArrayList<Object> fetchBusinessInfo(){
@@ -40,16 +49,18 @@ public class DbConnection {
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
                 businessInfo.add(0,result.getString("bsi_name"));//0
-                businessInfo.add(1,result.getString("bsi_email"));//1
-                businessInfo.add(2,result.getString("bsi_address"));
-                businessInfo.add(3,result.getInt("bsi_number"));
-                businessInfo.add(4,result.getInt("bsi_alt_number"));
-                businessInfo.add(5,result.getDate("bsi_registration_date"));
-                businessInfo.add(6,result.getInt("bsi_workers"));
-                businessInfo.add(7,result.getString("bsi_description"));
-                businessInfo.add(8,result.getString("mng_name"));
-                businessInfo.add(9,result.getInt("mng_number"));
-                businessInfo.add(10, result.getString("mng_email"));
+                businessInfo.add(1, result.getString("alias"));//1
+                businessInfo.add(2,result.getString("bsi_email"));//2
+                businessInfo.add(3,result.getString("bsi_address"));//3
+                businessInfo.add(4,result.getInt("bsi_number"));//4
+                businessInfo.add(5,result.getInt("bsi_alt_number"));//5
+                businessInfo.add(6,result.getDate("bsi_registration_date"));//6
+                businessInfo.add(7,result.getInt("bsi_workers"));//7
+                businessInfo.add(8, result.getBlob("hero_image"));//8
+                businessInfo.add(9,result.getString("bsi_description"));//9
+                businessInfo.add(10,result.getString("mng_name"));//10
+                businessInfo.add(11,result.getInt("mng_number"));//11
+                businessInfo.add(12, result.getString("mng_email"));//12
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,32 +69,34 @@ public class DbConnection {
     }
 
     //THIS METHOD WHEN INVOKED WILL UPDATE THE SYSTEM GENERAL FIELDS WITH THE SPECIFIED NEW DETAILS OF THE ORGANIZATION.
-    public void updateBusinessInfo(@NamedArg("businessName") String bsi_name, @NamedArg("businessEmail") String email, @NamedArg("businessAddress") String address, @NamedArg("bsinessNumner") int bsi_num,
-     @NamedArg("otherNumber") int alt_num, @NamedArg("date") LocalDate date, @NamedArg("totalWorkers") int workers, @NamedArg("description") String desc, @NamedArg("mng_name") String mng_name, @NamedArg("mng_number") int mng_number, @NamedArg("mng_email") String mng_email) {
+    public void updateBusinessInfo(@NamedArg("businessName") String bsi_name, @NamedArg("alias")String alias,  @NamedArg("businessEmail") String email, @NamedArg("businessAddress") String address, @NamedArg("bsinessNumner") int bsi_num,
+                                   @NamedArg("otherNumber") int alt_num, @NamedArg("date") LocalDate date, InputStream hero_image, @NamedArg("totalWorkers") int workers, @NamedArg("description") String desc, @NamedArg("mng_name") String mng_name, @NamedArg("mng_number") int mng_number, @NamedArg("mng_email") String mng_email) {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.getButtonTypes().remove(ButtonType.OK);
         alert.getButtonTypes().add(YES);
         try{
-                String updateQuery = "UPDATE business_info SET bsi_name = ?, bsi_email = ?, bsi_address = ?, bsi_number = ?, bsi_alt_number = ?, bsi_registration_date = ?, bsi_workers = ?, bsi_description = ?, mng_name = ?, mng_number = ?, mng_email = ?, updated_date = DEFAULT; ";
+                String updateQuery = "UPDATE business_info SET bsi_name = ?, alias = ?, bsi_email = ?, bsi_address = ?, bsi_number = ?, bsi_alt_number = ?, bsi_registration_date = ?, hero_image = ?, bsi_workers = ?, bsi_description = ?, mng_name = ?, mng_number = ?, mng_email = ?, updated_date = DEFAULT; ";
                 prepare = CONNECTOR().prepareStatement(updateQuery);
                 prepare.setString(1, bsi_name);
-                prepare.setString(2, email);
-                prepare.setString(3, address);
-                prepare.setInt(4, bsi_num);
-                prepare.setInt(5, alt_num);
-                prepare.setDate(6, Date.valueOf(date));
-                prepare.setInt(7, workers);
-                prepare.setString(8, desc);
-                prepare.setString(9, mng_name);
-                prepare.setInt(10, mng_number);
-                prepare.setString(11, mng_email);
+                prepare.setString(2, alias);
+                prepare.setString(3, email);
+                prepare.setString(4, address);
+                prepare.setInt(5, bsi_num);
+                prepare.setInt(6, alt_num);
+                prepare.setDate(7, Date.valueOf(date));
+                prepare.setBlob(8, hero_image);
+                prepare.setInt(9, workers);
+                prepare.setString(10, desc);
+                prepare.setString(11, mng_name);
+                prepare.setInt(12, mng_number);
+                prepare.setString(13, mng_email);
                 prepare.execute();
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
+                multiStagesOBJ.showSuccessPrompt();
 //                success.setTitle("Update Successful");
 //                success.setHeaderText("PERFECT, RECORDS UPDATED SUCCESSFULLY");
 //                success.showAndWait();
-
             } catch (Exception e) {
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setTitle("Exception");
@@ -100,18 +113,23 @@ public class DbConnection {
         //ARRAYLIST TO STORE ALL NAMES OF roles IN THE roles TABLE e,g Admin, Receptionist, Manager etc.
         ObservableList<String> UserRoles = FXCollections.observableArrayList();
         try {
-            String selectQuery = "SELECT DISTINCT(name) FROM roles ORDER BY name ASC;";
+            String selectQuery = "SELECT DISTINCT(name) FROM roles WHERE(is_default = 0) ORDER BY name ASC;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
                 String roleName = result.getString(1);
                 UserRoles.add(roleName);
             }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return UserRoles;
     }
+
+
 
     //THIS METHOD WHEN INVOKED TAKES A role_name AS AN ARGUMENT AND RETURNS THE id ASSOCIATED WITH SAME.
     public int fetchUserRoleID(String userRole) throws SQLException {
@@ -127,6 +145,22 @@ public class DbConnection {
             e.printStackTrace();
         }
         return role_id;
+    }
+
+    //THIS METHOD WHEN INVOKED TAKES A roleId AS AN ARGUMENT AND RETURNS THE roleName ASSOCIATED WITH SAME.
+    public String fetchUserRoleName(int role_id) throws SQLException {
+        String roleName = null;
+        try {
+            String selectQuery = "SELECT name FROM roles WHERE(id = '"+ role_id +"');";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if (result.next()) {
+                roleName = result.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return roleName;
     }
 
     //FETCH EMPLOYEE NAMES ONLY FROM THE employees TABLE.
@@ -170,7 +204,7 @@ public class DbConnection {
                 String idNumber = result.getString("id_number");//8
                 Date empDate = result.getDate("employment_date");//9
                 String desig = result.getString("designation");//10
-                String photo = result.getString("photo");//11
+                Blob photo = result.getBlob("photo");//11
                 double salary = result.getDouble("salary");//12
                 int added_by = result.getInt("added_by");//13
                 Timestamp updatedDate = result.getTimestamp("modified_date");//14
@@ -197,10 +231,33 @@ public class DbConnection {
                 String items = result.getString(1);
                 idtypes.add(items);
             }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return idtypes;
+    }
+
+    //FETCHES THE name COLUMN FROM THE roomsCategory TABLE
+    public ObservableList<String> fetchRoomCategories() {
+        ObservableList<String> categoryType = FXCollections.observableArrayList();
+        try{
+            String selectQuery = "SELECT DISTINCT(name) FROM roomsCategory ORDER BY name ASC;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+                String items = result.getString(1);
+                categoryType.add(items);
+            }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categoryType;
     }
 
     //FETCH THE name COLUMN FROM THE designation TABLE.
@@ -214,6 +271,9 @@ public class DbConnection {
                 String items = result.getString(1);
                 idtypes.add(items);
             }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -223,16 +283,56 @@ public class DbConnection {
     public ArrayList<String> fetchUsernames(){
         ArrayList<String> usernames = new ArrayList<>();
         try {
-            String selectQuery = "SELECT DISTINCT(lower(username)) FROM users;";
+            String selectQuery = "SELECT username FROM users WHERE( is_default = 0);";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while (result.next()) {
                 usernames.add(result.getString(1));
             }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
         }catch (Exception e) {
             e.printStackTrace();
         }
         return usernames;
+    }
+
+    public LinkedList<Integer> fetchEmployeeId() {
+        LinkedList<Integer> employeeId = new LinkedList<>();
+        try {
+            String selectQuery = "SELECT emp_id FROM users WHERE(is_default = 0);";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while (result.next()) {
+                employeeId.add(result.getInt(1));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return employeeId;
+    }
+
+    public ArrayList<Object> fetchUserLoginsDetails(String username) {
+        ArrayList<Object> items = new ArrayList<>();
+            try {
+                String selectQuery = "SELECT * FROM users WHERE(username = '"+ username +"');";
+                stmt = CONNECTOR().createStatement();
+                result = stmt.executeQuery(selectQuery);
+                while(result.next()) {
+                    items.add(0,result.getString("username"));//0
+                    items.add(1,result.getString("password"));//1
+                    items.add(2,result.getInt("role_id"));//2
+                    items.add(3, result.getInt("status"));//3
+                }
+                stmt.close();
+                result.close();
+                CONNECTOR().close();
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        return items;
     }
 
     /** THIS METHOD WHEN CALLED RETURNS AN INTEGER OF THE TOTAL ROW COUNT OF ALL EMPLOYEES FROM THE employees Table*/
@@ -287,18 +387,88 @@ public class DbConnection {
     }
 
 
+    /**
+     * THIS METHOD WHEN INVOKED SHALL RETURN start_date & updated_date FROM THE
+     *
+     * */
+    public ArrayList<Date> fetchExpiryAndUpdatedDates() {
+        ArrayList<Date> outputResult = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT expiry_date, DATE(updated_date) AS date_checker, start_date FROM activation_key;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if (result.next()) {
+                outputResult.add(0, result.getDate(1));
+                outputResult.add(1, result.getDate(2));
+                outputResult.add( 2, result.getDate(3));
+            }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return outputResult;
+    }
 
 
 
+    //THIS METHOD WHEN INVOKED SHALL RETURN AN ARRAY CONTAINING THE CURRENT AUTHENTICATION PASSWORD FROM THE activation_password TABLE.
+    public ArrayList<String> getSystemActivationPassword() {
+        ArrayList<String> item =  new ArrayList<>();
+        try {
+            String selectQuery = "SELECT admin_key FROM activation_password;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if(result.next()) {
+                item.add(result.getString(1));
+            }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    //THIS METHOD WHEN INVOKED SHALL RETURN A STRING REPRESENTATION OF THE CURRENT ACTIVATION KEY FROM THE activation_key TABLE.
+    protected String getSystemActivationKey() {
+        String keyValue = null;
+        try {
+            String selectQuery = "SELECT activation_code FROM activation_key";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if (result.next()) {
+                keyValue = result.getString(1);
+            }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return keyValue;
+    }
 
 
-
-
-
-
-
-
-
+    //THIS METHOD WHEN INVOKED SHALL RETURN ONLY ROOM NO.s FROM THE rooms TABLE.
+    public ObservableList<String> fetchRoomNoOnly() throws SQLException {
+        ObservableList<String> roomItems = FXCollections.observableArrayList();
+        try {
+            String selectQuery = "SELECT roomNo FROM rooms";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+                roomItems.add( result.getString("roomNo"));
+            }
+            stmt.close();
+            result.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return roomItems;
+    }
 
 
 

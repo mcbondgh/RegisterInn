@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <effect>
       <DropShadow height="8.855" radius="4.63375" spread="0.04" width="11.68">
          <color>
@@ -21,7 +21,7 @@
       </DropShadow>
    </effect>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1092.0">
          <fill>
             <LinearGradient endX="1.0" endY="1.0" startX="0.27760251162556066" startY="0.36908517350157727">
                <stops>
@@ -32,20 +32,20 @@
                   </Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color red="0.44999998807907104" green="0.6779457330703735" blue="1.0" />
+                        <Color red="0.45098039507865906" green="0.6784313917160034" blue="1.0" />
                      </color>
                   </Stop>
                </stops>
             </LinearGradient>
          </fill></Rectangle>
-      <Text fill="WHITE" layoutX="151.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INVENTORY" wrappingWidth="244.13675689697266">
+      <Text fill="WHITE" layoutX="125.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INVENTORY" wrappingWidth="224.1366958618164">
          <font>
-            <Font name="Transformers Movie" size="50.0" />
+            <Font name="Poppins Bold" size="36.0" />
          </font>
       </Text>
       <ImageView fitHeight="44.0" fitWidth="49.0" layoutX="56.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/stock.png" />
+            <Image url="@../../images/stock%20copy.png" />
          </image>
       </ImageView>
    </children>

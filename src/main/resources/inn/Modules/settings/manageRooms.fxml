@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="manageRoomsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.ManageRooms">
+   <effect>
+      <DropShadow height="10.98" radius="5.165" spread="0.04" width="11.68">
+         <color>
+            <Color red="0.35087719559669495" green="0.3400476574897766" blue="0.3400476574897766" />
+         </color>
+      </DropShadow>
+   </effect>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f9ec0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1092.0" />
+      <Text fill="WHITE" layoutX="119.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ROOMS &amp; PRICE LIST" wrappingWidth="368.80335235595703">
+         <font>
+            <Font name="Poppins Bold" size="36.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="43.0" fitWidth="46.0" layoutX="42.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #fff;">
+         <image>
+            <Image url="@../../images/marketing-analysis-icon-32%20copy.png" />
+         </image>
+      </ImageView>
+      <BorderPane fx:id="roomsBorderPane" layoutX="183.0" layoutY="60.0" prefHeight="532.0" prefWidth="895.0" style="-fx-background-color: #fff; -fx-background-radius: 5px; -fx-border-radius: 5px;">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="0.0" radius="10.1025" width="42.41">
+               <color>
+                  <Color red="0.8245614171028137" green="0.8245614171028137" blue="0.8245614171028137" />
+               </color>
+            </DropShadow>
+         </effect>
+      </BorderPane>
+      <Pane layoutX="15.0" layoutY="61.0" prefHeight="267.0" prefWidth="160.0" style="-fx-background-color: #fff; -fx-background-radius: 8px;">
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.8070175647735596" green="0.8070175647735596" blue="0.8070175647735596" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Pane prefHeight="42.0" prefWidth="160.0" style="-fx-background-color: #29a1c5; -fx-background-radius: 8px 8px 0 0;">
+               <children>
+                  <Label layoutX="41.0" layoutY="5.0" prefHeight="34.0" prefWidth="111.0" text="MENU LIST" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="priceListBtn" layoutX="14.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#priceListBtnClicked" onMouseEntered="#hoverEffectForPriceListBtn" onMouseExited="#mouseExitedForPriceListBtn" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: none; -fx-border-color: #1f9ec0; -fx-border-radius: 5px;" text="Price List" textFill="#1f9ec0">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="addRoomBtn" layoutX="14.0" layoutY="57.0" mnemonicParsing="false" onMouseClicked="#setRoomsButtonClicked" onMouseEntered="#HoverEffectForSetRoomBtn" onMouseExited="#mouseExitedSetRoomBtn" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: none; -fx-border-color: #1f9ec0; -fx-border-radius: 5px;" text="Set Rooms" textFill="#1f9ec0">
+               <font>
+                  <Font name="Poppins Regular" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

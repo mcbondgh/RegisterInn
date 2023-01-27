@@ -23,9 +23,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1031.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.EmployeeProfile">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.EmployeeProfile">
    <children>
-      <Pane layoutX="13.0" layoutY="119.0" prefHeight="445.0" prefWidth="1006.0" style="-fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 5px;">
+      <Pane layoutX="28.0" layoutY="119.0" prefHeight="449.0" prefWidth="1029.0" style="-fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 5px;">
          <children>
             <FlowPane layoutX="28.0" layoutY="52.0" prefHeight="233.0" prefWidth="220.0" style="-fx-border-color: #ccc; -fx-border-radius: 5px; -fx-background-color: #ff111d3;">
                <effect>
@@ -35,18 +35,31 @@
                      </color>
                   </DropShadow>
                </effect>
+               <children>
+                  <Label text="Image must be 50kb or below in size." textAlignment="CENTER" textFill="#c50000">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                     <FlowPane.margin>
+                        <Insets left="15.0" />
+                     </FlowPane.margin>
+                  </Label>
+               </children>
             </FlowPane>
             <ComboBox fx:id="employeeBox" layoutX="15.0" layoutY="6.0" onAction="#selectEmployeeOnAction" prefHeight="36.0" prefWidth="246.0" promptText="Select Employee Here" style="-fx-font-size: 16px; -fx-background-color: #03a7ab; -fx-text-base-color: white;" visibleRowCount="5" />
-            <Button fx:id="uploadImageBtn" alignment="CENTER" layoutX="82.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#UploadProfileImage" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: #3cb0fd;" text="Browse Image" textFill="WHITE">
+            <Button fx:id="uploadImageBtn" alignment="CENTER" layoutX="82.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#UploadProfileImage" prefHeight="20.0" prefWidth="89.0" style="-fx-background-color: #03a7ab;" text="Browse Image" textFill="WHITE">
                <font>
-                  <Font name="Carlito Bold" size="14.0" />
+                  <Font name="Carlito Bold" size="10.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <TextField fx:id="imageNameField" editable="false" layoutX="42.0" layoutY="288.0" prefHeight="25.0" prefWidth="192.0" promptText="Image Name" />
-            <ImageView fx:id="uploadProfile" accessibleText="PROFILE_IMAGE" fitHeight="200.0" fitWidth="200.0" layoutX="37.0" layoutY="70.0" pickOnBounds="true">
+            <TextField fx:id="imageNameField" disable="true" editable="false" layoutX="42.0" layoutY="288.0" prefHeight="5.0" prefWidth="192.0" promptText="Image Name">
+               <font>
+                  <Font size="10.0" />
+               </font></TextField>
+            <ImageView fx:id="uploadProfile" accessibleText="PROFILE_IMAGE" fitHeight="200.0" fitWidth="200.0" layoutX="37.0" layoutY="80.0" pickOnBounds="true">
                <image>
                   <Image url="@../../images/users.jpg" />
                </image>
@@ -57,7 +70,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </ImageView>
-            <GridPane layoutX="300.0" layoutY="18.0" prefHeight="316.0" prefWidth="699.0">
+            <GridPane layoutX="300.0" layoutY="18.0" prefHeight="324.0" prefWidth="721.0">
               <columnConstraints>
                 <ColumnConstraints />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="130.6666259765625" />
@@ -77,7 +90,7 @@
                <children>
                   <Label prefHeight="25.0" prefWidth="89.0" text="Firstname" GridPane.columnIndex="1">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -93,7 +106,7 @@
                   </TextField>
                   <Label prefHeight="25.0" prefWidth="89.0" text="Lastname" GridPane.columnIndex="3">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="30.0" />
@@ -109,16 +122,16 @@
                   </TextField>
                   <Label prefHeight="25.0" prefWidth="89.0" text="Gender" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox fx:id="genderBox" prefHeight="25.0" prefWidth="190.0" style="-fx-font-size: 15px;" visibleRowCount="2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="genderBox" prefHeight="25.0" prefWidth="190.0" style="-fx-background-color: #eee; -fx-font-family: roboto; -fx-font-size: 16px;" visibleRowCount="2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Label prefHeight="25.0" prefWidth="89.0" text="Email" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="30.0" />
@@ -134,15 +147,15 @@
                   </TextField>
                   <Label prefHeight="25.0" prefWidth="134.0" text="Phone Number" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label prefHeight="68.0" prefWidth="105.0" text="Digital Address" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Label prefHeight="63.0" prefWidth="112.0" text="Digital Address" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="30.0" />
@@ -166,16 +179,16 @@
                   </TextField>
                   <Label prefHeight="25.0" prefWidth="136.0" text="Id Type" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox fx:id="idTypeBox" prefHeight="25.0" prefWidth="190.0" style="-fx-font-size: 15px;" visibleRowCount="4" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="idTypeBox" prefHeight="25.0" prefWidth="190.0" style="-fx-background-color: #eee; -fx-font-family: roboto; -fx-font-size: 16px;" visibleRowCount="4" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <Label prefHeight="25.0" prefWidth="99.0" text="Id Number" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="30.0" />
@@ -191,16 +204,16 @@
                   </TextField>
                   <Label prefHeight="25.0" prefWidth="129.0" text="Joined Date" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </Label>
-                  <DatePicker fx:id="dateField" editable="false" prefHeight="29.0" prefWidth="150.0" style="-fx-font-size: 14px;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <DatePicker fx:id="dateField" editable="false" prefHeight="29.0" prefWidth="150.0" style="-fx-background-color: #eee;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                   <Label prefHeight="25.0" prefWidth="97.0" text="Designation" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="30.0" />
@@ -208,7 +221,7 @@
                   </Label>
                   <Label prefHeight="25.0" prefWidth="89.0" text="Salary" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -224,7 +237,7 @@
                   </TextField>
                   <Label prefHeight="25.0" prefWidth="89.0" text="Added By" textFill="#000000e3" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -232,7 +245,7 @@
                   </Label>
                   <TextField fx:id="addedByField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" GridPane.columnIndex="2" GridPane.rowIndex="6">
                      <font>
-                        <Font name="Carlito" size="16.0" />
+                        <Font name="Carlito Bold" size="16.0" />
                      </font>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -240,7 +253,7 @@
                   </TextField>
                   <TextField fx:id="updatedDate" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" GridPane.columnIndex="4" GridPane.rowIndex="6">
                      <font>
-                        <Font name="Carlito" size="16.0" />
+                        <Font name="Carlito Bold" size="16.0" />
                      </font>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -248,7 +261,7 @@
                   </TextField>
                   <Label prefHeight="25.0" prefWidth="106.0" text="Last Updated" GridPane.columnIndex="3" GridPane.rowIndex="6">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="30.0" />
@@ -256,7 +269,7 @@
                   </Label>
                   <TextField fx:id="idField" editable="false" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #000; -fx-background-color: #ff00003a;" GridPane.columnIndex="4" GridPane.rowIndex="5">
                      <font>
-                        <Font name="Carlito" size="16.0" />
+                        <Font name="Carlito Bold" size="16.0" />
                      </font>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -264,13 +277,13 @@
                   </TextField>
                   <Label prefHeight="25.0" prefWidth="99.0" text="Employee Id" GridPane.columnIndex="3" GridPane.rowIndex="5">
                      <font>
-                        <Font name="Carlito" size="18.0" />
+                        <Font name="Roboto" size="16.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox fx:id="designationBox" layoutX="127.0" layoutY="161.0" prefHeight="32.0" prefWidth="190.0" style="-fx-font-size: 15px;" visibleRowCount="4" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="designationBox" layoutX="127.0" layoutY="161.0" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: #eee; -fx-font-family: roboto; -fx-font-size: 16px;" visibleRowCount="4" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                </children>
             </GridPane>
             <Button fx:id="updateProfileBtn" alignment="CENTER" disable="true" layoutX="780.0" layoutY="392.0" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="12.0" prefWidth="98.0" style="-fx-background-color: #03a7ab;" text="Update" textFill="WHITE">
@@ -281,7 +294,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="deleteProfileBtn" alignment="CENTER" disable="true" layoutX="887.0" layoutY="392.0" mnemonicParsing="false" onMouseClicked="#deleteButtonClicked" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #ff0000;" text="Delete" textFill="WHITE" visible="false">
+            <Button fx:id="deleteProfileBtn" alignment="CENTER" disable="true" layoutX="887.0" layoutY="392.0" mnemonicParsing="false" onMouseClicked="#deleteButtonClicked" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #ff0000;" text="Delete" textFill="WHITE">
                <font>
                   <Font name="Carlito Bold" size="15.0" />
                </font>
@@ -297,12 +310,12 @@
                         <Font name="Carlito Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="userStatusLabel" layoutX="12.0" layoutY="26.0" prefHeight="27.0" prefWidth="127.0" textFill="#a30b0b">
+                  <Label fx:id="userStatusLabel" layoutX="10.0" layoutY="26.0" prefHeight="27.0" prefWidth="127.0" textFill="#a30b0b">
                      <font>
-                        <Font name="Carlito Bold" size="23.0" />
+                        <Font name="Roboto Black" size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="userRoleBox" disable="true" layoutX="149.0" layoutY="21.0" prefHeight="30.0" prefWidth="159.0" style="-fx-font-size: 15px; -fx-background-color: #ffff; -fx-border-color: #ffff;" visibleRowCount="4" />
+                  <ComboBox fx:id="userRoleBox" disable="true" layoutX="149.0" layoutY="21.0" prefHeight="30.0" prefWidth="159.0" style="-fx-font-size: 15px; -fx-background-color: #ffff; -fx-border-color: #ffff; -fx-font-family: roboto; -fx-font-size: 14px;" visibleRowCount="4" />
                   <Line endX="-100.0" endY="-100.00003051757812" layoutX="242.0" layoutY="105.0" startX="-100.0" startY="-45.666656494140625" stroke="#a30b0b" />
                   <Label layoutX="163.0" layoutY="1.0" prefHeight="22.0" prefWidth="138.0" text="Select A User Role" textFill="#8d0000">
                      <font>
@@ -313,10 +326,10 @@
             </Pane>
          </children>
       </Pane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#03a7ab" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1031.0" />
-      <Text fill="WHITE" layoutX="123.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER PROFILE" wrappingWidth="346.80338287353516">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#03a7ab" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1092.0" />
+      <Text fill="WHITE" layoutX="106.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EMPLOYEE PROFILE" wrappingWidth="358.80338287353516">
          <font>
-            <Font name="Transformers Movie" size="50.0" />
+            <Font name="Poppins Bold" size="36.0" />
          </font>
       </Text>
       <ImageView fitHeight="45.0" fitWidth="66.0" layoutX="45.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
@@ -327,9 +340,9 @@
       <Pane layoutX="349.0" layoutY="61.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #05c8cc;" />
       <Pane layoutX="351.0" layoutY="63.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #03a7ab;">
          <children>
-            <Label layoutX="41.0" layoutY="6.0" prefHeight="29.0" prefWidth="223.0" text="UPDATE USER INFOMATION" textFill="WHITE">
+            <Label layoutX="41.0" layoutY="6.0" prefHeight="29.0" prefWidth="223.0" text="UPDATE EMPOYEE DETAILS" textFill="WHITE">
                <font>
-                  <Font name="Carlito Bold" size="17.0" />
+                  <Font name="Poppins Bold" size="16.0" />
                </font>
             </Label>
          </children>

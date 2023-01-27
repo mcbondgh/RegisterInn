@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="userLogsPane" prefHeight="539.0" prefWidth="832.0" style="-fx-border-radius: 8px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView layoutX="79.0" layoutY="60.0" prefHeight="460.0" prefWidth="672.0">
+        <columns>
+          <TableColumn fx:id="usernameColumn" prefWidth="244.66666412353516" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="Username" />
+          <TableColumn fx:id="userRoleColumn" prefWidth="137.33334350585938" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="User Role" />
+            <TableColumn fx:id="signInColumn" prefWidth="137.33340454101562" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="Sign In" />
+            <TableColumn fx:id="signOutColumn" prefWidth="118.66668701171875" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="Sign Out" />
+        </columns>
+         <effect>
+            <DropShadow height="24.89" spread="0.11" width="17.11">
+               <color>
+                  <Color red="0.8421052694320679" green="0.8265107274055481" blue="0.8265107274055481" />
+               </color>
+            </DropShadow>
+         </effect>
+      </TableView>
+      <Pane layoutX="80.0" layoutY="15.0" prefHeight="31.0" prefWidth="396.0" style="-fx-background-color: #ededed; -fx-background-radius: 5px;" />
+      <Label layoutX="103.0" layoutY="13.0" prefHeight="35.0" prefWidth="260.0" text="DAILY USER LOGS" textFill="#777575">
+         <font>
+            <Font name="Poppins Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
