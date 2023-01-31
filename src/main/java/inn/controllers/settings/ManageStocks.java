@@ -63,7 +63,8 @@ public class ManageStocks {
     @FXML private  ComboBox<StocksCategoryTableView> categoryComboBox;
     @FXML private  DatePicker expiryDatePicker;
     @FXML private  Button saveStockButton, updateStockButton, deleteStockButton;
-
+    
+    //THIS CHANGES WAS MADE IN GITHUB...
 
 
 
