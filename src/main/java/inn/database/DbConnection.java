@@ -1,6 +1,7 @@
 package inn.database;
 
 import inn.multiStage.MultiStages;
+import inn.tableViews.RoomsCategoryTableView;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +16,6 @@ import java.util.LinkedList;
 
 public class DbConnection {
     public DbConnection() {}
-
 
     protected Connection CONNECTOR() throws SQLException {
         String SERVER_NAME = "Druglord";
@@ -241,15 +241,19 @@ public class DbConnection {
     }
 
     //FETCHES THE name COLUMN FROM THE roomsCategory TABLE
-    public ObservableList<String> fetchRoomCategories() {
-        ObservableList<String> categoryType = FXCollections.observableArrayList();
+    public ObservableList<RoomsCategoryTableView> fetchCategories() {
+        ObservableList<RoomsCategoryTableView> categoryType = FXCollections.observableArrayList();
         try{
-            String selectQuery = "SELECT DISTINCT(name) FROM roomsCategory ORDER BY name ASC;";
+            String selectQuery = "SELECT * FROM roomsCategory ORDER BY name ASC;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
-                String items = result.getString(1);
-                categoryType.add(items);
+                int roomId = result.getInt("id");
+                String categoryName = result.getString("name");
+                byte status = result.getByte("status");
+                double price = result.getDouble("price");
+
+                categoryType.add(new RoomsCategoryTableView(roomId, categoryName, status, price));
             }
             stmt.close();
             result.close();

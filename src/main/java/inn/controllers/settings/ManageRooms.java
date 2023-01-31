@@ -4,15 +4,18 @@ import inn.StartInn;
 import inn.models.ManageRoomsModel;
 import inn.prompts.UserNotification;
 import inn.tableViews.ManageRoomsTableView;
+import inn.tableViews.RoomsCategoryTableView;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,24 +26,20 @@ import java.util.ResourceBundle;
 public class ManageRooms extends ManageRoomsModel implements Initializable {
 
     //CLASS OBJECTS / CLASS INSTANTIATION FIELD;
-
     UserNotification notificationOBJ = new UserNotification();
     ManageRoomsTableView manageRoomsTableViewOBJ;
-
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
-
-
+    RoomsCategoryTableView roomsCategoryTableViewOBJ;
 
     /*******************************************************************************************************************
      *                                              FXLM NODE EJECTION.
      *******************************************************************************************************************/
     @FXML private AnchorPane manageRoomsPane, addRoomsPane;
-    @FXML private BorderPane roomsBorderPane;
+    @FXML private BorderPane roomsBorderPane, priceListPane;
+    @FXML private Pane controlPanel;
     @FXML private Button priceListBtn, categoryBtn, addRoomBtn, updateRoomButton;
     @FXML private Button saveRoomButton, deleteRoomButton;
     @FXML private TextField roomNumberField, roomCategoryField;
+    @FXML private ComboBox<String> categoryComboBox;
 
     /*******************************************************************************************************************
      ROOMS TABLEVIEW NODES EJECTION */
@@ -48,11 +47,17 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     private TableView<ManageRoomsTableView> roomsTableView;
     @FXML private TableColumn<ManageRoomsTableView, Integer> itemId;
     @FXML private TableColumn<ManageRoomsTableView, String> roomNumber;
-
     @FXML private TableColumn<ManageRoomsTableView, String> roomCategory;
-
-    @FXML private TableColumn<ManageRoomsTableView, String> addedBy;
+    @FXML private TableColumn<ManageRoomsTableView, String> priceColumn;
     @FXML private TableColumn<ManageRoomsTableView, CheckBox> action;
+
+
+
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        populateCategoryComboBox();
+        fillRoomsTableView();
+
+    }
 
 
     /*******************************************************************************************************************
@@ -63,12 +68,12 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     }
 
 
-
     /*******************************************************************************************************************
      *                               IMPLEMENTATION OF CLICK BUTTON EVENTS.
      *******************************************************************************************************************/
     @FXML void setRoomsButtonClicked() throws IOException {
-        FlipView("Modules/rooms_view/addRoomDisplay.fxml");
+        roomsBorderPane.setCenter(addRoomsPane);
+        //FlipView("Modules/rooms_view/addRoomDisplay.fxml");
     }
     @FXML void priceListBtnClicked() throws IOException {
         FlipView("Modules/rooms_view/priceListDisplay.fxml");
@@ -89,6 +94,8 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     /*******************************************************************************************************************
          *                      IMPLEMENTATION OF ACTION EVENT METHODS.
      *******************************************************************************************************************/
+
+    //THIS METHOD RETURNS A FULL ROW SELECTION WHEN AN ITEM IS SELECTED IN THE Rooms Table View.
     @FXML void tableValueSelected() {
         deleteRoomButton.setDisable(roomsTableView.getItems().isEmpty());
         updateRoomButton.setDisable(roomsTableView.getItems().isEmpty());
@@ -108,27 +115,15 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
                         fillRoomsTableView();
                     } else {
                         notificationOBJ.errorNotification("DELETE FAILED", "Delete Operation Failed For Room With No. " + roomNo);
-
                     }
                 }
         } catch (NullPointerException exception) {
             notificationOBJ.errorNotification("EMPTY ROLE", "You have not made any selection yet, please select a room to delete.");
         }
     }
-     @FXML void refreshRoomsTable()
-     {
-         fillRoomsTableView();
-     }
-
-    @FXML void validateFields() {
-        saveRoomButton.setDisable(checkRoomNoField() || checkRoomCategoryField());
-//        deleteRoomButton.setDisable(checkRoomNoField() || checkRoomCategoryField());
-    }
-
     @FXML void saveRoomButtonClicked() throws SQLException {
         String roomNo = roomNumberField.getText();
-        String roomCategory = roomCategoryField.getText();
-        String addedBy = "Super Admin";
+        //String roomCategory = categoryComboBox.getValue();
         if (checkIfRoomExist()) {
             notificationOBJ.errorNotification("ROOM No. EXIST", "Room With No. " + roomNo + " Already Exist");
         } else {
@@ -138,45 +133,69 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
             alert.setTitle("ADD ROOM");
             alert.setHeaderText("ARE YOU SURE YOU WANT TO ADD NEW ROOM WITH NO." + roomNo + "?");
             if (alert.showAndWait().get() == ButtonType.YES) {
-                int result = AddNewRoom(roomNo, roomCategory, addedBy);
+                int result = AddNewRoom(roomNo, categoryComboBox.getValue());
                 if (result > 0) {
                     notificationOBJ.successNotification("SUCCESSFUL", "Room No." + roomNo + " Successfully Added To Room List.", roomsBorderPane);
                     fillRoomsTableView();
                     clearFields();
+                    saveRoomButton.setDisable(true);
                 }
             } else notificationOBJ.informationNotification("FAILED TO ADD ROOM", "Add New Room Operation Terminated.");
         }
     }
 
+    //THIS METHOD IS INVOKED WHEN THE UPDATE BUTTON IS CLICKED
     @FXML void updateButtonRoomClicked() {
         if(roomsTableView.getSelectionModel().getSelectedItems().isEmpty()) {
             notificationOBJ.errorNotification("EMPTY ROLE", "You have not made any selection yet, please select a room.");
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "please confirm action to execute else CANCEL to abort");
             alert.setTitle("UPDATE ROOM ");
-            alert.setHeaderText("YOU HAVE REQUESTED TO UPDATE ROOM DETAILS, DO YOU WISH TO EXECUTE COMMAND?");
+            alert.setHeaderText("YOU HAVE REQUESTED TO UPDATE ROOM WITH ID: " + roomsTableView.getSelectionModel().getSelectedItem().getRoomId());
             alert.getButtonTypes().add(ButtonType.YES);
             alert.getButtonTypes().remove(ButtonType.OK);
             if(alert.showAndWait().get().equals(ButtonType.YES)) {
                 int flag = 0;
-                String placeHolder = "SYSTEM ADMIN";
+
                 for (ManageRoomsTableView columnValues : roomsTableView.getItems()) {
                     byte statusFlag = 0;
                     int roomId = columnValues.getRoomId();
                     String roomNo = columnValues.getRoomNo();
                     String roomCategory = columnValues.getRoomCategory();
+                    //double standardPrice = columnValues.getRoomPrice();
                     CheckBox action = columnValues.getStatusAction();
 
                     if(action.isSelected()) {
                         statusFlag = 1;
                     }
-                    flag = UpdateRoom(roomId, roomNo, roomCategory,statusFlag, placeHolder);
+                    flag = UpdateRoom(roomId, roomNo, roomCategory, statusFlag);
                 }
                 if (flag > 0) {
                     fillRoomsTableView();
                     notificationOBJ.successNotification("UPDATE SUCCESSFUL", "You Have Successfully Updated Room Details", roomsBorderPane);
                 } else notificationOBJ.errorNotification("UPDATE FAILED", "Update Operation Failed");
             }
+        }
+    }
+
+    @FXML void refreshRoomsTable()
+    {
+        //roomsTableView.getItems().clear();
+        //fillRoomsTableView();
+    }
+
+    //THIS METHOD IS INVOKED WHEN THEN CATEGORY COMBO BOX IS CLICKED AND CHECKS IF ANY SELECTIONS WHERE MADE AND TEXT FIELD IS NOT EMPTY.
+    //ENABLES THE SAVE BUTTON IF FALSE ELSE DISABLES THE SAVE BUTTON...
+    @FXML void CategoryTypeSelected() {
+        saveRoomButton.setDisable(checkRoomNoField() || checkRoomCategoryField());
+    }
+
+    //CHECKS IF TEXT FIELD AND COMBO BOX IS EMPTY.
+    @FXML void validateFields() {
+        try {
+            saveRoomButton.setDisable(checkRoomNoField() || checkRoomCategoryField());
+//        deleteRoomButton.setDisable(checkRoomNoField() || checkRoomCategoryField());
+        } catch (NullPointerException ignored) {
         }
     }
 
@@ -187,10 +206,31 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
 
     void clearFields() {
         roomNumberField.clear();
-        roomCategoryField.clear();
+        categoryComboBox.setValue(null);
         saveRoomButton.setDisable(true);
         deleteRoomButton.setDisable(true);
     }
+    @FXML void selectedCategoryValue() {
+        System.out.println(categoryComboBox.getValue());
+    }
+
+    void populateCategoryComboBox() {
+       for (RoomsCategoryTableView item : fetchCategories()) {
+           categoryComboBox.getItems().add(item.getRoomsCateName());
+       }
+    }
+
+    //THIS METHOD WHEN CALLED SHALL RETURN THE ASSOCIATED ROOM NUMBER FOR THE SELECTED ROOM CATEGORY.
+    int returnRoomId() {
+        int result = 0;
+        for(RoomsCategoryTableView item : fetchCategories()) {
+            if (categoryComboBox.getValue().equals(item.getRoomsCateName())) {
+                result = item.getRoomsCatId();
+            }
+        }
+        return result;
+    }
+
 
     void fillRoomsTableView() {
         roomsTableView.setItems(fetchAllRooms());
@@ -209,10 +249,9 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
             }
         });
 
-
-
         roomCategory.setCellValueFactory(new PropertyValueFactory<>("roomCategory"));
-        roomCategory.setCellFactory(TextFieldTableCell.forTableColumn());
+        //roomCategory.setCellFactory(TextFieldTableCell.forTableColumn());
+        roomCategory.setCellFactory(ComboBoxTableCell.forTableColumn(categoryComboBox.getItems()));
 
         //THIS LINE OF CODE GETS THE NEW VALUE ENTERED AND THEN SETS THE SPECIFIED ROLE VALUE TO THE NEW TEXT VALUE.
         roomCategory.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ManageRoomsTableView, String>>() {
@@ -223,8 +262,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
              }
         });
 
-
-        addedBy.setCellValueFactory(new PropertyValueFactory<>("addedBy"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("roomPrice"));
         //addedBy.setCellFactory(TextFieldTableCell.forTableColumn());
 
 //        action.setStyle("-fx-alignment-center; fx-font-size:16px");
@@ -240,7 +278,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
         return roomNumberField.getText().isBlank();
     }
     boolean checkRoomCategoryField() {
-        return roomCategoryField.getText().isBlank();
+        return categoryComboBox.getValue().isEmpty();
     }
 
     boolean checkIfRoomExist() throws SQLException {

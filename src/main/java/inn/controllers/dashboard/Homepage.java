@@ -110,6 +110,10 @@ public class Homepage extends DbConnection implements Initializable {
     @FXML void managePayrollButtonClick() throws IOException {
         FlipView("Modules/settings/payroll.fxml");
     }
+    @FXML void manageStocksButtonOnAction() throws IOException {
+        FlipView("Modules/settings/manageStocks.fxml");
+    }
+
 
     public void signoutBtnAction() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -150,8 +154,8 @@ public class Homepage extends DbConnection implements Initializable {
             Object about = fetchBusinessInfo().get(9);
             setBusinessNameLabel(bsi_name);
             setAboutField((String) about);
-        }catch (NullPointerException e) {
-            e.printStackTrace();
+        }catch (NullPointerException ignored) {
+            //e.printStackTrace();
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }

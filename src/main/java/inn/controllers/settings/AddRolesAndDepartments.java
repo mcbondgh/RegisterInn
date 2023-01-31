@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
@@ -37,6 +38,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             populateDepartmentTable();
             populateIdTypeTable();
             populateRoomsCategoryTable();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +46,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
     /******************************************* FXML NODE EJECTIONS ********************************/
 
-    @FXML private TextField roleField, departmentField, idTypeField, roomsCategoryField;
+    @FXML private TextField roleField, departmentField, idTypeField, roomsCategoryField,priceField;
 
     @FXML private BorderPane settingsPane;
     @FXML private ScrollPane scrollPane;
@@ -74,6 +76,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML private TableView<RoomsCategoryTableView> roomsCategoryTableView;
     @FXML private TableColumn<RoomsCategoryTableView, Integer> roomsCatId;
     @FXML private TableColumn<RoomsCategoryTableView, String> roomsCateName;
+    @FXML private TableColumn<RolesTypesTableView, Double> priceColumn;
 
 
     /*******************************************************************************************************************
@@ -130,10 +133,15 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         deleteIdTypeButton.setDisable(checkIdTypeField());
     }
 @FXML void validateRoomsCategoryField() {
-        addRoomCategoryBtn.setDisable(checkRoomsCategoryField());
-        deleteRoomsCategoryBtn.setDisable(checkRoomsCategoryField());
-}
+        priceField.setOnKeyReleased(KeyEvent ->  {
+            if(!(KeyEvent.getCode().isDigitKey() || KeyEvent.getCode().equals(KeyCode.BACK_SPACE) || KeyEvent.getCode().equals(KeyCode.PERIOD))) {
+                priceField.clear();
+            }
+        });
+        addRoomCategoryBtn.setDisable(checkRoomsCategoryField() || checkPriceField());
+        deleteRoomsCategoryBtn.setDisable(checkRoomsCategoryField() || checkPriceField());
 
+}
     //FOR ROLE TABLE VIEW ONLY
     @FXML void deleteRoleButtonClicked() throws SQLException {
         String currentValue = roleField.getText().trim();
@@ -260,11 +268,15 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     }
 
     @FXML void selectedRoomsCategoryNameValue() {
-        String selectedRow = roomsCategoryTableView.getSelectionModel().getSelectedItem().getRoomsCateName();
-        roomsCategoryField.setText(selectedRow);
+        String selectedCategoryName = roomsCategoryTableView.getSelectionModel().getSelectedItem().getRoomsCateName();
+        double selectedPrice= roomsCategoryTableView.getSelectionModel().getSelectedItem().getPrice();
+
+        roomsCategoryField.setText(selectedCategoryName);
+        priceField.setText(String.valueOf(selectedPrice));
     }
     @FXML void addRoomsCategoryButtonOnAction() throws SQLException {
         String currentValue = roomsCategoryField.getText().trim();
+        double currentPrice = Double.parseDouble(priceField.getText());
 
         if (checkIfRoomCategoryExist(currentValue)) {
             notificationOBJ.informationNotification("ALREADY EXIST", "Room Category name already exist.");
@@ -275,7 +287,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             alert.getButtonTypes().add(ButtonType.YES);
             alert.getButtonTypes().remove(ButtonType.OK);
             if(alert.showAndWait().get().equals(ButtonType.YES)) {
-                if (addNewRoomsCategory(currentValue) > 0) {
+                if (addNewRoomsCategory(currentValue, currentPrice) > 0) {
                     notificationOBJ.successNotification("SUCCESSFUL", "New Room Category successfully added.", settingsPane);
                     roomsCategoryTableView.getItems().clear();
                     roomsCategoryField.clear();
@@ -325,7 +337,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     boolean checkIdTypeField() {return idTypeField.getText().isBlank();}
     boolean checkDepartmentField() {return departmentField.getText().isBlank();}
     boolean checkRoomsCategoryField() {return roomsCategoryField.getText().isBlank();}
-
+    boolean checkPriceField() {return priceField.getText().isBlank();}
     boolean checkIfRoleExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
         for (String item : dbConnectionOBJ.fetchUserRoles()) {
@@ -363,8 +375,8 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
     boolean checkIfRoomCategoryExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
-        for (String item : dbConnectionOBJ.fetchRoomCategories()) {
-            if (Objects.equals(item.toLowerCase(), textFieldValue.toLowerCase())) {
+        for (RoomsCategoryTableView item : dbConnectionOBJ.fetchCategories()) {
+            if (Objects.equals(item.getRoomsCateName().toLowerCase(), textFieldValue.toLowerCase())) {
                 flag = true;
                 break;
             }
@@ -410,12 +422,14 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     void populateRoomsCategoryTable() {
         roomsCateName.setCellValueFactory( new PropertyValueFactory<>("roomsCateName"));
         roomsCatId.setCellValueFactory(new PropertyValueFactory<>("roomsCatId"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         ObservableList<RoomsCategoryTableView> roleValues = FXCollections.observableArrayList();
 
-        for (int i = 0; i < dbConnectionOBJ.fetchRoomCategories().size(); i++) {
-            roleValues.add(new RoomsCategoryTableView(i + 1, dbConnectionOBJ.fetchRoomCategories().get(i)));
-            roomsCategoryTableView.setItems(roleValues);
+        for (RoomsCategoryTableView item : fetchCategories()) {
+            roleValues.add(new RoomsCategoryTableView(item.getRoomsCatId(), item.getRoomsCateName(), item.getPrice()));
         }
+        roomsCategoryTableView.setItems(roleValues);
+
     }
 
 

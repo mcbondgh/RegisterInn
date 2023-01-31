@@ -29,17 +29,17 @@
                         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </padding>
                   </TextArea>
-                  <Label alignment="CENTER" contentDisplay="TEXT_ONLY" layoutX="926.0" layoutY="14.0" prefHeight="46.0" prefWidth="128.0" text="ABOUT US" textAlignment="CENTER" textFill="#34098b" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="TEXT_ONLY" layoutX="926.0" layoutY="14.0" prefHeight="46.0" prefWidth="128.0" text="ABOUT US" textAlignment="CENTER" textFill="#0472a6" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
                      <font>
                         <Font name="Bebas Neue Regular" size="38.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="TEXT_ONLY" layoutX="942.0" layoutY="479.0" prefHeight="46.0" prefWidth="106.0" text="ESTABLISHED DATE" textAlignment="CENTER" textFill="#34098b" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="TEXT_ONLY" layoutX="942.0" layoutY="479.0" prefHeight="46.0" prefWidth="106.0" text="ESTABLISHED DATE" textAlignment="CENTER" textFill="#0472a6" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
                      <font>
                         <Font name="Bebas Neue Regular" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="dateLabel" alignment="CENTER" contentDisplay="TEXT_ONLY" layoutX="933.0" layoutY="515.0" prefHeight="46.0" prefWidth="127.0" style="-fx-background-color: #34098b; -fx-background-radius: 5px;" text="2022-10-10" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                  <Label fx:id="dateLabel" alignment="CENTER" contentDisplay="TEXT_ONLY" layoutX="933.0" layoutY="515.0" prefHeight="46.0" prefWidth="127.0" style="-fx-background-color: #0472a6; -fx-background-radius: 5px;" text="2022-10-10" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
                      <font>
                         <Font name="Bebas Neue Regular" size="30.0" />
                      </font>
@@ -48,9 +48,9 @@
             </Pane>
          </center>
       </BorderPane>
-      <Pane layoutY="45.0" prefHeight="625.0" prefWidth="172.0" style="-fx-background-color: #fff;">
+      <Pane layoutY="45.0" prefHeight="625.0" prefWidth="172.0" style="-fx-background-color: #f2f2f2;">
          <children>
-            <Button id="dashboardButton" fx:id="dashboardBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" contentDisplay="TEXT_ONLY" layoutX="12.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#dashboardBtnAction" prefHeight="35.0" prefWidth="153.0" style="-fx-background-color: white;" styleClass="dashboardButton" stylesheets="@stylesheets/stylesheet.css" text="Dashboard" textAlignment="CENTER" textFill="#34098b" textOverrun="CLIP">
+            <Button id="dashboardButton" fx:id="dashboardBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" contentDisplay="TEXT_ONLY" layoutX="12.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#dashboardBtnAction" prefHeight="35.0" prefWidth="153.0" style="-fx-background-color: white;" styleClass="dashboardButton" stylesheets="@stylesheets/stylesheet.css" text="Dashboard" textAlignment="CENTER" textFill="#535353" textOverrun="CLIP">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -58,14 +58,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                <effect>
-                  <DropShadow height="5.84" offsetX="1.0" radius="2.8025" width="7.37">
+                  <DropShadow height="6.61" offsetX="1.0" radius="2.995" width="7.37">
                      <color>
-                        <Color red="0.5526315569877625" green="0.5185185074806213" blue="0.5185185074806213" />
+                        <Color red="0.7017543911933899" green="0.7017543911933899" blue="0.7017543911933899" />
                      </color>
                   </DropShadow>
                </effect>
             </Button>
-            <MenuButton fx:id="reportsBtn" alignment="BOTTOM_RIGHT" layoutX="15.0" layoutY="59.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Reports" textAlignment="CENTER" textFill="#34098b">
+            <MenuButton fx:id="reportsBtn" alignment="BOTTOM_RIGHT" layoutX="15.0" layoutY="59.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Reports" textAlignment="CENTER" textFill="#535353">
                <items>
                   <MenuItem id="dropdownMenu" mnemonicParsing="false" onAction="#reportsBtnAction" style="-fx-cursor: hand; -fx-font-family: Carlito; -fx-font-size: 16px;" text="Booking Report" />
                   <MenuItem id="dropdownMenu" mnemonicParsing="false" style="-fx-cursor: hand; -fx-font-family: Carlito; -fx-font-size: 16px;" text="Sales Report" />
@@ -85,7 +85,7 @@
                   </DropShadow>
                </effect>
             </MenuButton>
-            <Button fx:id="bookingBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="103.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#bookingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Booking" textAlignment="CENTER" textFill="#34098b" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="bookingBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="103.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#bookingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Booking" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -100,7 +100,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="accountingBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="145.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#accountingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Accounting" textAlignment="CENTER" textFill="#34098b" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="accountingBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="145.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#accountingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Accounting" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -115,7 +115,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="accountingBtn1" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="16.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#accountingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Message Box" textAlignment="CENTER" textFill="#34098b" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="accountingBtn1" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="16.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#accountingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Message Box" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -130,7 +130,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="inventoryBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="242.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inventoryBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Inventory" textAlignment="CENTER" textFill="#34098b" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="inventoryBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="242.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inventoryBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Inventory" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -145,7 +145,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <MenuButton fx:id="settingsBtn" alignment="BOTTOM_RIGHT" layoutX="14.0" layoutY="287.0" lineSpacing="2.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Settings" textAlignment="CENTER" textFill="#34098b">
+            <MenuButton fx:id="settingsBtn" alignment="BOTTOM_RIGHT" layoutX="14.0" layoutY="287.0" lineSpacing="2.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Settings" textAlignment="CENTER" textFill="#535353">
                <items>
                   <MenuItem id="dropdownMenu" fx:id="generalBtn" mnemonicParsing="false" onAction="#generalBtnAction" style="-fx-font-size: 16px; -fx-font-family: Carlito;" text="General" />
                   <MenuItem id="dropdownMenu" fx:id="manageRolesBtn" mnemonicParsing="false" onAction="#manageRolesBtnAction" style="-fx-font-size: 16px; -fx-font-family: Carlito;" text="Roles/Permissions" />
@@ -153,7 +153,7 @@
                   <MenuItem fx:id="employeeProfileBtn" mnemonicParsing="false" onAction="#employeeProfileBtnOnAction" style="-fx-font-size: 16px; -fx-font-family: Carlito;" text="Employee Profile" />
                   <MenuItem id="signoutBtn" fx:id="updateBtn" mnemonicParsing="false" onAction="#updateBtnAction" style="-fx-font-size: 16px; -fx-font-family: Carlito;" text="Update Login" />
                   <MenuItem fx:id="payRoleButton" mnemonicParsing="false" onAction="#managePayrollButtonClick" style="-fx-font-size: 16px; -fx-font-family: Carlito;" text="Manage Payroll" />
-                  <MenuItem mnemonicParsing="false" style="-fx-font-size: 16px; -fx-font-family: Carlito;" text="Manage Stocks" />
+                  <MenuItem fx:id="manageStocksButton" mnemonicParsing="false" onAction="#manageStocksButtonOnAction" style="-fx-font-size: 16px; -fx-font-family: Carlito;" text="Manage Stocks" />
                   <MenuItem fx:id="manageRoomsButton" mnemonicParsing="false" onAction="#manageRoomsBtnOnAction" style="-fx-font-size: 16px; -fx-font-family: Carlito;" text="Manage Rooms" />
                </items>
                <font>
@@ -170,17 +170,17 @@
                   </DropShadow>
                </effect>
             </MenuButton>
-            <ImageView fitHeight="33.0" fitWidth="32.0" layoutX="17.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="33.0" fitWidth="32.0" layoutX="19.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/Dashboard.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="17.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="20.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/marketing-analysis-icon-32.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="29.0" fitWidth="33.0" layoutX="17.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="29.0" fitWidth="33.0" layoutX="21.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/booking%20copy.png" />
                </image>
@@ -198,6 +198,11 @@
             <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="19.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/settings%20copy.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="17.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/messageBox.png" />
                </image>
             </ImageView>
          </children>
@@ -256,7 +261,7 @@
                   </Label>
                </children>
             </Pane>
-            <Label fx:id="businessNameLabel" layoutX="175.0" layoutY="-11.0" text="INN REGISTER" textFill="#34098b">
+            <Label fx:id="businessNameLabel" layoutX="175.0" layoutY="-11.0" text="INN REGISTER" textFill="#0472a6">
                <font>
                   <Font name="Bebas Neue Regular" size="51.0" />
                </font>

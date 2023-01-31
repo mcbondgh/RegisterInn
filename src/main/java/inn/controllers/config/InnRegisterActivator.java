@@ -93,8 +93,6 @@ public class InnRegisterActivator extends InnActivationModel implements Initiali
                 multiStagesOBJ.showFailedPrompt();
             }
         }
-
-
 //        multiStagesOBJ.systemUpdateAlertStage();
     }
 

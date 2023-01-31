@@ -4,16 +4,44 @@ import javafx.scene.control.CheckBox;
 
 public class ManageRoomsTableView {
     private int roomId;
-    private String roomNo, roomCategory, addedBy;
+    private String roomNo;
+    private String roomCategory;
+    private double roomPrice;
+
+    private byte isBooked;
+
+    private byte status;
     private CheckBox statusAction;
 
     public ManageRoomsTableView(){}
-    public ManageRoomsTableView(int roomId, String roomNo, String roomCategory, String addedBy, CheckBox statusAction) {
+    public ManageRoomsTableView(int roomId, String roomNo, String roomCategory, double roomPrice, CheckBox statusAction) {
         this.roomId = roomId;
         this.roomNo = roomNo;
         this.roomCategory = roomCategory;
-        this.addedBy = addedBy;
+        this.roomPrice = roomPrice;
         this.statusAction = statusAction;
+    }
+    public ManageRoomsTableView(int roomId, String roomNo, byte status, byte isBooked) {
+        this.roomId = roomId;
+        this.roomNo = roomNo;
+        this.isBooked = isBooked;
+        this.status = status;
+    }
+
+    public byte getIsBooked() {
+        return isBooked;
+    }
+
+    public void setIsBooked(byte isBooked) {
+        this.isBooked = isBooked;
+    }
+
+    public byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(byte status) {
+        this.status = status;
     }
 
     public int getRoomId() {
@@ -40,12 +68,12 @@ public class ManageRoomsTableView {
         this.roomCategory = roomCategory;
     }
 
-    public String getAddedBy() {
-        return addedBy;
+    public double getRoomPrice() {
+        return roomPrice;
     }
 
-    public void setAddedBy(String addedBy) {
-        this.addedBy = addedBy;
+    public void setRoomPrice(double roomPrice) {
+        this.roomPrice = roomPrice;
     }
 
     public CheckBox getStatusAction() {

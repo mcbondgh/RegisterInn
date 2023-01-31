@@ -93,7 +93,8 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
         try {
             inputStream = new FileInputStream(imageFile);
         } catch (NullPointerException | FileNotFoundException ignored) {
-
+            imageFile = new File(uploadProfile.getImage().getUrl());
+            inputStream = new FileInputStream(imageFile);
         }
         return inputStream;
     }
@@ -116,6 +117,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                 updateProfileBtn.setDisable(true);
                 uploadImageBtn.setDisable(true);
                 deleteProfileBtn.setDisable(true);
+
            }
            else {
                if (userRoleBox.isDisabled() || userRoleBox.getValue() == null) {
@@ -126,6 +128,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                    alert.setHeaderText("ARE YOU SURE YOU WANT TO UPDATE EMPLOYEE'S DETAILS?");
                    alert.setContentText("please confirm your action to execute else cancel to abort.");
                    if (alert.showAndWait().get() == ButtonType.YES) {
+
                        updateEmployeeRecord(Integer.parseInt(idField.getText()), firstnameField.getText(), lastnameField.getText(), genderBox.getValue(), emailField.getText(), numberField.getText(), addressField.getText(), idTypeBox.getValue(), idNumberField.getText(), designationBox.getValue(), userImage(), Double.parseDouble(salaryField.getText()) );
                        multiStagesOBJ.showSuccessPrompt();
                        clearFields();
@@ -189,7 +192,6 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                 Image profileImage = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
                 uploadProfile.setImage(profileImage);
                 stream.close();
-
         } catch (NullPointerException e) {
                 Image defaultImage = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\users.jpg");
                 uploadProfile.setImage(defaultImage);

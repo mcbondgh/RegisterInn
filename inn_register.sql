@@ -47,6 +47,7 @@ CREATE TABLE roomsCategory(
 	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     `name` VARCHAR(50),
     `status` TINYINT DEFAULT(1),
+    price DECIMAL(10, 2) DEFAULT(0.00),
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -110,9 +111,10 @@ CREATE TABLE activation_password(
 CREATE TABLE rooms(
 	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     roomNo VARCHAR(50),
-    roomCategory VARCHAR(50),
+	categoryId INT,
     `status` TINYINT DEFAULT(1),
-    addedBy VARCHAR(50) DEFAULT('Super Admin'),
+    isBooked TINYINT DEFAULT (0),
+    standardPrice DECIMAL(10, 2) DEFAULT(0.00),
     dateAdded DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

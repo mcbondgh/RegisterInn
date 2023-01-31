@@ -13,14 +13,14 @@ public class ManageRoomsModel extends DbConnection {
 
 
     //THIS METHOD WHEN INVOKED WILL TAKE 3 PARAMETERS AND INSERT INTO THE rooms TABLE.
-    public int AddNewRoom(@NamedArg("ROOM NO.") String roomNo, @NamedArg("ROOM CATEGORY") String roomCategory, @NamedArg("ADDED BY")String addedBy) {
+    public int AddNewRoom(@NamedArg("ROOM NO.") String roomNo, @NamedArg("CATEGORY ID") String categoryId) {
         int flag = 0;
         try{
-            String insertQuery = "INSERT INTO rooms(roomNo, roomCategory, addedBy) VALUES(?, ?, ?)";
+            String insertQuery = "INSERT INTO rooms(roomNo, categoryName) VALUES(?, ?)";
             prepare = CONNECTOR().prepareStatement(insertQuery);
             prepare.setString(1, roomNo);
-            prepare.setString(2, roomCategory);
-            prepare.setString(3, addedBy);
+            prepare.setString(2, categoryId);
+            //prepare.setDouble(3, standardPrice);
             flag = prepare.executeUpdate();
             prepare.close();
             CONNECTOR().close();
@@ -32,16 +32,16 @@ public class ManageRoomsModel extends DbConnection {
 
 
     //THIS METHOD WHEN INVOKED SHALL ACCEPT 5 PARAMETERS AND UPDATES THE rooms TABLE BASED ON THE ROOM ID PARSED.
-    public int UpdateRoom(@NamedArg("roomId") int roomID, @NamedArg("RoomNo.") String roomNo, @NamedArg("RoomCategory")String roomCatg, @NamedArg("StatusValue") byte statusValue,  String addedBy) {
+    public int UpdateRoom(@NamedArg("roomId") int roomID, @NamedArg("RoomNo.") String roomNo, @NamedArg("RoomCategory") String categoryId, @NamedArg("StatusValue") byte statusValue) {
             int  flag = 0;
         try {
-                String updateQuery = "UPDATE rooms SET roomNo = ?, roomCategory = ?,status = ?, addedBy = ? WHERE(id = ?)";
+                String updateQuery = "UPDATE rooms SET roomNo = ?, categoryName = ?,status = ? WHERE(id = ?)";
                 prepare = CONNECTOR().prepareStatement(updateQuery);
                 prepare.setString(1, roomNo);
-                prepare.setString(2, roomCatg);
+                prepare.setString(2, categoryId);
                 prepare.setByte(3, statusValue);
-                prepare.setString(4, addedBy);
-                prepare.setInt(5, roomID);
+                //prepare.setDouble(4, standardPrice);
+                prepare.setInt(4, roomID);
                 flag = prepare.executeUpdate();
                 prepare.close();
                 CONNECTOR().close();
@@ -88,6 +88,24 @@ public class ManageRoomsModel extends DbConnection {
         return flag;
     }
 
+    public String getRoomCateById(int value) {
+        String categoryName = "";
+        try{
+            String selectQuery = "SELECT name FROM roomsCategory WHERE(id = ?)";
+            prepare = CONNECTOR().prepareStatement(selectQuery);
+            prepare.setInt(1, value);
+            result = prepare.executeQuery();
+
+            if (result.next()) {
+                categoryName = result.getString("name");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  categoryName;
+    }
+
+
     //THIS METHOD WHEN CALLED SHALL FETCH AND RETURN ALL ROWS IN rooms TABLE
     public ObservableList<ManageRoomsTableView> fetchAllRooms() {
         ObservableList<ManageRoomsTableView> roomItems = FXCollections.observableArrayList();
@@ -95,20 +113,23 @@ public class ManageRoomsModel extends DbConnection {
             String selectQuery = "SELECT * FROM rooms";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
+
             while(result.next()) {
                 int roomId = result.getInt("id");// id
-               String roomNo =  result.getString("roomNo");//
-               String roomCat = result.getString("roomCategory");
+                String roomNo =  result.getString("roomNo");//
+                String categoryId = result.getString("CategoryName");
                 byte status =  result.getByte("status");
-                String addedBy = result.getString("addedBy");
+                byte isBooked = result.getByte("isBooked");
+                double standardPrice = result.getDouble("standardPrice");
                 Date dateAdded = result.getDate("dateAdded");
                 CheckBox roomStatus = new CheckBox();
                 roomStatus.setSelected(false);
-                roomStatus.setStyle("-fx-font-family:poppins; -fx-font-size:14px; -fx-alignment:center");
+                roomStatus.setStyle("-fx-font-family:poppins; -fx-font-size:14px; -fx-alignment:center; fx-text-fill: blue;");
                 if(status == 1) {
                     roomStatus.setSelected(true);
                 }
-                roomItems.add(new ManageRoomsTableView(roomId, roomNo, roomCat, addedBy, roomStatus));
+                roomItems.add(new ManageRoomsTableView(roomId, roomNo, categoryId, standardPrice, roomStatus));
+                //roomItems.add(new ManageRoomsTableView(roomId, roomNo, categoryId, status, isBooked, dateAdded));
             }
             stmt.close();
             result.close();

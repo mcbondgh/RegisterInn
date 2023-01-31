@@ -17,7 +17,9 @@ import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.net.URL;
+import java.sql.Blob;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class General extends DbConnection implements Initializable {
@@ -163,7 +165,8 @@ public class General extends DbConnection implements Initializable {
             filePath = selectedFile.getAbsolutePath();
             Image image = new Image(filePath);
             heroImage.setImage(image);
-        } catch (NullPointerException e) {
+            System.out.println(inputStream().toString());
+        } catch (NullPointerException | FileNotFoundException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "it is optional to set a hero image for your business.");
             alert.setTitle("No Image Selected");
             alert.setHeaderText("YOU SELECTED NO IMAGE AS YOUR HERO IMAGE.🙂");
@@ -173,12 +176,15 @@ public class General extends DbConnection implements Initializable {
     }
 
     //THIS METHOD WILL CONVERT THE SELECTED FILE INTO AN INPUT STREAM FOR UPLOAD INTO THE DATABASE.
-    InputStream inputStream() {
+    InputStream inputStream() throws FileNotFoundException {
         InputStream stream = null;
         try {
             stream = new FileInputStream(selectedFile);
+
         } catch (NullPointerException | FileNotFoundException file) {
-//            file.printStackTrace();
+             selectedFile = new File(heroImage.getImage().getUrl());
+             stream = new FileInputStream(selectedFile);
+
         }
        return stream;
     }
@@ -198,6 +204,7 @@ public class General extends DbConnection implements Initializable {
                 alert.setTitle("Confirm Update");
                 alert.setHeaderText("ARE YOU SURE YOU WANT TO UPDATE CURRENT RECORDS?");
                 if(!(alert.showAndWait().get() == ButtonType.CANCEL)) {
+
                     updateBusinessInfo(getBusinessName(), aliasField.getText(), getEmail(), getAddress(), getBusinessNumber(), getOtherNumberField(), datePickerField.getValue(), inputStream(), getTotalWorkers(), getDescription(), getManagerName(), getManagerNumber(), getManagerEmailField());
 //                    alert.setHeaderText("PERFECT, RECORDS UPDATED SUCCESSFULLY");
                 }
@@ -301,21 +308,37 @@ public class General extends DbConnection implements Initializable {
 
     /************************************ OTHER METHODS FIELD ***********************************************/
     //THIS METHOD FILLS THE TEXT FIELDS OF THE FORM WITH DATE RETURNED FROM THE DATABASE.
-    public void fillAllFields() {
-        setBusinessNameField((String) fetchBusinessInfo().get(0));
-        aliasField.setText((String) fetchBusinessInfo().get(1));
-        setEmail((String) fetchBusinessInfo().get(2));
-        setDigitalAddressField((String) fetchBusinessInfo().get(3));
-        setBusinessNumberField((Integer) fetchBusinessInfo().get(4));
-        setOtherNumberField((Integer) fetchBusinessInfo().get(5));
-        Date date = (Date) fetchBusinessInfo().get(6);
-        datePickerField.setValue((date.toLocalDate()));
-        setTotalWorkersField((Integer) fetchBusinessInfo().get(7));
-        setDescriptionField((String)fetchBusinessInfo().get(9));
-        setManagerNameField((String) fetchBusinessInfo().get(10));
-        setManagerNumberField((Integer) fetchBusinessInfo().get(11));
-        setManagerEmailField((String) fetchBusinessInfo().get(12));
+    public void fillAllFields(){
+        try {
 
+            setBusinessNameField((String) fetchBusinessInfo().get(0));
+            aliasField.setText((String) fetchBusinessInfo().get(1));
+            setEmail((String) fetchBusinessInfo().get(2));
+            setDigitalAddressField((String) fetchBusinessInfo().get(3));
+            setBusinessNumberField((Integer) fetchBusinessInfo().get(4));
+            setOtherNumberField((Integer) fetchBusinessInfo().get(5));
+            Date date = (Date) fetchBusinessInfo().get(6);
+            datePickerField.setValue((date.toLocalDate()));
+            setTotalWorkersField((Integer) fetchBusinessInfo().get(7));
+            setDescriptionField((String)fetchBusinessInfo().get(9));
+            setManagerNameField((String) fetchBusinessInfo().get(10));
+            setManagerNumberField((Integer) fetchBusinessInfo().get(11));
+            setManagerEmailField((String) fetchBusinessInfo().get(12));
+            Blob imageBlob = (Blob) fetchBusinessInfo().get(8);
+            byte[] imageByte = imageBlob.getBytes(1, (int) imageBlob.length());
+            OutputStream stream = new FileOutputStream("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\placeholder.jpg");
+            stream.write(imageByte);
+            Image profileImage = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\placeholder.jpg");
+            heroImage.setImage(profileImage);
+            stream.close();
+        } catch (NullPointerException e) {
+            Image defaultImage = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\placeholder.jpg");
+            heroImage.setImage(defaultImage);
+        } catch (SQLException | IOException e) {
+            throw new RuntimeException(e);
+        } catch (IndexOutOfBoundsException index) {
+            throw new IndexOutOfBoundsException();
+        }
     }
 
 

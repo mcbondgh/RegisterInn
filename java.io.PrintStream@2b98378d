@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-01-29T10:47:19.609349800Z</date>
+  <millis>1674989239609</millis>
+  <nanos>349800</nanos>
+  <sequence>0</sequence>
+  <logger>Error Logs</logger>
+  <level>SEVERE</level>
+  <class>inn.ErrorLogger</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>ERROR: </message>
+  <param>Cannot invoke "String.length()" because "value" is null</param>
+</record>
+</log>

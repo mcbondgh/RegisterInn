@@ -84,10 +84,10 @@ public class AddRolesAndDepartmentModel extends DbConnection {
     }
 
     //THIS METHOD WHEN INVOKED TAKES IN CATEGORY NAME AS AN ARGUMENT AND INSERTS SAME FROM THE roomsCategory TABLE.
-    public int addNewRoomsCategory(String categoryName) {
+    public int addNewRoomsCategory(String categoryName, Double price) {
         int flag = 0;
         try {
-            String insertQuery = "INSERT INTO roomsCategory VALUES(DEFAULT, '"+categoryName+"', DEFAULT, DEFAULT)";
+            String insertQuery = "INSERT INTO roomsCategory VALUES(DEFAULT, '"+categoryName+"', DEFAULT, '"+price+"', DEFAULT)";
             prepare = CONNECTOR().prepareStatement(insertQuery);
             flag = prepare.executeUpdate();
         } catch (Exception e) {

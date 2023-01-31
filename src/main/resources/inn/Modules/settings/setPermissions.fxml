@@ -1,27 +1,317 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.SearchableComboBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="setPermissionsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.SetPermissions">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="900.0" style="-fx-background-color: #fff; -fx-background-radius: #10px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.SetPermissions">
    <children>
-      <Label fx:id="departmentStatusLabel" layoutX="51.0" layoutY="409.0" text="Department Already Exist" textFill="#0aba30" visible="false">
-         <font>
-            <Font name="Roboto Black" size="12.0" />
-         </font>
-      </Label>
-      <Button fx:id="savePermissionButton" layoutX="670.0" layoutY="504.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="126.0" style="-fx-background-color: #037dab; -fx-text-fill: #fff;" text="Save Changes">
-         <font>
-            <Font name="Tahoma" size="14.0" />
-         </font>
+      <BorderPane layoutX="10.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="890.0" style="-fx-background-color: #fff;">
+         <center>
+            <ScrollPane fx:id="scrollPane" prefHeight="471.0" prefWidth="890.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
+               <content>
+                  <AnchorPane fx:id="innerAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="930.0" prefWidth="872.0" style="-fx-background-color: #fff;">
+                     <children>
+                        <TitledPane fx:id="settingsModule" layoutX="8.0" layoutY="83.0" prefHeight="344.0" prefWidth="853.0" style="-fx-background-radius: 10px;" text="SETTINGS" textFill="#037dab" textOverrun="CLIP">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="175.0" prefWidth="851.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <CheckBox fx:id="generalViewControl" layoutX="11.0" layoutY="14.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="126.0" text="SET GENERAL">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="14.0" />
+                                       </font></CheckBox>
+                                    <CheckBox fx:id="systemInfoViewControl" layoutX="29.0" layoutY="36.0" mnemonicParsing="false" text="System Information" textFill="#606060">
+                                       <font>
+                                          <Font name="Times New Roman" size="14.0" />
+                                       </font></CheckBox>
+                                    <CheckBox fx:id="systemActivationViewControl" layoutX="29.0" layoutY="62.0" mnemonicParsing="false" text="System Activation" textFill="#606060">
+                                       <font>
+                                          <Font name="Times New Roman" size="14.0" />
+                                       </font></CheckBox>
+                                    <CheckBox fx:id="authenKeyViewControl" layoutX="29.0" layoutY="89.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="137.0" text="Authen Key Reset" textFill="#606060">
+                                       <font>
+                                          <Font name="Times New Roman" size="14.0" />
+                                       </font></CheckBox>
+                                    <CheckBox fx:id="userLogsViewControl" layoutX="29.0" layoutY="116.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="137.0" text="User Logs" textFill="#606060">
+                                       <font>
+                                          <Font name="Times New Roman" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="rolesPermissionViewControl" layoutX="177.0" layoutY="14.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="189.0" text="ROLES &amp; PERMISSION">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="setPermissionViewControl" layoutX="196.0" layoutY="36.0" mnemonicParsing="false" text="Set Permissions" textFill="#606060">
+                                       <font>
+                                          <Font name="Times New Roman" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="addRolesViewControl" layoutX="196.0" layoutY="62.0" mnemonicParsing="false" text="Add Roles &amp; Categories" textFill="#606060">
+                                       <font>
+                                          <Font name="Times New Roman" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="employeesViewControl" layoutX="401.0" layoutY="12.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="189.0" text="MANAGE EMPLOYEES">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="viewEmployees" layoutX="418.0" layoutY="34.0" mnemonicParsing="false" text="View Employees " textFill="#606060">
+                                       <font>
+                                          <Font name="Times New Roman" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="addEmployeesViewControl" layoutX="418.0" layoutY="60.0" mnemonicParsing="false" text="Add Employees" textFill="#606060">
+                                       <font>
+                                          <Font name="Times New Roman" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="archivedViewControl" layoutX="418.0" layoutY="87.0" mnemonicParsing="false" text="View Archived" textFill="#606060">
+                                       <font>
+                                          <Font name="Times New Roman" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="employeeProfileViewControl" layoutX="3.0" layoutY="158.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="189.0" text="EMPLOYEE PROFILE">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="updateLoginsViewControl" layoutX="418.0" layoutY="158.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="189.0" text="UPDATE USER LOGINS">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="payrollViewControl" layoutX="204.0" layoutY="158.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="189.0" text="MANAGE PAYROLL">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="stocksViewControl" layoutX="628.0" layoutY="12.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="151.0" text="MANAGE STOCKS">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="roomsViewControl" layoutX="641.0" layoutY="156.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="151.0" text="MANAGE ROOMS">
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="setRoomsViewControl" layoutX="660.0" layoutY="178.0" mnemonicParsing="false" text="set Rooms" textFill="#606060">
+                                       <font>
+                                          <Font name="Times New Roman" size="14.0" />
+                                       </font>
+                                    </CheckBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="22.95" radius="9.515" spread="0.57" width="17.11">
+                                 <color>
+                                    <Color red="0.9385964870452881" green="0.9183181524276733" blue="0.9183181524276733" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </TitledPane>
+                        <TitledPane fx:id="reportsModule" layoutX="9.0" layoutY="442.0" prefHeight="130.0" prefWidth="417.0" style="-fx-background-radius: 10px;" text="REPORTS" textFill="#037dab" textOverrun="CLIP">
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="22.95" radius="9.515" spread="0.57" width="17.11">
+                                 <color>
+                                    <Color red="0.9385964870452881" green="0.9183181524276733" blue="0.9183181524276733" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="175.0" prefWidth="843.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="CheckBox" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TitledPane fx:id="bookingModule" layoutX="443.0" layoutY="442.0" prefHeight="130.0" prefWidth="417.0" style="-fx-background-radius: 10px;" text="BOOKINGS" textFill="#037dab" textOverrun="CLIP">
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="22.95" radius="9.515" spread="0.57" width="17.11">
+                                 <color>
+                                    <Color red="0.9385964870452881" green="0.9183181524276733" blue="0.9183181524276733" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="175.0" prefWidth="843.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="CheckBox" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TitledPane fx:id="inventoryModule" layoutX="9.0" layoutY="586.0" prefHeight="130.0" prefWidth="417.0" style="-fx-background-radius: 10px;" text="INVENTORY/STORE" textFill="#037dab" textOverrun="CLIP">
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="22.95" radius="9.515" spread="0.57" width="17.11">
+                                 <color>
+                                    <Color red="0.9385964870452881" green="0.9183181524276733" blue="0.9183181524276733" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="175.0" prefWidth="843.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="CheckBox" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TitledPane fx:id="accountingModule" layoutX="443.0" layoutY="586.0" prefHeight="130.0" prefWidth="417.0" style="-fx-background-radius: 10px;" text="ACCOUNTING" textFill="#037dab" textOverrun="CLIP">
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="22.95" radius="9.515" spread="0.57" width="17.11">
+                                 <color>
+                                    <Color red="0.9385964870452881" green="0.9183181524276733" blue="0.9183181524276733" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="175.0" prefWidth="843.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="CheckBox" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <Pane layoutX="113.0" layoutY="5.0" prefHeight="65.0" prefWidth="684.0" style="-fx-background-color: #eee; -fx-background-radius: 10px;">
+                           <children>
+                              <Text fill="#944d4d" layoutX="65.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Set and control the access levels for all types of User Roles available in your version of the INN REGISTER">
+                                 <font>
+                                    <Font name="Marlett" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#b73a05" layoutX="137.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACCESS LEVEL CONTROLS" wrappingWidth="429.6575012207031">
+                                 <font>
+                                    <Font name="Poppins Bold" size="31.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <effect>
+                              <DropShadow height="22.95" spread="0.21" width="19.05">
+                                 <color>
+                                    <Color red="0.8070175647735596" green="0.7945635914802551" blue="0.7945635914802551" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Pane>
+                        <TitledPane fx:id="dashboardModule" layoutX="9.0" layoutY="732.0" prefHeight="130.0" prefWidth="417.0" style="-fx-background-radius: 10px;" text="DASHBOARD" textFill="#037dab" textOverrun="CLIP">
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="22.95" radius="9.515" spread="0.57" width="17.11">
+                                 <color>
+                                    <Color red="0.9385964870452881" green="0.9183181524276733" blue="0.9183181524276733" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="175.0" prefWidth="843.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="CheckBox" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <CheckBox fx:id="settingsModuleChecker" layoutX="115.0" layoutY="90.0" mnemonicParsing="false" onAction="#settingsCheckerClicked" text="Disable Settings Module" textFill="#b10909">
+                           <font>
+                              <Font name="Wingdings" size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <TitledPane fx:id="messageBoxModule" layoutX="443.0" layoutY="732.0" prefHeight="130.0" prefWidth="417.0" style="-fx-background-radius: 10px;" text="MESSAGE BOX" textFill="#037dab" textOverrun="CLIP">
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="22.95" radius="9.515" spread="0.57" width="17.11">
+                                 <color>
+                                    <Color red="0.9385964870452881" green="0.9183181524276733" blue="0.9183181524276733" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="175.0" prefWidth="843.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="CheckBox" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <CheckBox fx:id="reportsModuleChecker" layoutX="114.0" layoutY="447.0" mnemonicParsing="false" onAction="#reportsCheckerClicked" text="Disable Reports Module" textFill="#b10909">
+                           <font>
+                              <Font name="Wingdings" size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="bookingModuleChecker" layoutX="560.0" layoutY="448.0" mnemonicParsing="false" onAction="#bookingCheckerClicked" text="Disable Booking Module" textFill="#b10909">
+                           <font>
+                              <Font name="Wingdings" size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="inventoryModuleChecker" layoutX="176.0" layoutY="593.0" mnemonicParsing="false" onAction="#inventoryCheckerClicked" text="Disable Reports Module" textFill="#b10909">
+                           <font>
+                              <Font name="Wingdings" size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="accountingModuleChecker" layoutX="581.0" layoutY="591.0" mnemonicParsing="false" onAction="#accountingCheckerClicked" text="Disable Reports Module" textFill="#b10909">
+                           <font>
+                              <Font name="Wingdings" size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="dashboardModuleChecker" layoutX="137.0" layoutY="738.0" mnemonicParsing="false" onAction="#dashboardCheckerClicked" text="Disable Dashboard Module" textFill="#b10909">
+                           <font>
+                              <Font name="Wingdings" size="12.0" />
+                           </font>
+                        </CheckBox>
+
+                        <CheckBox fx:id="messageBoxModuleChecker" layoutX="582.0" layoutY="739.0" mnemonicParsing="false" onAction="#messageBoxCheckerClicked" text="Disable Message Box Module" textFill="#b10909">
+                           <font>
+                              <Font name="Wingdings" size="12.0" />
+                           </font>
+                        </CheckBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+      <Pane layoutY="480.0" prefHeight="49.0" prefWidth="901.0" style="-fx-background-color: #efeded; -fx-background-radius: 0px 0px 6px 6px;">
+         <children>
+            <Button fx:id="saveButton" defaultButton="true" layoutX="758.0" layoutY="9.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="126.0" style="-fx-background-color: #037dab;" text="SAVE CHANGE" textFill="WHITE">
+               <font>
+                  <Font name="Poppins Bold" size="12.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="roleComboBox" layoutX="10.0" layoutY="6.0" prefHeight="36.0" prefWidth="211.0" promptText="Select User Role" style="-fx-background-color: white; -fx-font-size: 14px; -fx-font-family: poppins; -fx-text-fill: red;" visibleRowCount="5" />
+         </children>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
-      </Button>
-      <SearchableComboBox fx:id="roleTypeBox" layoutX="20.0" layoutY="20.0" prefHeight="31.0" prefWidth="200.0" promptText="Search User Role" style="-fx-color: #f7f7f7; -fx-font-family: poppins; -fx-font-size: 14px; -fx-border-color: white;" />
+      </Pane>
    </children>
 </AnchorPane>

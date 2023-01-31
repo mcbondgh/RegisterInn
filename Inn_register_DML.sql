@@ -12,8 +12,9 @@
     SELECT * FROM id_types;
     SELECT * FROM designation;
     SELECT * FROM rooms;
-    
-    
+    SELECT * FROM roomsCategory;
+    SELECT * FROM modules;
+        
     ALTER TABLE users 
     ADD COLUMN emp_id INT AFTER confirm_password;
     
@@ -56,13 +57,23 @@ SELECT DISTINCT(lower(username)) FROM users;
     ALTER TABLE roles DROP column note;
     ALTER TABLE rooms MODIFY COLUMN addedBy VARCHAR(50) DEFAULT 'Super Admin';
     
+    -- 27/01/2023
+    ALTER TABLE roomscategory ADD COLUMN  price DECIMAL(10, 2) DEFAULT(0.00) AFTER `status`;
+    
     /* 11-01-2022 ALTER THE ROLES TABLE.*/
 
 	-- 10/01/2023
     ALTER TABLE employees MODIFY COLUMN photo BLOB;
     -- 13/01/2023
     ALTER TABLE users ADD COLUMN added_by TINYINT AFTER status;
-
+    
+    -- 27/01/2023
+	ALTER TABLE rooms ADD COLUMN isBooked TINYINT DEFAULT 0 AFTER `status`;
+	ALTER TABLE rooms CHANGE COLUMN Price standardPrice DECIMAL(10,2) DEFAULT 0.00;
+    
+    -- 28/01/23
+   ALTER TABLE rooms CHANGE categoryId CategoryName VARCHAR(50);
+    
 	DESCRIBE inn_register.employees;
     DESCRIBE employees;
     DESCRIBE activation_key;
