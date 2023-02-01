@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="addRoomsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="895.0" style="-fx-border-color: lightgray; -fx-background-color: #fff; -fx-border-radius: 5px; -fx-background-radius: 5px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.ManageRooms">
+   <children>
+      <Pane fx:id="controlPanel" layoutX="17.0" layoutY="435.0" onMouseClicked="#refreshRoomsTable" prefHeight="91.0" prefWidth="869.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 5px;">
+         <children>
+            <TextField fx:id="roomNumberField" layoutX="35.0" layoutY="41.0" onKeyTyped="#validateFields" prefHeight="33.0" prefWidth="204.0" promptText="eg A1000" style="-fx-background-color: #fff; -fx-border-color: #1f9ec0; -fx-border-radius: 5px;">
+               <font>
+                  <Font name="Poppins Regular" size="16.0" />
+               </font>
+            </TextField>
+            <Label layoutX="38.0" layoutY="20.0" text="Room No." textFill="#1f9ec0">
+               <font>
+                  <Font name="Poppins Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="272.0" layoutY="20.0" text="Room Category" textFill="#1f9ec0">
+               <font>
+                  <Font name="Poppins Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="saveRoomButton" defaultButton="true" disable="true" layoutX="528.0" layoutY="42.0" mnemonicParsing="false" onAction="#saveRoomButtonClicked" prefHeight="33.0" prefWidth="93.0" style="-fx-background-color: #1f9ec0;" text="Add  Room" textFill="WHITE">
+               <font>
+                  <Font name="Poppins Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="updateRoomButton" disable="true" layoutX="632.0" layoutY="42.0" mnemonicParsing="false" onAction="#updateButtonRoomClicked" prefHeight="33.0" prefWidth="79.0" style="-fx-background-color: #f27d00;" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="Poppins Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="deleteRoomButton" disable="true" layoutX="723.0" layoutY="42.0" mnemonicParsing="false" onAction="#deleteRoomClicked" prefHeight="33.0" prefWidth="79.0" style="-fx-background-color: #c93200;" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="Poppins Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ComboBox fx:id="categoryComboBox" layoutX="267.0" layoutY="41.0" prefHeight="35.0" prefWidth="204.0" style="-fx-background-color: #fff; -fx-border-radius: 5px; -fx-border-color: #1f9ec0;" />
+         </children>
+         <effect>
+            <DropShadow height="15.16" radius="5.2375" width="7.79">
+               <color>
+                  <Color red="0.640350878238678" green="0.6067522168159485" blue="0.6067522168159485" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Pane>
+      <TableView fx:id="roomsTableView" editable="true" layoutX="17.0" layoutY="14.0" onMouseClicked="#tableValueSelected" prefHeight="413.0" prefWidth="869.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 5px; -fx-alignment: center;">
+        <columns>
+          <TableColumn fx:id="itemId" prefWidth="68.66665840148926" style="-fx-font-family: poppins; -fx-font-size: 16px; -fx-base-text-fill: red; -fx-alignment: center;" text="ID" />
+          <TableColumn fx:id="roomNumber" prefWidth="230.0" style="-fx-font-family: poppins; -fx-font-size: 16px; -fx-base-text-fill: red; -fx-alignment: center;" text="Room Number" />
+            <TableColumn fx:id="roomCategory" prefWidth="230.0" style="-fx-font-family: poppins; -fx-font-size: 16px; -fx-base-text-fill: red; -fx-alignment: center;" text="Room Category" />
+            <TableColumn fx:id="priceColumn" prefWidth="230.0" style="-fx-font-family: poppins; -fx-font-size: 16px; -fx-alignment: center;" text="Added by" />
+            <TableColumn fx:id="action" prefWidth="100.0" style="-fx-font-family: poppins; -fx-font-size: 16px; -fx-background-color: #e0fcff; -fx-alignment: center;" text="Action" />
+        </columns>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </TableView>
+   </children>
+</AnchorPane>
