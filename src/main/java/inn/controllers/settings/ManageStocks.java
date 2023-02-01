@@ -14,7 +14,7 @@ public class ManageStocks {
      ****** >>                      FXML NODE EJECTIONS
      *********************************************************************************************************/
     @FXML private TabPane stocksControlTabPane;
-    @FXML private TabPane stocksTab, stockLevelTab, internalSupplyTab, externalSupplyTab, addComponentsTab;
+    @FXML private Tab stocksTab, stockLevelTab, internalSupplyTab, externalSupplyTab, addComponentsTab;
 
 
     //******************* >> ADD COMPONENTS TAB NODE ITEMS
@@ -64,8 +64,19 @@ public class ManageStocks {
     @FXML private  DatePicker expiryDatePicker;
     @FXML private  Button saveStockButton, updateStockButton, deleteStockButton;
     
-    //THIS CHANGES WAS MADE IN GITHUB...
+    //THESE CHANGES WERE MADE IN GITHUB...
 
+
+
+
+
+    /*********************************************************************************************************
+     ****** >>                     TRUE OR FALSE STATEMENTS
+     *********************************************************************************************************/
+    boolean disableSuppliersTab() {
+        return suppliersCheckBox.isSelected();
+    }
+    boolean disableStockCategoriesTab() {return stockCategoryCheckBox.isSelected();}
 
 
 }//END OF CLASS

@@ -142,9 +142,9 @@ public class Homepage extends DbConnection implements Initializable {
         try {
             Blob imageBlob = (Blob) fetchBusinessInfo().get(8);
             byte[] imageByte = imageBlob.getBytes(1, (int) imageBlob.length());
-            OutputStream stream = new FileOutputStream("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\placeholder.jpg");
+            OutputStream stream = new FileOutputStream("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\placeholder.jpg");
             stream.write(imageByte);
-            Image image = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\placeholder.jpg");
+            Image image = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\placeholder.jpg");
             heroImageDisplay.setImage(image);
 
             String bsi_name = (String) fetchBusinessInfo().get(0);

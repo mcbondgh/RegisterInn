@@ -4,10 +4,10 @@ module inn {
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
-    requires validatorfx;
+//    requires validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
+//    requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires annotations;
@@ -33,6 +33,7 @@ module inn {
     opens inn.tableViews;
     exports inn.Controllers.config;
     opens inn.Controllers.config;
+
 
 
 }

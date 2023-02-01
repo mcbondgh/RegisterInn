@@ -227,7 +227,10 @@
             </Tab>
             <Tab fx:id="externalSupplyTab" style="-fx-background-color: #fff; -fx-border-color: lightgray; -fx-text-base-color: #098ecc; -fx-font-weight: bold; -fx-cursor: hand;" text="External Supply">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+
+                     </children></AnchorPane>
                </content>
             </Tab>
             <Tab fx:id="addComponentsTab" style="-fx-background-color: #fff; -fx-border-color: lightgray; -fx-text-base-color: #098ecc; -fx-font-weight: bold; -fx-cursor: hand;" text="Add Components">
@@ -325,7 +328,7 @@
                               <Font name="Roboto" size="14.0" />
                            </font>
                         </Button>
-                        <CheckBox fx:id="stockCategoryCheckBox" layoutX="930.0" layoutY="25.0" mnemonicParsing="false" />
+                        <CheckBox fx:id="stockCategoryCheckBox" layoutX="930.0" layoutY="25.0" mnemonicParsing="false" style="-fx-color: red;" textFill="RED" />
                         <TitledPane fx:id="suppliersTab" animated="false" layoutX="219.0" layoutY="22.0" prefHeight="452.0" prefWidth="559.0" text="Suppliers Table">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -342,7 +345,7 @@
                               </AnchorPane>
                           </content>
                         </TitledPane>
-                        <CheckBox fx:id="suppliersCheckBox" layoutX="350.0" layoutY="25.0" mnemonicParsing="false" />
+                        <CheckBox fx:id="suppliersCheckBox" layoutX="350.0" layoutY="25.0" mnemonicParsing="false" style="-fx-color: red;" textFill="RED" />
                      </children>
                   </AnchorPane>
                </content>
