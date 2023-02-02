@@ -244,11 +244,8 @@
                                     <TableView fx:id="stocksCategoryTable" editable="true" layoutX="-1.0" onMouseClicked="#stocksCategoryTableOnSelected" prefHeight="328.0" prefWidth="285.0">
                                        <columns>
                                           <TableColumn fx:id="idColumn" maxWidth="75.0" prefWidth="75.0" style="-fx-alignment: center; -fx-font-family: poppins; -fx-font-size: 16px;" text="ID" visible="false" />
-                                          <TableColumn fx:id="categoryNameColumn" maxWidth="284.0000407298406" prefWidth="284.0000407298406" style="-fx-alignment: left; -fx-font-family: poppins; -fx-font-size: 16px;" text="CATEGORY NAME" />
+                                          <TableColumn fx:id="categoryNameColumn" maxWidth="284.0000407298406" prefWidth="277.3334859609604" style="-fx-alignment: left; -fx-font-family: poppins; -fx-font-size: 16px;" text="CATEGORY NAME" />
                                        </columns>
-                                       <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </padding>
                                     </TableView>
                                     <TextField fx:id="categoryField" layoutX="17.0" layoutY="356.0" onKeyTyped="#validateStockCategoryOnKeyType" prefHeight="29.0" prefWidth="247.0" promptText="eg Market">
                                        <font>
@@ -312,12 +309,12 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="suppliersTable" layoutX="-1.0" layoutY="-3.0" prefHeight="427.0" prefWidth="558.0" style="-fx-font-family: poppins; -fx-font-size: 13px;">
+                                    <TableView fx:id="suppliersTable" editable="true" layoutX="-1.0" layoutY="-3.0" onMouseClicked="#suppliersTableRowSelected" prefHeight="427.0" prefWidth="558.0" style="-fx-font-family: poppins; -fx-font-size: 14px;">
                                        <columns>
                                           <TableColumn fx:id="supplierIdColumn" maxWidth="75.0" prefWidth="58.00001525878906" style="-fx-font-family: poppins;" text="ID" visible="false" />
-                                          <TableColumn fx:id="supplierNameColumn" maxWidth="222.66668701171875" onEditCommit="#supplierNameColumnOnEditCommit" prefWidth="190.66668701171875" style="-fx-font-family: poppins;" text="SUPPLIER NAME" />
+                                          <TableColumn fx:id="supplierNameColumn" maxWidth="222.66668701171875" prefWidth="190.66668701171875" style="-fx-font-family: poppins;" text="SUPPLIER NAME" />
                                           <TableColumn fx:id="contactColumn" maxWidth="222.66668701171875" prefWidth="148.66661071777344" style="-fx-font-family: poppins;" text="CONTACT" />
-                                          <TableColumn fx:id="locationColumn" maxWidth="233.33334350585938" prefWidth="218.66671752929688" style="-fx-font-family: poppins;" text="LOCATION" />
+                                          <TableColumn fx:id="locationColumn" maxWidth="233.33334350585938" prefWidth="209.33340454101562" style="-fx-font-family: poppins;" text="LOCATION" />
                                        </columns>
                                     </TableView>
                                  </children>
@@ -391,7 +388,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="updateSuppliersButton" disable="true" mnemonicParsing="false" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #f27d00;" text="Update" textFill="WHITE" GridPane.rowIndex="1">
+                              <Button fx:id="updateSuppliersButton" disable="true" mnemonicParsing="false" onAction="#updateSuppliersButtonClicked" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #f27d00;" text="Update" textFill="WHITE" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="Roboto" size="14.0" />
                                  </font>
@@ -399,7 +396,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="deleteSuppliersButton" disable="true" mnemonicParsing="false" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #c93200;" text="Delete" textFill="WHITE" GridPane.rowIndex="2">
+                              <Button fx:id="deleteSuppliersButton" disable="true" mnemonicParsing="false" onAction="#deleteSupplierButtonClicked" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #c93200;" text="Delete" textFill="WHITE" GridPane.rowIndex="2">
                                  <font>
                                     <Font name="Roboto" size="14.0" />
                                  </font>

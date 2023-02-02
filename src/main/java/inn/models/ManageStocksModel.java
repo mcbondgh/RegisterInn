@@ -35,7 +35,7 @@ public class ManageStocksModel extends DbConnection {
             prepare.setInt(2, itemId);
             flag = prepare.executeUpdate();
         }catch (SQLException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
         return flag;
     }
@@ -70,6 +70,37 @@ public class ManageStocksModel extends DbConnection {
             CONNECTOR().close();
         }catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+
+
+    //THIS METHOD WHEN INVOKED TAKES IN TWO PARAMETER i.e. stocksCategory DateType AS AN ARGUMENT AND UPDATES SAME IN THE StocksCategory TABLE..
+    public int updateSupplier(String supplierName, String contact, String location, int itemId) {
+        int flag = 0;
+        try {
+            String updateQuery = "UPDATE Suppliers SET Status = DEFAULT, SupplierName = ?, Contact = ?, Location = ? , DateCreated = DEFAULT WHERE(id = ?)";
+            prepare = CONNECTOR().prepareStatement(updateQuery);
+            prepare.setString(1, supplierName);
+            prepare.setString(2, contact);
+            prepare.setString(3, location);
+            prepare.setInt(4, itemId);
+            flag = prepare.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    public void deleteSelectedSupplier(@NamedArg("Item Id") int itemId) {
+        try {
+            String updateQuery = "DELETE FROM Suppliers  WHERE(id = ?)";
+            prepare = CONNECTOR().prepareStatement(updateQuery);
+            prepare.setInt(1, itemId);
+            prepare.execute();
+            prepare.close();
+            CONNECTOR().close();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

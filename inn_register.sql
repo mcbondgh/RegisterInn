@@ -56,6 +56,15 @@ CREATE TABLE StocksCategory(
     CategoryName VARCHAR(50), 
     DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE Suppliers(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    status TINYINT DEFAULT 1,
+    supplierName VARCHAR(100) NOT NULL,
+    contact VARCHAR(50) NOT NULL,
+    location VARCHAR(100) NOT NULL,
+    DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 
 
 CREATE TABLE employees(
@@ -114,6 +123,7 @@ CREATE TABLE activation_password(
     date_added DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+
 CREATE TABLE rooms(
 	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     roomNo VARCHAR(50),
@@ -123,7 +133,6 @@ CREATE TABLE rooms(
     standardPrice DECIMAL(10, 2) DEFAULT(0.00),
     dateAdded DATETIME DEFAULT CURRENT_TIMESTAMP
 );
-
 
 
 ALTER TABLE users 

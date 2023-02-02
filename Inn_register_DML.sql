@@ -15,6 +15,7 @@
     SELECT * FROM roomsCategory;
     SELECT * FROM modules;
     SELECT * FROM StocksCategory;
+    SELECT * FROM suppliers;
         
     ALTER TABLE users 
     ADD COLUMN emp_id INT AFTER confirm_password;
