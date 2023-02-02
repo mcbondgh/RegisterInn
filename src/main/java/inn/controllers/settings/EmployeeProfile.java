@@ -4,6 +4,8 @@ import inn.Controllers.config.DefPassword;
 import inn.models.EmpProfileModel;
 import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;
+import inn.prompts.UserNotification;
+import javafx.application.Preloader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -128,7 +130,6 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                    alert.setHeaderText("ARE YOU SURE YOU WANT TO UPDATE EMPLOYEE'S DETAILS?");
                    alert.setContentText("please confirm your action to execute else cancel to abort.");
                    if (alert.showAndWait().get() == ButtonType.YES) {
-
                        updateEmployeeRecord(Integer.parseInt(idField.getText()), firstnameField.getText(), lastnameField.getText(), genderBox.getValue(), emailField.getText(), numberField.getText(), addressField.getText(), idTypeBox.getValue(), idNumberField.getText(), designationBox.getValue(), userImage(), Double.parseDouble(salaryField.getText()) );
                        multiStagesOBJ.showSuccessPrompt();
                        clearFields();
@@ -166,7 +167,6 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
             e.printStackTrace();
         }
     }
-
     @FXML
     void selectEmployeeOnAction() throws FileNotFoundException {
         ArrayList<Object> result = fetchFullEmployeeDetails(employeeBox.getValue());
@@ -187,13 +187,13 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                 updatedDate.setText(result.get(14).toString());
                 Blob imageBlob = (Blob) result.get(11);
                 byte[] imageByte = imageBlob.getBytes(1, (int) imageBlob.length());
-                OutputStream stream = new FileOutputStream("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
+                OutputStream stream = new FileOutputStream("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
                 stream.write(imageByte);
-                Image profileImage = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
+                Image profileImage = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
                 uploadProfile.setImage(profileImage);
                 stream.close();
         } catch (NullPointerException e) {
-                Image defaultImage = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\users.jpg");
+                Image defaultImage = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\users.jpg");
                 uploadProfile.setImage(defaultImage);
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
@@ -258,7 +258,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
     @FXML
     boolean checkForEmptyFields() {
         try {
-            if (checkGenderBox() || checkIdTypeBox() || firstnameField.getText().isEmpty() || lastnameField.getText().isEmpty() || emailField.getText().isEmpty() ||
+            if (checkEmployeeBox() || checkGenderBox() || checkIdTypeBox() || firstnameField.getText().isEmpty() || lastnameField.getText().isEmpty() || emailField.getText().isEmpty() ||
                 addressField.getText().isEmpty() || checkDesignationBox() || salaryField.getText().isEmpty() || numberField.getText().isEmpty() || idNumberField.getText().isEmpty()) {
                 updateProfileBtn.setDisable(true);
                 uploadImageBtn.setDisable(true);
@@ -316,7 +316,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
 
     //CHECK IF THE USER HAS SELECTED AN EMPLOYEE FROM THE DROPDOWN BOX. IF YES RETURN true ELSE RETURN false
     public boolean checkEmployeeBox() {
-        return employeeBox.getValue() == null;
+        return employeeBox.getValue().isEmpty();
     }
 
     //CHECK IF THE USER HAS SELECTED AN ID TYPE FROM THE DROPDOWN BOX. IF YES RETURN true ELSE RETURN false

@@ -111,7 +111,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
                 if(alert.showAndWait().get().equals(ButtonType.YES)) {
                     boolean queryResult = deleteRoom(roomNo);
                     if(queryResult) {
-                        notificationOBJ.successNotification("DELETE SUCCESSFUL", "Room No." + roomNo + " Successfully Deleted.", roomsBorderPane);
+                        notificationOBJ.successNotification("DELETE SUCCESSFUL", "Room No." + roomNo + " Successfully Deleted.");
                         fillRoomsTableView();
                     } else {
                         notificationOBJ.errorNotification("DELETE FAILED", "Delete Operation Failed For Room With No. " + roomNo);
@@ -135,7 +135,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
             if (alert.showAndWait().get() == ButtonType.YES) {
                 int result = AddNewRoom(roomNo, categoryComboBox.getValue());
                 if (result > 0) {
-                    notificationOBJ.successNotification("SUCCESSFUL", "Room No." + roomNo + " Successfully Added To Room List.", roomsBorderPane);
+                    notificationOBJ.successNotification("SUCCESSFUL", "Room No." + roomNo + " Successfully Added To Room List.");
                     fillRoomsTableView();
                     clearFields();
                     saveRoomButton.setDisable(true);
@@ -172,7 +172,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
                 }
                 if (flag > 0) {
                     fillRoomsTableView();
-                    notificationOBJ.successNotification("UPDATE SUCCESSFUL", "You Have Successfully Updated Room Details", roomsBorderPane);
+                    notificationOBJ.successNotification("UPDATE SUCCESSFUL", "You Have Successfully Updated Room Details");
                 } else notificationOBJ.errorNotification("UPDATE FAILED", "Update Operation Failed");
             }
         }

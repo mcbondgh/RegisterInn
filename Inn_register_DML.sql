@@ -14,6 +14,7 @@
     SELECT * FROM rooms;
     SELECT * FROM roomsCategory;
     SELECT * FROM modules;
+    SELECT * FROM StocksCategory;
         
     ALTER TABLE users 
     ADD COLUMN emp_id INT AFTER confirm_password;
@@ -35,6 +36,7 @@
     TRUNCATE TABLE activation_password;
     TRUNCATE TABLE roles;
     TRUNCATE TABLE rooms;
+    TRUNCATE TABLE StocksCategory;
 
 -- ALTER TABLE AND UPDATE STATEMENTS
 	UPDATE business_info SET bsi_name = "GUEST HOUSE", updated_date = current_timestamp();

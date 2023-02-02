@@ -11,13 +11,12 @@ import org.controlsfx.control.action.Action;
 
 public class UserNotification {
     Notifications notifications = Notifications.create();
-    public void  successNotification(String title, String text, BorderPane pane) {
-        Image logo = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\successIcon.png");
+    public void  successNotification(String title, String text) {
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\successIcon.png");
         notifications.graphic(new ImageView(logo));
         notifications.title(title);
         notifications.text(text);
         notifications.position(Pos.TOP_CENTER);
-        notifications.owner(pane);
         notifications.show();
         notifications.hideAfter(Duration.seconds(3));
     }

@@ -146,7 +146,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML void deleteRoleButtonClicked() throws SQLException {
         String currentValue = roleField.getText().trim();
         if (deleteRoleType(currentValue) > 0) {
-            notificationOBJ.successNotification("SUCCESSFUL", "Selected role type successfully deleted.",settingsPane );
+            notificationOBJ.successNotification("SUCCESSFUL", "Selected role type successfully deleted");
             roleField.clear();
             validateRoleField();
             roleTableView.getItems().clear();
@@ -170,7 +170,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             alert.getButtonTypes().remove(ButtonType.OK);
             if(alert.showAndWait().get().equals(ButtonType.YES)) {
                 if (addNewRoleType(currentValue) > 0) {
-                    notificationOBJ.successNotification("SUCCESSFUL", "New role type successfully added.", settingsPane);
+                    notificationOBJ.successNotification("SUCCESSFUL", "New role type successfully added.");
                     roleField.clear();
                     validateRoleField();
                     roleTableView.getItems().clear();
@@ -188,7 +188,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML void deleteDepartmentButtonClicked() throws SQLException {
         String currentValue = departmentField.getText().trim();
         if (deleteDesignation(currentValue) > 0) {
-            notificationOBJ.successNotification("SUCCESSFUL", "Selected department type successfully deleted.", settingsPane);
+            notificationOBJ.successNotification("SUCCESSFUL", "Selected department type successfully deleted.");
             departmentField.clear();
             validateDepartmentField();
             departmentsTableView.getItems().clear();
@@ -214,7 +214,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             alert.getButtonTypes().remove(ButtonType.OK);
             if(alert.showAndWait().get().equals(ButtonType.YES)) {
                 if (addNewDepartment(currentValue) > 0) {
-                    notificationOBJ.successNotification("SUCCESSFUL", "New Department successfully added.", settingsPane);
+                    notificationOBJ.successNotification("SUCCESSFUL", "New Department successfully added.");
                     departmentField.clear();
                     validateDepartmentField();
                     departmentsTableView.getItems().clear();
@@ -241,7 +241,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             alert.getButtonTypes().remove(ButtonType.OK);
             if(alert.showAndWait().get().equals(ButtonType.YES)) {
                 if (addNewIdType(currentValue) > 0) {
-                    notificationOBJ.successNotification("SUCCESSFUL", "New Id type successfully added.", settingsPane);
+                    notificationOBJ.successNotification("SUCCESSFUL", "New Id type successfully added.");
                     idTypeField.clear();
                     validateIdTypeField();
                     idTypeTableView.getItems().clear();
@@ -259,7 +259,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML void deleteIdTypeButtonClicked() throws SQLException {
         String currentValue = idTypeField.getText().trim();
         if (deleteIdType(currentValue) > 0) {
-            notificationOBJ.successNotification("SUCCESSFUL", "Selected Id type successfully deleted.", settingsPane);
+            notificationOBJ.successNotification("SUCCESSFUL", "Selected Id type successfully deleted.");
             idTypeField.clear();
             validateIdTypeField();
             idTypeTableView.getItems().clear();
@@ -288,7 +288,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             alert.getButtonTypes().remove(ButtonType.OK);
             if(alert.showAndWait().get().equals(ButtonType.YES)) {
                 if (addNewRoomsCategory(currentValue, currentPrice) > 0) {
-                    notificationOBJ.successNotification("SUCCESSFUL", "New Room Category successfully added.", settingsPane);
+                    notificationOBJ.successNotification("SUCCESSFUL", "New Room Category successfully added.");
                     roomsCategoryTableView.getItems().clear();
                     roomsCategoryField.clear();
                     validateRoomsCategoryField();
@@ -301,7 +301,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML void deleteRoomsCategoryButtonClicked() {
         String currentValue = roomsCategoryField.getText().trim();
         if (deleteRoomsCategory(currentValue) > 0) {
-            notificationOBJ.successNotification("SUCCESSFUL", "Selected room category successfully deleted.", settingsPane);
+            notificationOBJ.successNotification("SUCCESSFUL", "Selected room category successfully deleted.");
             roomsCategoryField.clear();
             validateRoomsCategoryField();
             roomsCategoryTableView.getItems().clear();

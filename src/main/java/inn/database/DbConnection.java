@@ -2,6 +2,8 @@ package inn.database;
 
 import inn.multiStage.MultiStages;
 import inn.tableViews.RoomsCategoryTableView;
+import inn.tableViews.StocksCategoryTableView;
+import inn.tableViews.SuppliersTableViewItems;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +15,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.function.Supplier;
 
 public class DbConnection {
     public DbConnection() {}
@@ -472,6 +475,55 @@ public class DbConnection {
             e.printStackTrace();
         }
         return roomItems;
+    }
+
+
+
+    //THIS METHOD RETURNS ALL COLUMNS FROM THE StocksCategory TABLE
+    public ObservableList<StocksCategoryTableView> fetchStockCategories() {
+        ObservableList<StocksCategoryTableView> ListItems = FXCollections.observableArrayList();
+        try {
+            String selectQuery = "SELECT * FROM StocksCategory";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+                int id = result.getInt(1);
+                String categoryName = result.getString(2);
+                Date dateAdded = result.getDate(3);
+                ListItems.add(new StocksCategoryTableView(id, categoryName, dateAdded));
+            }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ListItems;
+    }
+
+    //THIS METHOD WHEN INVOKED SHALL RETURN ALL VALUES FROM THE Suppliers TABLE.
+    public ObservableList<SuppliersTableViewItems> fetchSuppliers() {
+        ObservableList<SuppliersTableViewItems> ListItems = FXCollections.observableArrayList();
+        try {
+            String selectQuery = "SELECT * FROM Suppliers;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+                int id = result.getInt("id");
+                int status = result.getInt("status");
+                String name = result.getString("supplierName");
+                String contact = result.getString("contact");
+                String location = result.getString("location");
+                Date date = result.getDate("DateCreated");
+                ListItems.add(new SuppliersTableViewItems(id, status, name, contact, location, date));
+            }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return ListItems;
     }
 
 

@@ -138,9 +138,9 @@ public class AuthenPasswordReset extends InnActivationModel implements Initializ
         newPasswordField.clear();
         confirmPasswordField.clear();
         resetPasswordBtn.setDisable(true);
-        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/dashboard/resetAuthenPassword.fxml"));
-        Parent root = fxmlLoader.load();
-        generalOBJ = fxmlLoader.getController();
+//        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/dashboard/resetAuthenPassword.fxml"));
+//        Parent root = fxmlLoader.load();
+//        generalOBJ = fxmlLoader.getController();
     }
 
 
