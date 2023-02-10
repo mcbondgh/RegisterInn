@@ -105,5 +105,34 @@ public class ManageStocksModel extends DbConnection {
     }
 
 
+    public int addNewStore(String storeName, String desc) {
+        int flag = 0;
+
+        try {
+            prepare = CONNECTOR().prepareStatement("INSERT INTO stores VALUES(DEFAULT, ?, ?, DEFAULT)");
+            prepare.setString(1, storeName);
+            prepare.setString(2, desc);
+            flag = prepare.executeUpdate();
+            prepare.close();
+            CONNECTOR().close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return flag;
+    }
+
+    public int deleteStore(int id) {
+        int flag = 0;
+        try {
+            prepare = CONNECTOR().prepareStatement("DELETE FROM stores WHERE(id= '"+ id+"')");
+            flag = prepare.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+
 
 }//END OF CLASS...

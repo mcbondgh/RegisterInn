@@ -1,7 +1,7 @@
 package inn.models;
 
 import inn.database.DbConnection;
-import inn.tableViews.ArchivedTable;
+import inn.tableViews.ArchivedTableData;
 import inn.tableViews.EmployeesTable;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
@@ -93,7 +93,7 @@ public class ResourceModel extends DbConnection{
     /**
      * THIS METHOD WHEN CALLED WILL RETURN ALL EMPLOYEES WHO'S STATUS = 0 ie INACTIVE EMPLOYEES (ARCHIVED) AND STORE THE RESULT IN AN OBSERVABLE LIST;
      * */
-    public ObservableList<ArchivedTable> inActiveEmployees = FXCollections.observableArrayList();
+    public ObservableList<ArchivedTableData> inActiveEmployees = FXCollections.observableArrayList();
     public void fetchInactiveEmployees() {
         try {
             String selectQuery = "SELECT * FROM employees WHERE status = 0 ORDER BY lastname ASC;";
@@ -116,7 +116,7 @@ public class ResourceModel extends DbConnection{
                 }
                 String desig = result.getString("designation");
                 CheckBox restoreButton = new CheckBox();
-                inActiveEmployees.add(new ArchivedTable(id, fullname, number, address , date, desig, currentStatus, salary, restoreButton));
+                inActiveEmployees.add(new ArchivedTableData(id, fullname, number, address , date, desig, currentStatus, salary, restoreButton));
             }
         }catch (Exception e) {
             e.printStackTrace();

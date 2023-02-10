@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.Camera;
+import javafx.scene.canvas.*;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,7 +24,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class Homepage extends DbConnection implements Initializable {
+public class Homepage extends DbConnection implements Initializable{
 
     /******************************************> OBJECT INSTANTIATION FIELD <*******************************************/
     MultiStages multiStagesOBJ = new MultiStages();
@@ -34,19 +36,22 @@ public class Homepage extends DbConnection implements Initializable {
     /******************************************> FXML OBJECTS  <*******************************************/
     @FXML private Button dashboardBtn, signoutBtn, inventoryBtn, bookingBtn, accountingBtn;
     @FXML private MenuButton reportsBtn, settingsBtn;
-    @FXML private MenuItem generalBtn, manageRolesBtn, updateBtn, humanResourceBtn;
-    @FXML private Label businessNameLabel, activeUserLabel, dateLabel;
+    @FXML private MenuItem generalBtn, manageRolesBtn, updateBtn, humanResourceBtn, employeeProfileBtn, payRoleButton, manageRoomsButton, manageStocksButton;
+    @FXML private Label businessNameLabel, activeUserLabel, dateLabel, counter;
     @FXML private TextArea aboutField;
     @FXML private BorderPane displayContainer;
     @FXML private ImageView heroImageDisplay;
 
     public static String label;
 
+    public static String setActiveUserNane;
+    public static int counterValue;
 
 //    General general = new General();
     /*******************************************************************************************************************
      IMPLEMENTATION OF INITIALIZER METHOD*/
     public void initialize(URL location, ResourceBundle resourceBundle) {
+        activeUserLabel.setText(setActiveUserNane);
         setDashboardVariables();
     }
 
@@ -107,13 +112,19 @@ public class Homepage extends DbConnection implements Initializable {
         FlipView("Modules/settings/manageRooms.fxml");
     }
 
+    @FXML public void messageBoxButtonOnAction() throws IOException {
+        FlipView("Modules/settings/manageRooms.fxml");
+    }
+
     @FXML void managePayrollButtonClick() throws IOException {
         FlipView("Modules/settings/payroll.fxml");
     }
     @FXML void manageStocksButtonOnAction() throws IOException {
         FlipView("Modules/settings/manageStocks.fxml");
     }
+    @FXML void countVALUE() {
 
+    }
 
     public void signoutBtnAction() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -122,7 +133,6 @@ public class Homepage extends DbConnection implements Initializable {
         alert.getButtonTypes().remove(ButtonType.OK);
         alert.getButtonTypes().add(YES);
 //        Optional<ButtonType> choose = alert.showAndWait();
-
         if(alert.showAndWait().get() == YES) {
             int returnedValue = modelOBJ.updateTrackerDateOnly();
             if (returnedValue > 0) {
@@ -161,4 +171,6 @@ public class Homepage extends DbConnection implements Initializable {
         }
 
     }
+
+
 }

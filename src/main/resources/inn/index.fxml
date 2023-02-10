@@ -20,7 +20,7 @@
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameField" layoutX="31.0" layoutY="33.0" prefHeight="28.0" prefWidth="250.0" promptText="eg mcbondgh" style="-fx-focus-traversable: red;">
+            <TextField fx:id="usernameField" layoutX="31.0" layoutY="33.0" prefHeight="28.0" prefWidth="250.0" promptText="eg mcbondgh">
                <font>
                   <Font name="Tahoma" size="12.0" />
                </font>

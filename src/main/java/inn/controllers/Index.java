@@ -2,8 +2,10 @@ package inn.Controllers;
 
 
 import inn.Controllers.dashboard.Homepage;
+import inn.MultiThreads;
 import inn.database.DbConnection;
 import inn.multiStage.MultiStages;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +14,7 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.ResourceBundle;
 
 public class Index extends Homepage implements Initializable {
@@ -22,21 +25,20 @@ public class Index extends Homepage implements Initializable {
         private Parent root;
 
 
+
+
     /*******************************************************************************************************************
      INITIALIZER METHOD */
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-            try {
-                setBusinessHero();
-            } catch (Exception E) {
-                try {
-                    E.printStackTrace();
-                    multiStages.wrongDateTimeStage();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+
+        try {
+            setBusinessHero();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     /*******************************************************************************************************************
@@ -57,10 +59,15 @@ public class Index extends Homepage implements Initializable {
     /*******************************************************************************************************************
      ACTION EVENT METHODS IMPLEMENTATION*/
     public void signinButtonAction() throws IOException {
+
+            Homepage.setActiveUserNane = getUsernameField().isBlank() ?  "Active User" :getUsernameField();
         multiStages.Homepage();
         signinButton.getScene().getWindow().hide();
 
     }
+
+
+
 
     public void passwordResetLink() throws IOException {
         multiStages.resetPassword();
@@ -79,11 +86,6 @@ public class Index extends Homepage implements Initializable {
     public void resetInnRegister() throws IOException {
         multiStages.innRegisterActivationStage();
     }
-
-
-
-
-
 
 
 

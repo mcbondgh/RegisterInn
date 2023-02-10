@@ -4,6 +4,7 @@ import inn.models.ManageStocksModel;
 import inn.prompts.UserNotification;
 import inn.tableViews.StockProductsTableView;
 import inn.tableViews.StocksCategoryTableView;
+import inn.tableViews.StoresTableData;
 import inn.tableViews.SuppliersTableViewItems;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -37,6 +38,26 @@ public class ManageStocks extends ManageStocksModel implements Initializable {
     @FXML private Label requiredIndicator;
 
 
+    //******************* >> PRODUCT STOCKS NODES
+    @FXML private TextField productNameField, receiptField, unitQuantityField,packQuantityField;
+    @FXML private TextArea notesField;
+    @FXML private ComboBox<String> itemDescBox, itemCategoryBox, itemSupplierBox, selectStoreBox;
+    @FXML private DatePicker expiryDatePicker;
+    @FXML private Button saveProductBtn, deleteProductBtn;
+
+
+    //******************* >> STORES TABLE VIEW
+    @FXML private TextField storesInputField, storeDescriptionField;
+    @FXML private TitledPane storesTab;
+    @FXML private CheckBox storesCheckBox;
+    @FXML private Button saveStoreButton, deleteStoreButton;
+
+
+    @FXML private TableView<StoresTableData> storeTypeTable;
+    @FXML private TableColumn<Object, String> storeName;
+    @FXML private TableColumn<Object, String> storeDescription;
+
+
     //******************* >> SUPPLIERS TABLE VIEW NODES
     @FXML private TableView<SuppliersTableViewItems> suppliersTable;
     @FXML private  TableColumn<SuppliersTableViewItems, Integer> supplierIdColumn;
@@ -51,37 +72,13 @@ public class ManageStocks extends ManageStocksModel implements Initializable {
     @FXML private  TableColumn<StocksCategoryTableView, String> categoryNameColumn;
 
 
-    //******************* >> STOCK PRODUCTS TABLE VIEW NODES
-    @FXML private TableView<StockProductsTableView> stocksTable;
-    @FXML private TableColumn<StockProductsTableView, String> proNameColumn;
-    @FXML private TableColumn<StockProductsTableView, String> productNameColumn;
-    @FXML private TableColumn<StockProductsTableView, String> notesColumn;
-    @FXML private TableColumn<StockProductsTableView, String> invoiceNoColumn;
-    @FXML private TableColumn<StockProductsTableView, String> categoryColumn;
-    @FXML private TableColumn<StockProductsTableView, String> supplierColumn;
-    @FXML private TableColumn<StockProductsTableView, Integer> qtyColumn;
-    @FXML private TableColumn<StockProductsTableView, Integer> costPriceColumn;
-    @FXML private TableColumn<StockProductsTableView, Integer> sellingPriceColumn;
-    @FXML private TableColumn<StockProductsTableView, Integer> totalColumn;
-    @FXML private TableColumn<StockProductsTableView, Integer> profitColumn;
-    @FXML private TableColumn<StockProductsTableView, Date> expDateColumn;
-    @FXML private TableColumn<StockProductsTableView, Date> dateColumn;
-    @FXML private TableColumn<StockProductsTableView, String> addedByColumn;
-
-    //******************* >> STOCKS TAB NODE ITEMS
-    @FXML private TextField searchField, displayProductId, productNameField, invoiceNoField, quantityField, costPriceField, amountField,  profitField;
-    @FXML private TextArea notesField;
-    @FXML private  ComboBox<SuppliersTableViewItems> supplierComboBox ;
-    @FXML private  ComboBox<String> categoryComboBox;
-    @FXML private  DatePicker expiryDatePicker;
-    @FXML private  Button saveStockButton, updateStockButton, deleteStockButton;
     
     //THESE CHANGES WERE MADE IN GITHUB...
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateStockCategoryTable();
-        fillStockCategoryComboBox();
         populateSuppliersTable();
+        populateStoresTable();
     }
 
 
@@ -93,28 +90,28 @@ public class ManageStocks extends ManageStocksModel implements Initializable {
     /*********************************************************************************************************
      ****** >>                   INPUT FIELDS VALIDATION OPERATION...
      *********************************************************************************************************/
-    @FXML void validateContactFieldOnKeyTyped(KeyEvent event) {
-        if (!(event.getCode().isDigitKey() || event.getCode().isArrowKey() || event.getCode() == KeyCode.BACK_SPACE)) {
-            contactField.setText(String.valueOf(0));
+    @FXML void validateUnitQuantityField(KeyEvent event) {
+        if(!(event.getCode() == KeyCode.PERIOD || event.getCode().isDigitKey()) || event.getCode().equals(KeyCode.BACK_SPACE)) {
+            unitQuantityField.clear();
         }
-        if(contactField.getText().length() > 10) {contactField.deleteText(10, contactField.getLength());}
-
     }
-    @FXML void validateStockCategoryOnKeyType() {
-        saveStockCategoryButton.setDisable(checkCategoryField());
+    @FXML void validatePackQuantityField(KeyEvent event) {
+        if(!(event.getCode() == KeyCode.PERIOD || event.getCode().isDigitKey()) || event.getCode().equals(KeyCode.BACK_SPACE)) {
+            unitQuantityField.clear();
+        }
     }
-    @FXML void validateAllSupplierFields() {
-        saveSuppliersButton.setDisable(checkLocationField() || checkSupplierNameField() || checkContactField());
-        saveSuppliersButton.setDisable(contactField.getText().length() <10);
-    }
-
 
 
     /*********************************************************************************************************
      ****** >>                    ACTION EVENT HANDLERS FOR STOCKS CATEGORY TABLE...
      *********************************************************************************************************/
     @FXML void stockCategoryCheckBoxClicked() {stockCategoriesTab.setDisable(disableStockCategoriesTab());}
-    @FXML void suppliersCheckBoxClicked() {suppliersTab.setDisable(disableSuppliersTab());}
+    @FXML void suppliersCheckBoxClicked() {
+        suppliersTab.setDisable(disableSuppliersTab());
+    }
+    @FXML void storeCheckBoxClicked() {
+        storesTab.setDisable(storesCheckBox.isSelected());
+    }
 
     //THIS ACTION EVENT IS ASSOCIATED WITH THE STOCKS BUTTON. WHEN CLICKED, BLOCK OF CODE SHALL BE EXECUTED...
     @FXML void saveStockCategoryButtonClicked() {
@@ -135,6 +132,11 @@ public class ManageStocks extends ManageStocksModel implements Initializable {
         updateStockCategoryButton.setDisable(false);
         deleteStockCategoryButton.setDisable(false);
     }
+    @FXML void suppliersTableRowSelected() {
+        updateSuppliersButton.setDisable(false);
+        deleteSuppliersButton.setDisable(false);
+    }
+
 
     //THIS METHOD IS RESPONSIBLE FOR ITERATING THROUGH THE STOCK CATEGORY TABLE AND SAVING ALL VALUES INTO THE StocksCategory TABLE..
     @FXML void updateStockCategoryButtonClicked() {
@@ -150,30 +152,94 @@ public class ManageStocks extends ManageStocksModel implements Initializable {
 
     //THIS METHOD IS RESPONSIBLE FOR DELETING AN ITEM FROM THE StocksCategory TABLE WHEN THE deleteStockCategoryButton IS CLICKED...
     @FXML void deleteStockCategoryButtonClicked() {
-        int itemId = stocksCategoryTable.getSelectionModel().getSelectedItem().getId();
-        int outputBit = deleteStockCategory(itemId);
-        switch (outputBit) {
-            case 1 -> {
+        try {
+            int itemId = stocksCategoryTable.getSelectionModel().getSelectedItem().getId();
+            int outputBit = deleteStockCategory(itemId);
+            if (outputBit == 1) {
                 notify.successNotification("DELETE SUCCESSFUL", "Selected Item Successfully Deleted.");
                 refreshStocksCategoryTable();
             }
-            case 0 -> notify.errorNotification("DELETE FAILED", "Failed To Delete Selected Item.");
+        } catch (NullPointerException e) {
+            notify.informationNotification("DELETE FAILED", "Please make a selection to delete");
         }
+
     }
-
-
     @FXML void saveSupplierButtonClicked() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "please confirm to add new supplier, else cancel to abort");
-        alert.getButtonTypes().add(ButtonType.YES);
-        alert.getButtonTypes().remove(ButtonType.OK);
-        alert.setTitle("ADD NEW SUPPLIER");
-        alert.setHeaderText("DO YOU WANT TO ADD " + supplierNameField.getText() + "?");
-        if (alert.showAndWait().get().equals(ButtonType.YES)) {
-             insertNewSupplier(supplierNameField.getText(), contactField.getText(), locationColumn.getText());
-             notify.successNotification("ADD SUCCESSFUL", "New supplier successfully added");
-             unsetSuppliersVariables();
+        if(checkIfSupplierAlreadyExist()) {
+            notify.informationNotification("SUPPLIER EXIST", "Supplier with name " + supplierNameField.getText() + " already exist");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "please confirm to add new supplier, else cancel to abort");
+            alert.getButtonTypes().add(ButtonType.YES);
+            alert.getButtonTypes().remove(ButtonType.OK);
+            alert.setTitle("ADD NEW SUPPLIER");
+            alert.setHeaderText("DO YOU WANT TO ADD " + supplierNameField.getText() + "?");
+            if (alert.showAndWait().get().equals(ButtonType.YES)) {
+                insertNewSupplier(supplierNameField.getText(), contactField.getText(), locationField.getText());
+                notify.successNotification("ADD SUCCESSFUL", "New supplier successfully added");
+                refreshSuppliersTable();
+                unsetSuppliersVariables();
+            }
         }
     }
+
+    @FXML void updateSuppliersButtonClicked() {
+        int outputBit = 0;
+        for (SuppliersTableViewItems items : suppliersTable.getItems()) {
+            outputBit = updateSupplier(items.getSupplierName(), items.getContactNumber(), items.getLocation(), items.getId());
+        }
+        switch (outputBit) {
+            case 1 -> {
+                notify.successNotification("UPDATE SUCCESSFUL", "Suppliers Table Items Successfully Updated.");
+            }
+            case 0 -> notify.errorNotification("UPDATE FAILED", "Update Operation failed.");
+        }
+    }
+
+    @FXML void deleteSupplierButtonClicked() {
+        try {
+            int itemId = suppliersTable.getSelectionModel().getSelectedItem().getId();
+            deleteSelectedSupplier(itemId);
+            notify.successNotification("DELETE SUCCESSFUL", "Selected Supplier Successfully Deleted.");
+            refreshSuppliersTable();
+        } catch (NullPointerException e) {
+            notify.informationNotification("EMPTY SELECTION" , "Please Select A Supplier To Be Deleted.");
+        }
+    }
+
+    @FXML void saveStoresButtonClicked() {
+       int outputResult = addNewStore(storesInputField.getText(), storeDescriptionField.getText());
+       switch (outputResult) {
+           case 1 -> {notify.successNotification("SAVED SUCCESSFULLY", "New store successfully saved");
+               storeTypeTable.getItems().clear();
+                populateStoresTable();
+                storesInputField.clear();
+                storeDescriptionField.clear();
+           }
+           case 0 -> notify.errorNotification("FAILED TO SAVE", "Failed to save new store");
+       }
+    }
+    @FXML void deleteStoreButtonClicked() {
+        int storeId = 0;
+        for (StoresTableData item : storeTypeTable.getSelectionModel().getSelectedItems()) {
+            storeId = item.getId();
+        }
+        int outputResult = deleteStore(storeId);
+        switch(outputResult) {
+            case 1-> {
+                notify.successNotification("DELETE SUCCESSFUL ", "Store successfully deleted");
+                storeTypeTable.getItems().clear();
+                populateStoresTable();
+            }
+            case 0-> notify.errorNotification("FAILED TO DELETE", "Attempt to delete failed.");
+        }
+    }
+
+    @FXML void storesTableRowSelected() {
+        deleteStoreButton.setDisable(!storeTypeTable.isFocused());
+    }
+
+    @FXML void saveProductButtonOnAction() {}
+    @FXML void deleteProductButtonOnAction() {}
 
     /*********************************************************************************************************
      ****** >>                     TRUE OR FALSE STATEMENTS FOR STOCKS CATEGORY
@@ -214,6 +280,17 @@ public class ManageStocks extends ManageStocksModel implements Initializable {
         return flag;
     }
 
+    boolean checkIfSupplierAlreadyExist() {
+        boolean flag = false;
+        for (SuppliersTableViewItems item : fetchSuppliers()) {
+            String itemName = supplierNameField.getText().toLowerCase().trim();
+            if(Objects.equals(item.getSupplierName().trim().toLowerCase(), itemName)) {
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
 
 
     /*********************************************************************************************************
@@ -235,15 +312,44 @@ public class ManageStocks extends ManageStocksModel implements Initializable {
         stocksCategoryTable.setItems(fetchStockCategories());
     }
 
-    @FXML private void supplierNameColumnOnEditCommit(TableColumn.CellEditEvent<StocksCategoryTableView, String> cellEditEvent) {
-        supplierNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        suppliersTableOBJ.setSupplierName(cellEditEvent.getNewValue());
-    }
     private void populateSuppliersTable() {
         supplierNameColumn.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
+        supplierNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        supplierNameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<SuppliersTableViewItems, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<SuppliersTableViewItems, String> cellEditEvent) {
+                suppliersTableOBJ = cellEditEvent.getRowValue();
+                suppliersTableOBJ.setSupplierName(cellEditEvent.getNewValue());
+            }
+        });
+
         contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactNumber"));
+        contactColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        contactColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<SuppliersTableViewItems, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<SuppliersTableViewItems, String> cellEditEvent) {
+                suppliersTableOBJ = cellEditEvent.getRowValue();
+                suppliersTableOBJ.setContactNumber(cellEditEvent.getNewValue());
+            }
+        });
+
         locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        locationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        locationColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<SuppliersTableViewItems, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<SuppliersTableViewItems, String> cellEditEvent) {
+                suppliersTableOBJ = cellEditEvent.getRowValue();
+                suppliersTableOBJ.setLocation(cellEditEvent.getNewValue());
+            }
+        });
+
         suppliersTable.setItems(fetchSuppliers());
+    }
+
+    private void populateStoresTable() {
+        storeName.setCellValueFactory(new PropertyValueFactory<>("storeName"));
+        storeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        storeTypeTable.setItems(fetchStores());
     }
 
 
@@ -286,11 +392,6 @@ public class ManageStocks extends ManageStocksModel implements Initializable {
     /*********************************************************************************************************
      ****** >>                     COMBOBOX FILL METHODS.
      *********************************************************************************************************/
-    void fillStockCategoryComboBox() {
-       for(StocksCategoryTableView item : fetchStockCategories()) {
-           categoryComboBox.getItems().add(item.getCategoryName());
-       }
-    }
 
 
 }//END OF CLASS

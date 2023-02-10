@@ -3,7 +3,7 @@ package inn.Controllers.settings;
 import inn.Controllers.config.DefPassword;
 import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;
-import inn.tableViews.ArchivedTable;
+import inn.tableViews.ArchivedTableData;
 import inn.tableViews.EmployeesTable;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
@@ -51,16 +51,16 @@ public class HumanResource extends ResourceModel implements Initializable {
     @FXML private TableColumn<EmployeesTable, Button> removeColumn;
 
     /************************************ ARCHIVED TABLEVIEW COLUMN NAMES EJECTED FROM THE FXML FILE.*/
-    @FXML private TableView<ArchivedTable> ArchivedTableView;
+    @FXML private TableView<ArchivedTableData> ArchivedTableView;
     @FXML private  TableColumn<EmployeesTable, Integer> empId1;
-    @FXML private TableColumn<ArchivedTable, String>  fullnameColumn1;
-    @FXML private TableColumn<ArchivedTable, String>  numberColumn1;
-    @FXML private TableColumn<ArchivedTable, String>  addressColumn1;
-    @FXML private TableColumn<ArchivedTable, String> designationColumn1;
-    @FXML private TableColumn<ArchivedTable, String> dateJoinedColumn1;
-    @FXML private TableColumn<ArchivedTable, String> statusColumn1;
-    @FXML private TableColumn<ArchivedTable, String> salaryColumn1;
-    @FXML private TableColumn<ArchivedTable, Button> restoreColumn;
+    @FXML private TableColumn<ArchivedTableData, String>  fullnameColumn1;
+    @FXML private TableColumn<ArchivedTableData, String>  numberColumn1;
+    @FXML private TableColumn<ArchivedTableData, String>  addressColumn1;
+    @FXML private TableColumn<ArchivedTableData, String> designationColumn1;
+    @FXML private TableColumn<ArchivedTableData, String> dateJoinedColumn1;
+    @FXML private TableColumn<ArchivedTableData, String> statusColumn1;
+    @FXML private TableColumn<ArchivedTableData, String> salaryColumn1;
+    @FXML private TableColumn<ArchivedTableData, Button> restoreColumn;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -243,7 +243,7 @@ public class HumanResource extends ResourceModel implements Initializable {
 
     @FXML
     private int archiveTableRestoreButtonClicked() {
-        ArchivedTable empObject;
+        ArchivedTableData empObject;
         for (int i = 0; i < ArchivedTableView.getItems().size(); i++) {
             empObject = ArchivedTableView.getItems().get(i);
             int id = empObject.getEmpId1();

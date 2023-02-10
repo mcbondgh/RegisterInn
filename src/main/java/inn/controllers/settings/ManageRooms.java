@@ -1,5 +1,6 @@
 package inn.Controllers.settings;
 
+import inn.Controllers.report.Report;
 import inn.StartInn;
 import inn.models.ManageRoomsModel;
 import inn.prompts.UserNotification;

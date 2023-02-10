@@ -3,7 +3,9 @@ package inn.database;
 import inn.multiStage.MultiStages;
 import inn.tableViews.RoomsCategoryTableView;
 import inn.tableViews.StocksCategoryTableView;
+import inn.tableViews.StoresTableData;
 import inn.tableViews.SuppliersTableViewItems;
+import javafx.application.Preloader;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -290,7 +292,7 @@ public class DbConnection {
     public ArrayList<String> fetchUsernames(){
         ArrayList<String> usernames = new ArrayList<>();
         try {
-            String selectQuery = "SELECT username FROM users WHERE( is_default = 0);";
+            String selectQuery = "SELECT username FROM users WHERE(is_default = 0);";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while (result.next()) {
@@ -526,6 +528,29 @@ public class DbConnection {
         return ListItems;
     }
 
+
+    public ObservableList<StoresTableData> fetchStores() {
+        ObservableList returnStores = FXCollections.observableArrayList();
+
+        try {
+           String SelectQuery = "SELECT * FROM stores;";
+           stmt = CONNECTOR().createStatement();
+           result = stmt.executeQuery(SelectQuery);
+           while(result.next()) {
+               int id = result.getInt(1);
+               String storeName = result.getString(2);
+               String description = result.getString(3);
+               returnStores.add(new StoresTableData(id, storeName, description));
+           }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return  returnStores;
+    }
 
 
 }//END OF CLASS

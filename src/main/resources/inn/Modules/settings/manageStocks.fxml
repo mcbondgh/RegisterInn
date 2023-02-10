@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--<?import io.github.palexdev.materialfx.controls.*?>-->
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import io.github.palexdev.materialfx.controls.legacy.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -17,203 +21,195 @@
             <Font name="Roboto Bold" size="14.0" />
          </font>
       </Label>
-      <TabPane fx:id="stocksControlTabPane" layoutX="3.0" layoutY="54.0" prefHeight="545.0" prefWidth="1083.0" style="-fx-background-color: #fff; -fx-font-size: 13px; -fx-font-family: poppins; -fx-padding: 1px; -fx-border-color: #fff;">
+      <TabPane fx:id="stocksControlTabPane" layoutX="3.0" layoutY="54.0" prefHeight="545.0" prefWidth="1083.0" style="-fx-background-color: #fff; -fx-font-size: 10px; -fx-font-family: poppins; -fx-padding: 1px; -fx-border-color: #fff;">
          <tabs>
-            <Tab fx:id="stocksTab" style="-fx-background-color: #fff; -fx-border-color: lightgray; -fx-text-base-color: #098ecc; -fx-font-weight: bold; -fx-cursor: hand;" text="Stocks">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="1079.0" style="-fx-background-color: #fff;">
+            <Tab style="-fx-text-base-color: #098ecc; -fx-font-weight: bold; -fx-background-color: #fff;" text="Stock Up">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="42.0" layoutY="5.0" prefHeight="32.0" prefWidth="28.0" style="-fx-background-color: #098ecc; -fx-background-radius: 5px;" text="🔎" textFill="WHITE">
-                           <font>
-                              <Font name="Poppins Black" size="22.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="searchField" layoutX="64.0" layoutY="5.0" prefHeight="32.0" prefWidth="214.0" promptText="eg Search Product" style="-fx-border-color: #098ecc; -fx-border-radius: 5px; -fx-background-radius: 5px;">
-                           <font>
-                              <Font name="Poppins Regular" size="13.0" />
-                           </font>
-                        </TextField>
-                        <Pane layoutX="9.0" layoutY="392.0" prefHeight="110.0" prefWidth="1064.0" style="-fx-background-color: #f2f2f2; -fx-background-radius: 5px;">
+                        <TreeTableView fx:id="ProductStocksTable" layoutX="7.0" layoutY="46.0" prefHeight="323.0" prefWidth="1063.0" style="-fx-font-size: 11px;" tableMenuButtonVisible="true">
+                          <columns>
+                            <TreeTableColumn fx:id="itemNameColumn" prefWidth="144.66665172576904" text="Item Name" />
+                            <TreeTableColumn prefWidth="68.00003051757812" text="Receipt No." />
+                              <TreeTableColumn prefWidth="82.0" text="Item Desc" />
+                              <TreeTableColumn prefWidth="82.0" text="Unit Qty" />
+                              <TreeTableColumn prefWidth="82.0" text="Pack Qty" />
+                              <TreeTableColumn prefWidth="82.0" text="Expiry Date" />
+                              <TreeTableColumn prefWidth="82.0" text="Item Category" />
+                              <TreeTableColumn prefWidth="82.0" text="Supplier" />
+                              <TreeTableColumn prefWidth="57.33331298828125" text="Store" />
+                              <TreeTableColumn prefWidth="115.99993896484375" text="Notes" />
+                              <TreeTableColumn prefWidth="73.3333740234375" text="Added By" />
+                              <TreeTableColumn prefWidth="82.0" style="-fx-text-fill: red;" text="Status" />
+                              <TreeTableColumn editable="false" prefWidth="82.0" text="Deleted By" />
+                          </columns>
+                        </TreeTableView>
+                        <Pane fx:id="infoPane" layoutX="11.0" layoutY="380.0" prefHeight="131.0" prefWidth="1061.0" style="-fx-border-radius: 10px; -fx-background-color: #f2f2f2;">
+                           <children>
+                              <GridPane layoutX="14.0" layoutY="3.0" prefHeight="99.0" prefWidth="1041.0">
+                                <columnConstraints>
+                                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="223.33332316080728" minWidth="10.0" prefWidth="180.66665649414062" />
+                                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="145.33333333333331" minWidth="0.0" prefWidth="141.99999999999997" />
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="126.33333333333331" minWidth="10.0" prefWidth="113.33335367838544" />
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="201.66666666666669" minWidth="10.0" prefWidth="89.66666666666669" />
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="142.0" minWidth="0.0" prefWidth="88.0" />
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="207.33333333333337" minWidth="10.0" prefWidth="120.33333333333326" />
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="195.33329264322913" minWidth="10.0" prefWidth="131.33335367838538" />
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="195.33329264322913" minWidth="10.0" prefWidth="142.6666463216145" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="50.33333333333333" minHeight="10.0" prefHeight="39.99997965494791" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="32.66668701171875" minHeight="10.0" prefHeight="32.66668701171875" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <TextField fx:id="productNameField" prefHeight="29.0" prefWidth="169.0" promptText="eg Coca Cola" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label text="Item Name">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="receiptField" prefHeight="29.0" prefWidth="135.0" promptText="eg Coca Cola" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label text="Receipt No" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Item Desc" GridPane.columnIndex="2">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="itemDescBox" prefHeight="27.0" prefWidth="101.0" style="-fx-background-color: #fff; -fx-fon-family: 12px;" visibleRowCount="3" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ComboBox>
+                                    <Label text="Unit Qty" GridPane.columnIndex="3">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="unitQuantityField" onKeyTyped="#validateUnitQuantityField" prefHeight="29.0" prefWidth="80.0" promptText="eg Coca Cola" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="packQuantityField" layoutX="453.0" layoutY="37.0" onKeyTyped="#validatePackQuantityField" prefHeight="29.0" prefWidth="80.0" promptText="eg Coca Cola" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label text="Pack Qty" GridPane.columnIndex="4">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="itemCategoryBox" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #fff; -fx-fon-family: 12px;" visibleRowCount="3" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ComboBox>
+                                    <Label text="Item Category" GridPane.columnIndex="5">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Supplier" GridPane.columnIndex="6">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="itemSupplierBox" prefHeight="30.0" prefWidth="121.0" style="-fx-background-color: #fff; -fx-fon-family: 12px;" visibleRowCount="3" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ComboBox>
+                                    <DatePicker fx:id="expiryDatePicker" editable="false" prefHeight="34.0" prefWidth="125.0" style="-fx-font-size: 14px;" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+                                    <Label text="Expiry Date" GridPane.columnIndex="7">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="selectStoreBox" prefHeight="30.0" prefWidth="149.0" promptText="Select Store" style="-fx-background-color: #fff; -fx-font-family: poppins; -fx-font-size: 12px;" visibleRowCount="3" GridPane.rowIndex="2">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ComboBox>
+                                    <Button fx:id="saveProductBtn" disable="true" mnemonicParsing="false" onAction="#saveProductButtonOnAction" prefHeight="33.0" prefWidth="38.0" style="-fx-background-color: #0cb700;" text="💾" textFill="WHITE" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="Roboto" size="16.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Button fx:id="deleteProductBtn" disable="true" mnemonicParsing="false" onAction="#deleteProductButtonOnAction" prefHeight="33.0" prefWidth="38.0" style="-fx-background-color: #c93200;" text="🗑" textFill="WHITE" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="Roboto" size="16.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <GridPane.margin>
+                                          <Insets left="50.0" />
+                                       </GridPane.margin>
+                                    </Button>
+                                 </children>
+                              </GridPane>
+                              <Button fx:id="updateButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" disable="true" layoutX="663.0" layoutY="470.0" mnemonicParsing="false"  prefHeight="32.0" prefWidth="118.0" style="-fx-background-color: #ef4545;" text="UPDATE " textFill="WHITE">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <font>
+                                    <Font name="Roboto Black" size="18.0" />
+                                 </font>
+                              </Button>
+                              <TextArea fx:id="notesField" layoutX="196.0" layoutY="69.0" prefHeight="50.0" prefWidth="251.0" promptText="Notes">
+                                 <font>
+                                    <Font name="Poppins Regular" size="12.0" />
+                                 </font>
+                              </TextArea>
+                            
+                           </children>
                            <effect>
-                              <DropShadow radius="9.0275" width="17.11">
+                              <DropShadow>
                                  <color>
-                                    <Color red="0.7280701994895935" green="0.7280701994895935" blue="0.7280701994895935" />
+                                    <Color red="0.7631579041481018" green="0.7631579041481018" blue="0.7631579041481018" />
                                  </color>
                               </DropShadow>
                            </effect>
-                           <children>
-                              <TextField fx:id="productNameField" layoutX="23.0" layoutY="23.0" style="-fx-font-family: poppins;" />
-                              <TextField fx:id="invoiceNoField" layoutX="196.0" layoutY="23.0" prefHeight="27.0" prefWidth="135.0" style="-fx-font-family: poppins;" />
-                              <ComboBox fx:id="supplierComboBox" layoutX="337.0" layoutY="24.0" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #fff; -fx-border-color: #eee; -fx-border-radius: 5px;">
-                                 <effect>
-                                    <Glow />
-                                 </effect>
-                              </ComboBox>
-                              <ComboBox fx:id="categoryComboBox" layoutX="483.0" layoutY="24.0" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #fff; -fx-border-color: #eee; -fx-border-radius: 5px;">
-                                 <effect>
-                                    <Glow />
-                                 </effect>
-                              </ComboBox>
-                              <DatePicker fx:id="expiryDatePicker" editable="false" layoutX="626.0" layoutY="24.0" prefHeight="27.0" prefWidth="106.0" showWeekNumbers="true" style="-fx-font-family: poppins; -fx-font-size: 13; -fx-background-color: #fff;" />
-                              <TextArea fx:id="notesField" layoutX="24.0" layoutY="63.0" prefHeight="43.0" prefWidth="307.0" style="-fx-font-family: poppins;" />
-                              <TextField fx:id="quantityField" layoutX="339.0" layoutY="78.0" prefHeight="27.0" prefWidth="71.0" style="-fx-font-family: poppins; -fx-text-fill: black;" />
-                              <TextField fx:id="costPriceField" layoutX="415.0" layoutY="78.0" prefHeight="27.0" prefWidth="71.0" style="-fx-font-family: poppins; -fx-text-fill: black;" />
-                              <TextField fx:id="sellingPriceField" layoutX="489.0" layoutY="77.0" prefHeight="27.0" prefWidth="71.0" style="-fx-font-family: poppins; -fx-text-fill: black;" />
-                              <Label layoutX="27.0" layoutY="6.0" text="Product Name">
-                                 <font>
-                                    <Font name="Poppins Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="340.0" layoutY="60.0" text="Quantity">
-                                 <font>
-                                    <Font name="Poppins Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="199.0" layoutY="6.0" text="Invoice No.">
-                                 <font>
-                                    <Font name="Poppins Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="344.0" layoutY="6.0" text="Supplier">
-                                 <font>
-                                    <Font name="Poppins Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="486.0" layoutY="6.0" text="Category">
-                                 <font>
-                                    <Font name="Poppins Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="632.0" layoutY="5.0" text="Expiry Date">
-                                 <font>
-                                    <Font name="Poppins Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="414.0" layoutY="59.0" text="Cost Price">
-                                 <font>
-                                    <Font name="Poppins Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="488.0" layoutY="58.0" text="Sell Price">
-                                 <font>
-                                    <Font name="Poppins Regular" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="amountField" alignment="CENTER" layoutX="577.0" layoutY="78.0" prefHeight="27.0" prefWidth="70.0" style="-fx-border-radius: 5px; -fx-background-color: #fff; -fx-text-fill: red; -fx-alignment: center;">
-                                 <font>
-                                    <Font name="Poppins Bold" size="12.0" />
-                                 </font>
-                              </TextField>
-                              <Label layoutX="586.0" layoutY="59.0" text="AMOUNT" textFill="#ff5f5f">
-                                 <font>
-                                    <Font name="Poppins Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="profitField" alignment="CENTER" layoutX="661.0" layoutY="77.0" prefHeight="27.0" prefWidth="70.0" style="-fx-border-radius: 5px; -fx-background-color: #fff; -fx-text-fill: #00ce63; -fx-alignment: center;">
-                                 <font>
-                                    <Font name="Poppins Bold" size="12.0" />
-                                 </font>
-                              </TextField>
-                              <Label layoutX="672.0" layoutY="58.0" text="PROFIT" textFill="#00ce63">
-                                 <font>
-                                    <Font name="Poppins Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="saveStockButton" layoutX="938.0" layoutY="6.0" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: #0cb700;" text="SAVE" textFill="WHITE">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="Poppins Bold" size="12.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                                 <effect>
-                                    <DropShadow>
-                                       <color>
-                                          <Color red="0.859649121761322" green="0.859649121761322" blue="0.859649121761322" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </Button>
-                              <Button fx:id="updateStockButton" layoutX="938.0" layoutY="41.0" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: #f27d00;" text="UPDATE" textFill="WHITE">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="Poppins Bold" size="12.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                                 <effect>
-                                    <DropShadow>
-                                       <color>
-                                          <Color red="0.859649121761322" green="0.859649121761322" blue="0.859649121761322" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </Button>
-                              <TextField fx:id="displayProductId" alignment="CENTER" disable="true" editable="false" layoutX="796.0" layoutY="32.0" prefHeight="59.0" prefWidth="120.0" style="-fx-border-radius: 10px; -fx-border-color: lightgray; -fx-background-radius: 10px;" text="1000000">
-                                 <font>
-                                    <Font name="Poppins Bold Italic" size="24.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </padding>
-                              </TextField>
-                              <Button fx:id="deleteStockButton" layoutX="938.0" layoutY="76.0" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: #c93200;" text="DELETE" textFill="WHITE">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="Poppins Bold" size="12.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                                 <effect>
-                                    <DropShadow>
-                                       <color>
-                                          <Color red="0.859649121761322" green="0.859649121761322" blue="0.859649121761322" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </Button>
-                              <Label layoutX="813.0" layoutY="12.0" text="PRODUCT ID" textFill="#b5b1b1">
-                                 <font>
-                                    <Font name="Poppins Italic" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
                         </Pane>
-                        <TableView fx:id="stocksTable" editable="true" layoutX="8.0" layoutY="42.0" prefHeight="343.0" prefWidth="1069.0" style="-fx-font-family: poppins; -fx-font-size: 12px;" tableMenuButtonVisible="true">
-                          <columns>
-                            <TableColumn fx:id="proIdColumn" maxWidth="75.0" prefWidth="75.0" text="PRO. ID" />
-                            <TableColumn fx:id="productNameColumn" maxWidth="163.99999237060547" prefWidth="163.99999237060547" text="PRO. NAME" />
-                              <TableColumn fx:id="notesColumn" maxWidth="163.99999237060547" prefWidth="163.99999237060547" text="NOTES" />
-                              <TableColumn fx:id="invoiceNoColumn" maxWidth="163.99999237060547" prefWidth="108.66670227050781" text="INVOICE NO." />
-                              <TableColumn fx:id="categoryColumn" maxWidth="221.33334350585938" prefWidth="148.0" text="CATEGORY" />
-                              <TableColumn fx:id="supplierColumn" maxWidth="288.6665954589844" prefWidth="123.3333740234375" text="SUPPLIER" />
-                              <TableColumn fx:id="qtyColumn" maxWidth="278.66668701171875" prefWidth="70.6666259765625" style="-fx-text-fill: #ff0000;" text="QTY" />
-                              <TableColumn fx:id="costPriceColumn" maxWidth="370.6666259765625" prefWidth="92.66656494140625" style="-fx-text-fill: #ff0000;" text="C. PRICE" />
-                              <TableColumn fx:id="sellingPriceColumn" maxWidth="370.6666259765625" prefWidth="92.66656494140625" style="-fx-text-fill: #ff0000;" text="S. PRICE" />
-                              <TableColumn fx:id="totalColumn" maxWidth="370.6666259765625" prefWidth="92.66656494140625" style="-fx-text-fill: #ff0000;" text="AMONT" />
-                              <TableColumn fx:id="profitColumn" maxWidth="370.6666259765625" prefWidth="92.66656494140625" style="-fx-text-fill: #0cb700;" text="PROFIT" />
-                              <TableColumn fx:id="expDateColumn" maxWidth="370.6666259765625" prefWidth="92.66656494140625" text="EXP DATE" />
-                              <TableColumn fx:id="dateColumn" maxWidth="370.6666259765625" prefWidth="92.66656494140625" text="DATE" />
-                              <TableColumn fx:id="addedByColumn" maxWidth="370.6666259765625" prefWidth="92.66656494140625" text="ADDED BY" />
-                          </columns>
-                        </TableView>
-                        <Text fill="#910c0c" layoutX="303.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NOTE: Every item entered here is automatically saved to the warehouse">
-                           <font>
-                              <Font size="11.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </AnchorPane>
-               </content>
+                        <MFXTextField layoutX="67.0" prefHeight="45.0" prefWidth="224.0" text="inpidis" />
+                        <MFXButton layoutX="396.0" layoutY="10.0" />
+                        <MFXLegacyComboBox layoutX="501.0" layoutY="11.0" />
+                        <MFXRadioButton layoutX="319.0" layoutY="23.0" />
+                        <MFXTitledPane layoutX="7.0" layoutY="16.0" />
+                     </children></AnchorPane>
+              </content>
             </Tab>
             <Tab fx:id="stockLevelTab" style="-fx-background-color: #fff; -fx-border-color: lightgray; -fx-text-base-color: #098ecc; -fx-font-weight: bold; -fx-cursor: hand;" text="View Stock Level">
                <content>
@@ -244,10 +240,10 @@
                                     <TableView fx:id="stocksCategoryTable" editable="true" layoutX="-1.0" onMouseClicked="#stocksCategoryTableOnSelected" prefHeight="328.0" prefWidth="285.0">
                                        <columns>
                                           <TableColumn fx:id="idColumn" maxWidth="75.0" prefWidth="75.0" style="-fx-alignment: center; -fx-font-family: poppins; -fx-font-size: 16px;" text="ID" visible="false" />
-                                          <TableColumn fx:id="categoryNameColumn" maxWidth="284.0000407298406" prefWidth="277.3334859609604" style="-fx-alignment: left; -fx-font-family: poppins; -fx-font-size: 16px;" text="CATEGORY NAME" />
+                                          <TableColumn fx:id="categoryNameColumn" maxWidth="284.0000407298406" prefWidth="277.3334859609604" style="-fx-font-family: poppins; -fx-font-size: 16px;" text="CATEGORY NAME" />
                                        </columns>
                                     </TableView>
-                                    <TextField fx:id="categoryField" layoutX="17.0" layoutY="356.0" onKeyTyped="#validateStockCategoryOnKeyType" prefHeight="29.0" prefWidth="247.0" promptText="eg Market">
+                                    <TextField fx:id="categoryField" layoutX="17.0" layoutY="356.0" prefHeight="29.0" prefWidth="247.0" promptText="eg Market">
                                        <font>
                                           <Font name="Poppins Regular" size="14.0" />
                                        </font>
@@ -257,7 +253,7 @@
                                           <Font name="Poppins Regular" size="13.0" />
                                        </font>
                                     </Label>
-                                    <GridPane layoutX="31.0" layoutY="388.0" prefHeight="30.0" prefWidth="222.0">
+                                    <GridPane layoutX="31.0" layoutY="394.0" prefHeight="30.0" prefWidth="222.0">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.3333740234375" minWidth="10.0" prefWidth="74.66664632161458" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="73.66668701171874" />
@@ -297,128 +293,171 @@
                               </AnchorPane>
                           </content>
                         </TitledPane>
-                        <ListView layoutX="10.0" layoutY="48.0" prefHeight="421.0" prefWidth="200.0" style="-fx-border-color: #ddd; -fx-border-radius: 10px; -fx-background-color: #fff;" />
-                        <ListView focusTraversable="false" layoutX="10.0" layoutY="48.0" prefHeight="42.0" prefWidth="200.0" style="-fx-border-radius: 10px; -fx-background-color: #098ecc;" />
                         <Label layoutX="27.0" layoutY="55.0" prefHeight="28.0" prefWidth="171.0" text="ADD SUPPLIERS" textFill="WHITE">
                            <font>
                               <Font name="Poppins Bold" size="20.0" />
                            </font>
                         </Label>
-                        <CheckBox fx:id="stockCategoryCheckBox" layoutX="930.0" layoutY="25.0" mnemonicParsing="false" onAction="#stockCategoryCheckBoxClicked" style="-fx-color: red;" textFill="RED" />
-                        <TitledPane fx:id="suppliersTab" animated="false" layoutX="219.0" layoutY="22.0" prefHeight="452.0" prefWidth="559.0" text="Suppliers Table">
+                        <CheckBox fx:id="stockCategoryCheckBox" layoutX="906.0" layoutY="25.0" mnemonicParsing="false" onAction="#stockCategoryCheckBoxClicked" style="-fx-color: red;" textFill="RED" />
+                        <TitledPane fx:id="suppliersTab" animated="false" layoutX="302.0" layoutY="22.0" prefHeight="452.0" prefWidth="468.0" text="Suppliers Table">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="539.0">
                                  <children>
-                                    <TableView fx:id="suppliersTable" editable="true" layoutX="-1.0" layoutY="-3.0" onMouseClicked="#suppliersTableRowSelected" prefHeight="427.0" prefWidth="558.0" style="-fx-font-family: poppins; -fx-font-size: 14px;">
+                                    <TableView fx:id="suppliersTable" editable="true" layoutX="-1.0" onMouseClicked="#suppliersTableRowSelected" prefHeight="313.0" prefWidth="467.0" style="-fx-font-family: poppins; -fx-font-size: 12px;">
                                        <columns>
                                           <TableColumn fx:id="supplierIdColumn" maxWidth="75.0" prefWidth="58.00001525878906" style="-fx-font-family: poppins;" text="ID" visible="false" />
                                           <TableColumn fx:id="supplierNameColumn" maxWidth="222.66668701171875" prefWidth="190.66668701171875" style="-fx-font-family: poppins;" text="SUPPLIER NAME" />
                                           <TableColumn fx:id="contactColumn" maxWidth="222.66668701171875" prefWidth="148.66661071777344" style="-fx-font-family: poppins;" text="CONTACT" />
-                                          <TableColumn fx:id="locationColumn" maxWidth="233.33334350585938" prefWidth="209.33340454101562" style="-fx-font-family: poppins;" text="LOCATION" />
+                                          <TableColumn fx:id="locationColumn" maxWidth="136.66665649414062" prefWidth="136.66665649414062" style="-fx-font-family: poppins;" text="LOCATION" />
                                        </columns>
                                     </TableView>
+                                    <GridPane layoutX="111.0" layoutY="387.0" prefHeight="42.0" prefWidth="232.0">
+                                      <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Button fx:id="saveSuppliersButton" disable="true" mnemonicParsing="false" onAction="#saveSupplierButtonClicked" prefHeight="27.0" prefWidth="70.0" style="-fx-background-color: #0cb700;" text="Save" textFill="WHITE">
+                                             <font>
+                                                <Font name="Roboto" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Button>
+                                          <Button fx:id="updateSuppliersButton" disable="true" mnemonicParsing="false" onAction="#updateSuppliersButtonClicked" prefHeight="27.0" prefWidth="70.0" style="-fx-background-color: #f27d00;" text="Update" textFill="WHITE" GridPane.columnIndex="1">
+                                             <font>
+                                                <Font name="Roboto" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Button>
+                                          <Button fx:id="deleteSuppliersButton" disable="true" mnemonicParsing="false" onAction="#deleteSupplierButtonClicked" prefHeight="27.0" prefWidth="70.0" style="-fx-background-color: #c93200;" text="Delete" textFill="WHITE" GridPane.columnIndex="2">
+                                             <font>
+                                                <Font name="Roboto" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Button>
+                                       </children>
+                                    </GridPane>
+                                    <GridPane layoutX="6.0" layoutY="322.0" prefHeight="64.0" prefWidth="450.0">
+                                      <columnConstraints>
+                                          <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                          <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="30.66668701171875" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="39.33331298828125" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label prefHeight="28.0" prefWidth="107.0" text="Supplier Name" textFill="#6e6b6b">
+                                             <font>
+                                                <Font name="Poppins Regular" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="supplierNameField" prefHeight="29.0" prefWidth="145.0" promptText="eg Market" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font name="Poppins Regular" size="14.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label prefHeight="28.0" prefWidth="63.0" text="Location" textFill="#6e6b6b" GridPane.columnIndex="1">
+                                             <font>
+                                                <Font name="Poppins Regular" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="locationField" prefHeight="29.0" prefWidth="145.0" promptText="eg Accra" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font name="Poppins Regular" size="14.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label prefHeight="28.0" prefWidth="57.0" text="Contact" textFill="#6e6b6b" GridPane.columnIndex="2">
+                                             <font>
+                                                <Font name="Poppins Regular" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="contactField" cache="true" cacheHint="QUALITY" depthTest="ENABLE" prefHeight="31.0" prefWidth="145.0" promptText="0201010101" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font name="Poppins Regular" size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </TextField>
+                                       </children>
+                                    </GridPane>
                                  </children>
                               </AnchorPane>
                           </content>
                         </TitledPane>
-                        <CheckBox fx:id="suppliersCheckBox" layoutX="350.0" layoutY="25.0" mnemonicParsing="false" onAction="#suppliersCheckBoxClicked" style="-fx-color: red;" textFill="RED" />
-                        <GridPane layoutX="28.0" layoutY="102.0" prefWidth="158.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label prefHeight="28.0" prefWidth="133.0" text="Supplier Name" textFill="#6e6b6b">
-                                 <font>
-                                    <Font name="Poppins Regular" size="13.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="supplierNameField" onKeyTyped="#validateAllSupplierFields" prefHeight="27.0" prefWidth="185.0" promptText="eg Market" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="Poppins Regular" size="14.0" />
-                                 </font>
-                              </TextField>
-                              <Label prefHeight="28.0" prefWidth="133.0" text="Location" textFill="#6e6b6b" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="Poppins Regular" size="13.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="locationField" onKeyTyped="#validateAllSupplierFields" prefHeight="27.0" prefWidth="185.0" promptText="eg Accra" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font name="Poppins Regular" size="14.0" />
-                                 </font>
-                              </TextField>
-                              <Label prefHeight="28.0" prefWidth="133.0" text="Contact" textFill="#6e6b6b" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font name="Poppins Regular" size="13.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="contactField" cache="true" cacheHint="QUALITY" depthTest="ENABLE" onKeyReleased="#validateContactFieldOnKeyTyped" onKeyTyped="#validateAllSupplierFields" prefHeight="27.0" prefWidth="185.0" promptText="0201010101" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font name="Poppins Regular" size="14.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                              </TextField>
-                           </children>
-                        </GridPane>
-                        <GridPane layoutX="35.0" layoutY="301.0" prefHeight="97.0" prefWidth="143.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Button fx:id="saveSuppliersButton" disable="true" mnemonicParsing="false" onAction="#saveSupplierButtonClicked" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #0cb700;" text="Save" textFill="WHITE">
-                                 <font>
-                                    <Font name="Roboto" size="14.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                              <Button fx:id="updateSuppliersButton" disable="true" mnemonicParsing="false" onAction="#updateSuppliersButtonClicked" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #f27d00;" text="Update" textFill="WHITE" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="Roboto" size="14.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                              <Button fx:id="deleteSuppliersButton" disable="true" mnemonicParsing="false" onAction="#deleteSupplierButtonClicked" prefHeight="27.0" prefWidth="135.0" style="-fx-background-color: #c93200;" text="Delete" textFill="WHITE" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="Roboto" size="14.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                           </children>
-                        </GridPane>
+                        <CheckBox fx:id="suppliersCheckBox" layoutX="413.0" layoutY="25.0" mnemonicParsing="false" onAction="#suppliersCheckBoxClicked" style="-fx-color: red;" textFill="RED" />
                         <Label fx:id="requiredIndicator" focusTraversable="false" layoutX="86.0" layoutY="228.0" text="*" textFill="#e60c0c" underline="true" visible="false">
                            <font>
                               <Font name="Arial Narrow Bold" size="18.0" />
                            </font>
                         </Label>
+                        <TitledPane fx:id="storesTab" animated="false" layoutX="12.0" layoutY="23.0" prefHeight="452.0" prefWidth="270.0" text="Stores Table">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="429.0" prefWidth="265.0">
+                                 <children>
+                                    <TableView fx:id="storeTypeTable" editable="true" layoutY="1.0" onMouseClicked="#storesTableRowSelected" prefHeight="313.0" prefWidth="266.0" style="-fx-font-family: poppins; -fx-font-size: 12;">
+                                       <columns>
+                                          <TableColumn fx:id="supplierIdColumn1" maxWidth="75.0" prefWidth="58.00001525878906" style="-fx-font-family: poppins;" text="ID" visible="false" />
+                                          <TableColumn fx:id="storeName" maxWidth="222.66668701171875" prefWidth="121.3333044052124" style="-fx-font-family: poppins;" text="STORE NAME" />
+                                          <TableColumn fx:id="storeDescription" maxWidth="143.3333511352539" prefWidth="143.3333511352539" style="-fx-font-family: poppins;" text="DESCRIPTION" />
+                                       </columns>
+                                    </TableView>
+                                    <TextField fx:id="storesInputField" layoutX="19.0" layoutY="322.0" prefHeight="29.0" prefWidth="211.0" promptText="eg Admin">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="storeDescriptionField" layoutX="17.0" layoutY="357.0" prefHeight="29.0" prefWidth="213.0" promptText="eg This is the warehouse">
+                                       <font>
+                                          <Font name="Poppins Regular" size="12.0" />
+                                       </font>
+                                    </TextField>
+                                    <Button fx:id="saveStoreButton" disable="true" layoutX="56.0" layoutY="397.0" mnemonicParsing="false" onAction="#saveStoresButtonClicked" prefHeight="27.0" prefWidth="70.0" style="-fx-background-color: #0cb700;" text="Save" textFill="WHITE">
+                                       <font>
+                                          <Font name="Roboto" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Button fx:id="deleteStoreButton" disable="true" layoutX="147.0" layoutY="396.0" mnemonicParsing="false" onAction="#deleteStoreButtonClicked" prefHeight="27.0" prefWidth="70.0" style="-fx-background-color: #c93200;" text="Delete" textFill="WHITE">
+                                       <font>
+                                          <Font name="Roboto" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <CheckBox fx:id="storesCheckBox" layoutX="104.0" layoutY="26.0" mnemonicParsing="false" onAction="#storeCheckBoxClicked" style="-fx-color: red;" textFill="RED" />
                      </children>
                   </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="setPriceTab" style="-fx-background-color: #fff; -fx-border-color: lightgray; -fx-text-base-color: #098ecc; -fx-font-weight: bold; -fx-cursor: hand;" text="Set Prices">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
          </tabs>
       </TabPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#098ecc" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1092.0" />
-      <Text fill="WHITE" layoutX="103.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STOCKS" wrappingWidth="195.47000885009766">
+      <Text fill="WHITE" layoutX="99.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STOCKS" wrappingWidth="164.0">
          <font>
             <Font name="Poppins Bold" size="36.0" />
          </font>

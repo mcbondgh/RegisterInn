@@ -196,6 +196,9 @@ public class General extends DbConnection implements Initializable {
                 dateLabel.setVisible(true);
                 datePickerField.setStyle("-fx-border-width:4px; -fx-border-color:#ff0000;");
             } else {
+                if(selectedFile.equals(null)) {
+                    selectedFile = new File(heroImage.getImage().getUrl());
+                }
                 dateLabel.setVisible(false);
                 datePickerField.setStyle(null);
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

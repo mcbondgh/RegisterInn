@@ -7,13 +7,14 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.dashboard.Homepage">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#countVALUE" prefHeight="670.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.dashboard.Homepage">
    <children>
-      <BorderPane fx:id="displayContainer" layoutX="177.0" layoutY="54.0" prefHeight="605.0" prefWidth="1095.0" style="-fx-background-color: #ddddd;">
+      <BorderPane fx:id="displayContainer" layoutX="177.0" layoutY="54.0" prefHeight="605.0" prefWidth="1095.0" style="-fx-background-color: #ddd;">
          <center>
-            <Pane prefHeight="592.0" prefWidth="1097.0" BorderPane.alignment="CENTER">
+            <Pane prefHeight="592.0" prefWidth="1097.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
                <children>
                   <Pane layoutX="17.0" layoutY="-103.0" />
                   <ImageView fx:id="heroImageDisplay" fitHeight="599.0" fitWidth="904.0" layoutX="2.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
@@ -115,7 +116,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="accountingBtn1" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="16.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#accountingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Message Box" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="messageBoxButton" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" disable="true" layoutX="16.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#messageBoxButtonOnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Message Box" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -130,7 +131,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="inventoryBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="242.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inventoryBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Inventory" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="inventoryBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="242.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inventoryBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Make Sakes" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -190,9 +191,9 @@
                   <Image url="@../../images/payment%20icon%20copy.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="17.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="17.0" layoutY="249.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/stock%20copy.png" />
+                  <Image url="@../../images/stocks.jpg" />
                </image>
             </ImageView>
             <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="19.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
@@ -254,9 +255,14 @@
                         <Image url="@../../images/profile.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="activeUserLabel" layoutX="57.0" layoutY="15.0" prefHeight="18.0" prefWidth="145.0" text="Active User">
+                  <Label fx:id="activeUserLabel" layoutX="57.0" layoutY="21.0" prefHeight="18.0" prefWidth="145.0" text="Active User">
                      <font>
                         <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="71.0" layoutY="6.0" text="Current User" textFill="#00b203">
+                     <font>
+                        <Font name="Roboto Bold" size="10.0" />
                      </font>
                   </Label>
                </children>
@@ -266,6 +272,7 @@
                   <Font name="Bebas Neue Regular" size="51.0" />
                </font>
             </Label>
+            <Circle fill="#09e618" layoutX="1016.0" layoutY="14.0" radius="6.0" stroke="WHITE" strokeType="INSIDE" />
          </children>
          <cursor>
             <Cursor fx:constant="HAND" />
