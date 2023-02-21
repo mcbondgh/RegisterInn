@@ -140,6 +140,32 @@ CREATE TABLE stores(
     DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE ProductStock(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ProductName VARCHAR(255) NOT NULL,
+    ProductDescription VARCHAR(10) NOT NULL,
+    ProductBrand VARCHAR(100) NOT NULL,
+    Category VARCHAR(50) NOT NULL,
+    Supplier VARCHAR(100) DEFAULT 'Unknown',
+    Notes TEXT,
+	ExpiryDate DATE,
+	UnitQuantity INT NOT NULL DEFAULT 0,
+    PackQuantity INT NOT NULL DEFAULT 0,
+    QtyPerPack INT NOT NULL DEFAULT 0,
+    ProductQuantity INT NOT NULL,
+	StoreId INT NOT NULL DEFAULT 1 REFERENCES stores(id),
+    ActiveStatus TINYINT DEFAULT 0,
+    DeleteStatus TINYINT DEFAULT 0,
+    AddedBy INT,
+    DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE ProductBrand(
+	Id INT AUTO_INCREMENT PRIMARY KEY,
+    BrandName VARCHAR(100),
+    DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 ALTER TABLE users 
 ADD FOREIGN KEY(role_id) REFERENCES roles(id) ON DELETE SET NULL;
 

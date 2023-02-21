@@ -1,11 +1,9 @@
 package inn.Controllers.settings;
 
-import inn.Controllers.config.DefPassword;
+import inn.Controllers.configurations.DefPassword;
 import inn.models.EmpProfileModel;
 import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;
-import inn.prompts.UserNotification;
-import javafx.application.Preloader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;

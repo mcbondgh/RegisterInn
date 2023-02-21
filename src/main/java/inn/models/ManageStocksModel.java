@@ -4,6 +4,7 @@ import inn.database.DbConnection;
 import javafx.beans.NamedArg;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 
 public class ManageStocksModel extends DbConnection {
@@ -11,20 +12,18 @@ public class ManageStocksModel extends DbConnection {
     //THIS METHOD INSERTS INTO THE StocksCategory Table
     public int insertNewStockCategory(String categoryName) {
         int flag = 0;
-        try {
-            String insertQuery = "INSERT INTO StocksCategory VALUES(DEFAULT, ?, DEFAULT)";
-            prepare = CONNECTOR().prepareStatement(insertQuery);
-            prepare.setString(1, categoryName);
-            flag = prepare.executeUpdate();
-            prepare.close();
-            CONNECTOR().close();
-        }catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                String insertQuery = "INSERT INTO StocksCategory VALUES(DEFAULT, ?, DEFAULT)";
+                prepare = CONNECTOR().prepareStatement(insertQuery);
+                prepare.setString(1, categoryName);
+                flag = prepare.executeUpdate();
+                prepare.close();
+                CONNECTOR().close();
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return flag;
         }
-
-        return flag;
-    }
-
     //THIS METHOD WHEN INVOKED TAKES IN TWO PARAMETER i.e. stocksCategory DateType AS AN ARGUMENT AND UPDATES SAME IN THE StocksCategory TABLE..
     public int updateStocksCategory(String categoryName, int itemId) {
         int flag = 0;
@@ -104,10 +103,8 @@ public class ManageStocksModel extends DbConnection {
         }
     }
 
-
     public int addNewStore(String storeName, String desc) {
         int flag = 0;
-
         try {
             prepare = CONNECTOR().prepareStatement("INSERT INTO stores VALUES(DEFAULT, ?, ?, DEFAULT)");
             prepare.setString(1, storeName);
@@ -125,7 +122,7 @@ public class ManageStocksModel extends DbConnection {
     public int deleteStore(int id) {
         int flag = 0;
         try {
-            prepare = CONNECTOR().prepareStatement("DELETE FROM stores WHERE(id= '"+ id+"')");
+            prepare = CONNECTOR().prepareStatement("DELETE FROM stores WHERE(id= '"+ id +"')");
             flag = prepare.executeUpdate();
         }catch (Exception e) {
             e.printStackTrace();
@@ -133,6 +130,44 @@ public class ManageStocksModel extends DbConnection {
         return flag;
     }
 
+    //THIS METHOD WHEN INVOKED SHALL TAKE A NUMBER OF ARGUMENTS AND INTERS SAME INTO THE ProductStock Table...
+    public int insertProduct(String productName, String productDesc, String productBrand, String category, String supplier, String notes, Date expiryDate, int unitQty, int packQty, int qtyPerPack, int productQuantity, byte AddedBy) {
+        int flag = 0;
+        try {
+            String insertQuery = "INSERT INTO ProductStock(ProductName, ProductDescription, ProductBrand, Category, Supplier, Notes, ExpiryDate, UnitQuantity, PackQuantity, QtyPerPack, productQuantity, AddedBy) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            prepare = CONNECTOR().prepareStatement(insertQuery);
+            prepare.setString(1, productName);
+            prepare.setString(2, productDesc);
+            prepare.setString(3, productBrand);
+            prepare.setString(4, category);
+            prepare.setString(5, supplier);
+            prepare.setString(6, notes);
+            prepare.setDate(7, expiryDate);
+            prepare.setInt(8, unitQty);
+            prepare.setInt(9, packQty);
+            prepare.setInt(10, qtyPerPack);
+            prepare.setInt(11, productQuantity);
+            prepare.setByte(12, AddedBy);
+            flag = prepare.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    public boolean addNewBrand(String brandName) {
+        boolean flag = true;
+        try {
+            String insertQuery = "INSERT INTO ProductBrand VALUES(DEFAULT, ?, DEFAULT)";
+            prepare = CONNECTOR().prepareStatement(insertQuery);
+            prepare.setString(1, brandName);
+            flag = prepare.execute();
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return flag;
+    }
 
 
 }//END OF CLASS...

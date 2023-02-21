@@ -1,3 +1,16 @@
 #dashboardButton:hover {
    -fx-background-color: orange;
 }
+
+.products-table {
+    -fx-background-color:#fff;
+}
+
+.ProductStocksTable {
+    -fx-border-color:red;
+    -fx-border-width:2px;
+}
+
+.products-table TableColumn {
+    -fx-background-color:green;
+}

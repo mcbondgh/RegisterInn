@@ -1,14 +1,11 @@
 package inn.Controllers.settings;
 
-import inn.Controllers.config.SysActivator;
-import inn.StartInn;
+import inn.Controllers.configurations.SysActivator;
 import inn.database.DbConnection;
 import inn.models.InnActivationModel;
 import inn.multiStage.MultiStages;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 
 import java.io.IOException;

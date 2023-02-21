@@ -1,4 +1,4 @@
-package inn.Controllers.config;
+package inn.Controllers.configurations;
 
 import inn.database.DbConnection;
 import inn.models.InnActivationModel;
@@ -57,8 +57,6 @@ public class InnRegisterActivator extends InnActivationModel implements Initiali
      *                                      ACTION EVENT METHODS.
      * ****************************************************************************************************************/
 
-
-
     @FXML void closeButtonAction() {
         closeButton.setOnMouseClicked(MouseEvent -> closeButton.getScene().getWindow().hide());
     }
@@ -83,7 +81,6 @@ public class InnRegisterActivator extends InnActivationModel implements Initiali
             alert1.setHeaderText("YOU HAVE INITIATED TO UPDATE YOUR INN REGISTER. DO YOU WANT TO PROCEED?");
             if(alert1.showAndWait().get() == ButtonType.YES) {
                 int returnedValue = updateSoftwareActivation(generatedKey, getExpiryDateValue());
-
                 if (returnedValue > 0) {
                     multiStagesOBJ.systemUpdateAlertStage();
                     clearFields();

@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="625.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.ActivationStatus">
    <children>
@@ -97,7 +92,7 @@
             </DropShadow>
          </effect>
          <children>
-            <Pane fx:id="daysCounterTextBackground" layoutX="137.0" prefHeight="115.0" prefWidth="95.0" style="-fx-background-color: lightgreen; -fx-background-radius: 0px 5px 5px 0px;">
+            <Pane fx:id="daysCounterTextBackground" layoutX="152.0" prefHeight="115.0" prefWidth="80.0" style="-fx-background-color: lightgreen; -fx-background-radius: 0px 5px 5px 0px;">
                <effect>
                   <DropShadow height="3.48" radius="1.725" spread="0.08" width="5.42">
                      <color>
@@ -106,16 +101,16 @@
                   </DropShadow>
                </effect>
                <children>
-                  <Label layoutX="8.0" layoutY="17.0" prefHeight="81.0" prefWidth="82.0" text="Day(s) To Expire" textAlignment="CENTER" textFill="#048d3d" wrapText="true">
+                  <Label layoutX="8.0" layoutY="17.0" prefHeight="81.0" prefWidth="65.0" text="Day(s) To Expire" textAlignment="CENTER" textFill="#048d3d" wrapText="true">
                      <font>
                         <Font name="Roboto Black" size="18.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <Label fx:id="daysCounterLabel" layoutX="7.0" layoutY="11.0" prefHeight="88.0" prefWidth="128.0" text="365" textFill="#00c274">
+            <Label fx:id="daysCounterLabel" layoutX="7.0" layoutY="11.0" prefHeight="88.0" prefWidth="125.0" text="366" textFill="#00c274">
                <font>
-                  <Font name="Roboto Black" size="69.0" />
+                  <Font name="Poppins Bold" size="46.0" />
                </font>
                <effect>
                   <DropShadow height="0.0" offsetX="1.0" offsetY="1.0" radius="0.475" spread="0.05" width="3.9">

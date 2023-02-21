@@ -1,16 +1,14 @@
 package inn.database;
 
 import inn.multiStage.MultiStages;
-import inn.tableViews.RoomsCategoryTableView;
-import inn.tableViews.StocksCategoryTableView;
-import inn.tableViews.StoresTableData;
-import inn.tableViews.SuppliersTableViewItems;
+import inn.tableViews.*;
 import javafx.application.Preloader;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import kotlin.Unit;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -28,7 +26,6 @@ public class DbConnection {
         String URL = "jdbc:mysql://127.0.0.1:3308/inn_register";
         return DriverManager.getConnection(URL, SERVER_NAME, PASSWORD);
     }
-
 
     /*
     ----------------------------------------------------------------------------------------------------------------------
@@ -528,9 +525,30 @@ public class DbConnection {
         return ListItems;
     }
 
+    public ObservableList<StoresTableData.BrandsTableData> fetchProductBrands() {
+        ObservableList<StoresTableData.BrandsTableData> returnStores = FXCollections.observableArrayList();
+        try {
+            String SelectQuery = "SELECT * FROM ProductBrand;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(SelectQuery);
+            while(result.next()) {
+                int id = result.getInt(1);
+                String brandName = result.getString(2);
+                Timestamp dateCreated  = result.getTimestamp(3);
+                returnStores.add(new StoresTableData.BrandsTableData(id, brandName, dateCreated));
+            }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return  returnStores;
+    }
 
     public ObservableList<StoresTableData> fetchStores() {
-        ObservableList returnStores = FXCollections.observableArrayList();
+        ObservableList<StoresTableData> returnStores = FXCollections.observableArrayList();
 
         try {
            String SelectQuery = "SELECT * FROM stores;";
@@ -550,6 +568,41 @@ public class DbConnection {
         }
 
         return  returnStores;
+    }
+
+        public ObservableList<ProductStock> fetchProductDetails(){
+        ObservableList<ProductStock> products = FXCollections.observableArrayList();
+        try{
+            String selectQuery = "SELECT * FROM ProductStock WHERE(DeleteStatus = 0)";
+            stmt = CONNECTOR().createStatement();
+            result  = stmt.executeQuery(selectQuery);
+            while (result.next()) {
+                int rowId = result.getInt(1);
+                String productName = result.getString(2);
+                String productDesc = result.getString(3);
+                String productBrand = result.getString(4);
+                String productCategory = result.getString(5);
+                String productSupplier = result.getString(6);
+                String notes = result.getString(7);
+                Date expiryDate = result.getDate(8);
+                int unitQuantity = result.getInt(9);
+                int packQuantity = result.getInt(10);
+                int qtyPerPack = result.getInt(11);
+                int totalQuantity = result.getInt(12);
+                byte storeId = result.getByte(13);
+                byte activeStatus = result.getByte(14);
+                byte deleteStatus = result.getByte(15);
+                byte addedBy = result.getByte(16);
+                Timestamp dateCreated = result.getTimestamp(17);
+                products.add(new ProductStock(rowId, productName, productDesc, productBrand, productCategory, productSupplier, notes, expiryDate, unitQuantity, packQuantity, qtyPerPack, totalQuantity, storeId, activeStatus, deleteStatus, addedBy, dateCreated));
+            }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return products;
     }
 
 

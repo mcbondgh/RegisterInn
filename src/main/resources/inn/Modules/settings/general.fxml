@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.General">
    <children>
-      <BorderPane fx:id="settingsPane" layoutX="232.0" layoutY="60.0" prefHeight="532.0" prefWidth="851.0" style="-fx-background-color: #fff; -fx-background-radius: 5px; -fx-border-radius: 5px;">
+      <BorderPane fx:id="settingsPane" layoutX="190.0" layoutY="60.0" prefHeight="532.0" prefWidth="893.0" style="-fx-background-color: #fff; -fx-background-radius: 5px; -fx-border-radius: 5px;">
          <effect>
             <DropShadow blurType="GAUSSIAN" height="0.0" radius="10.1025" width="42.41">
                <color>
@@ -21,9 +21,9 @@
             </DropShadow>
          </effect>
          <center>
-            <Pane fx:id="infoPane" prefHeight="539.0" prefWidth="832.0" style="-fx-border-radius: 8px;" BorderPane.alignment="CENTER">
+            <Pane fx:id="infoPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="849.0" style="-fx-border-radius: 8px;" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane layoutX="65.0" layoutY="25.0" prefHeight="426.0" prefWidth="757.0">
+                  <GridPane layoutX="32.0" layoutY="25.0" prefHeight="445.0" prefWidth="790.0">
                     <columnConstraints>
                       <ColumnConstraints halignment="RIGHT" maxWidth="316.0" minWidth="10.0" prefWidth="130.33333333333334" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="362.6667124430338" minWidth="10.0" prefWidth="253.33331298828122" />
@@ -253,13 +253,13 @@
                         </Label>
                      </children>
                   </GridPane>
-                  <Button fx:id="uploadImageBtn" layoutX="680.0" layoutY="396.0" mnemonicParsing="false" onAction="#browseImageOnAction" style="-fx-background-color: #0078d9;" text="Browse Image" textFill="WHITE" />
-                  <ImageView fx:id="heroImage" fitHeight="117.0" fitWidth="181.0" layoutX="642.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: red;">
+                  <Button fx:id="uploadImageBtn" layoutX="662.0" layoutY="419.0" mnemonicParsing="false" onAction="#browseImageOnAction" style="-fx-background-color: #0078d9;" text="Browse Image" textFill="WHITE" />
+                  <ImageView fx:id="heroImage" fitHeight="117.0" fitWidth="181.0" layoutX="624.0" layoutY="296.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: red;">
                      <image>
                         <Image url="@../../images/placeholder.jpg" />
                      </image>
                   </ImageView>
-                  <Button fx:id="updateButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" disable="true" layoutX="663.0" layoutY="470.0" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="32.0" prefWidth="118.0" style="-fx-background-color: #ef4545;" text="UPDATE " textFill="WHITE">
+                  <Button fx:id="updateButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" disable="true" layoutX="663.0" layoutY="476.0" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="32.0" prefWidth="118.0" style="-fx-background-color: #ef4545;" text="UPDATE " textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -287,7 +287,7 @@
             <Image url="@../../images/settings%20copy.png" />
          </image>
       </ImageView>
-      <Pane layoutX="24.0" layoutY="61.0" prefHeight="267.0" prefWidth="181.0" style="-fx-background-radius: 8px; -fx-background-color: #fff;">
+      <Pane layoutX="12.0" layoutY="61.0" prefHeight="267.0" prefWidth="159.0" style="-fx-background-radius: 8px; -fx-background-color: #fff;">
          <effect>
             <DropShadow>
                <color>
@@ -296,33 +296,38 @@
             </DropShadow>
          </effect>
          <children>
-            <Pane prefHeight="42.0" prefWidth="181.0" style="-fx-background-color: #ab0303; -fx-background-radius: 8px 8px 0 0;">
+            <Pane prefHeight="42.0" prefWidth="159.0" style="-fx-background-color: #ab0303; -fx-background-radius: 8px 8px 0 0;">
                <children>
-                  <Label layoutX="41.0" layoutY="5.0" prefHeight="34.0" prefWidth="111.0" text="MENU LIST" textFill="WHITE">
+                  <Label layoutX="27.0" layoutY="5.0" prefHeight="34.0" prefWidth="111.0" text="MENU LIST" textFill="WHITE">
                      <font>
                         <Font name="Poppins Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <Button fx:id="activationKeyButton" layoutX="12.0" layoutY="101.0" mnemonicParsing="false" onMouseClicked="#activationBtnClicked" onMouseEntered="#hoverEffectForActivationBtn" onMouseExited="#mouseExitedForActivationBtn" prefHeight="30.0" prefWidth="157.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="System Activation" textFill="#ac022c">
+            <Button fx:id="activationKeyButton" layoutX="12.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#activationBtnClicked" onMouseEntered="#hoverEffectForActivationBtn" onMouseExited="#mouseExitedForActivationBtn" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="System Activation" textFill="#ac022c">
                <font>
-                  <Font name="Poppins Regular" size="14.0" />
+                  <Font name="Poppins Regular" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="systemInfoBtn" layoutX="12.0" layoutY="56.0" mnemonicParsing="false" onMouseClicked="#systemInfoBtnClicked" onMouseEntered="#HoverEffectForSysInfoBtn" onMouseExited="#mouseExitedForSysInfo" prefHeight="30.0" prefWidth="157.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="System Infomation" textFill="#ac022c">
+            <Button fx:id="systemInfoBtn" layoutX="12.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#systemInfoBtnClicked" onMouseEntered="#HoverEffectForSysInfoBtn" onMouseExited="#mouseExitedForSysInfo" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="System Infomation" textFill="#ac022c">
                <font>
-                  <Font name="Poppins Regular" size="14.0" />
+                  <Font name="Poppins Regular" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="authenBtn" layoutX="12.0" layoutY="148.0" mnemonicParsing="false" onMouseClicked="#AuthenKeyBtnClicked" onMouseEntered="#mouseHoverForAuthenBtn" onMouseExited="#mouseExitedForAuthenBtn" prefHeight="30.0" prefWidth="157.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="Athen Key Reset" textFill="#ac022c">
+            <Button fx:id="authenBtn" layoutX="12.0" layoutY="135.0" mnemonicParsing="false" onMouseClicked="#AuthenKeyBtnClicked" onMouseEntered="#mouseHoverForAuthenBtn" onMouseExited="#mouseExitedForAuthenBtn" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="Athen Key Reset" textFill="#ac022c">
                <font>
-                  <Font name="Poppins Regular" size="14.0" />
+                  <Font name="Poppins Regular" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="userLogsButton" layoutX="12.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#userLogsBtnClicked" onMouseEntered="#HoverEffectForUserLogsBtn" onMouseExited="#mouseExitedForUserLogsBtn" prefHeight="30.0" prefWidth="157.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="User Logs" textFill="#ac022c">
+            <Button fx:id="userLogsButton" layoutX="12.0" layoutY="178.0" mnemonicParsing="false" onMouseClicked="#userLogsBtnClicked" onMouseEntered="#HoverEffectForUserLogsBtn" onMouseExited="#mouseExitedForUserLogsBtn" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="User Logs" textFill="#ac022c">
                <font>
-                  <Font name="Poppins Regular" size="14.0" />
+                  <Font name="Poppins Regular" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="backUpButton" layoutX="13.0" layoutY="219.0" mnemonicParsing="false" onMouseClicked="#backUpButtonOnClick" onMouseEntered="#HoverEffectForBackupBtn" onMouseExited="#mouseExitedForBackupBtn" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="Backup" textFill="#ac022c">
+               <font>
+                  <Font name="Poppins Regular" size="12.0" />
                </font>
             </Button>
          </children>

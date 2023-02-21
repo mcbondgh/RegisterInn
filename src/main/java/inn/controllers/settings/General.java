@@ -36,7 +36,7 @@ public class General extends DbConnection implements Initializable {
     @FXML private TextField managerNameField, managerEmailField, managerNumberField, totalWorkersField, aliasField;
     @FXML private TextArea descriptionField;
     @FXML private DatePicker datePickerField;
-    @FXML private Button updateButton, uploadImageBtn, activationKeyButton, authenBtn, systemInfoBtn, userLogsButton;
+    @FXML private Button updateButton, uploadImageBtn, activationKeyButton, authenBtn, systemInfoBtn, userLogsButton, backUpButton;
     @FXML private Label dateLabel;
     @FXML private ImageView heroImage;
     @FXML private Pane infoPane;
@@ -44,6 +44,7 @@ public class General extends DbConnection implements Initializable {
 
     String filePath = null;
     File selectedFile = null;
+    InputStream stream = null;
 
 
 
@@ -177,14 +178,11 @@ public class General extends DbConnection implements Initializable {
 
     //THIS METHOD WILL CONVERT THE SELECTED FILE INTO AN INPUT STREAM FOR UPLOAD INTO THE DATABASE.
     InputStream inputStream() throws FileNotFoundException {
-        InputStream stream = null;
         try {
             stream = new FileInputStream(selectedFile);
-
-        } catch (NullPointerException | FileNotFoundException file) {
+        } catch (NullPointerException | FileNotFoundException ignored) {
              selectedFile = new File(heroImage.getImage().getUrl());
              stream = new FileInputStream(selectedFile);
-
         }
        return stream;
     }
@@ -196,9 +194,6 @@ public class General extends DbConnection implements Initializable {
                 dateLabel.setVisible(true);
                 datePickerField.setStyle("-fx-border-width:4px; -fx-border-color:#ff0000;");
             } else {
-                if(selectedFile.equals(null)) {
-                    selectedFile = new File(heroImage.getImage().getUrl());
-                }
                 dateLabel.setVisible(false);
                 datePickerField.setStyle(null);
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -207,7 +202,6 @@ public class General extends DbConnection implements Initializable {
                 alert.setTitle("Confirm Update");
                 alert.setHeaderText("ARE YOU SURE YOU WANT TO UPDATE CURRENT RECORDS?");
                 if(!(alert.showAndWait().get() == ButtonType.CANCEL)) {
-
                     updateBusinessInfo(getBusinessName(), aliasField.getText(), getEmail(), getAddress(), getBusinessNumber(), getOtherNumberField(), datePickerField.getValue(), inputStream(), getTotalWorkers(), getDescription(), getManagerName(), getManagerNumber(), getManagerEmailField());
 //                    alert.setHeaderText("PERFECT, RECORDS UPDATED SUCCESSFULLY");
                 }
@@ -271,6 +265,10 @@ public class General extends DbConnection implements Initializable {
         FlipView("Modules/Settings/resetAuthenPassword.fxml");
     }
 
+    @FXML public void backUpButtonOnClick() throws IOException{
+        FlipView("Modules/Settings/backUpView.fxml");
+    }
+
 
 
 //<------------------------MOUSE HOVER EFFECT FIELD FOR ALL BUTTONS. -------------------------------->
@@ -278,34 +276,37 @@ public class General extends DbConnection implements Initializable {
     void HoverEffectForSysInfoBtn() {
         systemInfoBtn.setStyle("-fx-background-color:#ab0303; -fx-text-fill:#fff");
     }
-
     @FXML
     void mouseExitedForSysInfo() {
         systemInfoBtn.setStyle("-fx-background-color:none; -fx-text-fill: #ab0303; -fx-border-color: #ab0303");
     }
-
     @FXML void hoverEffectForActivationBtn() {
         activationKeyButton.setStyle("-fx-background-color:#ab0303; -fx-text-fill:#fff");
     }
-
     @FXML void mouseExitedForActivationBtn() {
         activationKeyButton.setStyle("-fx-background-color:none; -fx-text-fill: #ab0303; -fx-border-color: #ab0303");
     }
-
     @FXML void mouseHoverForAuthenBtn() {
         authenBtn.setStyle("-fx-background-color:#ab0303; -fx-text-fill:#fff");
     }
-
     @FXML void mouseExitedForAuthenBtn() {
         authenBtn.setStyle("-fx-background-color:none; -fx-text-fill: #ab0303; -fx-border-color: #ab0303");
     }
-
     @FXML void HoverEffectForUserLogsBtn() {
         userLogsButton.setStyle("-fx-background-color:#ab0303; -fx-text-fill:#fff");
     }
-
     @FXML void mouseExitedForUserLogsBtn() {
         userLogsButton.setStyle("-fx-background-color:none; -fx-text-fill: #ab0303; -fx-border-color: #ab0303");
+    }
+    @FXML void HoverEffectForBackupBtn() {
+        backUpButton.setStyle("-fx-background-color:#ab0303; -fx-text-fill:#fff");
+        backUpButton.setScaleX(1.07);
+        backUpButton.setScaleY(1.07);
+    }
+    @FXML void mouseExitedForBackupBtn() {
+        backUpButton.setStyle("-fx-background-color:none; -fx-text-fill: #ab0303; -fx-border-color: #ab0303");
+        backUpButton.setScaleX(1);
+        backUpButton.setScaleY(1);
     }
 
 
@@ -313,7 +314,6 @@ public class General extends DbConnection implements Initializable {
     //THIS METHOD FILLS THE TEXT FIELDS OF THE FORM WITH DATE RETURNED FROM THE DATABASE.
     public void fillAllFields(){
         try {
-
             setBusinessNameField((String) fetchBusinessInfo().get(0));
             aliasField.setText((String) fetchBusinessInfo().get(1));
             setEmail((String) fetchBusinessInfo().get(2));
@@ -329,13 +329,13 @@ public class General extends DbConnection implements Initializable {
             setManagerEmailField((String) fetchBusinessInfo().get(12));
             Blob imageBlob = (Blob) fetchBusinessInfo().get(8);
             byte[] imageByte = imageBlob.getBytes(1, (int) imageBlob.length());
-            OutputStream stream = new FileOutputStream("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\placeholder.jpg");
+            OutputStream stream = new FileOutputStream("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
             stream.write(imageByte);
-            Image profileImage = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\placeholder.jpg");
+            Image profileImage = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
             heroImage.setImage(profileImage);
             stream.close();
         } catch (NullPointerException e) {
-            Image defaultImage = new Image("E:\\JAVA APPLICATIONS\\RegisterInn\\src\\main\\resources\\inn\\images\\placeholder.jpg");
+            Image defaultImage = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
             heroImage.setImage(defaultImage);
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
@@ -343,16 +343,6 @@ public class General extends DbConnection implements Initializable {
             throw new IndexOutOfBoundsException();
         }
     }
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="484.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.prompts.UserPrompts">
+   <children>
+      <TextField fx:id="brandInputField" layoutX="92.0" layoutY="69.0" onKeyReleased="#brandInputAction" prefHeight="37.0" prefWidth="291.0" style="-fx-background-color: #eee; -fx-border-color: lightblue; -fx-border-width: 2px; -fx-border-radius: 10px;">
+         <font>
+            <Font name="Poppins Regular" size="14.0" />
+         </font>
+      </TextField>
+      <Text layoutX="178.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Brand">
+         <font>
+            <Font name="Poppins Bold Italic" size="15.0" />
+         </font>
+      </Text>
+      <Button fx:id="saveBrand" disable="true" layoutX="179.0" layoutY="122.0" mnemonicParsing="false" onAction="#saveBrandOnAction" prefHeight="27.0" prefWidth="113.0" style="-fx-background-color: #0cb700;" text="Add Brand" textFill="WHITE">
+         <font>
+            <Font name="Roboto" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Pane layoutY="170.0" prefHeight="27.0" prefWidth="484.0" style="-fx-background-color: #eee;">
+         <children>
+            <Label fx:id="brandLabel" layoutX="67.0" layoutY="5.0" text="Brand Name Already Exist Please Enter A Unique Brand Name" textFill="#ff3e3e" visible="false">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </Label>
+         </children></Pane>
+   </children>
+</AnchorPane>

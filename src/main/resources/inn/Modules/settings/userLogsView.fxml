@@ -6,14 +6,14 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="userLogsPane" prefHeight="539.0" prefWidth="832.0" style="-fx-border-radius: 8px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="userLogsPane" prefHeight="539.0" prefWidth="832.0" style="-fx-border-radius: 8px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.UserLogsAndBackup">
    <children>
-      <TableView layoutX="79.0" layoutY="60.0" prefHeight="460.0" prefWidth="672.0">
+      <TableView fx:id="userLogsTableView" layoutX="79.0" layoutY="60.0" prefHeight="460.0" prefWidth="721.0">
         <columns>
-          <TableColumn fx:id="usernameColumn" prefWidth="244.66666412353516" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="Username" />
-          <TableColumn fx:id="userRoleColumn" prefWidth="137.33334350585938" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="User Role" />
-            <TableColumn fx:id="signInColumn" prefWidth="137.33340454101562" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="Sign In" />
-            <TableColumn fx:id="signOutColumn" prefWidth="118.66668701171875" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="Sign Out" />
+          <TableColumn fx:id="usernameColumn" prefWidth="290.00000762939453" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="Username" />
+          <TableColumn fx:id="userRoleColumn" prefWidth="144.66665649414062" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="User Role" />
+            <TableColumn fx:id="signInColumn" prefWidth="118.0" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="Sign In" />
+            <TableColumn fx:id="signOutColumn" prefWidth="147.33331298828125" style="-fx-font-size: 16px; -fx-font-family: poppins;" text="Sign Out" />
         </columns>
          <effect>
             <DropShadow height="24.89" spread="0.11" width="17.11">

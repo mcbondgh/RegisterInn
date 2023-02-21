@@ -4,15 +4,21 @@ import inn.StartInn;
 import inn.database.DbConnection;
 import inn.models.InnActivationModel;
 import inn.multiStage.MultiStages;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
+import io.github.palexdev.materialfx.controls.MFXToggleButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.Camera;
 import javafx.scene.canvas.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,6 +29,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Homepage extends DbConnection implements Initializable{
 
@@ -34,25 +42,51 @@ public class Homepage extends DbConnection implements Initializable{
 
 
     /******************************************> FXML OBJECTS  <*******************************************/
-    @FXML private Button dashboardBtn, signoutBtn, inventoryBtn, bookingBtn, accountingBtn;
+    @FXML private Button dashboardBtn, signoutBtn, inventoryBtn, bookingBtn, accountingBtn,newMemberButton;
     @FXML private MenuButton reportsBtn, settingsBtn;
     @FXML private MenuItem generalBtn, manageRolesBtn, updateBtn, humanResourceBtn, employeeProfileBtn, payRoleButton, manageRoomsButton, manageStocksButton;
-    @FXML private Label businessNameLabel, activeUserLabel, dateLabel, counter;
+    @FXML private Label businessNameLabel, activeUserLabel, dateLabel, counter,userFlag;
     @FXML private TextArea aboutField;
     @FXML private BorderPane displayContainer;
     @FXML private ImageView heroImageDisplay;
+    @FXML private AnchorPane homepagePane;
+    @FXML private MFXNotificationCenter notificationIcon;
+
+    @FXML private Circle beepIndicator;
+    @FXML private Pane sidebarPane, borderPaneCenter;
+    @FXML private MFXToggleButton togglerButton;
 
     public static String label;
 
     public static String setActiveUserNane;
     public static int counterValue;
 
+    Timer timer = new Timer();
+    TimerTask task = new TimerTask() {
+        int counter = 1;
+        @Override
+        public void run() {
+            if (counter > 0){
+               beepIndicator.setStyle("-fx-fill:#beffc2");
+               counter--;
+            }else {
+                beepIndicator.setStyle("-fx-fill:#09e618");counter = 1;
+            }
+        }
+    };
+
+
 //    General general = new General();
     /*******************************************************************************************************************
      IMPLEMENTATION OF INITIALIZER METHOD*/
     public void initialize(URL location, ResourceBundle resourceBundle) {
-        activeUserLabel.setText(setActiveUserNane);
+        activeUserLabel.setText(setActiveUserNane);userFlag.setText(activeUserLabel.getText());
         setDashboardVariables();
+        timer.scheduleAtFixedRate(task,0,1000);
+        }
+    public void checkFLOW(){
+//        timer.scheduleAtFixedRate(task,0,1000);
+
     }
 
     /*******************************************************************************************************************
@@ -122,9 +156,6 @@ public class Homepage extends DbConnection implements Initializable{
     @FXML void manageStocksButtonOnAction() throws IOException {
         FlipView("Modules/settings/manageStocks.fxml");
     }
-    @FXML void countVALUE() {
-
-    }
 
     public void signoutBtnAction() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -134,6 +165,7 @@ public class Homepage extends DbConnection implements Initializable{
         alert.getButtonTypes().add(YES);
 //        Optional<ButtonType> choose = alert.showAndWait();
         if(alert.showAndWait().get() == YES) {
+            task.cancel();
             int returnedValue = modelOBJ.updateTrackerDateOnly();
             if (returnedValue > 0) {
                 signoutBtn.getScene().getWindow().hide();
@@ -144,6 +176,8 @@ public class Homepage extends DbConnection implements Initializable{
     public void updateBtnAction() throws IOException {
         multiStagesOBJ.UpdateLoginDetails();
     }
+
+
 
 
     /*******************************************************************************************************************
@@ -173,4 +207,5 @@ public class Homepage extends DbConnection implements Initializable{
     }
 
 
-}
+
+}//END OF CLASS

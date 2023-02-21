@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--<?import com.gluonhq.charm.glisten.control.*?>-->
+
+<?import io.github.palexdev.materialfx.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -10,11 +13,11 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#countVALUE" prefHeight="670.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.dashboard.Homepage">
+<AnchorPane fx:id="homepagePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.dashboard.Homepage">
    <children>
-      <BorderPane fx:id="displayContainer" layoutX="177.0" layoutY="54.0" prefHeight="605.0" prefWidth="1095.0" style="-fx-background-color: #ddd;">
+      <BorderPane fx:id="displayContainer" layoutX="177.0" layoutY="54.0" prefHeight="605.0" prefWidth="1095.0" style="-fx-background-color: #f9f9f9;">
          <center>
-            <Pane prefHeight="592.0" prefWidth="1097.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
+            <Pane fx:id="borderPaneCenter" prefHeight="592.0" prefWidth="1095.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
                <children>
                   <Pane layoutX="17.0" layoutY="-103.0" />
                   <ImageView fx:id="heroImageDisplay" fitHeight="599.0" fitWidth="904.0" layoutX="2.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
@@ -48,10 +51,17 @@
                </children>
             </Pane>
          </center>
+         <bottom>
+            <Label fx:id="userFlag" prefHeight="17.0" prefWidth="104.0" text="Label" visible="false" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="4.0" />
+               </font>
+            </Label>
+         </bottom>
       </BorderPane>
-      <Pane layoutY="45.0" prefHeight="625.0" prefWidth="172.0" style="-fx-background-color: #f2f2f2;">
+      <Pane fx:id="sidebarPane" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragEntered="#checkFLOW" prefHeight="625.0" prefWidth="172.0" style="-fx-background-color: #f2f2f2;">
          <children>
-            <Button id="dashboardButton" fx:id="dashboardBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" contentDisplay="TEXT_ONLY" layoutX="12.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#dashboardBtnAction" prefHeight="35.0" prefWidth="153.0" style="-fx-background-color: white;" styleClass="dashboardButton" stylesheets="@stylesheets/stylesheet.css" text="Dashboard" textAlignment="CENTER" textFill="#535353" textOverrun="CLIP">
+            <Button id="dashboardButton" fx:id="dashboardBtn" alignment="CENTER_RIGHT" cache="true" cacheHint="SPEED" contentDisplay="TEXT_ONLY" layoutX="12.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#dashboardBtnAction" prefHeight="35.0" prefWidth="153.0" style="-fx-background-color: white; -fx-background-radius: 5px;" styleClass="dashboardButton" stylesheets="@stylesheets/stylesheet.css" text="Dashboard" textFill="#535353" textOverrun="CLIP">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -65,8 +75,11 @@
                      </color>
                   </DropShadow>
                </effect>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
             </Button>
-            <MenuButton fx:id="reportsBtn" alignment="BOTTOM_RIGHT" layoutX="15.0" layoutY="59.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Reports" textAlignment="CENTER" textFill="#535353">
+            <MenuButton fx:id="reportsBtn" alignment="CENTER_RIGHT" layoutX="15.0" layoutY="59.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff; -fx-background-radius: 5px;" text="Reports" textFill="#535353">
                <items>
                   <MenuItem id="dropdownMenu" mnemonicParsing="false" onAction="#reportsBtnAction" style="-fx-cursor: hand; -fx-font-family: Carlito; -fx-font-size: 16px;" text="Booking Report" />
                   <MenuItem id="dropdownMenu" mnemonicParsing="false" style="-fx-cursor: hand; -fx-font-family: Carlito; -fx-font-size: 16px;" text="Sales Report" />
@@ -85,8 +98,11 @@
                      </color>
                   </DropShadow>
                </effect>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
             </MenuButton>
-            <Button fx:id="bookingBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="103.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#bookingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Booking" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="bookingBtn" alignment="CENTER_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="103.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#bookingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff; -fx-background-radius: 5px;" text="Booking" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -100,8 +116,11 @@
                      </color>
                   </DropShadow>
                </effect>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
             </Button>
-            <Button fx:id="accountingBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="145.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#accountingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Accounting" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="accountingBtn" alignment="CENTER_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="145.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#accountingBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff; -fx-background-radius: 5px;" text="Accounting" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -115,8 +134,11 @@
                      </color>
                   </DropShadow>
                </effect>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
             </Button>
-            <Button fx:id="messageBoxButton" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" disable="true" layoutX="16.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#messageBoxButtonOnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Message Box" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="messageBoxButton" alignment="CENTER_RIGHT" cache="true" cacheHint="SPEED" disable="true" layoutX="16.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#messageBoxButtonOnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff; -fx-background-radius: 5px;" text="Message Box" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -130,8 +152,11 @@
                      </color>
                   </DropShadow>
                </effect>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
             </Button>
-            <Button fx:id="inventoryBtn" alignment="BOTTOM_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="242.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inventoryBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Make Sakes" textAlignment="CENTER" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="inventoryBtn" alignment="CENTER_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="237.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inventoryBtnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff; -fx-background-radius: 5px;" text="Make Sakes" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -145,8 +170,11 @@
                      </color>
                   </DropShadow>
                </effect>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
             </Button>
-            <MenuButton fx:id="settingsBtn" alignment="BOTTOM_RIGHT" layoutX="14.0" layoutY="287.0" lineSpacing="2.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="Settings" textAlignment="CENTER" textFill="#535353">
+            <MenuButton fx:id="settingsBtn" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="287.0" lineSpacing="2.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff; -fx-background-radius: 5px;" text="Settings" textFill="#535353">
                <items>
                   <MenuItem id="dropdownMenu" fx:id="generalBtn" mnemonicParsing="false" onAction="#generalBtnAction" style="-fx-font-size: 16px; -fx-font-family: Carlito;" text="General" />
                   <MenuItem id="dropdownMenu" fx:id="manageRolesBtn" mnemonicParsing="false" onAction="#manageRolesBtnAction" style="-fx-font-size: 16px; -fx-font-family: Carlito;" text="Roles/Permissions" />
@@ -170,6 +198,9 @@
                      </color>
                   </DropShadow>
                </effect>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
             </MenuButton>
             <ImageView fitHeight="33.0" fitWidth="32.0" layoutX="19.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -191,12 +222,12 @@
                   <Image url="@../../images/payment%20icon%20copy.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="17.0" layoutY="249.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="19.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/stocks.jpg" />
+                  <Image url="@../../images/stock.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="19.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="19.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/settings%20copy.png" />
                </image>
@@ -204,6 +235,29 @@
             <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="17.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/messageBox.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="newMemberButton" alignment="CENTER_RIGHT" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="335.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff; -fx-border-radius: 5px; -fx-background-radius: 5px;" text="New Subscriber" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
+               <font>
+                  <Font name="Roboto" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <DropShadow height="5.84" offsetX="1.0" radius="2.8025" width="7.37">
+                     <color>
+                        <Color red="0.5526315569877625" green="0.5185185074806213" blue="0.5185185074806213" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Button>
+            <ImageView fitHeight="29.0" fitWidth="37.0" layoutX="20.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/new%20subscriber.png" />
                </image>
             </ImageView>
          </children>
@@ -224,15 +278,18 @@
             </InnerShadow>
          </effect>
          <children>
-            <Button fx:id="signoutBtn" alignment="CENTER_RIGHT" layoutX="1176.0" layoutY="11.0" mnemonicParsing="false" onAction="#signoutBtnAction" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: #ff0000;" text="Signout" textFill="WHITE">
+            <Button fx:id="signoutBtn" alignment="CENTER_RIGHT" layoutX="1194.0" layoutY="11.0" mnemonicParsing="false" onAction="#signoutBtnAction" prefHeight="26.0" prefWidth="79.0" style="-fx-background-color: #ff0000; -fx-background-radius: 10px;" text="Signout" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="12.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
             </Button>
-            <ImageView fitHeight="29.0" fitWidth="44.0" layoutX="1169.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="26.0" fitWidth="36.0" layoutX="1192.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -245,9 +302,9 @@
                   <Image url="@../../images/logo.png" />
                </image>
             </ImageView>
-            <Pane layoutX="955.0" layoutY="1.0" prefHeight="43.0" prefWidth="214.0" style="-fx-background-color: #fff;">
+            <Pane layoutX="940.0" layoutY="5.0" prefHeight="35.0" prefWidth="206.0" style="-fx-background-color: #fff; -fx-border-radius: 5px; -fx-background-radius: 5px;">
                <children>
-                  <ImageView fitHeight="41.0" fitWidth="37.0" layoutX="9.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="3.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -255,24 +312,34 @@
                         <Image url="@../../images/profile.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="activeUserLabel" layoutX="57.0" layoutY="21.0" prefHeight="18.0" prefWidth="145.0" text="Active User">
+                  <Label fx:id="activeUserLabel" layoutX="52.0" layoutY="2.0" prefHeight="18.0" prefWidth="153.0" text="Active User" textFill="#03a827">
                      <font>
-                        <Font name="Tahoma Bold" size="14.0" />
+                        <Font name="Tahoma Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="71.0" layoutY="6.0" text="Current User" textFill="#00b203">
+                  <Label fx:id="userRoleLabel" layoutX="53.0" layoutY="19.0" text="Cashier" textFill="#ff2424">
                      <font>
                         <Font name="Roboto Bold" size="10.0" />
                      </font>
                   </Label>
+<!--                  <Icon content="ARROW_DROP_DOWN" layoutX="174.0" layoutY="6.0" />-->
                </children>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.7368420958518982" green="0.7368420958518982" blue="0.7368420958518982" />
+                     </color>
+                  </DropShadow>
+               </effect>
             </Pane>
-            <Label fx:id="businessNameLabel" layoutX="175.0" layoutY="-11.0" text="INN REGISTER" textFill="#0472a6">
+            <Label fx:id="businessNameLabel" layoutX="175.0" layoutY="4.0" text="INN REGISTER" textFill="#0472a6">
                <font>
-                  <Font name="Bebas Neue Regular" size="51.0" />
+                  <Font name="Bebas Neue Regular" size="32.0" />
                </font>
             </Label>
-            <Circle fill="#09e618" layoutX="1016.0" layoutY="14.0" radius="6.0" stroke="WHITE" strokeType="INSIDE" />
+            <Circle fx:id="beepIndicator" fill="#beffc2" layoutX="984.0" layoutY="16.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
+            <MFXNotificationCenter fx:id="notificationIcon" layoutX="822.0" layoutY="-5.0" popupHeight="300.0" popupWidth="90.0" prefHeight="66.0" prefWidth="72.0" scaleX="0.7" scaleY="0.7" />
+
          </children>
          <cursor>
             <Cursor fx:constant="HAND" />

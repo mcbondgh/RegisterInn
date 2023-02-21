@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class MultiStages{
 
+
     public void Homepage() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/dashboard/homepage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -177,6 +178,20 @@ public class MultiStages{
         stage.setTitle("Successfully Activated.");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);
+        stage.setAlwaysOnTop(true);
+        stage.show();
+    }
+    public void addBrandStage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("prompts/addBrandView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.setResizable(false);
+        stage.setTitle("Add Brand");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UTILITY);
         stage.setAlwaysOnTop(true);
         stage.show();
     }

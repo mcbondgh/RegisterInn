@@ -11,6 +11,7 @@ module inn {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires annotations;
+    requires materialfx;
 
     exports inn;
     exports inn.Controllers;
@@ -31,8 +32,8 @@ module inn {
     opens inn.Controllers.accounting;
     opens inn.prompts;
     opens inn.tableViews;
-    exports inn.Controllers.config;
-    opens inn.Controllers.config;
+    exports inn.Controllers.configurations;
+    opens inn.Controllers.configurations;
 
 
 

@@ -1,4 +1,4 @@
-package inn.Controllers.config;
+package inn.Controllers.configurations;
 
 import inn.models.InnActivationModel;
 import javafx.beans.NamedArg;

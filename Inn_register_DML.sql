@@ -16,7 +16,10 @@
     SELECT * FROM modules;
     SELECT * FROM StocksCategory;
     SELECT * FROM suppliers;
-        
+    SELECT * FROM stores;
+    SELECT * FROM ProductStock;
+    SELECT * FROM ProductBrand;
+
     ALTER TABLE users 
     ADD COLUMN emp_id INT AFTER confirm_password;
     
@@ -38,6 +41,8 @@
     TRUNCATE TABLE roles;
     TRUNCATE TABLE rooms;
     TRUNCATE TABLE StocksCategory;
+    TRUNCATE TABLE stores;
+    TRUNCATE TABLE ProductStock;
 
 -- ALTER TABLE AND UPDATE STATEMENTS
 	UPDATE business_info SET bsi_name = "GUEST HOUSE", updated_date = current_timestamp();
@@ -76,7 +81,12 @@ SELECT DISTINCT(lower(username)) FROM users;
     
     -- 28/01/23
    ALTER TABLE rooms CHANGE categoryId CategoryName VARCHAR(50);
-    
+   
+   -- 18/02/2023
+   ALTER TABLE ProductStock DROP COLUMN ReceiptNo;    
+   ALTER TABLE productstock ADD COLUMN ProductBrand VARCHAR(100) AFTER ProductDescription;
+   ALTER TABLE ProductStock ADD COLUMN productQuantity INT AFTER QtyPerPack;
+   
 	DESCRIBE inn_register.employees;
     DESCRIBE employees;
     DESCRIBE activation_key;
@@ -96,6 +106,8 @@ ALTER TABLE activation_key
 CHANGE COLUMN expirey_date expiry_date DATE NOT NULL;
 INSERT INTO activation_key(activation_code, expiry_date)
 VALUES('dsdseewe', '2022-1-1');
+
+
 
 -- DROP TABLES SECTION ---
 DROP TABLE activation_key; 

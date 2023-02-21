@@ -1,6 +1,6 @@
 package inn.Controllers.settings;
 
-import inn.Controllers.config.DefPassword;
+import inn.Controllers.configurations.DefPassword;
 import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;
 import inn.tableViews.ArchivedTableData;
