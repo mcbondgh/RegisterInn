@@ -2,7 +2,7 @@ package inn.tableViews;
 
 import javafx.scene.control.CheckBox;
 
-public class ManageRoomsTableView {
+public class ManageRoomsData {
     private int roomId;
     private String roomNo;
     private String roomCategory;
@@ -13,15 +13,15 @@ public class ManageRoomsTableView {
     private byte status;
     private CheckBox statusAction;
 
-    public ManageRoomsTableView(){}
-    public ManageRoomsTableView(int roomId, String roomNo, String roomCategory, double roomPrice, CheckBox statusAction) {
+    public ManageRoomsData(){}
+    public ManageRoomsData(int roomId, String roomNo, String roomCategory, double roomPrice, CheckBox statusAction) {
         this.roomId = roomId;
         this.roomNo = roomNo;
         this.roomCategory = roomCategory;
         this.roomPrice = roomPrice;
         this.statusAction = statusAction;
     }
-    public ManageRoomsTableView(int roomId, String roomNo, byte status, byte isBooked) {
+    public ManageRoomsData(int roomId, String roomNo, byte status, byte isBooked) {
         this.roomId = roomId;
         this.roomNo = roomNo;
         this.isBooked = isBooked;

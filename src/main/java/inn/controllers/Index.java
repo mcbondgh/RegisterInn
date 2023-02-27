@@ -2,6 +2,7 @@ package inn.Controllers;
 
 
 import inn.Controllers.dashboard.Homepage;
+import inn.ErrorLogger;
 import inn.MultiThreads;
 import inn.database.DbConnection;
 import inn.multiStage.MultiStages;
@@ -32,10 +33,16 @@ public class Index extends Homepage implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         try {
             setBusinessHero();
         }catch (Exception e){
+            try {
+                multiStages.wrongDateTimeStage();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            ErrorLogger errorLogger = new ErrorLogger();
+            errorLogger.log(e.getLocalizedMessage());
             e.printStackTrace();
         }
 
@@ -59,8 +66,7 @@ public class Index extends Homepage implements Initializable {
     /*******************************************************************************************************************
      ACTION EVENT METHODS IMPLEMENTATION*/
     public void signinButtonAction() throws IOException {
-
-            Homepage.setActiveUserNane = getUsernameField().isBlank() ?  "Active User" :getUsernameField();
+        Homepage.setActiveUserNane = getUsernameField().isBlank() ?  "Active User" :getUsernameField();
         multiStages.Homepage();
         signinButton.getScene().getWindow().hide();
 

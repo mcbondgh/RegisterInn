@@ -2,15 +2,15 @@ package inn.tableViews;
 
 import java.sql.Date;
 
-public class SuppliersTableViewItems {
+public class SuppliersData {
 
     private String supplierName, contactNumber, location;
     private int id, status;
     private Date date;
 
 
-    public SuppliersTableViewItems() {}
-    public SuppliersTableViewItems(int id, int status, String supplierName, String contactNumber, String location, Date date) {
+    public SuppliersData() {}
+    public SuppliersData(int id, int status, String supplierName, String contactNumber, String location, Date date) {
         this.id  = id;
         this.status = status;
         this.supplierName = supplierName;
@@ -18,7 +18,7 @@ public class SuppliersTableViewItems {
         this.location = location;
         this.date = date;
     }
-    public SuppliersTableViewItems(String supplierName, String contactNumber, String location) {
+    public SuppliersData(String supplierName, String contactNumber, String location) {
         this.supplierName = supplierName;
         this.contactNumber = contactNumber;
         this.location = location;

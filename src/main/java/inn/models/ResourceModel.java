@@ -2,7 +2,7 @@ package inn.models;
 
 import inn.database.DbConnection;
 import inn.tableViews.ArchivedTableData;
-import inn.tableViews.EmployeesTable;
+import inn.tableViews.EmployeesData;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,7 +60,7 @@ public class ResourceModel extends DbConnection{
     /**
      * THIS METHOD WHEN CALLED WILL RETURN ONLY EMPLOYEES WHO'S STATUS == 1 ie ACTIVE EMPLOYEES. AND STORE THE RESULT IN AN OBSERVABLE LIST ;
      */
-    public ObservableList<EmployeesTable> activeEmployees = FXCollections.observableArrayList();
+    public ObservableList<EmployeesData> activeEmployees = FXCollections.observableArrayList();
     public void fetchActiveEmployees() {
         try {
             String selectQuery = "SELECT * FROM employees WHERE status = 1 ORDER BY lastname ASC;";
@@ -83,7 +83,7 @@ public class ResourceModel extends DbConnection{
                 }
                 String desig = result.getString("designation");
                 CheckBox archiveButton = new CheckBox();
-                activeEmployees.add(new EmployeesTable(id, fullname, number, address , date, desig, currentStatus, salary, archiveButton));
+                activeEmployees.add(new EmployeesData(id, fullname, number, address , date, desig, currentStatus, salary, archiveButton));
             }
         }catch (Exception e) {
             e.printStackTrace();

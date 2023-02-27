@@ -143,17 +143,13 @@ CREATE TABLE stores(
 CREATE TABLE ProductStock(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY,
     ProductName VARCHAR(255) NOT NULL,
-    ProductDescription VARCHAR(10) NOT NULL,
+    ProductType VARCHAR(10) NOT NULL,
     ProductBrand VARCHAR(100) NOT NULL,
     Category VARCHAR(50) NOT NULL,
     Supplier VARCHAR(100) DEFAULT 'Unknown',
     Notes TEXT,
 	ExpiryDate DATE,
-	UnitQuantity INT NOT NULL DEFAULT 0,
-    PackQuantity INT NOT NULL DEFAULT 0,
-    QtyPerPack INT NOT NULL DEFAULT 0,
-    ProductQuantity INT NOT NULL,
-	StoreId INT NOT NULL DEFAULT 1 REFERENCES stores(id),
+	StoreId INT NOT NULL DEFAULT 1,
     ActiveStatus TINYINT DEFAULT 0,
     DeleteStatus TINYINT DEFAULT 0,
     AddedBy INT,
@@ -165,6 +161,27 @@ CREATE TABLE ProductBrand(
     BrandName VARCHAR(100),
     DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE stockLevels(
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ProductId BIGINT,
+    StockLevel INT,
+    CurrentQty INT,
+    PresentUnitQty INT,
+    PresentPackQty INT,
+    PresentPackPerQty INT,
+    PreviousUnitQty INT,
+    PreviousPackQty INT,
+    PreviousPackPerQty INT,
+    BeforeUnitQty INT,
+    BeforePackQty INT,
+    BeforePerPackQty INT,
+    StockGuage INT,
+    UpdatedBy INT,
+    UpdatedDate DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
 
 ALTER TABLE users 
 ADD FOREIGN KEY(role_id) REFERENCES roles(id) ON DELETE SET NULL;

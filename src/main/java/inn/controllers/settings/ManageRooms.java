@@ -1,11 +1,10 @@
 package inn.Controllers.settings;
 
-import inn.Controllers.report.Report;
 import inn.StartInn;
 import inn.models.ManageRoomsModel;
 import inn.prompts.UserNotification;
-import inn.tableViews.ManageRoomsTableView;
-import inn.tableViews.RoomsCategoryTableView;
+import inn.tableViews.ManageRoomsData;
+import inn.tableViews.RoomsCategoryData;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,8 +27,8 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
 
     //CLASS OBJECTS / CLASS INSTANTIATION FIELD;
     UserNotification notificationOBJ = new UserNotification();
-    ManageRoomsTableView manageRoomsTableViewOBJ;
-    RoomsCategoryTableView roomsCategoryTableViewOBJ;
+    ManageRoomsData manageRoomsTableViewOBJ;
+    RoomsCategoryData roomsCategoryTableViewOBJ;
 
     /*******************************************************************************************************************
      *                                              FXLM NODE EJECTION.
@@ -45,12 +44,12 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     /*******************************************************************************************************************
      ROOMS TABLEVIEW NODES EJECTION */
     @FXML
-    private TableView<ManageRoomsTableView> roomsTableView;
-    @FXML private TableColumn<ManageRoomsTableView, Integer> itemId;
-    @FXML private TableColumn<ManageRoomsTableView, String> roomNumber;
-    @FXML private TableColumn<ManageRoomsTableView, String> roomCategory;
-    @FXML private TableColumn<ManageRoomsTableView, String> priceColumn;
-    @FXML private TableColumn<ManageRoomsTableView, CheckBox> action;
+    private TableView<ManageRoomsData> roomsTableView;
+    @FXML private TableColumn<ManageRoomsData, Integer> itemId;
+    @FXML private TableColumn<ManageRoomsData, String> roomNumber;
+    @FXML private TableColumn<ManageRoomsData, String> roomCategory;
+    @FXML private TableColumn<ManageRoomsData, String> priceColumn;
+    @FXML private TableColumn<ManageRoomsData, CheckBox> action;
 
 
 
@@ -158,7 +157,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
             if(alert.showAndWait().get().equals(ButtonType.YES)) {
                 int flag = 0;
 
-                for (ManageRoomsTableView columnValues : roomsTableView.getItems()) {
+                for (ManageRoomsData columnValues : roomsTableView.getItems()) {
                     byte statusFlag = 0;
                     int roomId = columnValues.getRoomId();
                     String roomNo = columnValues.getRoomNo();
@@ -204,7 +203,6 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     /*******************************************************************************************************************
      *                              IMPLEMENTATION OF OTHER SPECIAL METHODS.
      *******************************************************************************************************************/
-
     void clearFields() {
         roomNumberField.clear();
         categoryComboBox.setValue(null);
@@ -216,7 +214,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     }
 
     void populateCategoryComboBox() {
-       for (RoomsCategoryTableView item : fetchCategories()) {
+       for (RoomsCategoryData item : fetchCategories()) {
            categoryComboBox.getItems().add(item.getRoomsCateName());
        }
     }
@@ -224,7 +222,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     //THIS METHOD WHEN CALLED SHALL RETURN THE ASSOCIATED ROOM NUMBER FOR THE SELECTED ROOM CATEGORY.
     int returnRoomId() {
         int result = 0;
-        for(RoomsCategoryTableView item : fetchCategories()) {
+        for(RoomsCategoryData item : fetchCategories()) {
             if (categoryComboBox.getValue().equals(item.getRoomsCateName())) {
                 result = item.getRoomsCatId();
             }
@@ -242,9 +240,9 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
         roomNumber.setCellFactory(TextFieldTableCell.forTableColumn());
 
         //THIS LINE OF CODE GETS THE NEW VALUE ENTERED AND THEN SETS THE SPECIFIED ROLE VALUE TO THE NEW TEXT VALUE.
-        roomNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ManageRoomsTableView, String>>() {
+        roomNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ManageRoomsData, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<ManageRoomsTableView, String> cellEditEvent) {
+            public void handle(TableColumn.CellEditEvent<ManageRoomsData, String> cellEditEvent) {
                 manageRoomsTableViewOBJ = cellEditEvent.getRowValue();
                 manageRoomsTableViewOBJ.setRoomNo(cellEditEvent.getNewValue());
             }
@@ -255,9 +253,9 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
         roomCategory.setCellFactory(ComboBoxTableCell.forTableColumn(categoryComboBox.getItems()));
 
         //THIS LINE OF CODE GETS THE NEW VALUE ENTERED AND THEN SETS THE SPECIFIED ROLE VALUE TO THE NEW TEXT VALUE.
-        roomCategory.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ManageRoomsTableView, String>>() {
+        roomCategory.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ManageRoomsData, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<ManageRoomsTableView, String> cellEditEvent) {
+            public void handle(TableColumn.CellEditEvent<ManageRoomsData, String> cellEditEvent) {
                 manageRoomsTableViewOBJ = cellEditEvent.getRowValue();
                 manageRoomsTableViewOBJ.setRoomCategory(cellEditEvent.getNewValue());
              }

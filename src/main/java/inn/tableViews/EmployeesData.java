@@ -2,12 +2,12 @@ package inn.tableViews;
 
 import javafx.scene.control.CheckBox;
 
-public class EmployeesTable {
+public class EmployeesData {
     private int empId;
    private String fullname, phoneNumber, joinedDate,  address, designation , status, salary;
    private CheckBox archiveButton;
 
-    public EmployeesTable(int empId, String fullname, String phoneNumber,  String address,String joinedDate, String designation, String status, String salary, CheckBox archiveButton) {
+    public EmployeesData(int empId, String fullname, String phoneNumber, String address, String joinedDate, String designation, String status, String salary, CheckBox archiveButton) {
         this.empId = empId;
         this.fullname = fullname;
         this.phoneNumber = phoneNumber;

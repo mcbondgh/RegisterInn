@@ -4,13 +4,11 @@
 
 .products-table {
     -fx-background-color:#fff;
+    -fx-font-size: 40px;
 }
 
-.ProductStocksTable {
-    -fx-border-color:red;
-    -fx-border-width:2px;
+stocks-tableView{
+    -fx-background-color: #e0fbff;
 }
 
-.products-table TableColumn {
-    -fx-background-color:green;
-}
+

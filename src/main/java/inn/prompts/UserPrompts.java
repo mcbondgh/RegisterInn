@@ -1,8 +1,6 @@
 package inn.prompts;
 
-import com.almasb.fxgl.notification.Notification;
 import inn.models.ManageStocksModel;
-import inn.tableViews.StocksCategoryTableView;
 import inn.tableViews.StoresTableData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -15,7 +13,7 @@ import java.util.Objects;
 public class UserPrompts extends ManageStocksModel {
     @FXML private Button failedBtn, closeBtn, closeActivationStageBtn, adjustDateTimeCloseBtn, saveBrand;
     @FXML private TextField brandInputField;
-    @FXML private Label brandLabel;
+    @FXML private Label brandLabelDisplay;
 
 
 
@@ -42,11 +40,12 @@ public class UserPrompts extends ManageStocksModel {
     }
     @FXML void brandInputAction() {
         saveBrand.setDisable(brandInputField.getText().isBlank());
+        String brandName = brandInputField.getText();
         for (StoresTableData.BrandsTableData item : fetchProductBrands()) {
-            if(Objects.equals(item.getBrandName().toLowerCase().replaceAll("\\s", ""), brandInputField.getText().toLowerCase().replaceAll("\\s", ""))) {
+            if(Objects.equals(item.getBrandName().toLowerCase().replaceAll("\\s", ""), brandName.replaceAll("\\s", ""))) {
+                brandLabelDisplay.setVisible(true);
                 saveBrand.setDisable(true);
-                brandLabel.setVisible(true);
-            } else brandLabel.setVisible(false);
+            } else brandLabelDisplay.setVisible(false);
         }
     }
 

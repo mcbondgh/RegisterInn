@@ -1,11 +1,11 @@
 package inn.tableViews;
 
 
-public class IdTypeTableView {
+public class IdTypesData {
     private String idTypeName;
     private  int idTypeID;
 
-    public IdTypeTableView( int idTypeID, String idTypeName) {
+    public IdTypesData(int idTypeID, String idTypeName) {
         this.idTypeID = idTypeID;
         this.idTypeName = idTypeName;
 

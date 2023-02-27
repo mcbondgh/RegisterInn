@@ -21,7 +21,14 @@ public class StartInn extends Application implements Initializable {
     @Override
     public void start(Stage stage) throws IOException {
         MultiStages multiStages = new MultiStages();
-        multiStages.LoginForm();
+        try {
+            multiStages.LoginForm();
+        }catch (IndexOutOfBoundsException e) {
+            ErrorLogger errorLogger = new ErrorLogger();
+            errorLogger.log(e.getMessage());
+           multiStages.wrongDateTimeStage();
+        }
+
     }
 
 

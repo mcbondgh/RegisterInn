@@ -1,5 +1,7 @@
 package inn.tableViews;
 
+import javafx.scene.control.Label;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -7,38 +9,31 @@ import java.sql.Timestamp;
  *  product stock
  *
  */
-public class ProductStock {
+public class ProductsStockData {
     int rowId;
     String productName;
-    String productDesc;
+    String ProductType;
     String productBrand;
     String itemCategory;
     String suppliers;
     String notes;
     Date expiryDate;
-    int unitQuantity;
-    int packQuantity;
-    int qtyPerPack;
-    int totalQuantity;
     byte storeId;
-    byte activeStatus;
+    Label activeStatus;
     byte deleteStatus;
     byte addedBy;
     Timestamp dateAdded;
 
-    public ProductStock(int rowId, String productName, String productDesc, String productBrand, String itemCategory, String suppliers, String notes, Date expiryDate, int unitQuantity, int packQuantity, int qtyPerPack, int totalQuantity, byte storeId, byte activeStatus, byte deleteStatus, byte addedBy, Timestamp dateAdded) {
+    public ProductsStockData() {}
+    public ProductsStockData(int rowId, String productName, String ProductType, String productBrand, String itemCategory, String suppliers, String notes, Date expiryDate,  byte storeId, Label activeStatus, byte deleteStatus, byte addedBy, Timestamp dateAdded) {
         this.rowId = rowId;
         this.productName = productName;
-        this.productDesc = productDesc;
+        this.ProductType = ProductType;
         this.productBrand = productBrand;
         this.itemCategory = itemCategory;
         this.suppliers = suppliers;
         this.notes = notes;
         this.expiryDate = expiryDate;
-        this.unitQuantity = unitQuantity;
-        this.packQuantity = packQuantity;
-        this.qtyPerPack = qtyPerPack;
-        this.totalQuantity = totalQuantity;
         this.storeId = storeId;
         this.activeStatus = activeStatus;
         this.deleteStatus = deleteStatus;
@@ -58,16 +53,16 @@ public class ProductStock {
         return productName;
     }
 
+    public String getProductType() {
+        return ProductType;
+    }
+
+    public void setProductType(String productType) {
+        ProductType = productType;
+    }
+
     public void setProductName(String productName) {
         this.productName = productName;
-    }
-
-    public String getProductDesc() {
-        return productDesc;
-    }
-
-    public void setProductDesc(String productDesc) {
-        this.productDesc = productDesc;
     }
 
     public String getProductBrand() {
@@ -110,37 +105,6 @@ public class ProductStock {
         this.expiryDate = expiryDate;
     }
 
-    public int getUnitQuantity() {
-        return unitQuantity;
-    }
-
-    public void setUnitQuantity(int unitQuantity) {
-        this.unitQuantity = unitQuantity;
-    }
-
-    public int getPackQuantity() {
-        return packQuantity;
-    }
-
-    public void setPackQuantity(int packQuantity) {
-        this.packQuantity = packQuantity;
-    }
-
-    public int getQtyPerPack() {
-        return qtyPerPack;
-    }
-
-    public void setQtyPerPack(int qtyPerPack) {
-        this.qtyPerPack = qtyPerPack;
-    }
-
-    public int getTotalQuantity() {
-        return totalQuantity;
-    }
-
-    public void setTotalQuantity(int totalQuantity) {
-        this.totalQuantity = totalQuantity;
-    }
 
     public byte getStoreId() {
         return storeId;
@@ -150,11 +114,11 @@ public class ProductStock {
         this.storeId = storeId;
     }
 
-    public byte getActiveStatus() {
+    public Label getActiveStatus() {
         return activeStatus;
     }
 
-    public void setActiveStatus(byte activeStatus) {
+    public void setActiveStatus(Label activeStatus) {
         this.activeStatus = activeStatus;
     }
 

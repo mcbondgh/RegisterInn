@@ -1,12 +1,12 @@
 package inn.tableViews;
 
 
-public class DepartmentTableView {
+public class DepartmentData {
 
     private String departmentName;
     private int departmentId;
 
-    public DepartmentTableView( int departmentId, String departmentName) {
+    public DepartmentData(int departmentId, String departmentName) {
         this.departmentId = departmentId;
         this.departmentName = departmentName;
     }

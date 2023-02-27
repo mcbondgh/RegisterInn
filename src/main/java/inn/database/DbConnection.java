@@ -1,30 +1,43 @@
 package inn.database;
 
+import inn.ErrorLogger;
 import inn.multiStage.MultiStages;
 import inn.tableViews.*;
-import javafx.application.Preloader;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import kotlin.Unit;
+import javafx.scene.control.Label;
 
 import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.function.Supplier;
 
 public class DbConnection {
     public DbConnection() {}
 
     protected Connection CONNECTOR() throws SQLException {
-        String SERVER_NAME = "Druglord";
-        String PASSWORD = "1244656800";
-        String URL = "jdbc:mysql://127.0.0.1:3308/inn_register";
-        return DriverManager.getConnection(URL, SERVER_NAME, PASSWORD);
+        Connection driverConnection = null;
+        try {
+            String SERVER_NAME = "Druglord";
+            String PASSWORD = "1244656800";
+            String URL = "jdbc:mysql://127.0.0.1:3308/inn_register";
+
+            driverConnection = DriverManager.getConnection(URL, SERVER_NAME, PASSWORD);
+//        String URL = "jdbc:mysql://104.238.222.166:3306/kwegyira_inn_register";
+//        jdbc:mysql://104.238.222.166:3306/?user=kwegyira
+
+        }catch (SQLException ex) {
+            MultiStages multiStages = new MultiStages();
+//            multiStages.wrongDateTimeStage();
+            ErrorLogger errorLogger = new ErrorLogger();
+            errorLogger.log(ex.getLocalizedMessage());
+        }
+
+        return driverConnection;
     }
 
     /*
@@ -243,8 +256,8 @@ public class DbConnection {
     }
 
     //FETCHES THE name COLUMN FROM THE roomsCategory TABLE
-    public ObservableList<RoomsCategoryTableView> fetchCategories() {
-        ObservableList<RoomsCategoryTableView> categoryType = FXCollections.observableArrayList();
+    public ObservableList<RoomsCategoryData> fetchCategories() {
+        ObservableList<RoomsCategoryData> categoryType = FXCollections.observableArrayList();
         try{
             String selectQuery = "SELECT * FROM roomsCategory ORDER BY name ASC;";
             stmt = CONNECTOR().createStatement();
@@ -255,7 +268,7 @@ public class DbConnection {
                 byte status = result.getByte("status");
                 double price = result.getDouble("price");
 
-                categoryType.add(new RoomsCategoryTableView(roomId, categoryName, status, price));
+                categoryType.add(new RoomsCategoryData(roomId, categoryName, status, price));
             }
             stmt.close();
             result.close();
@@ -479,8 +492,8 @@ public class DbConnection {
 
 
     //THIS METHOD RETURNS ALL COLUMNS FROM THE StocksCategory TABLE
-    public ObservableList<StocksCategoryTableView> fetchStockCategories() {
-        ObservableList<StocksCategoryTableView> ListItems = FXCollections.observableArrayList();
+    public ObservableList<StocksCategoryData> fetchStockCategories() {
+        ObservableList<StocksCategoryData> ListItems = FXCollections.observableArrayList();
         try {
             String selectQuery = "SELECT * FROM StocksCategory";
             stmt = CONNECTOR().createStatement();
@@ -489,7 +502,7 @@ public class DbConnection {
                 int id = result.getInt(1);
                 String categoryName = result.getString(2);
                 Date dateAdded = result.getDate(3);
-                ListItems.add(new StocksCategoryTableView(id, categoryName, dateAdded));
+                ListItems.add(new StocksCategoryData(id, categoryName, dateAdded));
             }
             stmt.close();
             result.close();
@@ -501,8 +514,8 @@ public class DbConnection {
     }
 
     //THIS METHOD WHEN INVOKED SHALL RETURN ALL VALUES FROM THE Suppliers TABLE.
-    public ObservableList<SuppliersTableViewItems> fetchSuppliers() {
-        ObservableList<SuppliersTableViewItems> ListItems = FXCollections.observableArrayList();
+    public ObservableList<SuppliersData> fetchSuppliers() {
+        ObservableList<SuppliersData> ListItems = FXCollections.observableArrayList();
         try {
             String selectQuery = "SELECT * FROM Suppliers;";
             stmt = CONNECTOR().createStatement();
@@ -514,7 +527,7 @@ public class DbConnection {
                 String contact = result.getString("contact");
                 String location = result.getString("location");
                 Date date = result.getDate("DateCreated");
-                ListItems.add(new SuppliersTableViewItems(id, status, name, contact, location, date));
+                ListItems.add(new SuppliersData(id, status, name, contact, location, date));
             }
             stmt.close();
             result.close();
@@ -570,31 +583,41 @@ public class DbConnection {
         return  returnStores;
     }
 
-        public ObservableList<ProductStock> fetchProductDetails(){
-        ObservableList<ProductStock> products = FXCollections.observableArrayList();
+        public ObservableList<ProductsStockData> fetchProductDetails(){
+        ObservableList<ProductsStockData> products = FXCollections.observableArrayList();
         try{
             String selectQuery = "SELECT * FROM ProductStock WHERE(DeleteStatus = 0)";
             stmt = CONNECTOR().createStatement();
             result  = stmt.executeQuery(selectQuery);
+
             while (result.next()) {
                 int rowId = result.getInt(1);
                 String productName = result.getString(2);
-                String productDesc = result.getString(3);
+                String ProductType = result.getString(3);
                 String productBrand = result.getString(4);
                 String productCategory = result.getString(5);
                 String productSupplier = result.getString(6);
                 String notes = result.getString(7);
                 Date expiryDate = result.getDate(8);
-                int unitQuantity = result.getInt(9);
-                int packQuantity = result.getInt(10);
-                int qtyPerPack = result.getInt(11);
-                int totalQuantity = result.getInt(12);
-                byte storeId = result.getByte(13);
-                byte activeStatus = result.getByte(14);
-                byte deleteStatus = result.getByte(15);
-                byte addedBy = result.getByte(16);
-                Timestamp dateCreated = result.getTimestamp(17);
-                products.add(new ProductStock(rowId, productName, productDesc, productBrand, productCategory, productSupplier, notes, expiryDate, unitQuantity, packQuantity, qtyPerPack, totalQuantity, storeId, activeStatus, deleteStatus, addedBy, dateCreated));
+                byte storeId = result.getByte(9);
+                byte activeStatus = result.getByte(10);
+                byte deleteStatus = result.getByte(11);
+                byte addedBy = result.getByte(12);
+                Timestamp dateCreated = result.getTimestamp(13);
+
+                Label statusValue = new Label();
+                switch(activeStatus) {
+                    case 0 -> {
+                        statusValue.setText("Not Active");
+                        statusValue.setStyle("-fx-text-fill:red");
+                    }
+                    case 1 -> {
+                        statusValue.setStyle("-fx-text-fill:green");
+                        statusValue.setText("Active");
+                    }
+                }
+//                    String statusValue = activeStatus == 0 ? "Not Active" : "Active";
+                products.add(new ProductsStockData(rowId, productName, ProductType, productBrand, productCategory, productSupplier, notes, expiryDate, storeId, statusValue, deleteStatus, addedBy, dateCreated));
             }
             stmt.close();
             result.close();
@@ -605,5 +628,95 @@ public class DbConnection {
         return products;
     }
 
+    //THIS METHOD WHEN INVOKED SHALL RETURN A PRODUCT id AND Product type FROM THE productStock
+    //BASED ON THE PRODUCT NAME PARSED AS AN ARGUMENT.
+    public ArrayList<Object> getProductIdAndType(@NamedArg("productname") String productName){
+        ArrayList<Object> productValues = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT Id, ProductType FROM ProductStock WHERE(ProductName = '"+ productName +"')";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if(result.next()) {
+                int id = result.getInt("Id");
+                String type = result.getString("ProductType");
+                productValues.add(id);
+                productValues.add(type);
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return productValues;
+    }
+
+    public ArrayList<String> getProductTypeByName(@NamedArg("Product Name") String productName){
+        ArrayList<String> fetchedValues = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT ProductType FROM ProductStock WHERE(ProductName = '"+productName+"')";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while (result.next()) {
+//                fetchedValues.add(result.getString("ProductName"));//0
+                fetchedValues.add(result.getString("ProductType"));//1
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return fetchedValues;
+    }
+
+    public ObservableList<StockLevelData> fetchStockLevelDetails() {
+        ObservableList<StockLevelData> stockLevelData = FXCollections.observableArrayList();
+
+        try {
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery( "SELECT\n" +
+                    "    sl.id, ProductName, StockLevel, CurrentQty, PresentUnitQty, PresentPackQty, PresentPackPerQty, PreviousUnitQty, PreviousPackQty, PreviousPackPerQty, BeforeUnitQty, BeforePackQty, BeforePackQty, BeforePerPackQty, StockGuage, UpdatedBy, UpdatedDate\n" +
+                    "    FROM productstock AS ps\n" +
+                    "    INNER JOIN stocklevels as sl\n" +
+                    "    ON sl.ProductId = ps.id \n" +
+                    "    WHERE ps.DeleteStatus = 0;");
+            while (result.next()) {
+                int id = result.getInt("sl.id");
+                String ProductId = result.getString("ProductName");
+                int StockLevel = result.getInt("StockLevel");
+                int CurrentQty = result.getInt("CurrentQty");
+                int PresentUnitQty = result.getInt("PresentUnitQty");
+                int PresentPackQty = result.getInt("PresentPackQty");
+                int PresentPackPerQty = result.getInt("PresentPackPerQty");
+                int PreviousUnitQty = result.getInt("PreviousUnitQty");
+                int PreviousPackQty = result.getInt("PreviousPackQty");
+                int PreviousPackPerQty = result.getInt("PreviousPackPerQty");
+                int BeforeUnitQty = result.getInt("BeforeUnitQty");
+                int BeforePackQty = result.getInt("BeforePackQty");
+                int BeforePerPackQty = result.getInt("BeforePerPackQty");
+                int StockGuage = result.getInt("StockGuage");
+                String UpdatedBy = result.getString("UpdatedBy");
+                Timestamp UpdatedDate = result.getTimestamp("UpdatedDate");
+
+                stockLevelData.add(new StockLevelData(id, ProductId, StockLevel, CurrentQty, PresentUnitQty, PresentPackQty, PresentPackPerQty, PreviousUnitQty, PreviousPackQty, PreviousPackPerQty, BeforeUnitQty, BeforePackQty, BeforePerPackQty,StockGuage, UpdatedBy, UpdatedDate ));
+
+            }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return stockLevelData;
+    }
+
+
+//    public static void main(String[] args) throws SQLException {
+//        DbConnection con = new DbConnection();
+//        System.out.println("connecting....");
+//        try  {
+//            con.CONNECTOR();
+//            System.out.println("connected....");
+//
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }//END OF CLASS

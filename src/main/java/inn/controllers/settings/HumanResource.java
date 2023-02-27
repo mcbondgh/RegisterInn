@@ -4,7 +4,7 @@ import inn.Controllers.configurations.DefPassword;
 import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;
 import inn.tableViews.ArchivedTableData;
-import inn.tableViews.EmployeesTable;
+import inn.tableViews.EmployeesData;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,20 +39,20 @@ public class HumanResource extends ResourceModel implements Initializable {
     @FXML private Label emailLabel, totalEmpCountLabel, activeEmpCountLabel, archivedEmpCountLabel;
 
     /************************************ EMPLOYEES TABLEVIEW COLUMN NAMES EJECTED FROM THE FXML FILE.*/
-    @FXML public TableView<EmployeesTable> EmployeesTableView;
-    @FXML private  TableColumn<EmployeesTable, Integer> empId;
-    @FXML private TableColumn<EmployeesTable, String>  fullnameColumn;
-    @FXML private TableColumn<EmployeesTable, String>  numberColumn;
-    @FXML private TableColumn<EmployeesTable, String>  addressColumn;
-    @FXML private TableColumn<EmployeesTable, String> designationColumn;
-    @FXML private TableColumn<EmployeesTable, String> dateJoinedColumn;
-    @FXML private TableColumn<EmployeesTable, String> statusColumn;
-    @FXML private TableColumn<EmployeesTable, String> salaryColumn;
-    @FXML private TableColumn<EmployeesTable, Button> removeColumn;
+    @FXML public TableView<EmployeesData> EmployeesTableView;
+    @FXML private  TableColumn<EmployeesData, Integer> empId;
+    @FXML private TableColumn<EmployeesData, String>  fullnameColumn;
+    @FXML private TableColumn<EmployeesData, String>  numberColumn;
+    @FXML private TableColumn<EmployeesData, String>  addressColumn;
+    @FXML private TableColumn<EmployeesData, String> designationColumn;
+    @FXML private TableColumn<EmployeesData, String> dateJoinedColumn;
+    @FXML private TableColumn<EmployeesData, String> statusColumn;
+    @FXML private TableColumn<EmployeesData, String> salaryColumn;
+    @FXML private TableColumn<EmployeesData, Button> removeColumn;
 
     /************************************ ARCHIVED TABLEVIEW COLUMN NAMES EJECTED FROM THE FXML FILE.*/
     @FXML private TableView<ArchivedTableData> ArchivedTableView;
-    @FXML private  TableColumn<EmployeesTable, Integer> empId1;
+    @FXML private  TableColumn<EmployeesData, Integer> empId1;
     @FXML private TableColumn<ArchivedTableData, String>  fullnameColumn1;
     @FXML private TableColumn<ArchivedTableData, String>  numberColumn1;
     @FXML private TableColumn<ArchivedTableData, String>  addressColumn1;
@@ -260,7 +260,7 @@ public class HumanResource extends ResourceModel implements Initializable {
 
     @FXML
     private int activeTableSaveButtonClicked() {
-            EmployeesTable empObject;
+            EmployeesData empObject;
         for (int i = 0; i < EmployeesTableView.getItems().size(); i++) {
                 empObject = EmployeesTableView.getItems().get(i);
                 int id = empObject.getEmpId();

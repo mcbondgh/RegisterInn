@@ -1,7 +1,7 @@
 package inn.models;
 
 import inn.database.DbConnection;
-import inn.tableViews.ManageRoomsTableView;
+import inn.tableViews.ManageRoomsData;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -107,8 +107,8 @@ public class ManageRoomsModel extends DbConnection {
 
 
     //THIS METHOD WHEN CALLED SHALL FETCH AND RETURN ALL ROWS IN rooms TABLE
-    public ObservableList<ManageRoomsTableView> fetchAllRooms() {
-        ObservableList<ManageRoomsTableView> roomItems = FXCollections.observableArrayList();
+    public ObservableList<ManageRoomsData> fetchAllRooms() {
+        ObservableList<ManageRoomsData> roomItems = FXCollections.observableArrayList();
         try {
             String selectQuery = "SELECT * FROM rooms";
             stmt = CONNECTOR().createStatement();
@@ -128,7 +128,7 @@ public class ManageRoomsModel extends DbConnection {
                 if(status == 1) {
                     roomStatus.setSelected(true);
                 }
-                roomItems.add(new ManageRoomsTableView(roomId, roomNo, categoryId, standardPrice, roomStatus));
+                roomItems.add(new ManageRoomsData(roomId, roomNo, categoryId, standardPrice, roomStatus));
                 //roomItems.add(new ManageRoomsTableView(roomId, roomNo, categoryId, status, isBooked, dateAdded));
             }
             stmt.close();

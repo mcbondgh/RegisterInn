@@ -1,10 +1,10 @@
 package inn.Controllers.dashboard;
 
+import inn.Controllers.settings.ManageProductStocks;
 import inn.StartInn;
 import inn.database.DbConnection;
 import inn.models.InnActivationModel;
 import inn.multiStage.MultiStages;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
 import io.github.palexdev.materialfx.controls.MFXToggleButton;
 import javafx.fxml.FXML;
@@ -15,8 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.Camera;
-import javafx.scene.canvas.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
@@ -39,6 +37,7 @@ public class Homepage extends DbConnection implements Initializable{
     InnActivationModel modelOBJ = new InnActivationModel();
 
     ButtonType YES = ButtonType.YES;
+    ManageProductStocks manageProductStocksOBJ = new ManageProductStocks();
 
 
     /******************************************> FXML OBJECTS  <*******************************************/
@@ -166,6 +165,7 @@ public class Homepage extends DbConnection implements Initializable{
 //        Optional<ButtonType> choose = alert.showAndWait();
         if(alert.showAndWait().get() == YES) {
             task.cancel();
+            manageProductStocksOBJ.populateTableView.cancel();
             int returnedValue = modelOBJ.updateTrackerDateOnly();
             if (returnedValue > 0) {
                 signoutBtn.getScene().getWindow().hide();

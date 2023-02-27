@@ -19,6 +19,17 @@
     SELECT * FROM stores;
     SELECT * FROM ProductStock;
     SELECT * FROM ProductBrand;
+    SELECT * FROM stockLevels;
+    
+    SELECT
+	sl.ProductId, ProductName, StockLevel, CurrentQty, PresentUnitQty, PresentPackQty, PresentPackPerQty, PreviousUnitQty, PreviousPackQty, PreviousPackPerQty, BeforeUnitQty, BeforePackQty, BeforePerPackQty, StockGuage, UpdatedBy, UpdatedDate
+    FROM productstock AS ps
+    INNER JOIN stocklevels as sl
+    ON sl.ProductId = ps.id 
+    WHERE ps.DeleteStatus = 0;
+    
+    SELECT * FROM ProductStock WHERE(ProductName LIKE'%STAR%' OR ProductBrand LIKE'% HEALTH%' AND DeleteStatus = 0); 
+    
 
     ALTER TABLE users 
     ADD COLUMN emp_id INT AFTER confirm_password;
@@ -43,6 +54,8 @@
     TRUNCATE TABLE StocksCategory;
     TRUNCATE TABLE stores;
     TRUNCATE TABLE ProductStock;
+    TRUNCATE TABLE ProductBrand;
+    TRUNCATE TABLE StockLevels;
 
 -- ALTER TABLE AND UPDATE STATEMENTS
 	UPDATE business_info SET bsi_name = "GUEST HOUSE", updated_date = current_timestamp();
@@ -86,6 +99,12 @@ SELECT DISTINCT(lower(username)) FROM users;
    ALTER TABLE ProductStock DROP COLUMN ReceiptNo;    
    ALTER TABLE productstock ADD COLUMN ProductBrand VARCHAR(100) AFTER ProductDescription;
    ALTER TABLE ProductStock ADD COLUMN productQuantity INT AFTER QtyPerPack;
+   -- 21/02/2023 
+   ALTER TABLE productstock DROP COLUMN UnitQuantity;
+   ALTER TABLE productstock DROP COLUMN PackQuantity;
+   ALTER TABLE productstock DROP COLUMN QtyPerPack;
+   ALTER TABLE productstock DROP COLUMN ProductQuantity;
+   ALTER TABLE productstock ADD COLUMN ProductType VARCHAR(10) AFTER PRODUCTNAME;
    
 	DESCRIBE inn_register.employees;
     DESCRIBE employees;
@@ -97,7 +116,8 @@ SELECT DISTINCT(lower(username)) FROM users;
     ALTER TABLE employees 
     MODIFY COLUMN photo BLOB;
 	
-	SET foreign_key_checks = 1;
+    -- FOREIGN KEY CHECKS
+	SET foreign_key_checks = 0;
 
 UPDATE employees SET modified_date  = DEFAULT 
 WHERE id = 10;
@@ -107,7 +127,8 @@ CHANGE COLUMN expirey_date expiry_date DATE NOT NULL;
 INSERT INTO activation_key(activation_code, expiry_date)
 VALUES('dsdseewe', '2022-1-1');
 
-
+INSERT INTO ProductStock(ProductName, ProductDescription, ProductBrand, Category, Supplier, Notes, ExpiryDate, UnitQuantity, PackQuantity, QtyPerPack, productQuantity, AddedBy)
+VALUES('VITAMILK', 'SD', 'DSD', 'D', 'DSD',  'DSDSD', '2020-10-20', 5, 5, 5, 5, 1);
 
 -- DROP TABLES SECTION ---
 DROP TABLE activation_key; 

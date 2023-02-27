@@ -4,10 +4,10 @@ import inn.StartInn;
 import inn.database.DbConnection;
 import inn.models.AddRolesAndDepartmentModel;
 import inn.prompts.UserNotification;
-import inn.tableViews.DepartmentTableView;
-import inn.tableViews.IdTypeTableView;
-import inn.tableViews.RolesTypesTableView;
-import inn.tableViews.RoomsCategoryTableView;
+import inn.tableViews.DepartmentData;
+import inn.tableViews.IdTypesData;
+import inn.tableViews.RolesTypesData;
+import inn.tableViews.RoomsCategoryData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implements Initializable {
 
     DbConnection dbConnectionOBJ = new DbConnection();
-    RolesTypesTableView rolesTypesOBJ = new RolesTypesTableView();
+    RolesTypesData rolesTypesOBJ = new RolesTypesData();
     UserNotification notificationOBJ = new UserNotification();
 
 
@@ -55,28 +55,28 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML private Button addDepartmentButton, deleteDepartmentButton, addRoomCategoryBtn, deleteRoomsCategoryBtn;
     @FXML private Button addIdTypeButton, deleteIdTypeButton;
     @FXML private CheckBox roleCheckBox, departmentCheckBox, idTypeCheckBox, roomCategoriesCheckBox;
-    @FXML private TableView<RolesTypesTableView> roleTableView;
-    @FXML private TableColumn<RolesTypesTableView, String> roleName;
-    @FXML private TableColumn<RolesTypesTableView, Integer> roleId;
+    @FXML private TableView<RolesTypesData> roleTableView;
+    @FXML private TableColumn<RolesTypesData, String> roleName;
+    @FXML private TableColumn<RolesTypesData, Integer> roleId;
 
 
     //FXML NODES FOR DEPARTMENT TABLE VIEW
-    @FXML private TableView<DepartmentTableView> departmentsTableView;
-    @FXML private TableColumn<DepartmentTableView, String> departmentName;
-    @FXML private TableColumn<DepartmentTableView, Integer> departmentId;
+    @FXML private TableView<DepartmentData> departmentsTableView;
+    @FXML private TableColumn<DepartmentData, String> departmentName;
+    @FXML private TableColumn<DepartmentData, Integer> departmentId;
 
 
     //FXML NODES FOR ID TYPE TABLE VIEW.
-    @FXML private TableView<IdTypeTableView> idTypeTableView;
-    @FXML private TableColumn<IdTypeTableView, String> idTypeID;
-    @FXML private TableColumn<RolesTypesTableView, Integer> idTypeName;
+    @FXML private TableView<IdTypesData> idTypeTableView;
+    @FXML private TableColumn<IdTypesData, String> idTypeID;
+    @FXML private TableColumn<RolesTypesData, Integer> idTypeName;
 
 
     //FXML NODES FOR ROOMS CATEGORY TABLE VIEW
-    @FXML private TableView<RoomsCategoryTableView> roomsCategoryTableView;
-    @FXML private TableColumn<RoomsCategoryTableView, Integer> roomsCatId;
-    @FXML private TableColumn<RoomsCategoryTableView, String> roomsCateName;
-    @FXML private TableColumn<RolesTypesTableView, Double> priceColumn;
+    @FXML private TableView<RoomsCategoryData> roomsCategoryTableView;
+    @FXML private TableColumn<RoomsCategoryData, Integer> roomsCatId;
+    @FXML private TableColumn<RoomsCategoryData, String> roomsCateName;
+    @FXML private TableColumn<RolesTypesData, Double> priceColumn;
 
 
     /*******************************************************************************************************************
@@ -375,7 +375,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
     boolean checkIfRoomCategoryExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
-        for (RoomsCategoryTableView item : dbConnectionOBJ.fetchCategories()) {
+        for (RoomsCategoryData item : dbConnectionOBJ.fetchCategories()) {
             if (Objects.equals(item.getRoomsCateName().toLowerCase(), textFieldValue.toLowerCase())) {
                 flag = true;
                 break;
@@ -389,10 +389,10 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     void populateRolesTable() throws SQLException {
         roleName.setCellValueFactory( new PropertyValueFactory<>("roleName"));
         roleId.setCellValueFactory(new PropertyValueFactory<>("roleId"));
-        ObservableList<RolesTypesTableView> roleValues = FXCollections.observableArrayList();
+        ObservableList<RolesTypesData> roleValues = FXCollections.observableArrayList();
 
         for (int i = 0; i < dbConnectionOBJ.fetchUserRoles().size(); i++) {
-            roleValues.add(new RolesTypesTableView(i + 1, dbConnectionOBJ.fetchUserRoles().get(i)));
+            roleValues.add(new RolesTypesData(i + 1, dbConnectionOBJ.fetchUserRoles().get(i)));
             roleTableView.setItems(roleValues);
         }
     }
@@ -400,10 +400,10 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     void populateIdTypeTable() {
         idTypeName.setCellValueFactory( new PropertyValueFactory<>("idTypeName"));
         idTypeID.setCellValueFactory(new PropertyValueFactory<>("idTypeID"));
-        ObservableList<IdTypeTableView> roleValues = FXCollections.observableArrayList();
+        ObservableList<IdTypesData> roleValues = FXCollections.observableArrayList();
 
         for (int i = 0; i < dbConnectionOBJ.fetchIdTypes().size(); i++) {
-            roleValues.add(new IdTypeTableView(i + 1, dbConnectionOBJ.fetchIdTypes().get(i)));
+            roleValues.add(new IdTypesData(i + 1, dbConnectionOBJ.fetchIdTypes().get(i)));
             idTypeTableView.setItems(roleValues);
         }
     }
@@ -411,10 +411,10 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     void populateDepartmentTable() {
         departmentName.setCellValueFactory( new PropertyValueFactory<>("departmentName"));
         departmentId.setCellValueFactory(new PropertyValueFactory<>("departmentId"));
-        ObservableList<DepartmentTableView> roleValues = FXCollections.observableArrayList();
+        ObservableList<DepartmentData> roleValues = FXCollections.observableArrayList();
 
         for (int i = 0; i < dbConnectionOBJ.fetchDesignation().size(); i++) {
-            roleValues.add(new DepartmentTableView(i + 1, dbConnectionOBJ.fetchDesignation().get(i)));
+            roleValues.add(new DepartmentData(i + 1, dbConnectionOBJ.fetchDesignation().get(i)));
             departmentsTableView.setItems(roleValues);
         }
     }
@@ -423,10 +423,10 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         roomsCateName.setCellValueFactory( new PropertyValueFactory<>("roomsCateName"));
         roomsCatId.setCellValueFactory(new PropertyValueFactory<>("roomsCatId"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        ObservableList<RoomsCategoryTableView> roleValues = FXCollections.observableArrayList();
+        ObservableList<RoomsCategoryData> roleValues = FXCollections.observableArrayList();
 
-        for (RoomsCategoryTableView item : fetchCategories()) {
-            roleValues.add(new RoomsCategoryTableView(item.getRoomsCatId(), item.getRoomsCateName(), item.getPrice()));
+        for (RoomsCategoryData item : fetchCategories()) {
+            roleValues.add(new RoomsCategoryData(item.getRoomsCatId(), item.getRoomsCateName(), item.getPrice()));
         }
         roomsCategoryTableView.setItems(roleValues);
 

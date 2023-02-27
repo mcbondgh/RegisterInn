@@ -1,14 +1,14 @@
 package inn.tableViews;
 
 
-public class RolesTypesTableView {
+public class RolesTypesData {
 
-    public RolesTypesTableView() {}
+    public RolesTypesData() {}
 
     private String roleName;
     private int roleId;
 
-    public RolesTypesTableView(int roleId, String name) {
+    public RolesTypesData(int roleId, String name) {
         this.roleId = roleId;
         this.roleName = name;
     }

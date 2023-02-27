@@ -2,18 +2,18 @@ package inn.tableViews;
 
 import java.sql.Date;
 
-public class StocksCategoryTableView {
-    public StocksCategoryTableView() {}
+public class StocksCategoryData {
+    public StocksCategoryData() {}
     private int Id;
     private String categoryName;
     private Date dateAdded;
 
-    public StocksCategoryTableView(int id, String categoryName, Date dateAdded) {
+    public StocksCategoryData(int id, String categoryName, Date dateAdded) {
         Id = id;
         this.categoryName = categoryName;
         this.dateAdded = dateAdded;
     }
-    public StocksCategoryTableView(int id, String categoryName) {
+    public StocksCategoryData(int id, String categoryName) {
         Id = id;
         this.categoryName = categoryName;
     }
