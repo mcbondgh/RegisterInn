@@ -28,13 +28,13 @@ public class StartInn extends Application implements Initializable {
             errorLogger.log(e.getMessage());
            multiStages.wrongDateTimeStage();
         }
-
     }
 
 
     public static void main(String[] args) {
         launch();
-
     }
+
+
 }//END OF CLASS
 

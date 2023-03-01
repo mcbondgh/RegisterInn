@@ -138,7 +138,7 @@
                   <Insets right="10.0" />
                </padding>
             </Button>
-            <Button fx:id="messageBoxButton" alignment="CENTER_RIGHT" cache="true" cacheHint="SPEED" disable="true" layoutX="16.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#messageBoxButtonOnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff; -fx-background-radius: 5px;" text="Message Box" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button fx:id="messageBoxButton" alignment="CENTER_RIGHT" cache="true" cacheHint="SPEED" layoutX="16.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#messageBoxButtonOnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #fff; -fx-background-radius: 5px;" text="Message Box" textFill="#535353" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>

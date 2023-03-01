@@ -85,7 +85,6 @@ public class Homepage extends DbConnection implements Initializable{
         }
     public void checkFLOW(){
 //        timer.scheduleAtFixedRate(task,0,1000);
-
     }
 
     /*******************************************************************************************************************

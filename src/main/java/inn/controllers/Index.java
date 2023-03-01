@@ -45,7 +45,6 @@ public class Index extends Homepage implements Initializable {
             errorLogger.log(e.getLocalizedMessage());
             e.printStackTrace();
         }
-
     }
 
     /*******************************************************************************************************************
@@ -61,8 +60,6 @@ public class Index extends Homepage implements Initializable {
     public void setUsernameField(String username) {usernameField.setText(username);}
     public String getUsernameField() {return usernameField.getText();}
 
-
-
     /*******************************************************************************************************************
      ACTION EVENT METHODS IMPLEMENTATION*/
     public void signinButtonAction() throws IOException {
@@ -71,9 +68,6 @@ public class Index extends Homepage implements Initializable {
         signinButton.getScene().getWindow().hide();
 
     }
-
-
-
 
     public void passwordResetLink() throws IOException {
         multiStages.resetPassword();
