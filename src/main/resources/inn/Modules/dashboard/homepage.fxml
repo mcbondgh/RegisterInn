@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="homepagePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.dashboard.Homepage">
+<AnchorPane fx:id="homepagePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.dashboard.Homepage">
    <children>
       <BorderPane fx:id="displayContainer" layoutX="177.0" layoutY="54.0" prefHeight="605.0" prefWidth="1095.0" style="-fx-background-color: #f9f9f9;">
          <center>
@@ -61,7 +61,7 @@
       </BorderPane>
       <Pane fx:id="sidebarPane" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragEntered="#checkFLOW" prefHeight="625.0" prefWidth="172.0" style="-fx-background-color: #f2f2f2;">
          <children>
-            <Button id="dashboardButton" fx:id="dashboardBtn" alignment="CENTER_RIGHT" cache="true" cacheHint="SPEED" contentDisplay="TEXT_ONLY" layoutX="12.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#dashboardBtnAction" prefHeight="35.0" prefWidth="153.0" style="-fx-background-color: white; -fx-background-radius: 5px;" styleClass="dashboardButton" stylesheets="@stylesheets/stylesheet.css" text="Dashboard" textFill="#535353" textOverrun="CLIP">
+            <Button id="dashboardButton" fx:id="dashboardBtn" alignment="CENTER_RIGHT" cache="true" cacheHint="SPEED" contentDisplay="TEXT_ONLY" layoutX="12.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#dashboardBtnAction" prefHeight="35.0" prefWidth="153.0" style="-fx-background-color: white; -fx-background-radius: 5px; -fx-border-color: gray; -fx-border-radius: 5;" styleClass="dashboardButton" stylesheets="@stylesheets/stylesheet.css" text="Dashboard" textFill="#535353" textOverrun="CLIP">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
@@ -278,7 +278,7 @@
             </InnerShadow>
          </effect>
          <children>
-            <Button fx:id="signoutBtn" alignment="CENTER_RIGHT" layoutX="1194.0" layoutY="11.0" mnemonicParsing="false" onAction="#signoutBtnAction" prefHeight="26.0" prefWidth="79.0" style="-fx-background-color: #ff0000; -fx-background-radius: 10px;" text="Signout" textFill="WHITE">
+            <Button fx:id="signoutBtn" alignment="CENTER_RIGHT" layoutX="1194.0" layoutY="11.0" mnemonicParsing="false" onMousePressed="#signoutBtnAction" prefHeight="26.0" prefWidth="79.0" style="-fx-background-color: #ff0000; -fx-background-radius: 10px;" text="Signout" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="12.0" />
                </font>

@@ -36,13 +36,14 @@ public class UserPrompts extends ManageStocksModel {
         boolean result  = addNewBrand(brandInputField.getText());
         if(!result) {
             brandInputField.clear();
+            saveBrand.setDisable(true);
         }
     }
     @FXML void brandInputAction() {
         saveBrand.setDisable(brandInputField.getText().isBlank());
         String brandName = brandInputField.getText();
         for (StoresTableData.BrandsTableData item : fetchProductBrands()) {
-            if(Objects.equals(item.getBrandName().toLowerCase().replaceAll("\\s", ""), brandName.replaceAll("\\s", ""))) {
+            if(Objects.equals(item.getBrandName().toLowerCase().replaceAll("\\s", ""), brandName.toLowerCase().replaceAll("\\s", ""))) {
                 brandLabelDisplay.setVisible(true);
                 saveBrand.setDisable(true);
             } else brandLabelDisplay.setVisible(false);

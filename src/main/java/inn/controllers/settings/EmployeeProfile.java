@@ -355,7 +355,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
 
     boolean validateEmpId() {
         boolean result = false;
-        for(int empIds: fetchEmployeeId()) {
+        for(int empIds: getUserId()) {
             if(Integer.parseInt(idField.getText()) == empIds) {
                 result = true;
             }

@@ -266,6 +266,8 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
 
 //        action.setStyle("-fx-alignment-center; fx-font-size:16px");
         action.setCellValueFactory(new PropertyValueFactory<>("statusAction"));
+
+
     }
 
 

@@ -1,63 +1,64 @@
 package inn.tableViews;
 
+import javafx.scene.control.Label;
+
 import java.sql.Timestamp;
 
 public class StockLevelData {
-
-    int itemId;
-    String productName;
+    int stockId;
+    Label stockItemName;
     int stockLevel;
-    int currentQty;
-    int  PresentUnitQty;
-    int PresentPackQty;
-    int PresentPackPerQty;
-    int PreviousUnitQty;
-    int PreviousPackQty;
-    int PreviousPackPerQty;
-    int BeforeUnitQty;
-    int BeforePackQty;
-    int BeforePerPackQty;
-    int StockGuage;
-    String UpdatedBy;
-    Timestamp UpdatedDate;
+    int currentStockLevel;
+    int currentBoxQuantity;
+    int currentQuantityPerBox;
+    int oldStockLevel;
+    int previousStockLevel;
+    int previousBoxQuantity;
+    int previousQuantityPerBox;
+    int gage;
+    String modifiedBy;
+    Timestamp lastModified;
 
 
-    public StockLevelData() {}
 
-    public StockLevelData(int itemId, String productName, int stockLevel, int currentQty, int presentUnitQty, int presentPackQty, int presentPackPerQty, int previousUnitQty, int previousPackQty, int previousPackPerQty, int beforeUnitQty, int beforePackQty, int beforePerPackQty, int stockGuage, String updatedBy, Timestamp updatedDate) {
-        this.itemId = itemId;
-        this.productName = productName;
+    public StockLevelData(int stockId, Label stockItemName, int stockLevel, int currentStockLevel, int currentBoxQuantity, int currentQuantityPerBox, int oldStockLevel, int previousStockLevel, int previousBoxQuantity, int previousQuantityPerBox, int gage, String modifiedBy, Timestamp lastModified) {
+        this.stockId = stockId;
+        this.stockItemName = stockItemName;
         this.stockLevel = stockLevel;
-        this.currentQty = currentQty;
-        PresentUnitQty = presentUnitQty;
-        PresentPackQty = presentPackQty;
-        PresentPackPerQty = presentPackPerQty;
-        PreviousUnitQty = previousUnitQty;
-        PreviousPackQty = previousPackQty;
-        PreviousPackPerQty = previousPackPerQty;
-        BeforeUnitQty = beforeUnitQty;
-        BeforePackQty = beforePackQty;
-        BeforePerPackQty = beforePerPackQty;
-        StockGuage = stockGuage;
-        UpdatedBy = updatedBy;
-        UpdatedDate = updatedDate;
+        this.currentStockLevel = currentStockLevel;
+        this.currentBoxQuantity = currentBoxQuantity;
+        this.currentQuantityPerBox = currentQuantityPerBox;
+        this.oldStockLevel = oldStockLevel;
+        this.previousStockLevel = previousStockLevel;
+        this.previousBoxQuantity = previousBoxQuantity;
+        this.previousQuantityPerBox = previousQuantityPerBox;
+        this.gage = gage;
+        this.modifiedBy = modifiedBy;
+        this.lastModified = lastModified;
     }
 
-
-    public int getItemId() {
-        return itemId;
+    public int getStockId() {
+        return stockId;
     }
 
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+    public void setStockId(int stockId) {
+        this.stockId = stockId;
     }
 
-    public String getProductName() {
-        return productName;
+    public Label getStockItemName() {
+        return stockItemName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setStockItemName(Label stockItemName) {
+        this.stockItemName = stockItemName;
+    }
+
+    public int getOldStockLevel() {
+        return oldStockLevel;
+    }
+
+    public void setOldStockLevel(int oldStockLevel) {
+        this.oldStockLevel = oldStockLevel;
     }
 
     public int getStockLevel() {
@@ -68,107 +69,75 @@ public class StockLevelData {
         this.stockLevel = stockLevel;
     }
 
-    public int getCurrentQty() {
-        return currentQty;
+    public int getCurrentStockLevel() {
+        return currentStockLevel;
     }
 
-    public void setCurrentQty(int currentQty) {
-        this.currentQty = currentQty;
+    public void setCurrentStockLevel(int currentStockLevel) {
+        this.currentStockLevel = currentStockLevel;
     }
 
-    public int getPresentUnitQty() {
-        return PresentUnitQty;
+    public int getCurrentBoxQuantity() {
+        return currentBoxQuantity;
     }
 
-    public void setPresentUnitQty(int presentUnitQty) {
-        PresentUnitQty = presentUnitQty;
+    public void setCurrentBoxQuantity(int currentBoxQuantity) {
+        this.currentBoxQuantity = currentBoxQuantity;
     }
 
-    public int getPresentPackQty() {
-        return PresentPackQty;
+    public int getCurrentQuantityPerBox() {
+        return currentQuantityPerBox;
     }
 
-    public void setPresentPackQty(int presentPackQty) {
-        PresentPackQty = presentPackQty;
+    public void setCurrentQuantityPerBox(int currentQuantityPerBox) {
+        this.currentQuantityPerBox = currentQuantityPerBox;
     }
 
-    public int getPresentPackPerQty() {
-        return PresentPackPerQty;
+    public int getPreviousStockLevel() {
+        return previousStockLevel;
     }
 
-    public void setPresentPackPerQty(int presentPackPerQty) {
-        PresentPackPerQty = presentPackPerQty;
+    public void setPreviousStockLevel(int previousStockLevel) {
+        this.previousStockLevel = previousStockLevel;
     }
 
-    public int getPreviousUnitQty() {
-        return PreviousUnitQty;
+    public int getPreviousBoxQuantity() {
+        return previousBoxQuantity;
     }
 
-    public void setPreviousUnitQty(int previousUnitQty) {
-        PreviousUnitQty = previousUnitQty;
+    public void setPreviousBoxQuantity(int previousBoxQuantity) {
+        this.previousBoxQuantity = previousBoxQuantity;
     }
 
-    public int getPreviousPackQty() {
-        return PreviousPackQty;
+    public int getPreviousQuantityPerBox() {
+        return previousQuantityPerBox;
     }
 
-    public void setPreviousPackQty(int previousPackQty) {
-        PreviousPackQty = previousPackQty;
+    public void setPreviousQuantityPerBox(int previousQuantityPerBox) {
+        this.previousQuantityPerBox = previousQuantityPerBox;
     }
 
-    public int getPreviousPackPerQty() {
-        return PreviousPackPerQty;
+    public int getGage() {
+        return gage;
     }
 
-    public void setPreviousPackPerQty(int previousPackPerQty) {
-        PreviousPackPerQty = previousPackPerQty;
+    public void setGage(int gage) {
+        this.gage = gage;
     }
 
-    public int getBeforeUnitQty() {
-        return BeforeUnitQty;
+    public String getModifiedBy() {
+        return modifiedBy;
     }
 
-    public void setBeforeUnitQty(int beforeUnitQty) {
-        BeforeUnitQty = beforeUnitQty;
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
     }
 
-    public int getBeforePackQty() {
-        return BeforePackQty;
+    public Timestamp getLastModified() {
+        return lastModified;
     }
 
-    public void setBeforePackQty(int beforePackQty) {
-        BeforePackQty = beforePackQty;
-    }
-
-    public int getBeforePerPackQty() {
-        return BeforePerPackQty;
-    }
-
-    public void setBeforePerPackQty(int beforePerPackQty) {
-        BeforePerPackQty = beforePerPackQty;
-    }
-
-    public int getStockGuage() {
-        return StockGuage;
-    }
-
-    public void setStockGuage(int stockGuage) {
-        StockGuage = stockGuage;
-    }
-
-    public String getUpdatedBy() {
-        return UpdatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        UpdatedBy = updatedBy;
-    }
-
-    public Timestamp getUpdatedDate() {
-        return UpdatedDate;
-    }
-
-    public void setUpdatedDate(Timestamp updatedDate) {
-        UpdatedDate = updatedDate;
+    public void setLastModified(Timestamp lastModified) {
+        this.lastModified = lastModified;
     }
 }//END OF CLASS.........

@@ -13,23 +13,51 @@
     SELECT * FROM designation;
     SELECT * FROM rooms;
     SELECT * FROM roomsCategory;
+    SELECT * FROM messageTemplates;
     SELECT * FROM modules;
-    SELECT * FROM StocksCategory;
-    SELECT * FROM suppliers;
+    SELECT * FROM productPrices;
     SELECT * FROM stores;
-    SELECT * FROM ProductStock;
-    SELECT * FROM ProductBrand;
-    SELECT * FROM stockLevels;
+    SELECT * FROM ProductItems;
+    SELECT * FROM stocklevels;
+    SELECT * FROM productBrand;
+	SELECT * FROM StocksCategory;
+    SELECT * FROM suppliers;
+
+-- STOCK LEVEL TABLE JOIN
+   SELECT 
+	sl.id, pi.productName, stocklevel, currentStockLevel, currentBoxQuantity,
+    currentQuantityPerBox, previousStockLevel, previousBoxQuantity, previousQuantityPerBox,
+    gage, username, lastModified
+   FROM StockLevels AS sl
+   INNER JOIN ProductItems AS pi
+		ON productId = pi.id
+   INNER JOIN users as us
+		ON sl.modifiedBy = us.id
+	WHERE pi.deleteStatus = 0;
     
-    SELECT
-	sl.ProductId, ProductName, StockLevel, CurrentQty, PresentUnitQty, PresentPackQty, PresentPackPerQty, PreviousUnitQty, PreviousPackQty, PreviousPackPerQty, BeforeUnitQty, BeforePackQty, BeforePerPackQty, StockGuage, UpdatedBy, UpdatedDate
-    FROM productstock AS ps
-    INNER JOIN stocklevels as sl
-    ON sl.ProductId = ps.id 
-    WHERE ps.DeleteStatus = 0;
+    -- PRODUCT ITEMS TABLE JOIN
+    SELECT pi.id, productName, supplyType, CategoryName, supplierName, BrandName, expiryDate, 
+    StoreName, note, activeStatus, deleteStatus, username, pi.DateCreated
+    FROM productItems as pi
+    INNER JOIN StocksCategory as sc
+		ON pi.categoryId = sc.id
+    INNER JOIN suppliers AS supId
+		ON supplieriD = supId.id
+    JOIN productBrand AS pb
+		ON brandId = pb.id
+	JOIN stores AS s
+		ON storeId = s.id
+	JOIN users AS us
+		ON us.id = addedBy
+	WHERE deleteStatus = 0;
     
-    SELECT * FROM ProductStock WHERE(ProductName LIKE'%STAR%' OR ProductBrand LIKE'% HEALTH%' AND DeleteStatus = 0); 
     
+    
+    -- TABLE JOIN FOR messageTemplates 
+    SELECT templateId, templateTitle, templateBody, dateCreated, dateModified, username 
+    FROM messagetemplates as mt
+    INNER JOIN users as u
+    ON  u.id = createdBy;
 
     ALTER TABLE users 
     ADD COLUMN emp_id INT AFTER confirm_password;
@@ -53,7 +81,7 @@
     TRUNCATE TABLE rooms;
     TRUNCATE TABLE StocksCategory;
     TRUNCATE TABLE stores;
-    TRUNCATE TABLE ProductStock;
+    TRUNCATE TABLE productitems;
     TRUNCATE TABLE ProductBrand;
     TRUNCATE TABLE StockLevels;
 
@@ -106,6 +134,11 @@ SELECT DISTINCT(lower(username)) FROM users;
    ALTER TABLE productstock DROP COLUMN ProductQuantity;
    ALTER TABLE productstock ADD COLUMN ProductType VARCHAR(10) AFTER PRODUCTNAME;
    
+   -- 05-03-2023
+   ALTER TABLE productitems MODIFY COLUMN dateCreated DATETIME;
+   ALTER TABLE productitems CHANGE COLUMN productStatus  activeStatus TINYINT DEFAULT 0;
+   ALTER TABLE productitems CHANGE COLUMN isDeleted  deleteStatus TINYINT DEFAULT 0;
+   
 	DESCRIBE inn_register.employees;
     DESCRIBE employees;
     DESCRIBE activation_key;
@@ -134,3 +167,6 @@ VALUES('VITAMILK', 'SD', 'DSD', 'D', 'DSD',  'DSDSD', '2020-10-20', 5, 5, 5, 5, 
 DROP TABLE activation_key; 
 DROP TABLE activation_password;
 DROP TABLE rooms;
+DROP TABLE ProductItems;
+DROP TABLE stocklevels;
+DROP TABLE productPrices;

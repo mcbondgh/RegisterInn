@@ -1,14 +1,18 @@
 package inn.Controllers.settings;
-import inn.multiStage.MultiStages;
-import inn.tableViews.*;
 
+
+import inn.ErrorLogger;
+import inn.enumerators.AlertTypesEnum;
 import inn.models.ManageStocksModel;
-
+import inn.multiStage.MultiStages;
+import inn.prompts.UserAlerts;
 import inn.prompts.UserNotification;
+import inn.tableViews.*;
+import inn.threads.ProductItemTask;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -22,10 +26,11 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.TimerTask;
 
 public class ManageProductStocks extends ManageStocksModel implements Initializable {
 
@@ -43,22 +48,28 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML private TextField supplierNameField, contactField, locationField, categoryField;
     @FXML private Button saveSuppliersButton, updateSuppliersButton, deleteSuppliersButton;
     @FXML private Button saveStockCategoryButton, updateStockCategoryButton, deleteStockCategoryButton;
-    @FXML private Label requiredIndicator;
-    @FXML private TextField searchProductsTextField;
+    @FXML private MFXButton updateStockLevelButton;
+    @FXML private Label requiredIndicator, selectedProductNameDisplay, selectedStockTypeDisplay;
+    @FXML private TextField productNameField;
+
 
 
     //******************* >>> PRODUCT STOCKS NODES
-    @FXML private TextField productNameField, totalProductQuantityField, unitQuantityField,packQuantityField, qtyPerPackField;
-    @FXML private TextArea notesField;
-    @FXML private ComboBox<String> itemDescBox, itemCategoryBox, itemSupplierBox, selectStoreBox;
-//    @FXML private MFXLegacyComboBox<String> itemBrandBox;
     @FXML private DatePicker expiryDatePicker;
-    @FXML private Button saveProductBtn, deleteProductBtn;
-    @FXML private ComboBox<String> brandComboBox;
+//    @FXML private TextField ;
+    @FXML private MFXTextField  searchProductsTextField, singleItemQtyField, boxQuantityField, qtyPerBoxField, purchasedPriceField, sellingPriceField ;
+    @FXML private Label totalProductDisplay, productProfitDisplay, stockLevelTotalProductDisplay;
+    @FXML private TextArea productNoteField;
+    @FXML private  Button saveProductButton, deleteProductButton;
+    @FXML private MFXLegacyComboBox<String> stockTypeSelector;
+    @FXML private MFXLegacyComboBox<String> productCategorySelector;
+    @FXML private MFXLegacyComboBox<String> productSupplierSelector;
+    @FXML private MFXLegacyComboBox<String> productBrandSelector;
+    @FXML private MFXTextField stockLevelSingleQtyField, stockLevelBoxQuantityField, stockLevelQtyPerBoxField;
 
 
     //******************* >> STORES TABLE VIEW
-    @FXML private TextField storesInputField, storeDescriptionField;
+    @FXML private TextField storesInputField, storeDescriptionField, productGate;
     @FXML private TitledPane storesTab;
     @FXML private CheckBox storesCheckBox;
     @FXML private Button saveStoreButton, deleteStoreButton;
@@ -81,54 +92,61 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML private  TableColumn<StocksCategoryData, Integer> idColumn;
     @FXML private  TableColumn<StocksCategoryData, String> categoryNameColumn;
 
-    //******************* >>PRODUCTS TABLE VIEW NODES
-    @FXML private MFXLegacyTableView<ProductsStockData> productsTableView;
-    @FXML private TableColumn<ProductsStockData, Integer> itemIdColumn;
-    @FXML private TableColumn<ProductsStockData, String> itemNameColumn;
-    @FXML private TableColumn<ProductsStockData, String> productTypeColumn;
-    @FXML private TableColumn<ProductsStockData, String> brandColumn;
-    @FXML private TableColumn<ProductsStockData, String> categoryColumn;
-    @FXML private TableColumn<ProductsStockData, String> supplierColumn;
-    @FXML private TableColumn<ProductsStockData, Date> expiryDateColumn;
-    @FXML private TableColumn<ProductsStockData, Label> statusColumn;
-    @FXML private TableColumn<ProductsStockData, Integer> addedByColumn;
-    @FXML private TableColumn<ProductsStockData, Timestamp> dateCreatedColumn;
 
+    //******************* >>PRODUCTS TABLE VIEW NODES
+    @FXML private MFXLegacyTableView<ProductsStockData> productItemTableView;
+    @FXML private TableColumn<ProductsStockData, Integer> productIdColumn;
+    @FXML private TableColumn<ProductsStockData, String> productNameColumn;
+    @FXML private TableColumn<ProductsStockData, String> supplyTypeField;
+    @FXML private TableColumn<ProductsStockData, String> productCategoryColumn;
+    @FXML private TableColumn<ProductsStockData, String> productBrandColumn;
+    @FXML private TableColumn<ProductsStockData, String> productSupplierColumn;
+    @FXML private TableColumn<ProductsStockData, String> productsStoreColumn;
+    @FXML private TableColumn<ProductsStockData, String> productStatusColumn;
+    @FXML private TableColumn<ProductsStockData, Date> productExpiryDateColumn;
+    @FXML private TableColumn<ProductsStockData, String> productAddedByColumn;
+    @FXML private TableColumn<ProductsStockData, Timestamp> productDateAddedColumn;
 
     //******************* >>STOCK LEVEL TABLE VIEW NODES
-    @FXML private MFXLegacyTableView<StockLevelData> stocksLevelTableView;
-    @FXML private TableColumn<StockLevelData, String> stockLevelProductNameColumn;
-    @FXML private TableColumn<StockLevelData, Integer> stockLevelAvailableQtyColumn;
-    @FXML private TableColumn<StockLevelData, Integer> stockLevelCurrentQtyColumn;
-    @FXML private TableColumn<StockLevelData, Integer> presentQtyUnitColumn;
-    @FXML private TableColumn<StockLevelData, Integer> presentQtyPackColumn;
-    @FXML private TableColumn<StockLevelData, Integer> presentQtyPerPackColumn;
-    @FXML private TableColumn<StockLevelData, Integer> previousQtyUnitColumn;
-    @FXML private TableColumn<StockLevelData, Integer> previousQtyPackColumn;
-    @FXML private TableColumn<StockLevelData, Integer> previousQtyPerPackColumn;
-    @FXML private TableColumn<StockLevelData, Integer> beforeQtyUnitColumn;
-    @FXML private TableColumn<StockLevelData, Integer> beforeQtyPackColumn;
-    @FXML private TableColumn<StockLevelData, Integer> beforeQtyPerPackColumn;
-    @FXML private TableColumn<StockLevelData, Integer> stockLevelGageColumn;
-    @FXML private TableColumn<StockLevelData, Timestamp> stockLevelUpdatedDateColumn;
-    @FXML private TableColumn<StockLevelData, String> stockLevelUpdatedByColumn;
+    @FXML private MFXLegacyTableView<StockLevelData> stockLevelTableView;
+    @FXML private TableColumn<StockLevelData, Integer> stockIdField;
+    @FXML private TableColumn<StockLevelData, String> stockNameColumn;
+    @FXML private TableColumn<StockLevelData, Integer> stockLevelColumn;
+    @FXML private TableColumn<StockLevelData, Integer> currentSingleColumn;
+    @FXML private TableColumn<StockLevelData, Integer> currentBoxColumn;
+    @FXML private TableColumn<StockLevelData, Integer> currentPerBoxColumn;
+    @FXML private TableColumn<StockLevelData, Integer> oldStockLevelColumn;
+    @FXML private TableColumn<StockLevelData, Integer> previousSingleColumn;
+    @FXML private TableColumn<StockLevelData, Integer> previousBoxColumn;
+    @FXML private TableColumn<StockLevelData, Integer> previousPerBoxColumn;
+    @FXML private TableColumn<StockLevelData, Integer> stockGagaColumn;
+    @FXML private TableColumn<StockLevelData, String> stockModifyColumn;
+    @FXML private TableColumn<StockLevelData, Timestamp> stockLastUpdateColumn;
 
-    @FXML private MFXButton updateStockLevelBtn;
-    @FXML private Label displayStockLevelProductName, stockLevelDisplayProductType;
-    @FXML private MFXTextField stockLevelUnitQtyField, stockLevelPackQtyField, stockLevelPerPackField, stockGuageField;
-    @FXML private TextField stockLevelTotalProduct;
 
+    //******************* >>PRODUCT PRICE TABLE VIEW NODES
+    @FXML private MFXLegacyTableView<ProductPricesData> pricesTableView;
+    @FXML private TableColumn<ProductPricesData, Integer> priceId;
+    @FXML private TableColumn<ProductPricesData, String> priceProductNane;
+    @FXML private TableColumn<ProductPricesData, Double> currentPurchasedPriceColumn;
+    @FXML private TableColumn<ProductPricesData, Double> currentSellingPriceColumn;
+    @FXML private TableColumn<ProductPricesData, Double> currentProfitColumn;
+    @FXML private TableColumn<ProductPricesData, Double> previousPurchasedPriceColumn;
+    @FXML private TableColumn<ProductPricesData, Double> previousSellingPriceColumn;
+    @FXML private TableColumn<ProductPricesData, Double> previousProfitColumn;
+    @FXML private TableColumn<ProductPricesData, String> priceUpdatedByColumn;
+    @FXML private TableColumn<ProductPricesData, Timestamp> priceLastUpdatedColumn;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateStockCategoryTable();
         populateSuppliersTable();
         populateStoresTable();
-        fillStoresComboBox();
-        fillCategoryComboBox();
-        fillItemDescriptionBox();
-        fillSuppliersComboBox();
-        populateTableView.run();
+        fillStockTypeSelector();
+        fillProductBrandSelector();
+        fillProductCategorySelector();
+        fillProductSupplierSelector();
+
     }
 
 
@@ -136,35 +154,12 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     UserNotification notify = new UserNotification();
     StocksCategoryData categoryTableOBJ;
     SuppliersData suppliersTableOBJ;
+
+    UserAlerts userAlertOBJ;
     MultiStages multiStages = new MultiStages();
+    ErrorLogger logger;
 
 
-    /*********************************************************************************************************
-     ****** >>                   INPUT FIELDS VALIDATION OPERATION...
-     *********************************************************************************************************/
-    @FXML void validateUnitQuantityField(KeyEvent event) {
-        if(!(event.getCode().isDigitKey() || event.getCode().isArrowKey() || event.getCode() == KeyCode.BACK_SPACE )) {
-            unitQuantityField.clear();
-        }
-    }
-    @FXML void validatePackQuantityField(KeyEvent event) {
-        if(!( event.getCode().isDigitKey() || event.getCode().isArrowKey() || event.getCode() == KeyCode.BACK_SPACE)) {
-            packQuantityField.clear();
-        }
-            try{
-                if(Integer.parseInt(packQuantityField.getText()) == 0) {
-                    totalProductQuantityField.setText(String.valueOf(0));
-                }
-            }catch (NumberFormatException ex) {
-                totalProductQuantityField.setText(String.valueOf(0));
-            }
-    }
-    @FXML private void validateQtyPerPackField(KeyEvent event) {
-            if(!( event.getCode().isDigitKey() || event.getCode().isArrowKey() || event.getCode() == KeyCode.BACK_SPACE)) {
-                qtyPerPackField.clear();
-            }
-
-    }
 
     /*********************************************************************************************************
      ****** >>                    ACTION EVENT HANDLERS FOR STOCKS CATEGORY TABLE...
@@ -247,14 +242,13 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     }
 
     @FXML void updateSuppliersButtonClicked() {
+
         int outputBit = 0;
         for (SuppliersData items : suppliersTable.getItems()) {
             outputBit = updateSupplier(items.getSupplierName(), items.getContactNumber(), items.getLocation(), items.getId());
         }
         switch (outputBit) {
-            case 1 -> {
-                notify.successNotification("UPDATE SUCCESSFUL", "Suppliers Table Items Successfully Updated.");
-            }
+            case 1 -> notify.successNotification("UPDATE SUCCESSFUL", "Suppliers Table Items Successfully Updated.");
             case 0 -> notify.errorNotification("UPDATE FAILED", "Update Operation failed.");
         }
     }
@@ -307,117 +301,12 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         }
     }
 
-    @FXML void saveProductButtonOnAction() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Click YES to add product else cancel to abort process.");
-        alert.setTitle("ADD NEW PRODUCT");
-        alert.setHeaderText("ARE YOU SURE YOU WANT TO ADD '"+productNameField.getText()+"' TO YOUR PRODUCTS?");
-        alert.getButtonTypes().add(ButtonType.YES);
-        alert.getButtonTypes().remove(ButtonType.OK);
 
-        Date expiryDate = Date.valueOf(expiryDatePicker.getValue());
-        int unitQty = Integer.parseInt(unitQuantityField.getText());
-        int packQty = Integer.parseInt(packQuantityField.getText());
-        int qtyPerPac = Integer.parseInt(qtyPerPackField.getText());
-        int totalQty = Integer.parseInt(totalProductQuantityField.getText());
-        String productName = productNameField.getText();
 
-        if (alert.showAndWait().get().equals(ButtonType.YES)) {
-            int outputResult = insertProduct(productNameField.getText(), itemDescBox.getValue(),  brandComboBox.getValue(), itemCategoryBox.getValue(), itemSupplierBox.getValue(), notesField.getText(), expiryDate,  (byte)1);
-            switch (outputResult) {
-                case 1 -> {
-                    ArrayList<Object> returnedValues = getProductIdAndType(productName);
-                    int productId = (int) returnedValues.get(0);
-                    insertNewStockLevelItem(productId, unitQty, packQty, qtyPerPac, totalQty);
-                    notify.successNotification("SUCCESSFULLY ADDED", "New product successfully added.");
-                    refreshProductsTable();
-                    clearFields();
-                }
-                case 0 -> notify.errorNotification("ADD PRODUCT FAILED", "Failed to add new product");
-            }
-        }
-    }
+    /*********************************************************************************************************
+     ****** >>                   INPUT FIELDS VALIDATION OPERATION...
+     *********************************************************************************************************/
 
-    @FXML void productsTableViewClicked() {
-        deleteProductBtn.setDisable(checkProductsTableSelection());
-    }
-
-    @FXML void loadBrandOnAction() {
-        brandComboBox.getItems().clear();
-        try {
-            for(StoresTableData.BrandsTableData item : fetchProductBrands()) {
-                brandComboBox.getItems().add(item.getBrandName());
-            }
-        }catch (Exception ignored) {
-
-        }
-
-    }
-
-    @FXML void addBrandPopupClicked() throws IOException {
-        multiStages.addBrandStage();
-    }
-
-    @FXML void deleteProductButtonOnAction() {
-        int itemId = productsTableView.getSelectionModel().getSelectedItem().getRowId();
-        String selectedItemName = productsTableView.getSelectionModel().getSelectedItem().getProductName();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm to remove product, else cancel to abort.");
-        alert.setTitle("REMOVE PRODUCT.");
-        alert.setHeaderText("ARE YOU SURE YOU WANT REMOVE '" + selectedItemName + "' FROM PRODUCT LIST.");
-        alert.getButtonTypes().remove(ButtonType.OK);
-        alert.getButtonTypes().add(ButtonType.YES);
-        if(alert.showAndWait().get().equals(ButtonType.YES)) {
-            int removeStatus = removeProduct(itemId);
-            switch(removeStatus) {
-                case 1 -> {
-                    notify.successNotification("REMOVE SUCCESSFUL", "Selected Product successfully removed.");
-                    refreshProductsTable();
-                }
-                case 0 -> notify.errorNotification("REMOVE FAILED", "Product Removal failed.");
-            }
-        }
-    }
-
-    @FXML void validateSelectedItemDesc() {
-        try {
-            String selectedDesc = itemDescBox.getValue();
-            if(selectedDesc.equals("Unit Item")) {
-                unitQuantityField.setDisable(false);
-                packQuantityField.setDisable(true);
-                qtyPerPackField.setDisable(true);
-            } else if (selectedDesc.equals("Pack Item")) {
-                unitQuantityField.setDisable(true);
-                packQuantityField.setDisable(false);
-                qtyPerPackField.setDisable(false);
-            } else {
-                unitQuantityField.setDisable(false);
-                packQuantityField.setDisable(false);
-                qtyPerPackField.setDisable(false);
-            }
-        } catch (NullPointerException ignored) {
-                saveProductBtn.setDisable(true);
-        }
-    }
-
-    @FXML void validateAllFields() {
-        saveProductBtn.setDisable(checkItemNameField() || checkItemDescField() || checkExpiryDatePicker() || checkItemCategoryBox() || checkBrandComboBox());
-
-        String selectedDesc = itemDescBox.getValue();
-        try {
-            if(selectedDesc.equals("Unit Item")) {
-                packQuantityField.setText(String.valueOf(0));
-                qtyPerPackField.setText(String.valueOf(0));
-                totalProductQuantityField.setText(unitQuantityField.getText());
-            } else if (selectedDesc.equals("Pack Item")) {
-                unitQuantityField.setText(String.valueOf(0));
-                totalProductQuantityField.setText(String.valueOf( computePackQuantityOnly()));
-            } else {
-                totalProductQuantityField.setText(String.valueOf(computeTotalQuantity()));
-            }
-        }catch (NumberFormatException ex) {
-            totalProductQuantityField.setText(String.valueOf(0));
-        } catch (NullPointerException ignored) {}
-
-    }
     @FXML private void validateStoreInputField(){
         saveStoreButton.setDisable(checkStoreInputField());
     }
@@ -428,22 +317,11 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             contactField.clear();
         } else contactField.setStyle("-fx-border-color:null");
     }
-
     @FXML private void validateSupplierNameField() {
         saveSuppliersButton.setDisable(checkSupplierNameField() || checkContactField());
     }
     @FXML private void validateCategoryNameField() {
         saveStockCategoryButton.setDisable(checkCategoryField());
-    }
-
-    @FXML private void validateProductName() throws SQLException {
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Please provide a unique name for each product.");
-        alert.setTitle("PRODUCT ALREADY EXIST");
-        alert.setHeaderText("ITEM NAME PROVIDED ALREADY EXIST IN THE DATABASE");
-        if (checkIfProductNameExist()) {
-            alert.showAndWait();
-            productNameField.clear();
-        }
     }
 
     /*********************************************************************************************************
@@ -462,12 +340,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     boolean checkCategoryField() {
         return categoryField.getText().isBlank();
     }
-    boolean checkBrandComboBox() {
-        return brandComboBox.getValue().isBlank();
-    }
-    boolean checkItemCategoryBox() {
-        return itemCategoryBox.getValue().isBlank();
-    }
+
     boolean checkSupplierNameField() {
         return supplierNameField.getText().isBlank();
     }
@@ -481,28 +354,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     }
     boolean checkStoreInputField(){return storesInputField.getText().isBlank();}
 
-    boolean checkItemNameField() {
-        return productNameField.getText().isBlank();
-    }
-
-    boolean checkUnitQuantityField() {
-        return unitQuantityField.getText().isBlank();
-    }
-    boolean checkPackQuantityField(){
-        return packQuantityField.getText().isBlank();
-    }
-    boolean checkItemDescField() {
-        return itemDescBox.getValue() == null;
-    }
-    boolean checkSelectedStoreField() {
-        return selectStoreBox.getValue() == null;
-    }
-    boolean checkQtyPerPackField () {
-        return qtyPerPackField.getText().isBlank();
-    }
-    boolean checkExpiryDatePicker() {
-        return expiryDatePicker.getValue() == null;
-    }
     boolean checkIfStockCategoryAlreadyExist() {
         boolean flag = false;
         for (StocksCategoryData item : fetchStockCategories()) {
@@ -518,27 +369,13 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         boolean flag = false;
         for (SuppliersData item : fetchSuppliers()) {
             String itemName = supplierNameField.getText().toLowerCase().trim();
-            if(Objects.equals(item.getSupplierName().trim().toLowerCase(), itemName)) {
+            if(Objects.equals(item.getSupplierName().replaceAll("\\s","").toLowerCase(), itemName)) {
                 flag = true;
             }
         }
         return flag;
     }
 
-    boolean checkIfProductNameExist(){
-        boolean flag = false;
-        for(ProductsStockData item : fetchProductDetails()) {
-            String itemName = item.getProductName().toLowerCase().replaceAll("\\s", "");
-          if (Objects.equals(itemName, productNameField.getText().toLowerCase().replaceAll("\\s", ""))){
-              flag = true;
-            }
-        }
-        return flag;
-    }
-
-    boolean checkProductsTableSelection() {
-        return productsTableView.getSelectionModel().isEmpty();
-    }
 
 
 
@@ -546,57 +383,14 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
      ****** >>                     TABLE VIEW FILL METHODS...
      *********************************************************************************************************/
 
-    public TimerTask populateTableView = new TimerTask() {
-        @Override
-        public void run() {
-            productsTableView.getItems().clear();
-            itemIdColumn.setCellValueFactory(new PropertyValueFactory<>("rowId"));
-            itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
-            productTypeColumn.setCellValueFactory(new PropertyValueFactory<>("ProductType"));
-            brandColumn.setCellValueFactory(new PropertyValueFactory<>("productBrand"));
-            supplierColumn.setCellValueFactory(new PropertyValueFactory<>("suppliers"));
-            categoryColumn.setCellValueFactory(new PropertyValueFactory<>("itemCategory"));
-            expiryDateColumn.setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
-            statusColumn.setCellValueFactory(new PropertyValueFactory<>("activeStatus"));
-            addedByColumn.setCellValueFactory(new PropertyValueFactory<>("addedBy"));
-            dateCreatedColumn.setCellValueFactory(new PropertyValueFactory<>("dateAdded"));
-            productsTableView.setItems(fetchProductDetails());
-
-            //stocksLevelTableView CELL POPULATION
-            stocksLevelTableView.getItems().clear();
-            stockLevelProductNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
-            stockLevelAvailableQtyColumn.setCellValueFactory(new PropertyValueFactory<>("stockLevel"));
-            stockLevelCurrentQtyColumn.setCellValueFactory(new PropertyValueFactory<>("currentQty"));
-            presentQtyUnitColumn.setCellValueFactory(new PropertyValueFactory<>("PresentUnitQty"));
-            presentQtyPackColumn.setCellValueFactory(new PropertyValueFactory<>("PresentPackQty"));
-            presentQtyPerPackColumn.setCellValueFactory(new PropertyValueFactory<>("PresentPackPerQty"));
-            previousQtyUnitColumn.setCellValueFactory(new PropertyValueFactory<>("PreviousUnitQty"));
-            previousQtyPackColumn.setCellValueFactory(new PropertyValueFactory<>("PreviousPackQty"));
-            previousQtyPerPackColumn.setCellValueFactory(new PropertyValueFactory<>("PreviousPackPerQty"));
-            beforeQtyUnitColumn.setCellValueFactory(new PropertyValueFactory<>("BeforeUnitQty"));
-            beforeQtyPackColumn.setCellValueFactory(new PropertyValueFactory<>("BeforePackQty"));
-            beforeQtyPerPackColumn.setCellValueFactory(new PropertyValueFactory<>("BeforePerPackQty"));
-            stockLevelGageColumn.setCellValueFactory(new PropertyValueFactory<>("StockGuage"));
-            stockLevelUpdatedDateColumn.setCellValueFactory(new PropertyValueFactory<>("UpdatedDate"));
-            stockLevelUpdatedByColumn.setCellValueFactory(new PropertyValueFactory<>("UpdatedBy"));
-            stocksLevelTableView.setItems(fetchStockLevelDetails());
-            populateTableView.cancel();
-
-        }
-    };
-
-
     private void populateStockCategoryTable() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("Id"));
 
         categoryNameColumn.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
         categoryNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        categoryNameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<StocksCategoryData, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<StocksCategoryData, String> cellEditEvent) {
-                categoryTableOBJ = cellEditEvent.getRowValue();
-                categoryTableOBJ.setCategoryName(cellEditEvent.getNewValue());
-            }
+        categoryNameColumn.setOnEditCommit(cellEditEvent -> {
+            categoryTableOBJ = cellEditEvent.getRowValue();
+            categoryTableOBJ.setCategoryName(cellEditEvent.getNewValue());
         });
         stocksCategoryTable.setItems(fetchStockCategories());
     }
@@ -604,32 +398,23 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     private void populateSuppliersTable() {
         supplierNameColumn.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
         supplierNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        supplierNameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<SuppliersData, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<SuppliersData, String> cellEditEvent) {
-                suppliersTableOBJ = cellEditEvent.getRowValue();
-                suppliersTableOBJ.setSupplierName(cellEditEvent.getNewValue());
-            }
+        supplierNameColumn.setOnEditCommit(cellEditEvent -> {
+            suppliersTableOBJ = cellEditEvent.getRowValue();
+            suppliersTableOBJ.setSupplierName(cellEditEvent.getNewValue());
         });
 
         contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactNumber"));
         contactColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        contactColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<SuppliersData, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<SuppliersData, String> cellEditEvent) {
-                suppliersTableOBJ = cellEditEvent.getRowValue();
-                suppliersTableOBJ.setContactNumber(cellEditEvent.getNewValue());
-            }
+        contactColumn.setOnEditCommit(cellEditEvent -> {
+            suppliersTableOBJ = cellEditEvent.getRowValue();
+            suppliersTableOBJ.setContactNumber(cellEditEvent.getNewValue());
         });
 
         locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
         locationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        locationColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<SuppliersData, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<SuppliersData, String> cellEditEvent) {
-                suppliersTableOBJ = cellEditEvent.getRowValue();
-                suppliersTableOBJ.setLocation(cellEditEvent.getNewValue());
-            }
+        locationColumn.setOnEditCommit(cellEditEvent -> {
+            suppliersTableOBJ = cellEditEvent.getRowValue();
+            suppliersTableOBJ.setLocation(cellEditEvent.getNewValue());
         });
 
         suppliersTable.setItems(fetchSuppliers());
@@ -641,18 +426,44 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         storeTypeTable.setItems(fetchStores());
     }
 
+    private void populateProductItemsTable() {
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<>("rowId"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        supplyTypeField.setCellValueFactory(new PropertyValueFactory<>("ProductType"));
+        productCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("itemCategory"));
+        productBrandColumn.setCellValueFactory(new PropertyValueFactory<>("productBrand"));
+        productSupplierColumn.setCellValueFactory(new PropertyValueFactory<>("suppliers"));
+        productsStoreColumn.setCellValueFactory(new PropertyValueFactory<>("storeId"));
+        productStatusColumn.setCellValueFactory(new PropertyValueFactory<>("activeStatus"));
+        productExpiryDateColumn.setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
+        productAddedByColumn.setCellValueFactory(new PropertyValueFactory<>("addedBy"));
+        productDateAddedColumn.setCellValueFactory(new PropertyValueFactory<>("dateAdded"));
+    }
+    private void populatePriceTableVIew() {
+
+    }
+
+    private void populateStockLevelTaleView() {
+        stockIdField.setCellValueFactory(new PropertyValueFactory<>("stockId"));
+        stockNameColumn.setCellValueFactory(new PropertyValueFactory<>("stockItemName"));
+        stockLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stockLevel"));
+        currentSingleColumn.setCellValueFactory(new PropertyValueFactory<>("currentStockLevel"));
+        currentBoxColumn.setCellValueFactory(new PropertyValueFactory<>("currentBoxQuantity"));
+        currentPerBoxColumn.setCellValueFactory(new PropertyValueFactory<>("currentQuantityPerBox"));
+        oldStockLevelColumn.setCellValueFactory(new PropertyValueFactory<>("oldStockLevel"));
+        previousSingleColumn.setCellValueFactory(new PropertyValueFactory<>("previousStockLevel"));
+        previousBoxColumn.setCellValueFactory(new PropertyValueFactory<>("previousBoxQuantity"));
+        previousPerBoxColumn.setCellValueFactory(new PropertyValueFactory<>("previousQuantityPerBox"));
+        stockGagaColumn.setCellValueFactory(new PropertyValueFactory<>("gage"));
+        stockModifyColumn.setCellValueFactory(new PropertyValueFactory<>("modifiedBy"));
+        stockLastUpdateColumn.setCellValueFactory(new PropertyValueFactory<>("lastModified"));
+    }
+
+
     /*********************************************************************************************************
      ****** >>                 FILTER TABLE VIEWS.....
      *********************************************************************************************************/
-    @FXML void filterProductsTable() {
-       if (searchProductsTextField.getText().isBlank()) {
-           refreshProductsTable();
-       } else {
-           String userInput = searchProductsTextField.getText();
 
-           productsTableView.setItems(filterProductStockTable(userInput));
-       }
-    }
 
     /*********************************************************************************************************
      ****** >>                    REFRESH TABLE VALUES.....
@@ -661,14 +472,15 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         stocksCategoryTable.getItems().clear();
         populateStockCategoryTable();
     }
-    private void refreshProductsTable(){
-        populateTableView.run();
-    }
+
     private void refreshSuppliersTable() {
         suppliersTable.getItems().clear();
         populateSuppliersTable();
     }
-
+    private void refreshProductsTable() {
+        productItemTableView.getItems().clear();
+        loadTablesButtonClicked();
+    }
     /*********************************************************************************************************
      >>  UNSET FIELDS AND BUTTONS TO DEFAULT
      *********************************************************************************************************/
@@ -691,123 +503,444 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     /*********************************************************************************************************
                  COMBOBOX FILL METHODS.
      *********************************************************************************************************/
-    void fillStoresComboBox() {
-        for (StoresTableData item : fetchStores()) {
-            selectStoreBox.getItems().add(item.getStoreName());
-        }
+    public void fillStockTypeSelector() {
+        stockTypeSelector.getItems().add("All");
+        stockTypeSelector.getItems().add("Single");
+        stockTypeSelector.getItems().add("Box");
     }
-    void fillCategoryComboBox() {
+
+    public void fillProductCategorySelector() {
         for (StocksCategoryData item : fetchStockCategories()) {
-            itemCategoryBox.getItems().add(item.getCategoryName());
+            productCategorySelector.getItems().add(item.getCategoryName());
         }
     }
-    void fillSuppliersComboBox() {
-        for (SuppliersData item : fetchSuppliers()) {
-            itemSupplierBox.getItems().add(item.getSupplierName());
+    public void fillProductBrandSelector() {
+        for (StoresTableData.BrandsTableData item : fetchProductBrands()) {
+            productBrandSelector.getItems().add(item.getBrandName());
         }
     }
-    void fillItemDescriptionBox() {
-        itemDescBox.getItems().add(0,"All");
-        itemDescBox.getItems().add(1, "Unit Item");
-        itemDescBox.getItems().add(2, "Pack Item");
+    public void fillProductSupplierSelector() {
+       for (SuppliersData item : fetchSuppliers()) {
+           productSupplierSelector.getItems().add(item.getSupplierName());
+       }
     }
 
-    void clearFields() {
-            try {
-                productNameField.clear();
-                itemDescBox.setValue(null);
-//                brandComboBox.setValue(null);
-                itemCategoryBox.setValue(null);
-                itemSupplierBox.setValue(null);
-                expiryDatePicker.setValue(null);
-                notesField.clear();
-                saveProductBtn.setDisable(true);
-                unitQuantityField.setText(String.valueOf(0));
-                packQuantityField.setText(String.valueOf(0));
-                qtyPerPackField.setText(String.valueOf(0));
-                totalProductQuantityField.setText(String.valueOf(0));
-
-            }catch (NullPointerException ignored) {
-
-            }
-    }
-
-
-//    INPUT FIELD COMPUTATIONS...
-    int computePackQuantityOnly() {
-        int result = 0;
-        try {
-            if (Integer.parseInt(packQuantityField.getText()) != 0 && Integer.parseInt(qtyPerPackField.getText()) != 0) {
-                result = Integer.parseInt(packQuantityField.getText()) * Integer.parseInt(qtyPerPackField.getText());;
-                totalProductQuantityField.setText(String.valueOf(result));
-            } else {
-                totalProductQuantityField.setText(String.valueOf(0));
-            }
-        }catch (NumberFormatException ex) {
-            totalProductQuantityField.setText(String.valueOf(0));
-        }
-        return result;
-    }
-
-    int computeTotalQuantity() {
-        int result = 0;
-        try {
-            if(unitQuantityField.getText().isBlank() || Integer.parseInt(unitQuantityField.getText()) == 0){
-                totalProductQuantityField.setText(String.valueOf(result));
-            } else {
-                result = Integer.parseInt(unitQuantityField.getText()) + computePackQuantityOnly();
-            }
-        }catch (NumberFormatException ex) {
-
-            totalProductQuantityField.setText(String.valueOf(0));
-        }
-        return result;
-    }
 
     /*********************************************************************************************************
-     ****** >>                    ACTION EVENT HANDLERS FOR STOCKS LEVELS TAB...
+     ****** >>                    ACTION EVENT HANDLERS FOR PRODUCT ITEMS TAB...
      *********************************************************************************************************/
-    public void refreshStocksLeveTableButtonClicked() {
-        populateTableView.run();
+    @FXML void reloadBrandSelector() {
+        productBrandSelector.getItems().clear();
+        fillProductBrandSelector();
     }
-    public void validateStockQuantityFields() {
+    @FXML void saveProductButtonClicked() {
+        LocalDateTime generatedDate = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+        String formatDate = formatter.format(generatedDate);
+        Timestamp transactionDate = Timestamp.valueOf(formatDate);
 
+        String productName = productNameField.getText();
+        String stockType = stockTypeSelector.getValue();
+        String proCategory = productCategorySelector.getValue();
+        String proBrand = productBrandSelector.getValue();
+        String proSupplier = productSupplierSelector.getValue();
+        String note = productNoteField.getText();
+        Date expiryDate = Date.valueOf(expiryDatePicker.getValue());
+
+        int singleQuantity = Integer.parseInt(singleItemQtyField.getText());
+        int boxQuantity = Integer.parseInt(boxQuantityField.getText());
+        int qtyPerPack = Integer.parseInt(qtyPerBoxField.getText());
+        int totalProduct = Integer.parseInt(totalProductDisplay.getText());
+
+        double purchasePrice = Double.parseDouble(purchasedPriceField.getText());
+        double sellingPrice = Double.parseDouble(sellingPriceField.getText());
+        double profit = Double.parseDouble(productProfitDisplay.getText());
+
+        int selectedCategoryId = 0;
+        int selectedBrandId = 0;
+        int selectedSupplierId = 0;
+
+        //GET THE ASSOCIATED ID TO THE SELECTED BRAND.
+        for (StoresTableData.BrandsTableData brandItem : fetchProductBrands()) {
+           if(brandItem.getBrandName().equals(proBrand)) {
+               selectedBrandId = brandItem.getBrandId();
+               break;
+           }
+        }
+
+        //GET THE ASSOCIATED ID TO THE SELECTED CATEGORY ITEM
+        for (StocksCategoryData categoryItem : fetchStockCategories()) {
+            if (categoryItem.getCategoryName().equals(proCategory)) {
+                selectedCategoryId = categoryItem.getId();
+                break;
+            }
+        }
+
+        //GET THE ASSOCIATED ID TO THE SELECTED SUPPLIER
+        for (SuppliersData suppliersData : fetchSuppliers()) {
+            if (suppliersData.getSupplierName().equals(proSupplier)){
+                selectedSupplierId = suppliersData.getId();
+                break;
+            }
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "please confirm your action to save else cancel to abort.");
+        alert.setTitle("SAVE NEW PRODUCT.");
+        alert.setHeaderText("ARE YOU SURE YOU WANT TO ADD " + productNameField.getText() + " TO YOUR PRODUCTS?");
+        alert.getButtonTypes().add(ButtonType.YES);
+        alert.getButtonTypes().remove(ButtonType.OK);
+            if (alert.showAndWait().get().equals(ButtonType.YES)) {
+                    int flag = 0;
+                    flag = addNewProductItem(productName,stockType,selectedCategoryId, selectedSupplierId, selectedBrandId, expiryDate, note, 1, transactionDate);
+                    ArrayList<Object> returnedProductId = getProductIdAndType(productName);
+                    int productId = (int) returnedProductId.get(0);
+                    flag += addNewStockLevel(productId, totalProduct, singleQuantity, boxQuantity, qtyPerPack, 1);
+                    flag += addNewProductPrice(productId, purchasePrice, sellingPrice, profit, 1);
+                    if (flag < 3) {
+                        notify.errorNotification("FAILED TO SAVE", "Your operation to save product failed");
+                    } else {
+                        notify.successNotification("SUCCESSFUL", productName + " successfully added to product list");
+                        refreshProductsTable();
+                        clearProductsItemField();
+                    }
+            }
     }
 
-    public void dynamicStockFieldsComputation() {
-        updateStockLevelBtn.setDisable(checkStockLevelPackQtyField() || checkStockUnitField() || checkStockLevelQtyPerPackField() );
-    }
 
-    public void stocksLevelTableViewClicked() {
-        String fetchedProductType = "";
-        String selectedItemName = stocksLevelTableView.getSelectionModel().getSelectedItem().getProductName();
-        int selectedItemId =  stocksLevelTableView.getSelectionModel().getSelectedItem().getItemId();
-        System.out.println(selectedItemId);
-
-        if (!(stocksLevelTableView.getSelectionModel().isEmpty())) {
-            ArrayList<String> fetchedValues = getProductTypeByName(selectedItemName);
-            fetchedProductType = fetchedValues.get(0);
-
-            displayStockLevelProductName.setText(selectedItemName);
-            stockLevelDisplayProductType.setText(fetchedProductType);
+    @FXML void deleteProductButtonClicked() {
+        if (productItemTableView.getSelectionModel().isEmpty()) {
+            userAlertOBJ = new UserAlerts("MAKE SELECTION", "SORRY! NO SELECTION DETECTED.", "please select the product to be remove.");
+            userAlertOBJ.chooseAlert(AlertTypesEnum.WARNING);
+            deleteProductButton.setDisable(true);
         } else {
-            System.out.println("null");
+            deleteProductButton.setDisable(false);
+            int selectedItemID = productItemTableView.getSelectionModel().getSelectedItem().getRowId();
+            String selectedItemName = productItemTableView.getSelectionModel().getSelectedItem().getProductName();
+
+            userAlertOBJ = new UserAlerts("REMOVE PRODUCT", "ARE YOU SURE REMOVE ITEM '" + selectedItemName + "' FROM LIST?",  "please confirm to delete else cancel to abort.");
+            userAlertOBJ.chooseAlert(AlertTypesEnum.CONFIRMATION);
+            if (userAlertOBJ.confirmationAlert()) {
+                int result = deleteSelectedProduct(selectedItemID);
+                if (result == 1) {
+                    notify.successNotification("REMOVED SUCCESSFUL", selectedItemName + " successfully remove.");
+                    refreshProductsTable();
+                }
+            }
         }
+
     }
-    /*********************************************************************************************************
-     ******>>>>>                     TRUE OR FALSE STATEMENTS FOR STOCKS LEVEL FIELDS
-     *********************************************************************************************************/
-    boolean checkStockUnitField() {
-        return stockLevelUnitQtyField.getText().isBlank();
-    }
-    boolean checkStockLevelPackQtyField() {
-        return stockLevelPackQtyField.getText().isBlank();
-    }
-    boolean checkStockLevelQtyPerPackField() {
-        return stockLevelPerPackField.getText().isBlank();
-    }
-    boolean checkStockGageField() {
-        return stockGuageField.getText().isBlank();
+    @FXML void addNewBrandButton() throws IOException {
+        multiStages.addBrandStage();
     }
 
+    @FXML void validateProductNameOnKeyTyped() {
+        if (checkIfProductExist()) {
+            userAlertOBJ = new UserAlerts("PRODUCT EXIST", "'"+productNameField.getText() + "' ALREADY EXIST IN YOUR LIST OF PRODUCTS", "please make sure each product name is unique");
+            userAlertOBJ.chooseAlert(AlertTypesEnum.INFORMATION);
+            productNameField.clear();
+        }
+    }
+    @FXML void validateAllProductFields() {
+        try {
+            saveProductButton.setDisable(isProductNameEmpty() || isProductCategoryEmpty() || isProductBrandEmpty() || isStockTypeEmpty() || isExpiryDateEmpty() || isSingleQtyEmpty() || isBoxQtyEmpty() || isPerPackEmpty() || isSellingPriceEmpty() || isPurchasedPriceEmpty());
+            if (stockTypeSelector.getValue().equals("Single")) {
+                singleItemQtyField.setDisable(false);
+                boxQuantityField.setDisable(true);
+                qtyPerBoxField.setDisable(true);
+                boxQuantityField.setText(String.valueOf(0));
+                qtyPerBoxField.setText(String.valueOf(0));
+            } else if(stockTypeSelector.getValue().equals("Box")) {
+                singleItemQtyField.setDisable(true);
+                boxQuantityField.setDisable(false);
+                qtyPerBoxField.setDisable(false);
+                singleItemQtyField.setText(String.valueOf(0));
+            } else {
+                singleItemQtyField.setDisable(false);
+                boxQuantityField.setDisable(false);
+                qtyPerBoxField.setDisable(false);
+            }
+        }catch (Exception ignored){}
+    }
+
+    @FXML void validateGageField(KeyEvent keypressed) {
+        if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
+            productGate.clear();
+        }
+    }
+
+    /*********************************************************************************************************
+     ****** >>                    KEY EVENT HANDLERS FOR PRODUCT ITEMS TAB............
+     *********************************************************************************************************/
+    @FXML void keyEventForSingleItemField(KeyEvent keypressed) {
+        try {
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
+            singleItemQtyField.clear();
+            } else {
+                if (stockTypeSelector.getValue().equals("Single")) {
+                    totalProductDisplay.setText(String.valueOf(singleItemQtyField.getText()));
+                }
+            }
+        }catch (NumberFormatException e) {
+            totalProductDisplay.setText(String.valueOf(0));
+        }
+    }
+    @FXML void keyEventForBoxQtyField(KeyEvent keypressed) {
+        try{
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
+                boxQuantityField.clear();
+            }
+        }catch (NumberFormatException e) {
+            totalProductDisplay.setText(String.valueOf(0));
+        }
+    }
+    @FXML void keyEventForPerBoxField(KeyEvent keypressed) {
+        try {
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
+                qtyPerBoxField.clear();
+            }  else {
+                if (stockTypeSelector.getValue().equals("Box")) {
+                    totalProductDisplay.setText(String.valueOf(computeTotalBoxQuantity()));
+                } else totalProductDisplay.setText(String.valueOf(computeTotalProductQuantity()));
+            }
+        } catch (NumberFormatException e) {
+            totalProductDisplay.setText(String.valueOf(0));
+        }
+    }
+    @FXML void keyEventForPurchasePrice(KeyEvent keypressed) {
+        try {
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE || keypressed.getCode() == KeyCode.PERIOD)) {
+                purchasedPriceField.clear();
+            }
+            productProfitDisplay.setText(String.valueOf(computeProductProfit()));
+        } catch (NumberFormatException e) {
+            productProfitDisplay.setText(String.valueOf(0));
+        }
+    }
+    @FXML void keyEventForSellingPrice(KeyEvent keypressed) {
+        try {
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE || keypressed.getCode() == KeyCode.PERIOD)) {
+                sellingPriceField.clear();
+            }
+            productProfitDisplay.setText(String.valueOf(computeProductProfit()));
+        }catch (NumberFormatException e) {
+            productProfitDisplay.setText(String.valueOf(0));
+        }
+    }
+
+    @FXML void loadTablesButtonClicked() {
+        populateProductItemsTable();
+        populateStockLevelTaleView();
+        populatePriceTableVIew();
+        ProductItemTask fillTablesTask = new ProductItemTask(fetchProductDetails(), fetchStockLevelDetails(), fetchProductPricesDetails(), productItemTableView, pricesTableView, stockLevelTableView);
+        Thread executeTask = new Thread(fillTablesTask);
+        executeTask.start();
+    }
+
+    @FXML void productTableViewClicked() {
+        deleteProductButton.setDisable(productItemTableView.getSelectionModel().isEmpty() && productItemTableView.isVisible());
+    }
+    @FXML void stockLevelTableClicked() throws SQLException {
+        String[] constants = {"All", "Box", "Single"};
+        boolean isNotSelected = stockLevelTableView.getSelectionModel().isEmpty();
+        if (isNotSelected) {
+            updateStockLevelButton.setDisable(true);
+        } else {
+            String selectedName = stockLevelTableView.getSelectionModel().getSelectedItem().getStockItemName().getText();
+            String stockType = getProductTypeByName(selectedName);
+            int gage =  stockLevelTableView.getSelectionModel().getSelectedItem().getGage();
+            selectedProductNameDisplay.setText(selectedName); selectedStockTypeDisplay.setText(stockType); productGate.setText(String.valueOf(gage));
+
+            if(Objects.equals(stockType, "Single")) {
+                stockLevelSingleQtyField.setDisable(false);
+                stockLevelBoxQuantityField.setDisable(true);
+                stockLevelQtyPerBoxField.setDisable(true);
+                stockLevelBoxQuantityField.setText(String.valueOf(0));
+                stockLevelQtyPerBoxField.setText(String.valueOf(0));
+            } else if (Objects.equals(stockType, "Box")) {
+                stockLevelSingleQtyField.setDisable(true);
+                stockLevelSingleQtyField.setText(String.valueOf(0));
+                stockLevelBoxQuantityField.setDisable(false);
+                stockLevelQtyPerBoxField.setDisable(false);
+            } else {
+                stockLevelSingleQtyField.setDisable(false);
+                stockLevelBoxQuantityField.setDisable(false);
+                stockLevelQtyPerBoxField.setDisable(false);
+            }
+        }
+    }
+
+    @FXML void updateStockLevelButtonClicked() {
+        int selectedId = stockLevelTableView.getSelectionModel().getSelectedItem().getStockId();//where condition
+        String productName = stockLevelTableView.getSelectionModel().getSelectedItem().getStockItemName().getText();
+        int singleValue = Integer.parseInt(stockLevelSingleQtyField.getText());//currentStock
+        int box = Integer.parseInt(stockLevelBoxQuantityField.getText());//currentBox
+        int perBox = Integer.parseInt(stockLevelQtyPerBoxField.getText());//currentUnitPerPack
+        int totalProducts = Integer.parseInt(stockLevelTotalProductDisplay.getText());//level
+        int gage = Integer.parseInt(productGate.getText());//gage
+        String userName = stockLevelTableView.getSelectionModel().getSelectedItem().getModifiedBy();
+
+        int stockLevel = stockLevelTableView.getSelectionModel().getSelectedItem().getStockLevel();//map to oldStockLevel
+        int currentLevel = stockLevelTableView.getSelectionModel().getSelectedItem().getCurrentStockLevel();//previous Level
+        int currentBoxValue = stockLevelTableView.getSelectionModel().getSelectedItem().getCurrentBoxQuantity();//Previous Box Level
+        int currentPerBox = stockLevelTableView.getSelectionModel().getSelectedItem().getCurrentQuantityPerBox(); //previous PerBox.
+
+        int finalStockLeve = totalProducts + stockLevel;
+
+//        String activeUsername = Homepage.activeUsername;
+//        int activeUserId = getUserIdByUsername(activeUsername);
+//
+
+        userAlertOBJ = new UserAlerts("UPDATE STOCK LEVEL", "YOU HAVE REQUESTED TO UPDATE STOCK DETAILS OF (" + productName + ")", "please confirm your action to update else cancel to abort.");
+
+        if (userAlertOBJ.confirmationAlert()) {
+
+            int flag = updateStockLevel(selectedId, finalStockLeve, singleValue, box, perBox, stockLevel, currentLevel, currentBoxValue,currentPerBox, gage, 1);
+            switch(flag) {
+                case 1 -> {
+                    notify.successNotification("UPDATE SUCCESSFUL","(" + productName + ") stock level successfully updated");
+                    loadTablesButtonClicked();
+                    clearStocksLevelFields();
+                }
+                case 0 -> notify.errorNotification("UPDATE FAILED", "Your request to update stock level for ("+ productName + ") failed");
+            }
+        }
+
+
+
+    }
+
+    @FXML void validateStockLevelSingleInput(KeyEvent keypressed) {
+        try {
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
+                stockLevelSingleQtyField.setText(String.valueOf(0));
+            } else {
+                int singleValue = Integer.parseInt(stockLevelSingleQtyField.getText());
+                stockLevelTotalProductDisplay.setText(String.valueOf(singleValue));
+            }
+
+        }catch (NumberFormatException e) {
+            stockLevelTotalProductDisplay.setText(String.valueOf(0));
+        }
+    }
+
+    @FXML void validateStockLevelBoxInputs(KeyEvent keypressed) {
+        try {
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
+                stockLevelBoxQuantityField.setText(String.valueOf(0));
+                stockLevelQtyPerBoxField.setText(String.valueOf(0));
+            } else {
+                int single = Integer.parseInt(stockLevelSingleQtyField.getText());
+                int box = Integer.parseInt(stockLevelBoxQuantityField.getText());
+                int perBox = Integer.parseInt(stockLevelQtyPerBoxField.getText());
+
+
+                if (stockLevelQtyPerBoxField.isDisable()) {
+                    stockLevelTotalProductDisplay.setText(String.valueOf(box * perBox));
+                } else {
+                    int total = single;
+                    total += box * perBox;
+                    stockLevelTotalProductDisplay.setText(String.valueOf(total));
+                }
+            }
+        }catch (NumberFormatException e) {
+            stockLevelTotalProductDisplay.setText(String.valueOf(0));
+        }
+
+    }
+
+    @FXML void stockLevelMouseMovedEvent() {
+        updateStockLevelButton.setDisable(stockLevelTotalProductDisplay.getText().equals(String.valueOf(0)));
+    }
+
+    /*********************************************************************************************************
+     ******                   COMPUTATION FOR PRODUCT ITEM FIELDS
+     *********************************************************************************************************/
+    int computeTotalProductQuantity() {
+        int single = Integer.parseInt(singleItemQtyField.getText());
+        int boxQty = Integer.parseInt(boxQuantityField.getText());
+        int perPack  = Integer.parseInt(qtyPerBoxField.getText());
+        return single + (boxQty * perPack);
+    }
+    int computeTotalBoxQuantity() {
+        int boxQty = Integer.parseInt(boxQuantityField.getText());
+        int perPack  = Integer.parseInt(qtyPerBoxField.getText());
+        return (boxQty * perPack);
+    }
+    double computeProductProfit() {
+        Double purchase = Double.parseDouble(purchasedPriceField.getText());
+        Double selling = Double.parseDouble(sellingPriceField.getText());
+        Double result = selling - purchase;
+        return Double.parseDouble(String.format("%.2f%n", result));
+    }
+
+    /*********************************************************************************************************
+     ******>>>>>                     TRUE OR FALSE STATEMENTS FOR PRODUCT ITEM FIELDS
+     *********************************************************************************************************/
+    boolean isProductNameEmpty() {
+        return productNameField.getText().isEmpty();
+    }
+    boolean isStockTypeEmpty() {
+        return stockTypeSelector.getValue().isEmpty();
+    }
+    boolean isProductBrandEmpty() {
+        return productBrandSelector.getValue().isEmpty();
+    }
+    boolean isProductCategoryEmpty() {
+        return productCategorySelector.getValue().isEmpty();
+    }
+    boolean isExpiryDateEmpty() {
+        return expiryDatePicker.getValue() == null;
+    }
+    boolean isSingleQtyEmpty() {
+        return singleItemQtyField.getText().isBlank();
+    }
+    boolean isBoxQtyEmpty() {
+        return boxQuantityField.getText().isBlank();
+    }
+    boolean isPerPackEmpty() {
+        return qtyPerBoxField.getText().isEmpty();
+    }
+    boolean isPurchasedPriceEmpty() {
+        return purchasedPriceField.getText().isBlank();
+    }
+    boolean isSellingPriceEmpty() {
+        return sellingPriceField.getText().isBlank();
+    }
+
+    boolean checkIfProductExist() {
+        boolean flag = false;
+        String userInput = productNameField.getText().toLowerCase().replaceAll("\\s", "");
+        for (ProductsStockData productName : fetchProductDetails()) {
+            if ( productName.getProductName().toLowerCase().replaceAll("\\s", "").equals(userInput)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+
+    private void clearProductsItemField() {
+        productNameField.clear();
+        productSupplierSelector.setValue(null);
+        stockTypeSelector.setValue(null);
+        productBrandSelector.setValue(null);
+        productCategorySelector.setValue(null);
+        expiryDatePicker.setValue(null);
+        singleItemQtyField.clear();
+        boxQuantityField.clear();
+        qtyPerBoxField.clear();
+        purchasedPriceField.clear();
+        sellingPriceField.clear();
+        productNoteField.clear();
+        totalProductDisplay.setText(String.valueOf(0));
+        productProfitDisplay.setText(String.valueOf(0));
+    }
+
+    void clearStocksLevelFields() {
+        stockLevelSingleQtyField.clear();
+        stockLevelBoxQuantityField.clear();
+        stockLevelQtyPerBoxField.clear();
+        stockLevelTotalProductDisplay.setText(String.valueOf(0));
+
+    }
 }//END OF CLASS

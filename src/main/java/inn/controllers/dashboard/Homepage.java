@@ -1,6 +1,5 @@
 package inn.Controllers.dashboard;
 
-import inn.Controllers.settings.ManageProductStocks;
 import inn.StartInn;
 import inn.database.DbConnection;
 import inn.models.InnActivationModel;
@@ -37,7 +36,7 @@ public class Homepage extends DbConnection implements Initializable{
     InnActivationModel modelOBJ = new InnActivationModel();
 
     ButtonType YES = ButtonType.YES;
-    ManageProductStocks manageProductStocksOBJ = new ManageProductStocks();
+
 
 
     /******************************************> FXML OBJECTS  <*******************************************/
@@ -57,32 +56,20 @@ public class Homepage extends DbConnection implements Initializable{
 
     public static String label;
 
-    public static String setActiveUserNane;
+    public static String activeUsername;
     public static int counterValue;
 
-    Timer timer = new Timer();
-    TimerTask task = new TimerTask() {
-        int counter = 1;
-        @Override
-        public void run() {
-            if (counter > 0){
-               beepIndicator.setStyle("-fx-fill:#beffc2");
-               counter--;
-            }else {
-                beepIndicator.setStyle("-fx-fill:#09e618");counter = 1;
-            }
-        }
-    };
+
 
 
 //    General general = new General();
     /*******************************************************************************************************************
      IMPLEMENTATION OF INITIALIZER METHOD*/
     public void initialize(URL location, ResourceBundle resourceBundle) {
-        activeUserLabel.setText(setActiveUserNane);userFlag.setText(activeUserLabel.getText());
+        activeUserLabel.setText(activeUsername);userFlag.setText(activeUserLabel.getText());
         setDashboardVariables();
-        timer.scheduleAtFixedRate(task,0,1000);
-        }
+        beepActiveUser();
+    }
     public void checkFLOW(){
 //        timer.scheduleAtFixedRate(task,0,1000);
     }
@@ -145,7 +132,7 @@ public class Homepage extends DbConnection implements Initializable{
     }
 
     @FXML public void messageBoxButtonOnAction() throws IOException {
-        FlipView("Modules/settings/manageRooms.fxml");
+      FlipView("Modules/messagebox/manageSms.fxml");
     }
 
     @FXML void managePayrollButtonClick() throws IOException {
@@ -153,6 +140,25 @@ public class Homepage extends DbConnection implements Initializable{
     }
     @FXML void manageStocksButtonOnAction() throws IOException {
         FlipView("Modules/settings/manageStocks.fxml");
+    }
+    private void beepActiveUser() {
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int counter = 1;
+            @Override
+            public void run() {
+                if (counter > 0){
+                    beepIndicator.setStyle("-fx-fill:#beffc2");
+                    counter--;
+                }else {
+                    beepIndicator.setStyle("-fx-fill:#09e618");counter = 1;
+                }
+                if (signoutBtn.isPressed()) {
+                    timer.cancel();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task,1,1000);
     }
 
     public void signoutBtnAction() throws IOException {
@@ -163,8 +169,6 @@ public class Homepage extends DbConnection implements Initializable{
         alert.getButtonTypes().add(YES);
 //        Optional<ButtonType> choose = alert.showAndWait();
         if(alert.showAndWait().get() == YES) {
-            task.cancel();
-            manageProductStocksOBJ.populateTableView.cancel();
             int returnedValue = modelOBJ.updateTrackerDateOnly();
             if (returnedValue > 0) {
                 signoutBtn.getScene().getWindow().hide();
@@ -177,8 +181,6 @@ public class Homepage extends DbConnection implements Initializable{
     }
 
 
-
-
     /*******************************************************************************************************************
      OTHER METHODS IMPLEMENTATION*/
     public void setDashboardVariables () {
@@ -189,7 +191,6 @@ public class Homepage extends DbConnection implements Initializable{
             stream.write(imageByte);
             Image image = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\placeholder.jpg");
             heroImageDisplay.setImage(image);
-
             String bsi_name = (String) fetchBusinessInfo().get(0);
             Date establishedDate = (Date) fetchBusinessInfo().get(6);
             LocalDate localDate = establishedDate.toLocalDate();

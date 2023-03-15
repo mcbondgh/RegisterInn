@@ -13,6 +13,8 @@ public class StoresTableData {
         this.description = description;
     }
 
+    public StoresTableData() {}
+
     public int getId() {
         return id;
     }

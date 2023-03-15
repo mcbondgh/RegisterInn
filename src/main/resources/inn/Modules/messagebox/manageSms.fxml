@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane fx:id="manageRoomsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.messagebox.ManageMessages">
+   <effect>
+      <DropShadow height="10.98" radius="5.165" spread="0.04" width="11.68">
+         <color>
+            <Color red="0.35087719559669495" green="0.3400476574897766" blue="0.3400476574897766" />
+         </color>
+      </DropShadow>
+   </effect>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#78bf21" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1092.0" />
+      <Text fill="WHITE" layoutX="119.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MESSAGE BOX" wrappingWidth="368.80335235595703">
+         <font>
+            <Font name="Poppins Bold" size="36.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="43.0" fitWidth="46.0" layoutX="42.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #fff;">
+         <image>
+            <Image url="@../../images/messageBox.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="854.0" layoutY="13.0" prefHeight="26.0" prefWidth="96.0" text="SMS BALANCE" textFill="WHITE">
+         <font>
+            <Font name="Poppins Bold" size="13.0" />
+         </font>
+      </Label>
+      <Rectangle fx:id="smsBalancePane" arcHeight="10.0" arcWidth="10.0" fill="WHITE" height="38.0" layoutX="953.0" layoutY="6.0" stroke="#cccccc" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" style="-fx-background-radius: 10px;" width="59.0" />
+      <Label fx:id="smsBalanceValue" layoutX="959.0" layoutY="14.0" prefHeight="20.0" prefWidth="120.0" text="0" textFill="#23ae00">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <TabPane layoutX="63.0" layoutY="48.0" prefHeight="556.0" prefWidth="1092.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="48.0">
+        <tabs>
+            <Tab style="-fx-text-base-color: #427203; -fx-font-weight: bold; -fx-padding: 5; -fx-background-color: #fff;" text="Message Logs">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="58.0" layoutY="-29.0" prefHeight="170.66666666666666" prefWidth="1092.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <TableView fx:id="MessageLogsTableView" fixedCellSize="30.0" layoutX="7.0" layoutY="36.0" prefHeight="467.0" prefWidth="1071.0" style="-fx-background-color: #fff; -fx-font-size: 14; -fx-font-family: poppins;" styleClass="MessageLogsTableView" stylesheets="@../../stylesheets/stylesheet.css" tableMenuButtonVisible="true">
+                                <columns>
+                                  <TableColumn fx:id="mobileNumberColumn" prefWidth="185.33333778381348" text="MOBILE NUMBER" />
+                                    <TableColumn fx:id="titleColumn" prefWidth="185.33333778381348" text="TITLE" />
+                                  <TableColumn fx:id="messageColumn" prefWidth="348.6666564941406" text="MESSAGE" />
+                                    <TableColumn fx:id="statusColumn" prefWidth="95.0" text="STATUS" />
+                                    <TableColumn fx:id="dateColumn" prefWidth="150.0" text="DATE" />
+                                    <TableColumn fx:id="sentByColumn" prefWidth="100.0" text="SENT BY" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab style="-fx-text-base-color: #427203; -fx-font-weight: bold; -fx-padding: 5; -fx-background-color: #fff;" text="Send Message">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="58.0" layoutY="-29.0" prefHeight="170.66666666666666" prefWidth="315.3333333333333" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="10.0" fill="#f4f4f4" height="448.0" layoutX="25.0" layoutY="63.0" stroke="TRANSPARENT" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" width="797.0" />
+                              <TextField fx:id="messageTitleField" layoutX="66.0" layoutY="108.0" onKeyTyped="#checkAllFields" prefHeight="40.0" prefWidth="369.0" promptText="MESSAGE TITLE" style="-fx-background-color: #ededed; -fx-background-radius: 10; -fx-border-radius: 10;">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="mobileNumberField" layoutX="544.0" layoutY="108.0" onKeyReleased="#validateMobileNumberField" onKeyTyped="#checkAllFields" prefHeight="40.0" prefWidth="180.0" promptText="0208023322" style="-fx-background-color: #ededed; -fx-background-radius: 10; -fx-border-radius: 10;">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <TextArea fx:id="messageContentField" layoutX="65.0" layoutY="188.0" onKeyTyped="#checkAllFields" prefHeight="258.0" prefWidth="723.0" promptText="TYPE YOUR MESSAGE HERE" style="-fx-border-radius: 10; -fx-background-radius: 10;" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="18.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </TextArea>
+                              <Button fx:id="sendMessageButton" defaultButton="true" disable="true" layoutX="541.0" layoutY="459.0" mnemonicParsing="false" onAction="#sendMessageButtonClicked" prefHeight="34.0" prefWidth="96.0" style="-fx-background-color: #00aa0e;" text="Send Message" textFill="WHITE">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="cancelMessageButton" cancelButton="true" layoutX="659.0" layoutY="458.0" mnemonicParsing="false" onAction="#cancelMessageButtonClicked" prefHeight="34.0" prefWidth="103.0" style="-fx-background-color: #ab0303;" text="Clear" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Label layoutX="75.0" layoutY="84.0" text="Message Title(required)" textFill="#427203">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="544.0" layoutY="84.0" text="Receiver's Number(required" textFill="#427203">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="75.0" layoutY="164.0" text="Message Content" textFill="#427203">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="aliasDisplay" layoutX="600.0" layoutY="155.0" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="545.0" layoutY="160.0" text="ALIAS:" textFill="#427203">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <ListView fx:id="contactListView" editable="true" fixedCellSize="30.0" layoutX="859.0" layoutY="89.0" onMouseClicked="#contactListViewActive" prefHeight="311.0" prefWidth="186.0" style="-fx-background-radius: 10; -fx-font-size: 14; -fx-font-family: poppins;">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </ListView>
+                              <Button fx:id="addContactButton" disable="true" layoutX="734.0" layoutY="115.0" minWidth="26.0" mnemonicParsing="false" onAction="#addContactButtonClicked" prefHeight="26.0" prefWidth="35.0" style="-fx-background-radius: 50; -fx-background-color: #ff0000;" text="Add" textFill="WHITE">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <DropShadow height="1.95" radius="0.475" width="1.95">
+                                       <color>
+                                          <Color red="0.6842105388641357" green="0.6842105388641357" blue="0.6842105388641357" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Button>
+                              <Label layoutX="868.0" layoutY="61.0" text="Broadcast Numbers" textFill="#427203">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="removeContactButton" disable="true" layoutX="922.0" layoutY="408.0" minWidth="26.0" mnemonicParsing="false" onAction="#removeContactButtonClicked" prefHeight="26.0" prefWidth="68.0" style="-fx-background-radius: 50; -fx-background-color: #ff0000;" text="Remove" textFill="WHITE">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#78bf21" height="25.0" layoutX="996.0" layoutY="59.0" stroke="TRANSPARENT" strokeType="INSIDE" width="37.0" />
+                              <Label fx:id="contactSizeIndicator" layoutX="1005.0" layoutY="59.0" text="0" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Separator layoutX="27.0" layoutY="46.0" prefHeight="6.0" prefWidth="1032.0" />
+                              <Label layoutX="248.0" layoutY="14.0" text="SEND A BROADCAST  SMS TO INDIVIDUAL(S) YOU WISH TO REACH" textFill="#78bf21">
+                                 <font>
+                                    <Font name="Poppins Black" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe4c0" height="43.0" layoutX="882.0" layoutY="462.0" stroke="#e6e6e6" strokeType="INSIDE" width="154.0" />
+                              <Separator layoutX="962.0" layoutY="463.0" orientation="VERTICAL" prefHeight="40.0" prefWidth="5.0" />
+                              <GridPane layoutX="899.0" layoutY="461.0" prefHeight="43.0" prefWidth="128.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="SUCCESS" textFill="#00be30">
+                                       <GridPane.margin>
+                                          <Insets left="1.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="FAILED" textFill="#d20000" GridPane.columnIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="successIndicator" text="0" textFill="#00bc1c" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" GridPane.vgrow="ALWAYS">
+                                       <GridPane.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="failedIndicator" text="0" textFill="#d20000" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" GridPane.vgrow="ALWAYS">
+                                       <GridPane.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab style="-fx-text-base-color: #427203; -fx-font-weight: bold; -fx-padding: 5; -fx-background-color: #fff;" text="Message Templates">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="381.0" layoutY="41.0" prefHeight="40.0" prefWidth="692.0" style="-fx-background-color: #f4f4f4;">
+                           <children>
+                              <TextField fx:id="namePlaceHolder" editable="false" layoutX="10.0" layoutY="-1.0" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: NONE;" text="[NAME]">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="amountPlaceHolder" editable="false" layoutX="91.0" layoutY="-1.0" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: NONE;" text="[AMOUNT]">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="numberPlaceHolder" editable="false" layoutX="189.0" layoutY="-2.0" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: NONE;" text="[NUMBER]">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="paymentMethodPlaceHolder" editable="false" layoutX="282.0" layoutY="-1.0" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: NONE;" text="[PAYMENT METHOD]">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="309.0" layoutY="87.0" prefHeight="417.0" prefWidth="768.0" style="-fx-background-color: #f4f4f4; -fx-border-radius: 10; -fx-background-radius: 10;">
+                           <children>
+                              <TextArea fx:id="templateBody" layoutX="52.0" layoutY="117.0" onKeyTyped="#checkTemplateFields" prefHeight="207.0" prefWidth="700.0" promptText="TYPE YOUR MESSAGE HERE" style="-fx-border-radius: 10; -fx-background-radius: 10;" wrapText="true">
+                                 <font>
+                                    <Font name="Times New Roman" size="18.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </TextArea>
+                              <TextField fx:id="templateTitle" layoutX="53.0" layoutY="52.0" onKeyTyped="#checkTemplateFields" prefHeight="40.0" prefWidth="323.0" promptText="MESSAGE TITLE" style="-fx-background-color: #ededed; -fx-background-radius: 10; -fx-border-radius: 10;">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Label layoutX="57.0" layoutY="30.0" text="Message Title(required)" textFill="#427203">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="saveTemplateButton" defaultButton="true" disable="true" layoutX="422.0" layoutY="355.0" mnemonicParsing="false" onAction="#saveTemplateButtonClicked" prefHeight="34.0" prefWidth="96.0" style="-fx-background-color: #00aa0e;" text="Save" textFill="WHITE">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="deleteTemplateButton" cancelButton="true" layoutX="546.0" layoutY="355.0" mnemonicParsing="false" onAction="#deleteTemplateButtonClicked" prefHeight="34.0" prefWidth="103.0" style="-fx-background-color: #ab0303;" text="Delete" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Label layoutX="414.0" layoutY="30.0" text="Last Updated By" textFill="#427203">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="576.0" layoutY="30.0" text="Last Updated Date" textFill="#427203">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Pane layoutX="414.0" layoutY="51.0" prefHeight="43.0" prefWidth="158.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <Label fx:id="lastUpdatedName" layoutX="8.0" layoutY="11.0">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane layoutX="584.0" layoutY="51.0" prefHeight="43.0" prefWidth="171.0" style="-fx-background-color: #fff;">
+                                 <children>
+                                    <Label fx:id="lastUpdatedDateTime" layoutX="6.0" layoutY="10.0">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </Pane>
+                        <ListView fx:id="templateTitleView" fixedCellSize="30.0" layoutX="22.0" layoutY="81.0" onMouseClicked="#templateListViewClicked" prefHeight="393.0" prefWidth="268.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-font-size: 14; -fx-font-wight: bold;">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </ListView>
+                        <Label layoutX="77.0" layoutY="48.0" text="TEMPLATE TITLES" textFill="#427203">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="388.0" layoutY="15.0" text="PLACE HOLDERS" textFill="#427203">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="deselectItemButton" disable="true" layoutX="109.0" layoutY="481.0" minWidth="26.0" mnemonicParsing="false" onAction="#deselectListItems" prefHeight="26.0" prefWidth="96.0" style="-fx-background-radius: 50; -fx-background-color: #ff0000;" text="Deselect Item" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab style="-fx-text-base-color: #427203; -fx-font-weight: bold; -fx-padding: 5; -fx-background-color: #fff;" text="Top Up Credit">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="58.0" layoutY="-29.0" prefHeight="170.66666666666666" prefWidth="1092.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <WebView fx:id="webviewSection" layoutX="10.0" layoutY="7.0" prefHeight="501.0" prefWidth="1075.0" style="-fx-border-color: gray; -fx-border-width: 5;">
+                                 <effect>
+                                    <DropShadow height="0.0" radius="0.0" width="0.0">
+                                       <color>
+                                          <Color red="0.8333333134651184" green="0.8333333134651184" blue="0.8333333134651184" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </WebView>
+                           </children></AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

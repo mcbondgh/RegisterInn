@@ -2,20 +2,16 @@ package inn.models;
 
 import inn.ErrorLogger;
 import inn.database.DbConnection;
-import inn.tableViews.ProductsStockData;
 import javafx.beans.NamedArg;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Label;
 
-import java.io.IOException;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ManageStocksModel extends DbConnection {
+
+    ErrorLogger logger;
 
     //THIS METHOD INSERTS INTO THE StocksCategory Table
     public int insertNewStockCategory(String categoryName) {
@@ -47,7 +43,7 @@ public class ManageStocksModel extends DbConnection {
         return flag;
     }
 
-    //THIS METHOD WHEN INVOKED TAKES IN ONE PARAMETER i.e. stocksCategory DateType AS AN ARGUMENT AND DELETES SAME IN THE StocksCategory TABLE..
+    //THIS METHOD WHEN INVOKED TAKES IN ONE PARAMETER i.e. stocksCategory DataType AS AN ARGUMENT AND DELETES SAME IN THE StocksCategory TABLE..
     public int deleteStockCategory(int itemId) {
         int flag = 0;
         try {
@@ -138,36 +134,8 @@ public class ManageStocksModel extends DbConnection {
         return flag;
     }
 
-    //THIS METHOD WHEN INVOKED SHALL TAKE A NUMBER OF ARGUMENTS AND INTERS SAME INTO THE ProductStock Table...
-    public int insertProduct(String productName, String ProductType, String productBrand, String category, String supplier, String notes, Date expiryDate,  byte AddedBy) {
-        int flag = 0;
-        try {
-            String insertQuery = "INSERT INTO ProductStock(ProductName, ProductType, ProductBrand, Category, Supplier, Notes, ExpiryDate, AddedBy) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-            prepare = CONNECTOR().prepareStatement(insertQuery);
-            prepare.setString(1, productName);
-            prepare.setString(2, ProductType);
-            prepare.setString(3, productBrand);
-            prepare.setString(4, category);
-            prepare.setString(5, supplier);
-            prepare.setString(6, notes);
-            prepare.setDate(7, expiryDate);
-            prepare.setByte(8, AddedBy);
-            flag = prepare.executeUpdate();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        return flag;
-    }
-    public int removeProduct(int productId) {
-        int flag = 0;
-        try {
-            prepare = CONNECTOR().prepareStatement(" UPDATE ProductStock SET DeleteStatus = 1 WHERE( id = '"+ productId +"')");
-            flag = prepare.executeUpdate();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        return flag;
-    }
+    //THIS METHOD WHEN INVOKED SHALL TAKE A NUMBER OF ARGUMENTS AND INTERS SAME INTO THE ProductItems Table...
+
 
 
     public boolean addNewBrand(String brandName) {
@@ -180,73 +148,105 @@ public class ManageStocksModel extends DbConnection {
         }catch (SQLException exception) {
             exception.printStackTrace();
         }
+        return flag;
+    }
+    public int addNewProductItem(String ProductName, String supplyType, int categoryId, int supplierId, int brandID, Date ExpiryDate, String note, int addedBy, Timestamp dateCreated) {
+        int flag = 0;
+        try {
+            String insertQuery = "INSERT INTO ProductItems(ProductName, supplyType, categoryId, supplierId, brandID, ExpiryDate, note, addedBy, dateCreated) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            prepare = CONNECTOR().prepareStatement(insertQuery);
+            prepare.setString(1, ProductName);
+            prepare.setString(2, supplyType);
+            prepare.setInt(3, categoryId);
+            prepare.setInt(4, supplierId);
+            prepare.setInt(5, brandID);
+            prepare.setDate(6, ExpiryDate);
+            prepare.setString(7, note);
+            prepare.setInt(8, addedBy);
+            prepare.setTimestamp(9, dateCreated);
+            flag =  prepare.executeUpdate();
+        }catch (SQLException ex) {
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+        }
+        return flag;
+    }
+
+
+    public int updateStockLevel(int itemId, int stockLevel, int currentStockLevel, int currentBoxQuantity, int currentQuantityPerBox, int oldStockLevel, int previousStockLevel, int previousBoxQuantity, int previousQuantityPerBox, int gage, int modifiedBy) {
+        int flag = 0;
+         try {
+             String updateQuery = "UPDATE stocklevels SET stockLevel = ?,  currentStockLevel = ?, currentBoxQuantity = ?, currentQuantityPerBox = ?, oldStockLevel = ?, previousStockLevel = ?, previousBoxQuantity = ?, previousQuantityPerBox = ?, gage = ?, modifiedBy = ? WHERE(id = ?)";
+             prepare = CONNECTOR().prepareStatement(updateQuery);
+             prepare.setInt(1, stockLevel);
+             prepare.setInt(2, currentStockLevel);
+             prepare.setInt(3, currentBoxQuantity);
+             prepare.setInt(4, currentQuantityPerBox);
+             prepare.setInt(5, oldStockLevel);
+             prepare.setInt(6, previousStockLevel);
+             prepare.setInt(7, previousBoxQuantity);
+             prepare.setInt(8, previousQuantityPerBox);
+             prepare.setInt(9, gage);
+             prepare.setInt(10, modifiedBy);
+             prepare.setInt(11, itemId);
+             flag = prepare.executeUpdate();
+         } catch (SQLException ex) {
+             logger = new ErrorLogger();
+             logger.log(ex.getMessage());
+         }
 
         return flag;
     }
 
-    public void insertNewStockLevelItem(@NamedArg("Product Id")int productId, @NamedArg("Unit Qty") int unitQty, @NamedArg("PackQty") int packQty, @NamedArg("Qty Per Pack") int QtyPerPack, @NamedArg("Total Product") int total) {
+    public int addNewStockLevel(int productId, int stockLevel, int currentStockLevel, int currentBoxQuantity, int currentQuantityPerBox, int modifiedBy) {
+        int flag = 0;
         try {
-            String insertQuery = "INSERT INTO stockLevels(ProductId, StockLevel, CurrentQty, PresentUnitQty, PresentPackQty, PresentPackPerQty) VALUES(?, ?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO stocklevels(productId, stockLevel, currentStockLevel, currentBoxQuantity, currentQuantityPerBox, modifiedBy) VALUES(?, ?, ?, ?, ?, ?)";
             prepare = CONNECTOR().prepareStatement(insertQuery);
-            prepare.setInt(1, productId);
-            prepare.setInt(2, total);
-            prepare.setInt(3, total);
-            prepare.setInt(4, unitQty);
-            prepare.setInt(5, packQty);
-            prepare.setInt(6, QtyPerPack);
-            prepare.execute();
+            prepare.setInt(1, productId );
+            prepare.setInt(2,stockLevel );
+            prepare.setInt(3,currentStockLevel );
+            prepare.setInt(4, currentBoxQuantity );
+            prepare.setInt(5, currentQuantityPerBox );
+            prepare.setInt(6, modifiedBy );
+            flag = prepare.executeUpdate();
         }catch (SQLException ex) {
-            ex.printStackTrace();
+            logger = new ErrorLogger();
+            logger.log(ex.getLocalizedMessage());
         }
+
+        return flag;
     }
 
-
-    public ObservableList<ProductsStockData> filterProductStockTable(String userInput) {
-        ObservableList<ProductsStockData> products = FXCollections.observableArrayList();
-        try {
-            String searchQuery = "SELECT * FROM ProductStock WHERE(ProductName LIKE'%" + userInput + "%' OR ProductBrand LIKE'%" + userInput + "%' AND DeleteStatus = 0 );";
-
-            stmt = CONNECTOR().createStatement();
-            result  = stmt.executeQuery(searchQuery);
-
-            while (result.next()) {
-                int rowId = result.getInt(1);
-                String productName = result.getString(2);
-                String ProductType = result.getString(3);
-                String productBrand = result.getString(4);
-                String productCategory = result.getString(5);
-                String productSupplier = result.getString(6);
-                String notes = result.getString(7);
-                Date expiryDate = result.getDate(8);
-                byte storeId = result.getByte(9);
-                byte activeStatus = result.getByte(10);
-                byte deleteStatus = result.getByte(11);
-                byte addedBy = result.getByte(12);
-                Timestamp dateCreated = result.getTimestamp(13);
-
-                Label statusValue = new Label();
-                switch(activeStatus) {
-                    case 0 -> {
-                        statusValue.setText("Not Active");
-                        statusValue.setStyle("-fx-text-fill:red");
-                    }
-                    case 1 -> {
-                        statusValue.setStyle("-fx-text-fill:green");
-                        statusValue.setText("Active");
-                    }
-                }
-//                    String statusValue = activeStatus == 0 ? "Not Active" : "Active";
-                products.add(new ProductsStockData(rowId, productName, ProductType, productBrand, productCategory, productSupplier, notes, expiryDate, storeId, statusValue, deleteStatus, addedBy, dateCreated));
+    public int addNewProductPrice(int productId, double purchasePrice, double sellingPrice, double profitPerItem, int modifiedBy) {
+        int flag = 0;
+            try {
+                String insertQuery = "INSERT INTO ProductPrices(productId, purchasePrice, sellingPrice, profitPerItem, modifiedBy) VALUES(?, ?, ?, ?, ?)";
+                prepare = CONNECTOR().prepareStatement(insertQuery);
+                prepare.setInt(1, productId);
+                prepare.setDouble(2, purchasePrice);
+                prepare.setDouble(3, sellingPrice);
+                prepare.setDouble(4, profitPerItem);
+                prepare.setInt(5, modifiedBy);
+                flag = prepare.executeUpdate();
+            }catch (SQLException ex) {
+                logger = new ErrorLogger();
+                logger.log(Arrays.toString(ex.getStackTrace()));
             }
-            stmt.close();
-            result.close();
-            CONNECTOR().close();
+        return flag;
+    }
+
+    public int deleteSelectedProduct(int itemId)  {
+        int flag = 0;
+        try {
+            String deleteStatement = "UPDATE ProductItems SET deleteStatus = 1 WHERE(id = '"+ itemId +"')";
+            stmt = CONNECTOR().createStatement();
+            flag = stmt.executeUpdate(deleteStatement);
         }catch (SQLException ex) {
-            ErrorLogger logger = new ErrorLogger();
+            logger = new ErrorLogger();
             logger.log(ex.getMessage());
         }
-        return products;
+        return flag;
     }
-
 
 }//END OF CLASS...

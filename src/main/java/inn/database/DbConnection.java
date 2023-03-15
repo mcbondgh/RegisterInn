@@ -1,11 +1,12 @@
 package inn.database;
 
-import inn.ErrorLogger;
+import inn.config.DatabaseConfiguration;
 import inn.multiStage.MultiStages;
 import inn.tableViews.*;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -16,34 +17,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class DbConnection {
+public class DbConnection extends DatabaseConfiguration {
     public DbConnection() {}
 
     protected Connection CONNECTOR() throws SQLException {
-        Connection driverConnection = null;
-        try {
-            String SERVER_NAME = "Druglord";
-            String PASSWORD = "1244656800";
-            String URL = "jdbc:mysql://127.0.0.1:3308/inn_register";
-
-            driverConnection = DriverManager.getConnection(URL, SERVER_NAME, PASSWORD);
-//        String URL = "jdbc:mysql://104.238.222.166:3306/kwegyira_inn_register";
-//        jdbc:mysql://104.238.222.166:3306/?user=kwegyira
-
-        }catch (SQLException ex) {
-            MultiStages multiStages = new MultiStages();
-//            multiStages.wrongDateTimeStage();
-            ErrorLogger errorLogger = new ErrorLogger();
-            errorLogger.log(ex.getLocalizedMessage());
-        }
-
-        return driverConnection;
+           return DriverManager.getConnection(URL, SERVER_NAME, PASSWORD);
     }
 
-    /*
-    ----------------------------------------------------------------------------------------------------------------------
-    ----------------------------------------------------------------------------------------------------------------------
-     */
+    /**********************************************************************************************************************/
     MultiStages multiStagesOBJ = new MultiStages();
     ButtonType YES = ButtonType.YES;
 
@@ -317,7 +298,7 @@ public class DbConnection {
         return usernames;
     }
 
-    public LinkedList<Integer> fetchEmployeeId() {
+    public LinkedList<Integer> getUserId() {
         LinkedList<Integer> employeeId = new LinkedList<>();
         try {
             String selectQuery = "SELECT emp_id FROM users WHERE(is_default = 0);";
@@ -330,6 +311,21 @@ public class DbConnection {
             e.printStackTrace();
         }
         return employeeId;
+    }
+
+    public int getUserIdByUsername(String username) {
+        int userId = 0;
+        try {
+            String selectQuery = "SELECT emp_id FROM users WHERE(is_default = 0 AND username = '" + username + "');";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while (result.next()) {
+               userId = result.getInt(1);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userId;
     }
 
     public ArrayList<Object> fetchUserLoginsDetails(String username) {
@@ -489,8 +485,6 @@ public class DbConnection {
         return roomItems;
     }
 
-
-
     //THIS METHOD RETURNS ALL COLUMNS FROM THE StocksCategory TABLE
     public ObservableList<StocksCategoryData> fetchStockCategories() {
         ObservableList<StocksCategoryData> ListItems = FXCollections.observableArrayList();
@@ -582,28 +576,40 @@ public class DbConnection {
 
         return  returnStores;
     }
-
-        public ObservableList<ProductsStockData> fetchProductDetails(){
+    public ObservableList<ProductsStockData> fetchProductDetails(){
         ObservableList<ProductsStockData> products = FXCollections.observableArrayList();
         try{
-            String selectQuery = "SELECT * FROM ProductStock WHERE(DeleteStatus = 0)";
+            String selectQuery = """
+                     SELECT pi.id, productName, supplyType, CategoryName, supplierName, BrandName, expiryDate,\s
+                        StoreName, note, activeStatus, deleteStatus, username, pi.DateCreated
+                        FROM productItems as pi
+                        INNER JOIN StocksCategory as sc
+                    \t\tON pi.categoryId = sc.id
+                        INNER JOIN suppliers AS supId
+                    \t\tON supplieriD = supId.id
+                        JOIN productBrand AS pb
+                    \t\tON brandId = pb.id
+                    \tJOIN stores AS s
+                    \t\tON storeId = s.id
+                    \tJOIN users AS us
+                    \t\tON us.id = addedBy
+                    \tWHERE deleteStatus = 0;""";
             stmt = CONNECTOR().createStatement();
             result  = stmt.executeQuery(selectQuery);
-
             while (result.next()) {
-                int rowId = result.getInt(1);
-                String productName = result.getString(2);
-                String ProductType = result.getString(3);
-                String productBrand = result.getString(4);
-                String productCategory = result.getString(5);
-                String productSupplier = result.getString(6);
-                String notes = result.getString(7);
-                Date expiryDate = result.getDate(8);
-                byte storeId = result.getByte(9);
+                int rowId = result.getInt("pi.id");
+                String productName = result.getString("productName");
+                String ProductType = result.getString("supplyType");
+                String productCategory = result.getString("CategoryName");
+                String productSupplier = result.getString("supplierName");
+                String productBrand = result.getString("BrandName");
+                String storeId = result.getString("s.StoreName");
+                Date expiryDate = result.getDate("expiryDate");
+                String notes = result.getString("note");
                 byte activeStatus = result.getByte(10);
                 byte deleteStatus = result.getByte(11);
-                byte addedBy = result.getByte(12);
-                Timestamp dateCreated = result.getTimestamp(13);
+                String  addedBy = result.getString("username");
+                Timestamp dateCreated = result.getTimestamp("pi.DateCreated");
 
                 Label statusValue = new Label();
                 switch(activeStatus) {
@@ -617,7 +623,7 @@ public class DbConnection {
                     }
                 }
 //                    String statusValue = activeStatus == 0 ? "Not Active" : "Active";
-                products.add(new ProductsStockData(rowId, productName, ProductType, productBrand, productCategory, productSupplier, notes, expiryDate, storeId, statusValue, deleteStatus, addedBy, dateCreated));
+                products.add(new ProductsStockData(rowId, productName, ProductType, productCategory, productSupplier, productBrand, expiryDate, notes, storeId, statusValue, deleteStatus, addedBy, dateCreated));
             }
             stmt.close();
             result.close();
@@ -633,12 +639,12 @@ public class DbConnection {
     public ArrayList<Object> getProductIdAndType(@NamedArg("productname") String productName){
         ArrayList<Object> productValues = new ArrayList<>();
         try {
-            String selectQuery = "SELECT Id, ProductType FROM ProductStock WHERE(ProductName = '"+ productName +"')";
+            String selectQuery = "SELECT Id, supplyType FROM ProductItems WHERE(ProductName = '"+ productName +"')";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             if(result.next()) {
                 int id = result.getInt("Id");
-                String type = result.getString("ProductType");
+                String type = result.getString("supplyType");
                 productValues.add(id);
                 productValues.add(type);
             }
@@ -649,62 +655,110 @@ public class DbConnection {
         return productValues;
     }
 
-    public ArrayList<String> getProductTypeByName(@NamedArg("Product Name") String productName){
-        ArrayList<String> fetchedValues = new ArrayList<>();
-        try {
-            String selectQuery = "SELECT ProductType FROM ProductStock WHERE(ProductName = '"+productName+"')";
-            stmt = CONNECTOR().createStatement();
-            result = stmt.executeQuery(selectQuery);
-            while (result.next()) {
-//                fetchedValues.add(result.getString("ProductName"));//0
-                fetchedValues.add(result.getString("ProductType"));//1
-            }
-        }catch (SQLException ex) {
-            ex.printStackTrace();
+    public String getProductTypeByName(@NamedArg("Product Name") String productName) throws SQLException {
+        String value ="";
+         String selectQuery = "SELECT supplyType FROM ProductItems WHERE(ProductName = '"+productName+"')";
+         stmt = CONNECTOR().createStatement();
+         result = stmt.executeQuery(selectQuery);
+//       fetchedValues.add(result.getString("ProductName"));//0
+        if (result.next()) {
+            value = result.getString("supplyType");
         }
-        return fetchedValues;
+       return value;
     }
 
     public ObservableList<StockLevelData> fetchStockLevelDetails() {
         ObservableList<StockLevelData> stockLevelData = FXCollections.observableArrayList();
-
         try {
+            String selectStatement = """
+                    SELECT\s
+                    \tsl.id, pi.productName, stocklevel, currentStockLevel, currentBoxQuantity,
+                        currentQuantityPerBox, oldStockLevel, previousStockLevel, previousBoxQuantity, previousQuantityPerBox,
+                        gage, username, lastModified
+                       FROM StockLevels AS sl
+                       INNER JOIN ProductItems AS pi
+                    \t\tON productId = pi.id
+                       INNER JOIN users as us
+                    \t\tON sl.modifiedBy = us.id
+                    \tWHERE pi.deleteStatus = 0;""";
             stmt = CONNECTOR().createStatement();
-            result = stmt.executeQuery( "SELECT\n" +
-                    "    sl.id, ProductName, StockLevel, CurrentQty, PresentUnitQty, PresentPackQty, PresentPackPerQty, PreviousUnitQty, PreviousPackQty, PreviousPackPerQty, BeforeUnitQty, BeforePackQty, BeforePackQty, BeforePerPackQty, StockGuage, UpdatedBy, UpdatedDate\n" +
-                    "    FROM productstock AS ps\n" +
-                    "    INNER JOIN stocklevels as sl\n" +
-                    "    ON sl.ProductId = ps.id \n" +
-                    "    WHERE ps.DeleteStatus = 0;");
+            result = stmt.executeQuery(selectStatement);
             while (result.next()) {
-                int id = result.getInt("sl.id");
-                String ProductId = result.getString("ProductName");
-                int StockLevel = result.getInt("StockLevel");
-                int CurrentQty = result.getInt("CurrentQty");
-                int PresentUnitQty = result.getInt("PresentUnitQty");
-                int PresentPackQty = result.getInt("PresentPackQty");
-                int PresentPackPerQty = result.getInt("PresentPackPerQty");
-                int PreviousUnitQty = result.getInt("PreviousUnitQty");
-                int PreviousPackQty = result.getInt("PreviousPackQty");
-                int PreviousPackPerQty = result.getInt("PreviousPackPerQty");
-                int BeforeUnitQty = result.getInt("BeforeUnitQty");
-                int BeforePackQty = result.getInt("BeforePackQty");
-                int BeforePerPackQty = result.getInt("BeforePerPackQty");
-                int StockGuage = result.getInt("StockGuage");
-                String UpdatedBy = result.getString("UpdatedBy");
-                Timestamp UpdatedDate = result.getTimestamp("UpdatedDate");
+                int stockId = result.getInt("sl.id");
+                String productName = result.getString("productName");
+                int stockLevel = result.getInt("stocklevel");
+                int currentStockLeve = result.getInt("currentStockLevel");
+                int currentBoxQuantity = result.getInt("currentBoxQuantity");
+                int currentQuantityPerBox = result.getInt("currentQuantityPerBox");
+                int oldStockLevel = result.getInt("oldStockLevel");
+                int previousStockLevel = result.getInt("previousStockLevel");
+                int previousBoxQuantity = result.getInt("previousBoxQuantity");
+                int previousQuantityPerBox = result.getInt("previousQuantityPerBox");
+                int gage = result.getInt("gage");
+                String userName = result.getString("username");
+                Timestamp lastModified = result.getTimestamp("lastModified");
 
-                stockLevelData.add(new StockLevelData(id, ProductId, StockLevel, CurrentQty, PresentUnitQty, PresentPackQty, PresentPackPerQty, PreviousUnitQty, PreviousPackQty, PreviousPackPerQty, BeforeUnitQty, BeforePackQty, BeforePerPackQty,StockGuage, UpdatedBy, UpdatedDate ));
+                Label productNameLabel = new Label();
+                if (stockLevel >= gage ) {
+                    productNameLabel.setText(productName);
+                    productNameLabel.setStyle("-fx-text-fill:#00a113;");
+                    productNameLabel.setPadding(new Insets(2));
+                } else if (stockLevel > 0){
+                    productNameLabel.setText(productName);
+                    productNameLabel.setStyle("-fx-text-fill:#f4a30d;");
+                    productNameLabel.setPadding(new Insets(2));
+                } else {
+                    productNameLabel.setText(productName);
+                    productNameLabel.setStyle("-fx-text-fill: #ff1f1f;");
+                    productNameLabel.setPadding(new Insets(2));
+                }
 
+                stockLevelData.add( new StockLevelData(stockId, productNameLabel, stockLevel, currentStockLeve, currentBoxQuantity, currentQuantityPerBox, oldStockLevel, previousStockLevel, previousBoxQuantity, previousQuantityPerBox, gage, userName, lastModified));
             }
-            stmt.close();
-            result.close();
-            CONNECTOR().close();
         }catch (SQLException ex) {
             ex.printStackTrace();
         }
         return stockLevelData;
     }
+    public ObservableList<ProductPricesData> fetchProductPricesDetails() {
+        ObservableList<ProductPricesData> productPrices = FXCollections.observableArrayList();
+
+//        try {
+//
+//        }catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+        return productPrices;
+    }
+
+    public ObservableList<MessageTemplatesData> fetchMessageTemplates() {
+        ObservableList<MessageTemplatesData> messageTemplate = FXCollections.observableArrayList();
+        try {
+            String selectStatement = "SELECT templateId, templateTitle, templateBody, dateCreated, dateModified, username \n" +
+                    "    FROM messagetemplates as mt\n" +
+                    "    INNER JOIN users as u\n" +
+                    "    ON  u.id = createdBy;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectStatement);
+            while(result.next()) {
+                int temId = result.getInt("templateId");
+                String tempTitle = result.getString("templateTitle");
+                String tempBody = result.getString("templateBody");
+                Timestamp tempDateCreated = result.getTimestamp("dateCreated");
+                Timestamp tempDateModified = result.getTimestamp("dateModified");
+                String userName = result.getString("username");
+                messageTemplate.add(new MessageTemplatesData(temId, tempTitle, tempBody, userName, tempDateCreated, tempDateModified));
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return messageTemplate;
+    }
+
+
+
+
+
 
 
 //    public static void main(String[] args) throws SQLException {

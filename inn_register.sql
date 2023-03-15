@@ -140,20 +140,20 @@ CREATE TABLE stores(
     DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE ProductStock(
-	Id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    ProductName VARCHAR(255) NOT NULL,
-    ProductType VARCHAR(10) NOT NULL,
-    ProductBrand VARCHAR(100) NOT NULL,
-    Category VARCHAR(50) NOT NULL,
-    Supplier VARCHAR(100) DEFAULT 'Unknown',
-    Notes TEXT,
-	ExpiryDate DATE,
-	StoreId INT NOT NULL DEFAULT 1,
-    ActiveStatus TINYINT DEFAULT 0,
+CREATE TABLE ProductItems(
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    ProductName VARCHAR(100),
+    supplyType VARCHAR(50),
+    categoryId INT,
+    supplierId INT,
+    brandID INT,
+    storeId INT DEFAULT 1,
+    ExpiryDate DATE,
+    note TEXT,
+    activeStatus TINYINT DEFAULT 0,
     DeleteStatus TINYINT DEFAULT 0,
-    AddedBy INT,
-    DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP
+    addedBy INT,
+    dateCreated DATETIME 
 );
 
 CREATE TABLE ProductBrand(
@@ -163,25 +163,53 @@ CREATE TABLE ProductBrand(
 );
 
 CREATE TABLE stockLevels(
-	id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    ProductId BIGINT,
-    StockLevel INT,
-    CurrentQty INT,
-    PresentUnitQty INT,
-    PresentPackQty INT,
-    PresentPackPerQty INT,
-    PreviousUnitQty INT,
-    PreviousPackQty INT,
-    PreviousPackPerQty INT,
-    BeforeUnitQty INT,
-    BeforePackQty INT,
-    BeforePerPackQty INT,
-    StockGuage INT,
-    UpdatedBy INT,
-    UpdatedDate DATETIME DEFAULT CURRENT_TIMESTAMP
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    productId BIGINT,
+    stockLevel INT,
+    currentStockLevel INT,
+    currentBoxQuantity INT,
+    currentQuantityPerBox INT,
+    oldStockLevel INT,
+    previousStockLevel INT,
+    previousBoxQuantity INT,
+    previousQuantityPerBox INT,
+    gage INT,
+    modifiedBy INT,
+    lastModified DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE productPrices(
+	id BIGINT PRIMARY KEY AUTO_INCREMENT, 
+    productId BIGINT,
+    purchasePrice DECIMAL(5,2) DEFAULT 0.00,
+    sellingPrice DECIMAL(5,2) DEFAULT 0.00,
+    profitPerItem DECIMAL(5,2) DEFAULT 0.00,
+    previousPurchasePrice DECIMAL(5,2) DEFAULT 0.00,
+    previousSellingPrice DECIMAL(5,2) DEFAULT 0.00,
+    previousProfit DECIMAL(5,2) DEFAULT 0.00,
+    modifiedBy INT,
+    dateModified DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 
+CREATE TABLE sentMessages(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    mobileNumber INT,
+    messageTitle VARCHAR(255),
+    messageBody TEXT,
+    messageStatus TINYTEXT,
+    sentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    sendBy int
+);
+
+CREATE TABLE messageTemplates(
+	templateId INT PRIMARY KEY AUTO_INCREMENT,
+    templateTitle VARCHAR(100) NOT NULL,
+    templateBody TEXT NOT NULL, 
+    createdBy TINYINT DEFAULT 1,
+    dateCreated DATETIME,
+    dateModified DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
 ALTER TABLE users 
 ADD FOREIGN KEY(role_id) REFERENCES roles(id) ON DELETE SET NULL;

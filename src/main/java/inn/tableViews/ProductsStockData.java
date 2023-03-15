@@ -18,19 +18,19 @@ public class ProductsStockData {
     String suppliers;
     String notes;
     Date expiryDate;
-    byte storeId;
+    String storeId;
     Label activeStatus;
     byte deleteStatus;
-    byte addedBy;
+    String addedBy;
     Timestamp dateAdded;
 
     public ProductsStockData() {}
-    public ProductsStockData(int rowId, String productName, String ProductType, String productBrand, String itemCategory, String suppliers, String notes, Date expiryDate,  byte storeId, Label activeStatus, byte deleteStatus, byte addedBy, Timestamp dateAdded) {
+    public ProductsStockData(int rowId, String productName, String ProductType, String itemCategory, String suppliers, String productBrand,  Date expiryDate, String notes, String storeId, Label activeStatus, byte deleteStatus, String addedBy, Timestamp dateAdded) {
         this.rowId = rowId;
         this.productName = productName;
         this.ProductType = ProductType;
-        this.productBrand = productBrand;
         this.itemCategory = itemCategory;
+        this.productBrand = productBrand;
         this.suppliers = suppliers;
         this.notes = notes;
         this.expiryDate = expiryDate;
@@ -106,11 +106,11 @@ public class ProductsStockData {
     }
 
 
-    public byte getStoreId() {
+    public String getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(byte storeId) {
+    public void setStoreId(String storeId) {
         this.storeId = storeId;
     }
 
@@ -130,11 +130,11 @@ public class ProductsStockData {
         this.deleteStatus = deleteStatus;
     }
 
-    public byte getAddedBy() {
+    public String getAddedBy() {
         return addedBy;
     }
 
-    public void setAddedBy(byte addedBy) {
+    public void setAddedBy(String addedBy) {
         this.addedBy = addedBy;
     }
 

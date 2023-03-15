@@ -1,6 +1,7 @@
 package inn.smsApi;
 
 import inn.ErrorLogger;
+import inn.database.DbConnection;
 
 import java.net.*;
 import java.io.*;
@@ -10,24 +11,24 @@ import java.io.*;
  * @author BulkSMS Ghana
  */
 public class SendMessage {
+    static ErrorLogger  errorLogger = new ErrorLogger();
+    DbConnection DOA = new DbConnection();
 
+    String alias = (String) DOA.fetchBusinessInfo().get(1);
 
     private static String API_key = "5c926b098c1087dac3f6";
     private String message;
     private String phone_number;
-    private String sender_id; //11 characters
-
-    static ErrorLogger  errorLogger = new ErrorLogger();
+    private String sender_id = alias; //11 characters
 
 
-    public SendMessage() {}
-    public SendMessage(String phone_number, String message, String sender_id) {
+//    public SendMessage() {}
+    public SendMessage(String phone_number, String message) {
         this.phone_number = phone_number;
         this.message = message;
-        this.sender_id = sender_id;
     }
 
-    public String messageStatus () {
+    public String submitMessage() {
         String status = "";
         try {
             /*******************API URL FOR SENDING MESSAGES********/
@@ -36,15 +37,6 @@ public class SendMessage {
             URLConnection connection = url.openConnection();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             status = bufferedReader.readLine().trim();
-//            switch (inputLine) {
-//                case "1000" -> System.out.println("Message sent");
-//                case "1002" -> System.out.println("Message not sent");
-//                case "1003" -> System.out.println("You don't have enough balance");
-//                case "1004" -> System.out.println("Invalid API Key");
-//                case "1005" -> System.out.println("Phone number not valid");
-//                case "1006" -> System.out.println("Invalid Sender ID");
-//                case "1008" -> System.out.println("Empty message");
-//            }
             bufferedReader.close();
         }catch (Exception e) {
             errorLogger.log(e.getLocalizedMessage());
@@ -65,10 +57,12 @@ public class SendMessage {
             balance = Integer.parseInt(inputLine);
 
             bufferedReader.close();
-        }catch (Exception e) {
+        }catch (UnknownHostException e) {
+            balance = 20000;
             errorLogger.log(e.getLocalizedMessage());
             e.printStackTrace();
-        }
+        } catch (IOException ignored) {}
+
         return balance;
     }
 
@@ -106,42 +100,42 @@ public class SendMessage {
         this.sender_id = sender_id;
     }
 
-    public static void main(String[] args) throws Exception {
+//    public static void main(String[] args) throws Exception {
 
-        int balance = SendMessage.checkSmsBalance();
-        System.out.println(balance);
-//        String API_key = "5c926b098c1087dac3f6";
-//        String message = "I SEE YOU GHOST...";
-//        String phone_number = "0200791855";
-//        String sender_id = "GHOST"; //11 characters
-//
-//        /*******************API URL FOR SENDING MESSAGES********/
-//        URL url = new URL("http://clientlogin.bulksmsgh.com/smsapi?key=" + API_key + "&to=" + phone_number + "&msg=" + message + "&sender_id=" + sender_id);
-//
-//        /****************API URL TO CHECK BALANCE****************/
-//        URL balanceUrl = new URL("http://clientlogin.bulksmsgh.com/api/smsapibalance?key=" + API_key);
-//
-//        URLConnection connection = balanceUrl.openConnection();
-//        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//        String inputLine;
-//        inputLine = in.readLine().trim();
-//        System.out.println(inputLine);
-//        if (inputLine.equals("1000")) {
-//            System.out.println("Message sent");
-//        } else if (inputLine.equals("1002")) {
-//            System.out.println("Message not sent");
-//        } else if (inputLine.equals("1003")) {
-//            System.out.println("You don't have enough balance");
-//        } else if (inputLine.equals("1004")) {
-//            System.out.println("Invalid API Key");
-//        } else if (inputLine.equals("1005")) {
-//            System.out.println("Phone number not valid");
-//        } else if (inputLine.equals("1006")) {
-//            System.out.println("Invalid Sender ID");
-//        } else if (inputLine.equals("1008")) {
-//            System.out.println("Empty message");
-//        }
-//        in.close();
+//        int balance = SendMessage.checkSmsBalance();
+//        System.out.println(balance);
+////        String API_key = "5c926b098c1087dac3f6";
+////        String message = "I SEE YOU GHOST...";
+////        String phone_number = "0200791855";
+////        String sender_id = "GHOST"; //11 characters
+////
+////        /*******************API URL FOR SENDING MESSAGES********/
+////        URL url = new URL("http://clientlogin.bulksmsgh.com/smsapi?key=" + API_key + "&to=" + phone_number + "&msg=" + message + "&sender_id=" + sender_id);
+////
+////        /****************API URL TO CHECK BALANCE****************/
+////        URL balanceUrl = new URL("http://clientlogin.bulksmsgh.com/api/smsapibalance?key=" + API_key);
+////
+////        URLConnection connection = balanceUrl.openConnection();
+////        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+////        String inputLine;
+////        inputLine = in.readLine().trim();
+////        System.out.println(inputLine);
+////        if (inputLine.equals("1000")) {
+////            System.out.println("Message sent");
+////        } else if (inputLine.equals("1002")) {
+////            System.out.println("Message not sent");
+////        } else if (inputLine.equals("1003")) {
+////            System.out.println("You don't have enough balance");
+////        } else if (inputLine.equals("1004")) {
+////            System.out.println("Invalid API Key");
+////        } else if (inputLine.equals("1005")) {
+////            System.out.println("Phone number not valid");
+////        } else if (inputLine.equals("1006")) {
+////            System.out.println("Invalid Sender ID");
+////        } else if (inputLine.equals("1008")) {
+////            System.out.println("Empty message");
+////        }
+////        in.close();
+////    }
 //    }
-    }
 }

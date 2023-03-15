@@ -1,10 +1,9 @@
 package inn;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class ErrorLogger {
     private final Logger logger =  Logger.getLogger(StartInn.class.getName());
@@ -25,5 +24,7 @@ public class ErrorLogger {
                 Date date = new Date();
                 logger.severe(date.toString() + " - " + message);
             }
+
+
 
 }

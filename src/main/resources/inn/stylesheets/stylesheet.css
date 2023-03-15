@@ -4,11 +4,26 @@
 
 .products-table {
     -fx-background-color:#fff;
-    -fx-font-size: 40px;
+    -fx-alignment:center;
+
+}
+.products-table column-header {
+    -fx-background-color:orange
 }
 
 stocks-tableView{
     -fx-background-color: #e0fbff;
 }
 
+.rooms-table-table-rows:odd {
+    -fx-background-color:orange;
+}
 
+.MessageLogsTableView {
+-fx-background-color:red;
+
+}
+
+.MessageLogsTableView header{
+    -fx-background-color:orange;
+}

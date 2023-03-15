@@ -3,10 +3,8 @@ package inn.Controllers;
 
 import inn.Controllers.dashboard.Homepage;
 import inn.ErrorLogger;
-import inn.MultiThreads;
 import inn.database.DbConnection;
 import inn.multiStage.MultiStages;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,7 +13,6 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Duration;
 import java.util.ResourceBundle;
 
 public class Index extends Homepage implements Initializable {
@@ -63,7 +60,7 @@ public class Index extends Homepage implements Initializable {
     /*******************************************************************************************************************
      ACTION EVENT METHODS IMPLEMENTATION*/
     public void signinButtonAction() throws IOException {
-        Homepage.setActiveUserNane = getUsernameField().isBlank() ?  "Active User" :getUsernameField();
+        Homepage.activeUsername = getUsernameField().isBlank() ?  "Active User" :getUsernameField();
         multiStages.Homepage();
         signinButton.getScene().getWindow().hide();
 
