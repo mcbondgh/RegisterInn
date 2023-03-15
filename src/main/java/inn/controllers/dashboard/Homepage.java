@@ -6,6 +6,7 @@ import inn.models.InnActivationModel;
 import inn.multiStage.MultiStages;
 import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
 import io.github.palexdev.materialfx.controls.MFXToggleButton;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -131,8 +132,15 @@ public class Homepage extends DbConnection implements Initializable{
         FlipView("Modules/settings/manageRooms.fxml");
     }
 
-    @FXML public void messageBoxButtonOnAction() throws IOException {
-      FlipView("Modules/messagebox/manageSms.fxml");
+    @FXML public void messageBoxButtonOnAction() throws IOException, InterruptedException {
+        Thread executeThread = new Thread(()-> Platform.runLater(() -> {
+            try {
+                FlipView("Modules/messagebox/manageSms.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+      }));
+        executeThread.start();
     }
 
     @FXML void managePayrollButtonClick() throws IOException {

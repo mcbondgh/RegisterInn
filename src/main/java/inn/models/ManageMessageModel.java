@@ -10,20 +10,23 @@ public class ManageMessageModel extends DbConnection {
 
     ErrorLogger logger;
 
-    protected int submitNewMessage(String mobileNumber, String messageTitle, String messageBody, byte messageStatus, int sendBy) {
+    protected int submitNewMessage(String mobileNumber, String messageTitle, String messageBody, byte messageStatus, int balance, int sendBy) {
         int flag = 0;
         try {
-            String insertQuery = "INSERT INTO sentmessages(mobileNumber, messageTitle, messageBody, messageStatus, sendBy) VALUES(?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO sentmessages(mobileNumber, messageTitle, messageBody, messageStatus, balance, sendBy) VALUES(?, ?, ?, ?, ?, ?)";
             prepare = CONNECTOR().prepareStatement(insertQuery);
             prepare.setString(1, mobileNumber);
             prepare.setString(2, messageTitle);
             prepare.setString(3, messageBody);
             prepare.setByte(4, messageStatus);
-            prepare.setInt(5, sendBy);
+            prepare.setInt(5, balance);
+            prepare.setInt(6, sendBy);
            flag =  prepare.executeUpdate();
         }catch (SQLException ex) {
+            ex.printStackTrace();
             logger = new ErrorLogger();
             logger.log(ex.getMessage());
+
         }
         return flag;
     }

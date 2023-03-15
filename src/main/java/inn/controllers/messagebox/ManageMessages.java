@@ -4,15 +4,20 @@ import inn.ErrorLogger;
 import inn.StartInn;
 import inn.database.DbConnection;
 import inn.models.ManageMessageModel;
+import inn.models.ResourceModel;
 import inn.prompts.UserAlerts;
 import inn.prompts.UserNotification;
 import inn.smsApi.SendMessage;
+import inn.tableViews.EmployeesData;
 import inn.tableViews.MessageTemplatesData;
+import inn.tableViews.SentMessagesData;
 import inn.threads.CheckSmsBalanceTask;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Rectangle;
@@ -24,10 +29,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class ManageMessages extends ManageMessageModel implements Initializable{
 
@@ -44,11 +46,25 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
     @FXML private Rectangle smsBalancePane;
     @FXML private TextField messageTitleField, mobileNumberField;
     @FXML private TextArea messageContentField;
-    @FXML private Button sendMessageButton, cancelMessageButton, addContactButton, removeContactButton;
+    @FXML private Button sendMessageButton, cancelMessageButton, addContactButton, removeContactButton, loadSentMessageButton;
     @FXML private Label aliasDisplay, contactSizeIndicator, successIndicator, failedIndicator;
-
     @FXML private ListView<String> contactListView;
+    @FXML private  Tab messageInboxTab, sendMessageTab, messageLogsTab, messageTemplateTab, topUpCreditTab;
+    @FXML private CheckBox chooseFromTemplateCheckBox, sendToEmployeesCheckBox;
+    @FXML private  ComboBox<String> chooseFromTemplateComboBox, sendToEmployeesComboBox;
 
+
+
+    /** TABLEVIEW COLUMNS*/
+    @FXML private TableView<SentMessagesData> messageLogsTableView;
+    @FXML private TableColumn<SentMessagesData, Integer> messageIdColumn;
+    @FXML private TableColumn<SentMessagesData, String> mobileNumberColumn;
+    @FXML private TableColumn<SentMessagesData, String> titleColumn;
+    @FXML private TableColumn<SentMessagesData, String> messageColumn;
+    @FXML private TableColumn<SentMessagesData, String> statusColumn;
+    @FXML private TableColumn<SentMessagesData, Integer> balanceColumn;
+    @FXML private TableColumn<SentMessagesData, Timestamp> dateColumn;
+    @FXML private TableColumn<SentMessagesData, String> sentByColumn;
 
     //CLASS INSTANTIATION FIELD
     CheckSmsBalanceTask messageTask = new CheckSmsBalanceTask();
@@ -67,6 +83,9 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadWebpage();
         fillTemplateListView();
+        populateSentMessageTable();
+        fillSendToEmployeesComboBox();
+        fillChooseFromTemplateComboBox();
         int returnedBalance = SendMessage.checkSmsBalance();
              aliasDisplay.setText(alias);
         if (returnedBalance == 20000) {
@@ -129,23 +148,53 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
             }
         }
 
-
-            void executeMessageTimer() {
+        //THIS METHOD WHEN INVOKED SHALL EXECUTE A TIMER THAT SENDS A BULK MESSAGE TO EACH SPECIFIED CONTACT AT AN INTERVAL OF 500 MILLISECOND.
+        void executeMessageTimer() {
             Timer timer = new Timer();
             TimerTask task = new TimerTask() {
                 int counter = 0;
+                int flag = 0;
+                byte sentStatus = 0;
+                byte failedStatus = 0;
+
                 @Override
                 public void run() {
                     if (counter < contactListSize()) {
-                        System.out.println(contactListView.getItems().get(counter));
+                        String contactList = contactListView.getItems().get(counter);
+                        String messageTitle = messageTitleField.getText();
+                        String messageBody = messageContentField.getText();
+                        Platform.runLater(()-> {
+                            int returnedBalance = SendMessage.checkSmsBalance();
+                            sendMessageOBJ = new SendMessage(contactList, messageBody);
+                            String status = sendMessageOBJ.submitMessage();
+                            if(Objects.equals(status,"1000")){
+                                    sentStatus = 1;
+                                    flag = submitNewMessage(contactList, messageTitle, messageBody, sentStatus, returnedBalance, 1);
+                                    successIndicator.setText(String.valueOf(counter));
+                                    smsBalanceValue.setText(String.valueOf(returnedBalance));
+                                    populateSentMessageTable();
+                                }
+                                else if (Objects.equals(status, "1002")){
+                                    failedIndicator.setText(String.valueOf(counter));
+                                    submitNewMessage(contactList, messageTitle, messageBody, failedStatus, returnedBalance, 1);
+                                    notify.errorNotification("MESSAGE FAILED", "SORRY YOUR MESSAGE FAILED TO SEND.");
+                                } else if (Objects.equals(status, "1005")) {
+                                    failedIndicator.setText(String.valueOf(counter));
+                                    submitNewMessage(contactList, "INVALID NUMBER", messageBody, failedStatus, returnedBalance, 1);
+                                    System.out.println("Phone number not valid");
+                                    notify.informationNotification("INVALID NUMBER", "Phone number not valid");
+                            } else {
+                                failedIndicator.setText(String.valueOf(counter));
+                                notify.errorNotification("FAILED TO SEND", "Your message failed to send.");
+                            }
+                        });
                         counter++;
                     } else {
                         timer.cancel();
                     }
                 }
             };
-            timer.scheduleAtFixedRate(task, 0, 1000);
-
+            timer.scheduleAtFixedRate(task, 0, 500);
         }
 
 
@@ -154,19 +203,20 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
     @FXML void sendMessageButtonClicked() {
         try {
             if (!(isContactListViewEmpty() || isMessageTitleEmpty() || isMessageBodyEmpty())) {
-                executeMessageTimer();
+                userAlerts = new UserAlerts("SEND SMS", "DO YOU WANT TO PROCEED TO SEND SMS TO PROVIDED NUMBER(s)?","please confirm to send message else cancel to abort." );
+                if (userAlerts.confirmationAlert()) {
+                    executeMessageTimer();
+                    notify.informationNotification("MESSAGE STATUS", "Please check indicators for success status. Thank you.");
+                }
             }
-
         } catch (Exception e) {
             logger = new ErrorLogger();
-            logger.log(e.getStackTrace().toString());
+            logger.log(Arrays.toString(e.getStackTrace()));
         }
     }
 
     @FXML void cancelMessageButtonClicked() {
-        messageTitleField.clear();
-        messageContentField.clear();
-        contactListView.getItems().clear();
+        clearFields();
     }
 
     @FXML void addContactButtonClicked() {
@@ -187,14 +237,11 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
         removeContactButton.setDisable(contactListView.getSelectionModel().isEmpty());
     }
 
-
     @FXML void removeContactButtonClicked() {
         int selectedItemIndex = contactListView.getSelectionModel().getSelectedIndex();
         contactListView.getItems().remove(selectedItemIndex);
         contactSizeIndicator.setText(String.valueOf(contactListSize()));
     }
-
-
 
     /*******************************************************************************************************************
      OTHER METHODS IMPLEMENTATION....*/
@@ -204,6 +251,9 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
         messageContentField.clear();
         sendMessageButton.setDisable(true);
         contactListView.getItems().clear();
+        contactSizeIndicator.setText(String.valueOf(0));
+        successIndicator.setText(String.valueOf(0));
+        failedIndicator.setText(String.valueOf(0));
     }
 
     int contactListSize() {
@@ -310,6 +360,34 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
             templateTitleView.getItems().add(title.getTemplateTitle());
         }
     }
+    void fillChooseFromTemplateComboBox() {
+        chooseFromTemplateComboBox.getItems().clear();
+        for (MessageTemplatesData titles : fetchMessageTemplates()) {
+            chooseFromTemplateComboBox.getItems().add(titles.getTemplateTitle());
+        }
+    }
+
+    void fillSendToEmployeesComboBox() {
+        ResourceModel resourceModel = new ResourceModel();
+        resourceModel.fetchActiveEmployees();
+        for (EmployeesData items: resourceModel.activeEmployees) {
+            sendToEmployeesComboBox.getItems().add(items.getPhoneNumber());
+        }
+
+    }
+
+    void populateSentMessageTable() {
+        messageIdColumn.setCellValueFactory(new PropertyValueFactory<>("messageId"));
+        mobileNumberColumn.setCellValueFactory(new PropertyValueFactory<>("mobileNumber"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("messageTitle"));
+        messageColumn.setCellValueFactory(new PropertyValueFactory<>("messageBody"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("messageStatus"));
+        balanceColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        sentByColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("sentDate"));
+        messageLogsTableView.setItems(getAllSentMessages());
+    }
+
     /*******************************************************************************************************************
      TOP UP AIRTIME VIEW CONTROLS ...*/
     @FXML private WebView webviewSection;

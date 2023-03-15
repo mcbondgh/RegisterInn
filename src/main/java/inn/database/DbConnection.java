@@ -1,5 +1,6 @@
 package inn.database;
 
+import inn.ErrorLogger;
 import inn.config.DatabaseConfiguration;
 import inn.multiStage.MultiStages;
 import inn.tableViews.*;
@@ -26,6 +27,7 @@ public class DbConnection extends DatabaseConfiguration {
 
     /**********************************************************************************************************************/
     MultiStages multiStagesOBJ = new MultiStages();
+    ErrorLogger logger;
     ButtonType YES = ButtonType.YES;
 
     protected Statement stmt = null;
@@ -753,6 +755,44 @@ public class DbConnection extends DatabaseConfiguration {
             ex.printStackTrace();
         }
         return messageTemplate;
+    }
+
+
+    public ObservableList<SentMessagesData> getAllSentMessages() {
+        ObservableList<SentMessagesData> sentMessages = FXCollections.observableArrayList();
+        try {
+            String selectQuery = " SELECT sm.id, mobileNumber, messageTitle, messageBody, messageStatus, balance, username, sentDate FROM sentmessages AS sm\n" +
+                    "    INNER JOIN users AS us\n" +
+                    "    ON sm.sendBy = us.id;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while (result.next()) {
+                int messageId = result.getInt("sm.id");
+                String mobileNumber = result.getNString("mobileNumber");
+                String messageTitle = result.getNString("messageTitle");
+                String messageBody = result.getString("messageBody");
+                int messageStatus = result.getInt("messageStatus");
+                int balance = result.getInt("balance");
+                String username = result.getNString("username");
+                Timestamp sentDate = result.getTimestamp("sentDate");
+
+                Label convertedStatus = new Label();
+
+                if (messageStatus == 1) {
+                    convertedStatus.setText("Sent");
+                    convertedStatus.setStyle("-fx-text-fill:#00aa0e; -fx-font-weight:bold; fx-alignment;center");
+                } else {
+                    convertedStatus.setText("Failed");
+                    convertedStatus.setStyle("-fx-text-fill:#ff1f1f; -fx-font-weight:bold; fx-alignment;center");
+                }
+                sentMessages.add(new SentMessagesData(messageId, mobileNumber, messageTitle, messageBody, convertedStatus, balance, username, sentDate));
+            }
+        }catch (Exception e) {
+            logger = new ErrorLogger();
+            logger.log(e.getMessage());
+        }
+
+        return sentMessages;
     }
 
 

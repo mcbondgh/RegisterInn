@@ -58,6 +58,11 @@
     FROM messagetemplates as mt
     INNER JOIN users as u
     ON  u.id = createdBy;
+    
+    -- TABLE JOIN FOR SENT MESSAGES 
+    SELECT sm.id, mobileNumber, messageTitle, messageBody, messageStatus, balance, sentDate, username FROM sentmessages AS sm
+    INNER JOIN users AS us
+    ON sm.sendBy = us.id;
 
     ALTER TABLE users 
     ADD COLUMN emp_id INT AFTER confirm_password;
@@ -138,6 +143,9 @@ SELECT DISTINCT(lower(username)) FROM users;
    ALTER TABLE productitems MODIFY COLUMN dateCreated DATETIME;
    ALTER TABLE productitems CHANGE COLUMN productStatus  activeStatus TINYINT DEFAULT 0;
    ALTER TABLE productitems CHANGE COLUMN isDeleted  deleteStatus TINYINT DEFAULT 0;
+   
+   -- 14-03-2023
+   ALTER TABLE sentmessages ADD COLUMN balance INT AFTER messageStatus; 
    
 	DESCRIBE inn_register.employees;
     DESCRIBE employees;
