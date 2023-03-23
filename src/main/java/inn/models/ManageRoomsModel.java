@@ -1,6 +1,5 @@
 package inn.models;
 
-import inn.database.DbConnection;
 import inn.tableViews.ManageRoomsData;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
@@ -9,7 +8,7 @@ import javafx.scene.control.CheckBox;
 
 import java.sql.Date;
 
-public class ManageRoomsModel extends DbConnection {
+public class ManageRoomsModel extends MainModel {
 
 
     //THIS METHOD WHEN INVOKED WILL TAKE 3 PARAMETERS AND INSERT INTO THE rooms TABLE.

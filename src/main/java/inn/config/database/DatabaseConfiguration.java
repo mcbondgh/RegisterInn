@@ -1,4 +1,4 @@
-package inn.config;
+package inn.config.database;
 
 public class DatabaseConfiguration {
    protected String SERVER_NAME = "Druglord";

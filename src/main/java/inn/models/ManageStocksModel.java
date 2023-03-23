@@ -1,7 +1,6 @@
 package inn.models;
 
 import inn.ErrorLogger;
-import inn.database.DbConnection;
 import javafx.beans.NamedArg;
 
 import java.sql.Date;
@@ -9,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
-public class ManageStocksModel extends DbConnection {
+public class ManageStocksModel extends MainModel {
 
     ErrorLogger logger;
 

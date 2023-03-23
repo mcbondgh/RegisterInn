@@ -1,7 +1,7 @@
 package inn.smsApi;
 
 import inn.ErrorLogger;
-import inn.database.DbConnection;
+import inn.models.MainModel;
 
 import java.net.*;
 import java.io.*;
@@ -12,7 +12,7 @@ import java.io.*;
  */
 public class SendMessage {
     static ErrorLogger  errorLogger = new ErrorLogger();
-    DbConnection DOA = new DbConnection();
+    MainModel DOA = new MainModel();
 
     String alias = (String) DOA.fetchBusinessInfo().get(1);
 

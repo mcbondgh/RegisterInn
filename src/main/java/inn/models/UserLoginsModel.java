@@ -1,10 +1,9 @@
 package inn.models;
 
-import inn.database.DbConnection;
 import inn.multiStage.MultiStages;
 import javafx.beans.NamedArg;
 
-public class UserLoginsModel extends DbConnection {
+public class UserLoginsModel extends MainModel {
     MultiStages multiStagesOBJ = new MultiStages();
 
     public UserLoginsModel() {

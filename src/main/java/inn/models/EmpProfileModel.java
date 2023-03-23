@@ -1,6 +1,5 @@
 package inn.models;
 
-import inn.database.DbConnection;
 import javafx.scene.control.Alert;
 
 import java.io.IOException;
@@ -8,7 +7,7 @@ import java.io.InputStream;
 import java.sql.DataTruncation;
 import java.sql.SQLException;
 
-public class EmpProfileModel extends DbConnection {
+public class EmpProfileModel extends MainModel {
 
 
     //THIS METHOD WHEN INVOKED WILL ACCEPT AN EMPLOYEE'S DETAILS AS AN ARGUMENT AND UPDATE SAME RECORD IN THE employees TABLE BASED ON employee's id.

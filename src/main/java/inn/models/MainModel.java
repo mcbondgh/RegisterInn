@@ -1,7 +1,7 @@
-package inn.database;
+package inn.models;
 
 import inn.ErrorLogger;
-import inn.config.DatabaseConfiguration;
+import inn.config.database.DatabaseConfiguration;
 import inn.multiStage.MultiStages;
 import inn.tableViews.*;
 import javafx.beans.NamedArg;
@@ -18,8 +18,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class DbConnection extends DatabaseConfiguration {
-    public DbConnection() {}
+public class MainModel extends DatabaseConfiguration {
+    public MainModel() {}
 
     protected Connection CONNECTOR() throws SQLException {
            return DriverManager.getConnection(URL, SERVER_NAME, PASSWORD);

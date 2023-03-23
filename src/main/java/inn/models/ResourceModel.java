@@ -1,6 +1,5 @@
 package inn.models;
 
-import inn.database.DbConnection;
 import inn.tableViews.ArchivedTableData;
 import inn.tableViews.EmployeesData;
 import javafx.beans.NamedArg;
@@ -10,7 +9,7 @@ import javafx.scene.control.CheckBox;
 
 import java.sql.Date;
 
-public class ResourceModel extends DbConnection{
+public class ResourceModel extends MainModel {
 
     //DEFAULT CONSTRUCTOR
     public ResourceModel() {super();}

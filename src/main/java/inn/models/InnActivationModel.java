@@ -1,11 +1,9 @@
 package inn.models;
 
-import inn.database.DbConnection;
-
 import java.sql.Date;
 import java.sql.SQLException;
 
-public class InnActivationModel extends DbConnection {
+public class InnActivationModel extends MainModel {
 
     public InnActivationModel(String activationKey, Date expiryDate) {
     }

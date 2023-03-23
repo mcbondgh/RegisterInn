@@ -1,12 +1,11 @@
 package inn.models;
 
 import inn.ErrorLogger;
-import inn.database.DbConnection;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class ManageMessageModel extends DbConnection {
+public class ManageMessageModel extends MainModel {
 
     ErrorLogger logger;
 

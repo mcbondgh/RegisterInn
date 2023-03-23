@@ -1,8 +1,6 @@
 package inn.models;
 
-import inn.database.DbConnection;
-
-public class AddRolesAndDepartmentModel extends DbConnection {
+public class AddRolesAndDepartmentModel extends MainModel {
 
     //THIS METHOD WHEN INVOKED TAKES IN ROLE NAME AS AN ARGUMENT AND INSERTS A NEW USER ROLE TYPE INTO THE roles TABLE.
     public int addNewRoleType(String roleName) {
