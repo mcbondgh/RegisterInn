@@ -2,7 +2,7 @@ package inn.Controllers.messagebox;
 
 import inn.ErrorLogger;
 import inn.StartInn;
-import inn.database.DbConnection;
+import inn.models.MainModel;
 import inn.models.ManageMessageModel;
 import inn.models.ResourceModel;
 import inn.prompts.UserAlerts;
@@ -69,7 +69,7 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
     //CLASS INSTANTIATION FIELD
     CheckSmsBalanceTask messageTask = new CheckSmsBalanceTask();
 
-    DbConnection DOA = new DbConnection();
+    MainModel DOA = new MainModel();
 
     String alias = (String) DOA.fetchBusinessInfo().get(1);
 

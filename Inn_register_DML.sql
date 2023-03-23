@@ -51,13 +51,20 @@
 		ON us.id = addedBy
 	WHERE deleteStatus = 0;
     
-    
-    
     -- TABLE JOIN FOR messageTemplates 
     SELECT templateId, templateTitle, templateBody, dateCreated, dateModified, username 
     FROM messagetemplates as mt
     INNER JOIN users as u
     ON  u.id = createdBy;
+    
+    -- TABLE JOIN FOR PRODUCT PRICES.
+    SELECT productId, productName purchasePrice, sellingPrice, profitPerItem, previousPurchasePrice, previousSellingPrice, previousProfit, username , dateModified
+    FROM productprices as pp
+    JOIN productItems as pi 
+		ON productId = pp.id
+	JOIN users as us
+		ON modifiedBy = us.id
+	WHERE deleteStatus = 0;
     
     -- TABLE JOIN FOR SENT MESSAGES 
     SELECT sm.id, mobileNumber, messageTitle, messageBody, messageStatus, balance, sentDate, username FROM sentmessages AS sm

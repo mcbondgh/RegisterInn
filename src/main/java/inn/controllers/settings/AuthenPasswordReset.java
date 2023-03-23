@@ -1,7 +1,7 @@
 package inn.Controllers.settings;
 
 import inn.Controllers.configurations.SysActivator;
-import inn.database.DbConnection;
+import inn.models.MainModel;
 import inn.models.InnActivationModel;
 import inn.multiStage.MultiStages;
 import javafx.fxml.FXML;
@@ -25,7 +25,7 @@ public class AuthenPasswordReset extends InnActivationModel implements Initializ
                                                 CLASS INSTANTIATION FIELD
      ******************************************************************************************************************/
     SysActivator sysActivatorOBJ = new SysActivator();
-    DbConnection modelOBJ = new DbConnection();
+    MainModel modelOBJ = new MainModel();
     MultiStages multiStagesOBJ =  new MultiStages();
     General generalOBJ;
 

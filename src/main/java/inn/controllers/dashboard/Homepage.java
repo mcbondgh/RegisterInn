@@ -1,7 +1,7 @@
 package inn.Controllers.dashboard;
 
 import inn.StartInn;
-import inn.database.DbConnection;
+import inn.models.MainModel;
 import inn.models.InnActivationModel;
 import inn.multiStage.MultiStages;
 import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Homepage extends DbConnection implements Initializable{
+public class Homepage extends MainModel implements Initializable{
 
     /******************************************> OBJECT INSTANTIATION FIELD <*******************************************/
     MultiStages multiStagesOBJ = new MultiStages();

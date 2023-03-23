@@ -1,6 +1,6 @@
 package inn.Controllers.settings;
 
-import inn.database.DbConnection;
+import inn.models.MainModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -10,7 +10,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class SetPermissions extends DbConnection implements Initializable {
+public class SetPermissions extends MainModel implements Initializable {
 
     /*******************************************************************************************************************
      *                                  FXML NODE EJECTIONS

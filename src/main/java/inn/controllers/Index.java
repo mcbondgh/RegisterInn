@@ -3,7 +3,7 @@ package inn.Controllers;
 
 import inn.Controllers.dashboard.Homepage;
 import inn.ErrorLogger;
-import inn.database.DbConnection;
+import inn.models.MainModel;
 import inn.multiStage.MultiStages;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -19,7 +19,7 @@ public class Index extends Homepage implements Initializable {
 
     /*******************************************> CLASS INSTANTIATION FIELD. <*************************************/
         MultiStages multiStages = new MultiStages();
-        DbConnection connector = new DbConnection();
+        MainModel connector = new MainModel();
         private Parent root;
 
 

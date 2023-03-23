@@ -725,11 +725,34 @@ public class MainModel extends DatabaseConfiguration {
     public ObservableList<ProductPricesData> fetchProductPricesDetails() {
         ObservableList<ProductPricesData> productPrices = FXCollections.observableArrayList();
 
-//        try {
-//
-//        }catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
+        try {
+            String selectQuery = " SELECT productId, productName, purchasePrice, sellingPrice, profitPerItem, previousPurchasePrice, previousSellingPrice, previousProfit, username , dateModified\n" +
+                    "    FROM productprices as pp\n" +
+                    "    JOIN productItems as pi \n" +
+                    "\t\tON productId = pp.id\n" +
+                    "\tJOIN users as us\n" +
+                    "\t\tON modifiedBy = us.id\n" +
+                    "\tWHERE deleteStatus = 0;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while (result.next()) {
+                int productId = result.getInt("productId");
+                float purchasePrice = result.getFloat("purchasePrice");
+                String productName = result.getString("productName");
+                float sellingPrice = result.getFloat("sellingPrice");
+                float profitPerItem = result.getFloat("profitPerItem");
+                float previousPurchasePrice = result.getFloat("previousPurchasePrice");
+                float previousSellingPrice = result.getFloat("previousSellingPrice");
+                float previousProfit = result.getFloat("previousProfit");
+                String username = result.getString("usename");
+                Timestamp dateModified = result.getTimestamp("dateModified");
+                productPrices.add(new ProductPricesData(productId, productName, purchasePrice, sellingPrice, profitPerItem, previousPurchasePrice, previousSellingPrice, previousProfit,username, dateModified));
+            }
+        }catch (SQLException ex) {
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+            ex.printStackTrace();
+        }
         return productPrices;
     }
 

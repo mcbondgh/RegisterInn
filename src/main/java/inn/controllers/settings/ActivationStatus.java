@@ -1,6 +1,6 @@
 package inn.Controllers.settings;
 
-import inn.database.DbConnection;
+import inn.models.MainModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -10,7 +10,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
 
-public class ActivationStatus extends DbConnection implements Initializable {
+public class ActivationStatus extends MainModel implements Initializable {
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {

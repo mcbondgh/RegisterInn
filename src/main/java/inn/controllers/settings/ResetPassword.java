@@ -1,12 +1,12 @@
 package inn.Controllers.settings;
 
-import inn.database.DbConnection;
+import inn.models.MainModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class ResetPassword extends DbConnection {
+public class ResetPassword extends MainModel {
 
     /*************************************** FXML NODES ************************************************/
     @FXML private TextField usernameField;

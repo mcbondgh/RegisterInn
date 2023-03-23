@@ -1,6 +1,6 @@
 package inn.Controllers.configurations;
 
-import inn.database.DbConnection;
+import inn.models.MainModel;
 import inn.models.InnActivationModel;
 import inn.multiStage.MultiStages;
 import javafx.fxml.FXML;
@@ -41,7 +41,7 @@ public class InnRegisterActivator extends InnActivationModel implements Initiali
     //    CLASS INSTANTIATION SECTION.
     MultiStages multiStagesOBJ = new MultiStages();
     SysActivator sysActivatorOBJ = new SysActivator();
-    DbConnection modelOBJ = new DbConnection();
+    MainModel modelOBJ = new MainModel();
 
 
 

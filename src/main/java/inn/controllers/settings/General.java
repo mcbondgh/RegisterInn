@@ -1,7 +1,7 @@
 package inn.Controllers.settings;
 
 import inn.StartInn;
-import inn.database.DbConnection;
+import inn.models.MainModel;
 import inn.multiStage.MultiStages;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +22,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class General extends DbConnection implements Initializable {
+public class General extends MainModel implements Initializable {
 
 /************************************ CLASS INSTANTIATION FIELD ***********************************************/
     MultiStages multiStagesOBJ = new MultiStages();

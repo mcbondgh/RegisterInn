@@ -1,7 +1,7 @@
 package inn.Controllers.settings;
 
 import inn.StartInn;
-import inn.database.DbConnection;
+import inn.models.MainModel;
 import inn.models.AddRolesAndDepartmentModel;
 import inn.prompts.UserNotification;
 import inn.tableViews.DepartmentData;
@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 
 public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implements Initializable {
 
-    DbConnection dbConnectionOBJ = new DbConnection();
+    MainModel mainModelOBJ = new MainModel();
     RolesTypesData rolesTypesOBJ = new RolesTypesData();
     UserNotification notificationOBJ = new UserNotification();
 
@@ -340,7 +340,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     boolean checkPriceField() {return priceField.getText().isBlank();}
     boolean checkIfRoleExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
-        for (String item : dbConnectionOBJ.fetchUserRoles()) {
+        for (String item : mainModelOBJ.fetchUserRoles()) {
             if (Objects.equals(item.toLowerCase(), textFieldValue.toLowerCase())) {
                 flag = true;
                 break;
@@ -352,7 +352,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
     boolean checkIfDepartmentExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
-        for (String item : dbConnectionOBJ.fetchDesignation()) {
+        for (String item : mainModelOBJ.fetchDesignation()) {
             if (Objects.equals(item.toLowerCase(), textFieldValue.toLowerCase())) {
                 flag = true;
                 break;
@@ -364,7 +364,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
     boolean checkIfIdTypeExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
-        for (String item : dbConnectionOBJ.fetchIdTypes()) {
+        for (String item : mainModelOBJ.fetchIdTypes()) {
             if (Objects.equals(item.toLowerCase(), textFieldValue.toLowerCase())) {
                 flag = true;
                 break;
@@ -375,7 +375,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
     boolean checkIfRoomCategoryExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
-        for (RoomsCategoryData item : dbConnectionOBJ.fetchCategories()) {
+        for (RoomsCategoryData item : mainModelOBJ.fetchCategories()) {
             if (Objects.equals(item.getRoomsCateName().toLowerCase(), textFieldValue.toLowerCase())) {
                 flag = true;
                 break;
@@ -391,8 +391,8 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         roleId.setCellValueFactory(new PropertyValueFactory<>("roleId"));
         ObservableList<RolesTypesData> roleValues = FXCollections.observableArrayList();
 
-        for (int i = 0; i < dbConnectionOBJ.fetchUserRoles().size(); i++) {
-            roleValues.add(new RolesTypesData(i + 1, dbConnectionOBJ.fetchUserRoles().get(i)));
+        for (int i = 0; i < mainModelOBJ.fetchUserRoles().size(); i++) {
+            roleValues.add(new RolesTypesData(i + 1, mainModelOBJ.fetchUserRoles().get(i)));
             roleTableView.setItems(roleValues);
         }
     }
@@ -402,8 +402,8 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         idTypeID.setCellValueFactory(new PropertyValueFactory<>("idTypeID"));
         ObservableList<IdTypesData> roleValues = FXCollections.observableArrayList();
 
-        for (int i = 0; i < dbConnectionOBJ.fetchIdTypes().size(); i++) {
-            roleValues.add(new IdTypesData(i + 1, dbConnectionOBJ.fetchIdTypes().get(i)));
+        for (int i = 0; i < mainModelOBJ.fetchIdTypes().size(); i++) {
+            roleValues.add(new IdTypesData(i + 1, mainModelOBJ.fetchIdTypes().get(i)));
             idTypeTableView.setItems(roleValues);
         }
     }
@@ -413,8 +413,8 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         departmentId.setCellValueFactory(new PropertyValueFactory<>("departmentId"));
         ObservableList<DepartmentData> roleValues = FXCollections.observableArrayList();
 
-        for (int i = 0; i < dbConnectionOBJ.fetchDesignation().size(); i++) {
-            roleValues.add(new DepartmentData(i + 1, dbConnectionOBJ.fetchDesignation().get(i)));
+        for (int i = 0; i < mainModelOBJ.fetchDesignation().size(); i++) {
+            roleValues.add(new DepartmentData(i + 1, mainModelOBJ.fetchDesignation().get(i)));
             departmentsTableView.setItems(roleValues);
         }
     }

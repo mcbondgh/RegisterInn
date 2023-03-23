@@ -438,8 +438,11 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         productExpiryDateColumn.setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
         productAddedByColumn.setCellValueFactory(new PropertyValueFactory<>("addedBy"));
         productDateAddedColumn.setCellValueFactory(new PropertyValueFactory<>("dateAdded"));
+        productItemTableView.setItems(fetchProductDetails());
     }
     private void populatePriceTableVIew() {
+
+        pricesTableView.setItems(fetchProductPricesDetails());
 
     }
 
