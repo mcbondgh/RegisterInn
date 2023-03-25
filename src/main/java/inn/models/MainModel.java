@@ -513,7 +513,7 @@ public class MainModel extends DatabaseConfiguration {
     public ObservableList<SuppliersData> fetchSuppliers() {
         ObservableList<SuppliersData> ListItems = FXCollections.observableArrayList();
         try {
-            String selectQuery = "SELECT * FROM Suppliers;";
+            String selectQuery = "SELECT * FROM Suppliers WHERE id > 1;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
@@ -724,12 +724,11 @@ public class MainModel extends DatabaseConfiguration {
     }
     public ObservableList<ProductPricesData> fetchProductPricesDetails() {
         ObservableList<ProductPricesData> productPrices = FXCollections.observableArrayList();
-
         try {
             String selectQuery = " SELECT productId, productName, purchasePrice, sellingPrice, profitPerItem, previousPurchasePrice, previousSellingPrice, previousProfit, username , dateModified\n" +
                     "    FROM productprices as pp\n" +
                     "    JOIN productItems as pi \n" +
-                    "\t\tON productId = pp.id\n" +
+                    "\t\tON productId = pi.id\n" +
                     "\tJOIN users as us\n" +
                     "\t\tON modifiedBy = us.id\n" +
                     "\tWHERE deleteStatus = 0;";
@@ -744,7 +743,7 @@ public class MainModel extends DatabaseConfiguration {
                 float previousPurchasePrice = result.getFloat("previousPurchasePrice");
                 float previousSellingPrice = result.getFloat("previousSellingPrice");
                 float previousProfit = result.getFloat("previousProfit");
-                String username = result.getString("usename");
+                String username = result.getString("username");
                 Timestamp dateModified = result.getTimestamp("dateModified");
                 productPrices.add(new ProductPricesData(productId, productName, purchasePrice, sellingPrice, profitPerItem, previousPurchasePrice, previousSellingPrice, previousProfit,username, dateModified));
             }

@@ -14,7 +14,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-
 import java.io.*;
 import java.net.URL;
 import java.sql.Blob;
@@ -41,6 +40,8 @@ public class General extends MainModel implements Initializable {
     @FXML private ImageView heroImage;
     @FXML private Pane infoPane;
     @FXML private BorderPane settingsPane;
+    @FXML private Button resetApplicationBtn;
+    @FXML private
 
     String filePath = null;
     File selectedFile = null;
@@ -63,40 +64,29 @@ public class General extends MainModel implements Initializable {
         this.businessNameField.setText(businessNameField);
     }
     public String getBusinessName() {return  businessNameField.getText();}
-
     public void setBusinessNumberField(int businessNumberField) {
         this.businessNumberField.setText(String.valueOf(businessNumberField));
     }
     public int getBusinessNumber() {return Integer.parseInt(businessNumberField.getText());}
-
     public void setOtherNumberField(int otherNumber) {otherNumberField.setText(String.valueOf(otherNumber));}
     public int getOtherNumberField() {return Integer.parseInt(otherNumberField.getText());}
-
     public void setDigitalAddressField(String address) {digitalAddressField.setText(address);}
     public String getAddress() {return digitalAddressField.getText();}
-
     public void setEmail(String email) { emailAddressField.setText(email);}
     public String getEmail() {return emailAddressField.getText();}
-
     public void setManagerEmailField(String email) {managerEmailField.setText(email);}
     public String getManagerEmailField() {return managerEmailField.getText();}
-
     public void setManagerNameField(String name) {managerNameField.setText(name);}
     public String getManagerName() {return managerNameField.getText();}
-
     public void setManagerNumberField(int number) {managerNumberField.setText(String.valueOf(number));}
     public int getManagerNumber() {return Integer.parseInt(managerNumberField.getText());}
-
     public void setTotalWorkersField(int total) {totalWorkersField.setText(String.valueOf(total));}
     public int getTotalWorkers() {return Integer.parseInt(totalWorkersField.getText());}
-
     public void setDescriptionField(String descrip) {descriptionField.setText(descrip);}
     public String getDescription () {return descriptionField.getText();}
-
     public void getDatePicker() {
         datePickerField.getValue();
     }
-
 
 
     /*******************************************************************************************************************
@@ -114,7 +104,6 @@ public class General extends MainModel implements Initializable {
         if (!(event.getCode().isDigitKey() || event.getCode() == (KeyCode.BACK_SPACE)) ){
             businessNumberField.clear();
         }
-
     }
     //THIS METHOD CHECKS IF THE ADMIN ENTERED NUMERIC VALUES ONLY INTO other_number_field, IF TRUE ALLOW, ELSE CLEAR FIELD.
     public void validateOtherNumberField(KeyEvent event) {
@@ -135,7 +124,6 @@ public class General extends MainModel implements Initializable {
         if (!(event.getCode().isDigitKey() || event.getCode() == (KeyCode.BACK_SPACE)) ){
             totalWorkersField.setText(null);
         }
-
     }
 
     //THIS METHOD DISABLES THE updateBtn UNTIL THE USER FILLS ALL THE TEXTFIELDS INCLUDING THE DATE PICKER.
@@ -209,9 +197,10 @@ public class General extends MainModel implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
+    public void resetButtonClicked() throws IOException {
+        multiStagesOBJ.showResetStage();
+    }
     public void checkNumberLength() {
         if(businessNumberField.getLength() == 10) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -252,26 +241,20 @@ public class General extends MainModel implements Initializable {
     void activationBtnClicked() throws IOException {
         FlipView("Modules/Settings/systemActivationStage.fxml");
     }
-
     @FXML void userLogsBtnClicked() throws IOException {
         FlipView("Modules/Settings/userLogsView.fxml");
     }
-
     @FXML void systemInfoBtnClicked() throws  IOException {
         settingsPane.setCenter(infoPane);
     }
-
     @FXML public void AuthenKeyBtnClicked() throws IOException {
         FlipView("Modules/Settings/resetAuthenPassword.fxml");
     }
-
     @FXML public void backUpButtonOnClick() throws IOException{
         FlipView("Modules/Settings/backUpView.fxml");
     }
 
-
-
-//<------------------------MOUSE HOVER EFFECT FIELD FOR ALL BUTTONS. -------------------------------->
+    //<------------------------MOUSE HOVER EFFECT FIELD FOR ALL BUTTONS. -------------------------------->
     @FXML
     void HoverEffectForSysInfoBtn() {
         systemInfoBtn.setStyle("-fx-background-color:#ab0303; -fx-text-fill:#fff");
@@ -298,6 +281,12 @@ public class General extends MainModel implements Initializable {
     @FXML void mouseExitedForUserLogsBtn() {
         userLogsButton.setStyle("-fx-background-color:none; -fx-text-fill: #ab0303; -fx-border-color: #ab0303");
     }
+    @FXML void mouseExitedForResetButton() {
+        resetApplicationBtn.setStyle("-fx-background-color:none; -fx-text-fill: #ab0303; -fx-border-color: #ab0303");
+    }
+    @FXML void HoverEffectForResetButton() {
+        resetApplicationBtn.setStyle("-fx-background-color:#ab0303; -fx-text-fill:#fff");
+    }
     @FXML void HoverEffectForBackupBtn() {
         backUpButton.setStyle("-fx-background-color:#ab0303; -fx-text-fill:#fff");
         backUpButton.setScaleX(1.07);
@@ -308,7 +297,6 @@ public class General extends MainModel implements Initializable {
         backUpButton.setScaleX(1);
         backUpButton.setScaleY(1);
     }
-
 
     /************************************ OTHER METHODS FIELD ***********************************************/
     //THIS METHOD FILLS THE TEXT FIELDS OF THE FORM WITH DATE RETURNED FROM THE DATABASE.

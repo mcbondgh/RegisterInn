@@ -318,11 +318,10 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
                 clearTemplateFields();
                 fillTemplateListView();
             } else {
-                notify.errorNotification("SAVE FAILED", "Oops, your attempt to save message template failed.");
+//                notify.errorNotification("SAVE FAILED", "Oops, your attempt to save message template failed.");
             }
         }
     }
-
     @FXML void templateListViewClicked() {
         if (!(isTemplateViewEmpty() && isTemplateItemSelected())) {
             deselectItemButton.setDisable(false);

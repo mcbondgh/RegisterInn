@@ -51,6 +51,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML private MFXButton updateStockLevelButton;
     @FXML private Label requiredIndicator, selectedProductNameDisplay, selectedStockTypeDisplay;
     @FXML private TextField productNameField;
+    @FXML private Button priceUpdateButton;
 
 
 
@@ -66,6 +67,9 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML private MFXLegacyComboBox<String> productSupplierSelector;
     @FXML private MFXLegacyComboBox<String> productBrandSelector;
     @FXML private MFXTextField stockLevelSingleQtyField, stockLevelBoxQuantityField, stockLevelQtyPerBoxField;
+    @FXML private Label priceProductNameDisplay, priceStockTypeDisplay;
+    @FXML private MFXTextField updatePurchasedPriceField, updateSellingPriceField;
+    @FXML private Label updateProductProfitDisplay;
 
 
     //******************* >> STORES TABLE VIEW
@@ -138,6 +142,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML private TableColumn<ProductPricesData, Timestamp> priceLastUpdatedColumn;
 
 
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateStockCategoryTable();
         populateSuppliersTable();
@@ -146,7 +151,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         fillProductBrandSelector();
         fillProductCategorySelector();
         fillProductSupplierSelector();
-
     }
 
 
@@ -221,7 +225,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         } catch (NullPointerException e) {
             notify.informationNotification("DELETE FAILED", "Please make a selection to delete");
         }
-
     }
     @FXML void saveSupplierButtonClicked() {
         if(checkIfSupplierAlreadyExist()) {
@@ -240,7 +243,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             }
         }
     }
-
     @FXML void updateSuppliersButtonClicked() {
 
         int outputBit = 0;
@@ -252,7 +254,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             case 0 -> notify.errorNotification("UPDATE FAILED", "Update Operation failed.");
         }
     }
-
     @FXML void deleteSupplierButtonClicked() {
         try {
             int itemId = suppliersTable.getSelectionModel().getSelectedItem().getId();
@@ -263,7 +264,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             notify.informationNotification("EMPTY SELECTION" , "Please Select A Supplier To Be Deleted.");
         }
     }
-
     @FXML void saveStoresButtonClicked() {
        int outputResult = addNewStore(storesInputField.getText(), storeDescriptionField.getText());
        switch (outputResult) {
@@ -291,7 +291,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             case 0-> notify.errorNotification("FAILED TO DELETE", "Attempt to delete failed.");
         }
     }
-
     @FXML void storesTableRowSelected() {
         String storeName = storeTypeTable.getSelectionModel().getSelectedItem().getStoreName();
         if (Objects.equals(storeName, "Store Room")) {
@@ -300,7 +299,35 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             deleteStoreButton.setDisable(!storeTypeTable.isFocused());
         }
     }
+    @FXML void updatePricesButtonClicked() {
+        boolean isNotSelected = pricesTableView.getSelectionModel().isEmpty();
+        if (isNotSelected) {
+            notify.errorNotification("EMPTY SELECTION", "Please select a product you wish to update before you submit");
+        } else {
+            int currentUserId = getUserIdByUsername("Admin");
+            String name = pricesTableView.getSelectionModel().getSelectedItem().getProductName();
+            int productId = Integer.parseInt(priceStockTypeDisplay.getText());
+            float newPurchasePrice = Float.parseFloat(updatePurchasedPriceField.getText());
+            float newSellingPrice = Float.parseFloat(updateSellingPriceField.getText());
+            float newProfit = Float.parseFloat(updateProductProfitDisplay.getText());
 
+            float currentPurchasePrice = pricesTableView.getSelectionModel().getSelectedItem().getPurchasePrice();
+            float currentSellingPrice = pricesTableView.getSelectionModel().getSelectedItem().getSellingPrice();
+            float currentProfit = pricesTableView.getSelectionModel().getSelectedItem().getProfitPerItem();
+
+            userAlertOBJ = new UserAlerts("UPDATE PRODUCT PRICE", "ARE YOU SURE YOU WANT TO COMMIT UPDATE FOR '" + name + "'?", "please confirm your action, else cancel to abort.");
+            if (userAlertOBJ.confirmationAlert()) {
+                int flag = updateProductPrices(productId, newPurchasePrice, newSellingPrice, newProfit, currentPurchasePrice, currentSellingPrice, currentProfit, currentUserId);
+                if (flag > 0) {
+                    notify.successNotification("UPDATE SUCCESSFUL", "Perfect, price of '"+ name + "' has successfully been updated.");
+                    refreshPriceTable();
+                    unsetProductPriceVariables();
+                } else {
+                    notify.errorNotification("UPDATE FAILED", "Your attempt to update '" + name +"' failed, contact system admin");
+                }
+            }
+        }
+    }
 
 
     /*********************************************************************************************************
@@ -376,6 +403,13 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         return flag;
     }
 
+    boolean checkUpdatePurchasePriceField() {
+        return updatePurchasedPriceField.getText().isBlank();
+    }
+
+    boolean checkUpdateSellingPriceField() {
+        return updateSellingPriceField.getText().isBlank();
+}
 
 
 
@@ -438,12 +472,18 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         productExpiryDateColumn.setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
         productAddedByColumn.setCellValueFactory(new PropertyValueFactory<>("addedBy"));
         productDateAddedColumn.setCellValueFactory(new PropertyValueFactory<>("dateAdded"));
-        productItemTableView.setItems(fetchProductDetails());
     }
     private void populatePriceTableVIew() {
-
-        pricesTableView.setItems(fetchProductPricesDetails());
-
+        priceId.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        priceProductNane.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        currentPurchasedPriceColumn.setCellValueFactory(new PropertyValueFactory<>("purchasePrice"));
+        currentSellingPriceColumn.setCellValueFactory(new PropertyValueFactory<>("sellingPrice"));
+        currentProfitColumn.setCellValueFactory(new PropertyValueFactory<>("profitPerItem"));
+        previousPurchasedPriceColumn.setCellValueFactory(new PropertyValueFactory<>("previousPurchasePrice"));
+        previousSellingPriceColumn.setCellValueFactory(new PropertyValueFactory<>("previousSellingPrice"));
+        previousProfitColumn.setCellValueFactory(new PropertyValueFactory<>("previousProfit"));
+        priceUpdatedByColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        priceLastUpdatedColumn.setCellValueFactory(new PropertyValueFactory<>("dateModified"));
     }
 
     private void populateStockLevelTaleView() {
@@ -484,6 +524,10 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         productItemTableView.getItems().clear();
         loadTablesButtonClicked();
     }
+    private void refreshPriceTable() {
+        pricesTableView.getItems().clear();
+        loadTablesButtonClicked();
+    }
     /*********************************************************************************************************
      >>  UNSET FIELDS AND BUTTONS TO DEFAULT
      *********************************************************************************************************/
@@ -501,6 +545,15 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         saveSuppliersButton.setDisable(true);
         updateSuppliersButton.setDisable(true);
         deleteSuppliersButton.setDisable(true);
+    }
+
+    void unsetProductPriceVariables() {
+        updateSellingPriceField.clear();
+        updatePurchasedPriceField.clear();
+        updateProductProfitDisplay.setText(String.valueOf(0));
+        priceUpdateButton.setDisable(true);
+        updatePurchasedPriceField.setDisable(true);
+        updateSellingPriceField.setDisable(true);
     }
 
     /*********************************************************************************************************
@@ -570,7 +623,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
                break;
            }
         }
-
         //GET THE ASSOCIATED ID TO THE SELECTED CATEGORY ITEM
         for (StocksCategoryData categoryItem : fetchStockCategories()) {
             if (categoryItem.getCategoryName().equals(proCategory)) {
@@ -578,7 +630,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
                 break;
             }
         }
-
         //GET THE ASSOCIATED ID TO THE SELECTED SUPPLIER
         for (SuppliersData suppliersData : fetchSuppliers()) {
             if (suppliersData.getSupplierName().equals(proSupplier)){
@@ -586,7 +637,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
                 break;
             }
         }
-
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "please confirm your action to save else cancel to abort.");
         alert.setTitle("SAVE NEW PRODUCT.");
         alert.setHeaderText("ARE YOU SURE YOU WANT TO ADD " + productNameField.getText() + " TO YOUR PRODUCTS?");
@@ -608,8 +658,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
                     }
             }
     }
-
-
     @FXML void deleteProductButtonClicked() {
         if (productItemTableView.getSelectionModel().isEmpty()) {
             userAlertOBJ = new UserAlerts("MAKE SELECTION", "SORRY! NO SELECTION DETECTED.", "please select the product to be remove.");
@@ -730,6 +778,34 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         }
     }
 
+    /*********************************************************************************************************
+     ****** >>                    KEY EVENT HANDLERS FOR PRICES TAB............
+     *********************************************************************************************************/
+    @FXML void keyReleasedOnPurchasePriceInput(KeyEvent keypressed) {
+        try {
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE || keypressed.getCode() == KeyCode.PERIOD)) {
+                updatePurchasedPriceField.clear();
+            }
+        }catch (NumberFormatException e) {
+            updateProductProfitDisplay.setText(String.valueOf(0));
+        }
+    }
+
+    @FXML void keyReleasedOnSellingPriceInput(KeyEvent keypressed) {
+        priceUpdateButton.setDisable(checkUpdateSellingPriceField() || checkUpdatePurchasePriceField());
+        try {
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE || keypressed.getCode() == KeyCode.PERIOD)) {
+                updateSellingPriceField.clear();
+            } else {
+                Double purchasePrice = Double.parseDouble(updatePurchasedPriceField.getText());
+                Double sellingPrice = Double.parseDouble(updateSellingPriceField.getText());
+                Double profit = (sellingPrice - purchasePrice);
+                updateProductProfitDisplay.setText(String.valueOf( Double.parseDouble(String.format("%.2f%n", profit))));
+            }
+        }catch (NumberFormatException e) {
+            updateProductProfitDisplay.setText(String.valueOf(0));
+        }
+    }
     @FXML void loadTablesButtonClicked() {
         populateProductItemsTable();
         populateStockLevelTaleView();
@@ -738,7 +814,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         Thread executeTask = new Thread(fillTablesTask);
         executeTask.start();
     }
-
     @FXML void productTableViewClicked() {
         deleteProductButton.setDisable(productItemTableView.getSelectionModel().isEmpty() && productItemTableView.isVisible());
     }
@@ -769,6 +844,21 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
                 stockLevelBoxQuantityField.setDisable(false);
                 stockLevelQtyPerBoxField.setDisable(false);
             }
+        }
+    }
+
+    @FXML private void priceTableViewClicked() {
+        boolean isNotSelected = pricesTableView.getSelectionModel().isEmpty();
+        if (isNotSelected) {
+            updatePurchasedPriceField.setDisable(true);
+            updateSellingPriceField.setDisable(true);
+        } else {
+            String productName = pricesTableView.getSelectionModel().getSelectedItem().getProductName();
+            int productId = pricesTableView.getSelectionModel().getSelectedItem().getProductId();
+            priceStockTypeDisplay.setText(String.valueOf(productId));
+            priceProductNameDisplay.setText(productName);
+            updatePurchasedPriceField.setDisable(false);
+            updateSellingPriceField.setDisable(false);
         }
     }
 
@@ -807,9 +897,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
                 case 0 -> notify.errorNotification("UPDATE FAILED", "Your request to update stock level for ("+ productName + ") failed");
             }
         }
-
-
-
     }
 
     @FXML void validateStockLevelSingleInput(KeyEvent keypressed) {
@@ -877,7 +964,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     }
 
     /*********************************************************************************************************
-     ******>>>>>                     TRUE OR FALSE STATEMENTS FOR PRODUCT ITEM FIELDS
+     ******                    TRUE OR FALSE STATEMENTS FOR PRODUCT ITEM FIELDS
      *********************************************************************************************************/
     boolean isProductNameEmpty() {
         return productNameField.getText().isEmpty();
@@ -909,7 +996,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     boolean isSellingPriceEmpty() {
         return sellingPriceField.getText().isBlank();
     }
-
     boolean checkIfProductExist() {
         boolean flag = false;
         String userInput = productNameField.getText().toLowerCase().replaceAll("\\s", "");
@@ -922,6 +1008,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         return flag;
     }
 
+//    CLEAR ITEM FIELDS TO RESET.
     private void clearProductsItemField() {
         productNameField.clear();
         productSupplierSelector.setValue(null);
@@ -938,7 +1025,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         totalProductDisplay.setText(String.valueOf(0));
         productProfitDisplay.setText(String.valueOf(0));
     }
-
     void clearStocksLevelFields() {
         stockLevelSingleQtyField.clear();
         stockLevelBoxQuantityField.clear();

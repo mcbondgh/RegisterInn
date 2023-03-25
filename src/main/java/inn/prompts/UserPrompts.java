@@ -2,6 +2,7 @@ package inn.prompts;
 
 import inn.models.ManageStocksModel;
 import inn.tableViews.StoresTableData;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

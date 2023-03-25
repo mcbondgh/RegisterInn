@@ -248,4 +248,25 @@ public class ManageStocksModel extends MainModel {
         return flag;
     }
 
+    protected int updateProductPrices(@NamedArg("productId")int productId, float purchasePrice, float sellingPrice, float profitPerItem, float previousPurchasePrice, float previousSellingPrice, float previousProfit, int modifiedBy) {
+        int flag = 0;
+        try {
+            String updateQuery = "UPDATE productPrices SET purchasePrice = ?, sellingPrice = ?, profitPerItem = ?, previousPurchasePrice = ?, previousSellingPrice = ?, previousProfit = ?, modifiedBy = ?, dateModified = DEFAULT WHERE(productId = ?)";
+            prepare = CONNECTOR().prepareStatement(updateQuery);
+            prepare.setFloat(1, purchasePrice);
+            prepare.setFloat(2, sellingPrice);
+            prepare.setFloat(3, profitPerItem);
+            prepare.setFloat(4, previousPurchasePrice);
+            prepare.setFloat(5, previousSellingPrice);
+            prepare.setFloat(6, previousProfit);
+            prepare.setInt(7, modifiedBy);
+            prepare.setInt(8, productId);
+            flag = prepare.executeUpdate();
+        }catch (SQLException ex) {
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+        }
+        return flag;
+    }
+
 }//END OF CLASS...
