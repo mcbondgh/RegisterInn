@@ -22,6 +22,14 @@
     SELECT * FROM productBrand;
 	SELECT * FROM StocksCategory;
     SELECT * FROM suppliers;
+    
+    SELECT productId, productName, purchasePrice, sellingPrice, profitPerItem, previousPurchasePrice, previousSellingPrice, previousProfit, username , dateModified
+          FROM productprices as pp
+		JOIN productItems as pi 
+		ON productId = pi.id
+		JOIN users as us
+		ON modifiedBy = us.id
+		WHERE deleteStatus = 0;
 
 -- STOCK LEVEL TABLE JOIN
    SELECT 
@@ -58,7 +66,7 @@
     ON  u.id = createdBy;
     
     -- TABLE JOIN FOR PRODUCT PRICES.
-    SELECT productId, productName purchasePrice, sellingPrice, profitPerItem, previousPurchasePrice, previousSellingPrice, previousProfit, username , dateModified
+    SELECT productId, productName, purchasePrice, sellingPrice, profitPerItem, previousPurchasePrice, previousSellingPrice, previousProfit, username , dateModified
     FROM productprices as pp
     JOIN productItems as pi 
 		ON productId = pp.id
@@ -96,6 +104,8 @@
     TRUNCATE TABLE productitems;
     TRUNCATE TABLE ProductBrand;
     TRUNCATE TABLE StockLevels;
+    TRUNCATE TABLE productprices;
+    TRUNCATE TABLE messageTemplates;
 
 -- ALTER TABLE AND UPDATE STATEMENTS
 	UPDATE business_info SET bsi_name = "GUEST HOUSE", updated_date = current_timestamp();

@@ -1,5 +1,6 @@
 package inn.Controllers.messagebox;
 
+import inn.Controllers.dashboard.Homepage;
 import inn.ErrorLogger;
 import inn.StartInn;
 import inn.models.MainModel;
@@ -127,6 +128,16 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
         }
         return flag;
     }
+    boolean checkListViewForEmployeeNumberExist(String mobileNumber) {
+        boolean flag = false;
+        for (String item : contactListView.getItems()) {
+            if (item.equals(mobileNumber)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
 
 
 
@@ -177,12 +188,12 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
                                 else if (Objects.equals(status, "1002")){
                                     failedIndicator.setText(String.valueOf(counter));
                                     submitNewMessage(contactList, messageTitle, messageBody, failedStatus, returnedBalance, 1);
-                                    notify.errorNotification("MESSAGE FAILED", "SORRY YOUR MESSAGE FAILED TO SEND.");
+//                                    notify.errorNotification("MESSAGE FAILED", "SORRY YOUR MESSAGE FAILED TO SEND.");
                                 } else if (Objects.equals(status, "1005")) {
                                     failedIndicator.setText(String.valueOf(counter));
                                     submitNewMessage(contactList, "INVALID NUMBER", messageBody, failedStatus, returnedBalance, 1);
                                     System.out.println("Phone number not valid");
-                                    notify.informationNotification("INVALID NUMBER", "Phone number not valid");
+//                                    notify.informationNotification("INVALID NUMBER", "Phone number not valid");
                             } else {
                                 failedIndicator.setText(String.valueOf(counter));
                                 notify.errorNotification("FAILED TO SEND", "Your message failed to send.");
@@ -194,7 +205,7 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
                     }
                 }
             };
-            timer.scheduleAtFixedRate(task, 0, 500);
+            timer.scheduleAtFixedRate(task, 0, 250);
         }
 
 
@@ -206,7 +217,6 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
                 userAlerts = new UserAlerts("SEND SMS", "DO YOU WANT TO PROCEED TO SEND SMS TO PROVIDED NUMBER(s)?","please confirm to send message else cancel to abort." );
                 if (userAlerts.confirmationAlert()) {
                     executeMessageTimer();
-                    notify.informationNotification("MESSAGE STATUS", "Please check indicators for success status. Thank you.");
                 }
             }
         } catch (Exception e) {
@@ -236,11 +246,56 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
     @FXML void contactListViewActive() {
         removeContactButton.setDisable(contactListView.getSelectionModel().isEmpty());
     }
-
     @FXML void removeContactButtonClicked() {
         int selectedItemIndex = contactListView.getSelectionModel().getSelectedIndex();
-        contactListView.getItems().remove(selectedItemIndex);
-        contactSizeIndicator.setText(String.valueOf(contactListSize()));
+        if (isContactListViewEmpty()) {
+            removeContactButton.setDisable(isContactListViewEmpty());
+        } else {
+            contactListView.getItems().remove(selectedItemIndex);
+            contactSizeIndicator.setText(String.valueOf(contactListSize()));
+        }
+    }
+    @FXML void sendToEmployeesCheckBoxClicked() {
+        if (sendToEmployeesCheckBox.isSelected()) {
+            sendToEmployeesComboBox.setVisible(true);
+        } else {
+            sendToEmployeesComboBox.setValue(null);
+            sendToEmployeesComboBox.setVisible(false);
+        }
+    }
+    @FXML void chooseFromTemplateCheckBoxClicked() {
+        chooseFromTemplateComboBox.setVisible(chooseFromTemplateCheckBox.isSelected());
+        if (chooseFromTemplateCheckBox.isSelected()) {
+            chooseFromTemplateComboBox.setVisible(true);
+        } else {
+            chooseFromTemplateComboBox.setValue(null);
+            chooseFromTemplateComboBox.setVisible(false);
+        }
+    }
+
+    @FXML void selectedMessageTemplateOnAction() {
+        String templateTitle = chooseFromTemplateComboBox.getValue();
+        for (MessageTemplatesData item : fetchMessageTemplates()) {
+            if (item.getTemplateTitle().equals(templateTitle)) {
+                messageTitleField.setText(item.getTemplateTitle());
+                messageContentField.setText(item.getTemplateBody());
+            }
+        }
+    }
+    @FXML void selectedEmplyeeOnAction() {
+        String selectedEmployee = sendToEmployeesComboBox.getValue();
+        ResourceModel resourceModel = new ResourceModel();
+        for (EmployeesData item : resourceModel.fetchActiveEmployees()) {
+            if (item.getFullname().equals(selectedEmployee)) {
+                String mobileNumber = item.getPhoneNumber();
+                if (checkListViewForEmployeeNumberExist(mobileNumber)) {
+                    notify.errorNotification("CONTACT EXIST", "Mobile Number is already added.");
+                } else {
+                    contactListView.getItems().add(mobileNumber);
+                }
+                break;
+            }
+        }
     }
 
     /*******************************************************************************************************************
@@ -268,7 +323,7 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
     @FXML private Button saveTemplateButton, deleteTemplateButton, deselectItemButton;
     @FXML private ListView<String> templateTitleView;
     @FXML private Label lastUpdatedDateTime, lastUpdatedName;
-
+    int selectedTemplateId;
 
     /*******************************************************************************************************************
      TRUE OR FALSE STATEMENTS FOR MESSAGE TEMPLATE......*/
@@ -296,39 +351,58 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
         saveTemplateButton.setDisable(isTemplateBodyEmpty() || isTemplateTitleEmpty());
     }
 
-
     @FXML void deleteTemplateButtonClicked() {
-
+        userAlerts = new UserAlerts("DELETE TEMPLATE", "PLEASE DO YOU WANT TO DELETE THIS MESSAGE TEMPLATE FROM YOUR MESSAGES?", "please confirm your action by clicking YES, else CANCEL to abort.");
+        if (userAlerts.confirmationAlert()) {
+            int result = deleteTemplate(selectedTemplateId);
+            if (result > 0) {
+                notify.successNotification("DELETE SUCCESSFUL", "Selected template successfully deleted.");
+                fillTemplateListView();
+            }
+        }
     }
 
     @FXML void saveTemplateButtonClicked() {
         String title = templateTitle.getText();
         String body = templateBody.getText();
+        String activeUser = Homepage.activeUsername;
+        int activeUserId = getUserIdByUsername(activeUser);
 
         LocalDateTime generatedDate = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String stringDate = dateTimeFormatter.format(generatedDate);
         Timestamp currentDatetime = Timestamp.valueOf(stringDate);
-
-        userAlerts = new UserAlerts("SAVE TEMPLATE", "ARE YOU SURE YOU WANT TO SAVE THIS TEMPLATE?", "please confirm to save template else cancel to abort.");
-        if (userAlerts.confirmationAlert()) {
-            int savedResult = saveNewMessageTemplate(title, body, (byte) 1, currentDatetime);
-            if (savedResult == 1) {
-                notify.successNotification("SAVE SUCCESSFUL", "Perfect, message template saved successfully");
-                clearTemplateFields();
-                fillTemplateListView();
-            } else {
-//                notify.errorNotification("SAVE FAILED", "Oops, your attempt to save message template failed.");
+        if (saveTemplateButton.getText().equals("Save")) {
+            userAlerts = new UserAlerts("SAVE TEMPLATE", "ARE YOU SURE YOU WANT TO SAVE THIS TEMPLATE?", "please confirm to save template else cancel to abort.");
+            if (userAlerts.confirmationAlert()) {
+                int savedResult = saveNewMessageTemplate(title, body, (byte) 1, currentDatetime);
+                if (savedResult == 1) {
+                    notify.successNotification("SAVE SUCCESSFUL", "Perfect, message template saved successfully");
+                    clearTemplateFields();
+                    fillTemplateListView();
+                }
+            }
+        } else {
+            userAlerts = new UserAlerts("UPDATE TEMPLATE", "ARE YOU SURE YOU WANT TO UPDATE SELECTED MESSAGE TEMPLATE?", "please confirm your action by clicking YES else CANCEL to abort.");
+            if (userAlerts.confirmationAlert()) {
+                int result = updateTemplate(selectedTemplateId, title, body, (byte)1);
+                if (result > 0) {
+                    notify.successNotification("UPDATE SUCCESSFUL", "Perfect, selected message template updated successfully");
+                    fillTemplateListView();
+                }
             }
         }
     }
     @FXML void templateListViewClicked() {
+        deleteTemplateButton.setDisable(isTemplateItemSelected());
+        saveTemplateButton.setDisable(isTemplateItemSelected());
         if (!(isTemplateViewEmpty() && isTemplateItemSelected())) {
             deselectItemButton.setDisable(false);
             saveTemplateButton.setText("Update");
             String selectedItem = templateTitleView.getSelectionModel().getSelectedItem();
             for (MessageTemplatesData item : fetchMessageTemplates()) {
                 if(item.getTemplateTitle().equals(selectedItem)) {
+                    selectedTemplateId = item.getTemplateId();
                     templateTitle.setText(item.getTemplateTitle());
                     templateBody.setText(item.getTemplateBody());
                     lastUpdatedDateTime.setText(item.getDateModified().toString());
@@ -346,6 +420,8 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
             lastUpdatedName.setText(null);
             saveTemplateButton.setText("Save");
             deselectItemButton.setDisable(true);
+            deleteTemplateButton.setDisable(true);
+            saveTemplateButton.setDisable(true);
     }
 
     void clearTemplateFields() {
@@ -367,12 +443,11 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
     }
 
     void fillSendToEmployeesComboBox() {
+        CheckBox check = new CheckBox("");
         ResourceModel resourceModel = new ResourceModel();
-        resourceModel.fetchActiveEmployees();
-        for (EmployeesData items: resourceModel.activeEmployees) {
-            sendToEmployeesComboBox.getItems().add(items.getPhoneNumber());
+        for (EmployeesData items: resourceModel.fetchActiveEmployees()) {
+            sendToEmployeesComboBox.getItems().add(items.getFullname());
         }
-
     }
 
     void populateSentMessageTable() {

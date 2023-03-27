@@ -59,8 +59,9 @@ public class ResourceModel extends MainModel {
     /**
      * THIS METHOD WHEN CALLED WILL RETURN ONLY EMPLOYEES WHO'S STATUS == 1 ie ACTIVE EMPLOYEES. AND STORE THE RESULT IN AN OBSERVABLE LIST ;
      */
-    public ObservableList<EmployeesData> activeEmployees = FXCollections.observableArrayList();
-    public void fetchActiveEmployees() {
+
+    public ObservableList<EmployeesData> fetchActiveEmployees() {
+        ObservableList<EmployeesData> activeEmployees = FXCollections.observableArrayList();
         try {
             String selectQuery = "SELECT * FROM employees WHERE status = 1 ORDER BY lastname ASC;";
             stmt = CONNECTOR().createStatement();
@@ -87,13 +88,15 @@ public class ResourceModel extends MainModel {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        return activeEmployees;
     }
 
     /**
      * THIS METHOD WHEN CALLED WILL RETURN ALL EMPLOYEES WHO'S STATUS = 0 ie INACTIVE EMPLOYEES (ARCHIVED) AND STORE THE RESULT IN AN OBSERVABLE LIST;
      * */
-    public ObservableList<ArchivedTableData> inActiveEmployees = FXCollections.observableArrayList();
-    public void fetchInactiveEmployees() {
+
+    public ObservableList<ArchivedTableData> fetchInactiveEmployees() {
+        ObservableList<ArchivedTableData> inActiveEmployees = FXCollections.observableArrayList();
         try {
             String selectQuery = "SELECT * FROM employees WHERE status = 0 ORDER BY lastname ASC;";
             stmt = CONNECTOR().createStatement();
@@ -120,6 +123,7 @@ public class ResourceModel extends MainModel {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        return inActiveEmployees;
     }
 
     /** THIS METHOD WHEN INVOKED TAKES AN EMPLOYEE ID PARAMETER AS AN ARGUMENT THEN UPDATES status=1 OF THE SPECIFIED EMPLOYEE IN THE employees table.*/

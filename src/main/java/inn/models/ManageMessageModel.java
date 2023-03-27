@@ -25,11 +25,9 @@ public class ManageMessageModel extends MainModel {
             ex.printStackTrace();
             logger = new ErrorLogger();
             logger.log(ex.getMessage());
-
         }
         return flag;
     }
-
     protected int saveNewMessageTemplate(String templateTitle, String templateBody, byte createdBy, Timestamp dateCreated) {
         int flag = 0;
         try {
@@ -46,7 +44,33 @@ public class ManageMessageModel extends MainModel {
         }
         return flag;
     }
+    protected int deleteTemplate(int templateId) {
+        int flag = 0;
+        try {
+            String deleteQuery = "DELETE FROM messageTemplates WHERE templateId = '" +templateId+ "';";
+            prepare = CONNECTOR().prepareStatement(deleteQuery);
+            flag = prepare.executeUpdate();
 
-
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return flag;
+    }
+    protected int updateTemplate(int templateId, String templateTitle, String templateBody, byte createdBy) {
+        int flag = 0;
+        try {
+            String insertQuery = "UPDATE messageTemplates SET templateTitle = ?,  templateBody = ?, createdBy = ?, dateModified = DEFAULT WHERE(templateId = ?)";
+            prepare = CONNECTOR().prepareStatement(insertQuery);
+            prepare.setString(1, templateTitle);
+            prepare.setString(2, templateBody);
+            prepare.setByte(3, createdBy);
+            prepare.setInt(4, templateId);
+            flag =  prepare.executeUpdate();
+        }catch (SQLException ex) {
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+        }
+        return flag;
+    }
 
 }//end of class

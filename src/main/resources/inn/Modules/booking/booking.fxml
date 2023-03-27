@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -25,7 +28,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.booking.Booking">
    <effect>
       <DropShadow height="8.855" radius="4.63375" spread="0.04" width="11.68">
          <color>
@@ -68,7 +71,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="519.0" prefWidth="918.0" style="-fx-background-color: #f6fcff;">
                      <children>
-                        <MFXLegacyTableView fixedCellSize="30.0" layoutX="292.0" layoutY="14.0" prefHeight="476.0" prefWidth="786.0" style="-fx-background-color: #fff; -FX-FONT-SIZE: 14;" tableMenuButtonVisible="true">
+                        <MFXLegacyTableView fixedCellSize="30.0" layoutX="393.0" layoutY="14.0" prefHeight="476.0" prefWidth="685.0" style="-fx-background-color: #fff; -FX-FONT-SIZE: 14;" tableMenuButtonVisible="true">
                            <effect>
                               <DropShadow height="38.52" radius="21.192500000000003" width="48.25">
                                  <color>
@@ -77,53 +80,188 @@
                               </DropShadow>
                            </effect>
                            <columns>
-                              <TableColumn prefWidth="98.66668701171875" text="ROOM NO." />
-                              <TableColumn prefWidth="171.99996948242188" text="CHECK IN TIME" />
-                              <TableColumn prefWidth="139.3333740234375" text="CHECK OUT TIME" />
-                              <TableColumn prefWidth="92.00006103515625" text="STATUS" />
-                              <TableColumn prefWidth="163.33331298828125" text="GUEST NAME" />
-                              <TableColumn prefWidth="117.3333740234375" text="NUMBER" />
+                              <TableColumn prefWidth="94.66668701171875" text="ROOM NO." />
+                              <TableColumn prefWidth="117.33331298828125" text="CHECK IN TIME" />
+                              <TableColumn prefWidth="112.6666259765625" text="DURATION" />
+                              <TableColumn prefWidth="107.3333740234375" text="STATUS" />
+                              <TableColumn prefWidth="104.0" text="DUE TIME" />
+                              <TableColumn prefWidth="103.3333740234375" text="ACTION" />
                            </columns>
                         </MFXLegacyTableView>
-                        <Pane layoutX="11.0" layoutY="11.0" prefHeight="474.0" prefWidth="259.0" style="-fx-border-color: #ddd; -fx-border-radius: 10px;">
+                        <Pane layoutX="11.0" layoutY="11.0" prefHeight="480.0" prefWidth="367.0" style="-fx-border-color: #ddd; -fx-border-radius: 10px; -fx-background-color: #f6fcff; -fx-background-radius: 10px;">
                            <children>
-                              <GridPane layoutX="13.0" layoutY="42.0" prefHeight="242.0" prefWidth="241.0">
+                              <Pane disable="true" layoutX="5.0" layoutY="290.0" prefHeight="76.0" prefWidth="357.0" style="-fx-background-color: #eee; -fx-background-radius: 5;">
+                                 <children>
+                                    <Label graphicTextGap="5.0" layoutX="12.0" layoutY="2.0" lineSpacing="1.0" prefHeight="28.0" prefWidth="54.0" text="Cash *" textFill="#797777" wrapText="true">
+                                       <font>
+                                          <Font name="Poppins Regular" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField alignment="CENTER" layoutX="6.0" layoutY="27.0" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: #fff; -fx-border-radius: 5;">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField alignment="CENTER" layoutX="77.0" layoutY="27.0" prefHeight="36.0" prefWidth="103.0" style="-fx-background-color: #fff; -fx-border-radius: 5;">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label graphicTextGap="5.0" layoutX="78.0" layoutY="2.0" lineSpacing="1.0" prefHeight="28.0" prefWidth="102.0" text="Momo Amount" textFill="#797777" wrapText="true">
+                                       <font>
+                                          <Font name="Poppins Regular" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField layoutX="192.0" layoutY="25.0" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: #fff; -fx-border-radius: 5;">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label graphicTextGap="5.0" layoutX="196.0" lineSpacing="1.0" prefHeight="28.0" prefWidth="110.0" text="Transaction Id" textFill="#797777" wrapText="true">
+                                       <font>
+                                          <Font name="Poppins Regular" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <GridPane layoutX="3.0" layoutY="34.0" prefHeight="87.0" prefWidth="361.0">
                                 <columnConstraints>
-                                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="184.33334350585938" minWidth="10.0" prefWidth="179.3333536783854" />
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="167.33331298828122" minWidth="10.0" prefWidth="163.33331298828122" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <MFXTextField floatMode="BORDER" floatingText="Guest Name *" prefHeight="40.0" prefWidth="235.0">
+                                    <MFXTextField floatMode="DISABLED" floatingText="Guest Name" floatingTextGap="2.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="170.0" promptText="Guest Name" GridPane.halignment="CENTER">
                                        <font>
-                                          <Font name="Poppins Bold" size="14.0" />
+                                          <Font name="Poppins Bold" size="16.0" />
                                        </font>
                                     </MFXTextField>
-                                    <MFXTextField floatMode="BORDER" floatingText="Mobile Number *" prefHeight="40.0" prefWidth="235.0" GridPane.rowIndex="1">
+                                    <MFXTextField floatMode="DISABLED" floatingText="Guest Name" floatingTextGap="2.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="170.0" promptText="Mobile Number" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                        <font>
-                                          <Font name="Poppins Bold" size="14.0" />
+                                          <Font name="Poppins Bold" size="16.0" />
                                        </font>
                                     </MFXTextField>
-                                    <MFXLegacyComboBox prefHeight="40.0" prefWidth="237.0" promptText="National Id Type" style="-fx-font-size: 14; -fx-background-color: #eee;" unfocusedLineColor="#800b4c" GridPane.rowIndex="2" />
-                                    <MFXTextField floatMode="BORDER" floatingText="ID Number" prefHeight="40.0" prefWidth="235.0" GridPane.rowIndex="3">
+                                    <MFXLegacyComboBox prefHeight="37.0" prefWidth="170.0" promptText="National Id Type" style="-fx-font-size: 14; -fx-background-color: #eee;" unfocusedLineColor="#800b4c" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <MFXTextField floatMode="DISABLED" floatingText="Guest Name" floatingTextGap="2.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="170.0" promptText="ID Number" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <font>
-                                          <Font name="Poppins Bold" size="14.0" />
+                                          <Font name="Poppins Bold" size="16.0" />
                                        </font>
                                     </MFXTextField>
-                                    <MFXLegacyComboBox prefHeight="40.0" prefWidth="235.0" promptText="Room Number *" style="-fx-font-size: 14; -fx-background-color: #eee;" GridPane.rowIndex="4" />
                                  </children>
                               </GridPane>
-                              <Label alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="30.0" prefWidth="255.0" style="-fx-background-color: #fff; -fx-background-radius: 10 10 0 0;" text="BOOKING DETAILS" textAlignment="CENTER" textFill="#b5b5b5" wrapText="true">
+                              <Label alignment="CENTER" layoutX="1.0" layoutY="1.0" prefHeight="30.0" prefWidth="365.0" style="-fx-background-color: #fff; -fx-background-radius: 10 10 0 0;" text="GUEST DETAILS" textAlignment="CENTER" textFill="#8f8f8f" wrapText="true">
                                  <font>
                                     <Font name="Lucida Bright" size="22.0" />
                                  </font>
                               </Label>
+                              <Label alignment="CENTER" layoutX="1.0" layoutY="151.0" prefHeight="35.0" prefWidth="365.0" style="-fx-background-color: #fff;" text="ROOM &amp; PAYMENT DETAILS" textAlignment="CENTER" textFill="#888888" wrapText="true">
+                                 <font>
+                                    <Font name="Lucida Bright" size="22.0" />
+                                 </font>
+                              </Label>
+                              <GridPane alignment="CENTER" layoutY="187.0" prefHeight="50.0" prefWidth="363.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="184.33334350585938" minWidth="10.0" prefWidth="179.3333536783854" />
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="167.33331298828122" minWidth="10.0" prefWidth="163.33331298828122" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <MFXLegacyComboBox prefHeight="37.0" prefWidth="170.0" promptText="Room Number *" style="-fx-font-size: 14; -fx-background-color: #eee;" GridPane.halignment="CENTER" />
+                                    <MFXLegacyComboBox prefHeight="37.0" prefWidth="170.0" promptText="Duration *" style="-fx-font-size: 14; -fx-background-color: #eee;" GridPane.columnIndex="1" />
+                                 </children>
+                              </GridPane>
+                              <GridPane alignment="CENTER" layoutX="11.0" layoutY="237.0" prefHeight="50.0" prefWidth="172.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="184.33334350585938" minWidth="10.0" prefWidth="179.3333536783854" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <MFXLegacyComboBox fx:id="paymentMethodComboBox" prefHeight="37.0" prefWidth="171.0" promptText="Payment Method *" style="-fx-font-size: 14; -fx-background-color: #eee;" />
+                                 </children>
+                              </GridPane>
+                              <Pane layoutX="191.0" layoutY="241.0" prefHeight="43.0" prefWidth="168.0" style="-fx-background-color: #ffd6d1; -fx-background-radius: 5px;">
+                                 <children>
+                                    <Label layoutX="27.0" layoutY="4.0" prefHeight="37.0" prefWidth="44.0" text="Price:" textAlignment="CENTER" wrapText="true">
+                                       <font>
+                                          <Font name="Poppins Regular" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="72.0" layoutY="9.0" text="1000.00">
+                                       <font>
+                                          <Font name="Poppins Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Accordion layoutX="33.0" layoutY="368.0" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="400.0" prefHeight="36.0" prefWidth="82.0" style="-fx-background-color: #ffd6d1; -fx-background-radius: 10;" text="0.00" textFill="#b50000">
+                                 <font>
+                                    <Font name="Colfax-Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="109.0" layoutY="393.0" prefHeight="50.0" prefWidth="91.0" style="-fx-background-color: #d1ffeb; -fx-background-radius: 10;" text="0.00" textFill="#008f1f">
+                                 <font>
+                                    <Font name="Colfax-Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <MFXButton buttonType="RAISED" layoutX="225.0" layoutY="381.0" prefHeight="29.0" prefWidth="123.0" rippleColor="#00aadd" style="-fx-background-color: #009ad2;" text="SAVE BOOKING">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <textFill>
+                                    <LinearGradient endX="1.0" endY="1.0">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color red="1.0" green="1.0" blue="1.0" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color red="0.9298245906829834" green="0.9269547462463379" blue="0.9269547462463379" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </LinearGradient>
+                                 </textFill>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </MFXButton>
+                              <Label graphicTextGap="5.0" layoutX="27.0" layoutY="376.0" lineSpacing="1.0" prefHeight="28.0" prefWidth="67.0" text="CHANGE" textFill="#cc6464" wrapText="true">
+                                 <font>
+                                    <Font name="Poppins Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label graphicTextGap="5.0" layoutX="119.0" layoutY="368.0" lineSpacing="1.0" prefHeight="28.0" prefWidth="74.0" text="TOTAL BILL" textFill="#56bc56" wrapText="true">
+                                 <font>
+                                    <Font name="Poppins Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <MFXButton buttonType="RAISED" layoutX="225.0" layoutY="418.0" prefHeight="28.0" prefWidth="123.0" rippleColor="#f80e0e" style="-fx-background-color: #b70000;" text="CANCEL" textFill="WHITE">
+                                 <font>
+                                    <Font name="Poppins Bold" size="12.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </MFXButton>
+                              <Text fill="#989898" layoutX="30.0" layoutY="474.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please cross check your transactions before you save" />
                            </children>
+                           <effect>
+                              <DropShadow>
+                                 <color>
+                                    <Color red="0.640350878238678" green="0.640350878238678" blue="0.640350878238678" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
                         </Pane>
                      </children>
                   </AnchorPane>
@@ -133,11 +271,40 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Circle fill="#f6fcff" layoutX="330.0" layoutY="141.0" radius="52.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#ffd4d4" layoutX="152.0" layoutY="86.0" radius="52.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="SUMMARY">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #f6fcff;">
+                     <children>
+                        <Pane layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="118.0" style="-fx-background-color: #fff; -fx-background-radius: 10;">
+                           <effect>
+                              <DropShadow>
+                                 <color>
+                                    <Color red="0.8684210777282715" green="0.8684210777282715" blue="0.8684210777282715" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <children>
+                              <Label layoutX="38.0" layoutY="7.0" prefHeight="50.0" prefWidth="82.0" text="10000" textFill="#00b12f">
+                                 <font>
+                                    <Font name="Poppins Black" size="23.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="4.0" layoutY="12.0" prefHeight="44.0" prefWidth="34.0" text="Ghc" textFill="#00b12f">
+                                 <font>
+                                    <Font name="Colfax-Black" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="5.0" text="Your Sales" textFill="#b10707" />
+                           </children>
+                        </Pane>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
       <GridPane layoutX="828.0" layoutY="3.0" prefHeight="44.0" prefWidth="263.0">
@@ -151,26 +318,26 @@
          <children>
             <Pane prefHeight="66.0" prefWidth="118.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;">
                <children>
-                  <Label layoutX="28.0" layoutY="16.0" prefHeight="28.0" prefWidth="63.0" text="1000" textFill="#00b12f">
+                  <Label layoutX="35.0" layoutY="16.0" prefHeight="28.0" prefWidth="54.0" text="1000" textFill="#00b12f">
                      <font>
                         <Font name="Poppins Black" size="19.0" />
                      </font>
                   </Label>
-                  <Label layoutX="12.0" layoutY="5.0" text="FREE ROOMS" textFill="#0fe243">
+                  <Label layoutX="18.0" layoutY="3.0" text="FREE ROOMS" textFill="#0fe243">
                      <font>
                         <Font name="Humnst777 BT Roman" size="14.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <Pane prefHeight="41.0" prefWidth="129.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;" GridPane.columnIndex="1">
+            <Pane prefHeight="44.0" prefWidth="123.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;" GridPane.columnIndex="1">
                <children>
-                  <Label layoutX="34.0" layoutY="16.0" prefHeight="28.0" prefWidth="54.0" text="1000" textFill="#d43200">
+                  <Label layoutX="42.0" layoutY="16.0" prefHeight="28.0" prefWidth="54.0" text="1000" textFill="#d43200">
                      <font>
                         <Font name="Poppins Black" size="19.0" />
                      </font>
                   </Label>
-                  <Label layoutX="6.0" layoutY="5.0" text="OCCUPIED ROOMS" textFill="#ff683a">
+                  <Label layoutX="6.0" layoutY="3.0" text="OCCUPIED ROOMS" textFill="#ff683a">
                      <font>
                         <Font name="Humnst777 BT Roman" size="13.0" />
                      </font>

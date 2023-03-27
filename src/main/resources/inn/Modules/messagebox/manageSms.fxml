@@ -208,7 +208,7 @@
                                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                        </GridPane.margin>
                                        <font>
-                                          <Font name="System Bold" size="12.0" />
+                                          <Font name="System Bold" size="17.0" />
                                        </font>
                                     </Label>
                                     <Label fx:id="failedIndicator" text="0" textFill="#d20000" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" GridPane.vgrow="ALWAYS">
@@ -216,23 +216,23 @@
                                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                        </GridPane.margin>
                                        <font>
-                                          <Font name="System Bold" size="12.0" />
+                                          <Font name="System Bold" size="17.0" />
                                        </font>
                                     </Label>
                                  </children>
                               </GridPane>
-                              <CheckBox fx:id="chooseFromTemplateCheckBox" layoutX="28.0" layoutY="47.0" mnemonicParsing="false" text="Choose From Template">
+                              <CheckBox fx:id="chooseFromTemplateCheckBox" layoutX="28.0" layoutY="47.0" mnemonicParsing="false" onAction="#chooseFromTemplateCheckBoxClicked" text="Choose From Template">
                                  <font>
                                     <Font name="Poppins Regular" size="12.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="sendToEmployeesCheckBox" layoutX="230.0" layoutY="47.0" mnemonicParsing="false" text="Send To Employee">
+                              <CheckBox fx:id="sendToEmployeesCheckBox" layoutX="230.0" layoutY="47.0" mnemonicParsing="false" onAction="#sendToEmployeesCheckBoxClicked" text="Send To Employee">
                                  <font>
                                     <Font name="Poppins Regular" size="12.0" />
                                  </font>
                               </CheckBox>
-                              <ComboBox fx:id="chooseFromTemplateComboBox" layoutX="28.0" layoutY="72.0" prefHeight="34.0" prefWidth="188.0" style="-fx-background-color: #f4f4f4;" />
-                              <ComboBox fx:id="sendToEmployeesComboBox" layoutX="228.0" layoutY="72.0" prefHeight="34.0" prefWidth="167.0" style="-fx-background-color: #f4f4f4;" />
+                              <ComboBox fx:id="chooseFromTemplateComboBox" layoutX="28.0" layoutY="72.0" onAction="#selectedMessageTemplateOnAction" prefHeight="34.0" prefWidth="188.0" style="-fx-background-color: #f4f4f4; -fx-font-weight: bold;" visible="false" />
+                              <ComboBox fx:id="sendToEmployeesComboBox" layoutX="228.0" layoutY="72.0" onAction="#selectedEmplyeeOnAction" prefHeight="34.0" prefWidth="147.0" style="-fx-background-color: #f4f4f4; -fx-font-weight: bold;" visible="false" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -298,6 +298,11 @@
                         </Pane>
                         <Pane layoutX="309.0" layoutY="87.0" prefHeight="417.0" prefWidth="768.0" style="-fx-background-color: #f4f4f4; -fx-border-radius: 10; -fx-background-radius: 10;">
                            <children>
+                              <TextField fx:id="templateTitle" layoutX="53.0" layoutY="52.0" onKeyTyped="#checkTemplateFields" prefHeight="40.0" prefWidth="323.0" promptText="MESSAGE TITLE" style="-fx-background-color: #ededed; -fx-background-radius: 10; -fx-border-radius: 10;">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </TextField>
                               <TextArea fx:id="templateBody" layoutX="52.0" layoutY="117.0" onKeyTyped="#checkTemplateFields" prefHeight="207.0" prefWidth="700.0" promptText="TYPE YOUR MESSAGE HERE" style="-fx-border-radius: 10; -fx-background-radius: 10;" wrapText="true">
                                  <font>
                                     <Font name="Times New Roman" size="18.0" />
@@ -306,11 +311,6 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </TextArea>
-                              <TextField fx:id="templateTitle" layoutX="53.0" layoutY="52.0" onKeyTyped="#checkTemplateFields" prefHeight="40.0" prefWidth="323.0" promptText="MESSAGE TITLE" style="-fx-background-color: #ededed; -fx-background-radius: 10; -fx-border-radius: 10;">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </TextField>
                               <Label layoutX="57.0" layoutY="30.0" text="Message Title(required)" textFill="#427203">
                                  <font>
                                     <Font size="14.0" />
@@ -321,7 +321,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="deleteTemplateButton" cancelButton="true" layoutX="546.0" layoutY="355.0" mnemonicParsing="false" onAction="#deleteTemplateButtonClicked" prefHeight="34.0" prefWidth="103.0" style="-fx-background-color: #ab0303;" text="Delete" textFill="WHITE">
+                              <Button fx:id="deleteTemplateButton" cancelButton="true" disable="true" layoutX="546.0" layoutY="355.0" mnemonicParsing="false" onAction="#deleteTemplateButtonClicked" prefHeight="34.0" prefWidth="103.0" style="-fx-background-color: #ab0303;" text="Delete" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -329,12 +329,12 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Label layoutX="414.0" layoutY="30.0" text="Last Updated By" textFill="#427203">
+                              <Label layoutX="416.0" layoutY="30.0" text="Last Updated By" textFill="#427203">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="576.0" layoutY="30.0" text="Last Updated Date" textFill="#427203">
+                              <Label layoutX="584.0" layoutY="30.0" text="Last Updated Date" textFill="#427203">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

@@ -410,7 +410,6 @@ public class HumanResource extends ResourceModel implements Initializable {
                                         EMPLOYEES TABLEVIEW IMPLEMENTATION METHODS
      *******************************************************************************************************************/
     public void populateEmployeesTable() {
-        fetchActiveEmployees();
         empId.setCellValueFactory(new PropertyValueFactory<>("empId"));
         fullnameColumn.setCellValueFactory(new PropertyValueFactory<>("fullname"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
@@ -420,12 +419,10 @@ public class HumanResource extends ResourceModel implements Initializable {
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         salaryColumn.setCellValueFactory(new PropertyValueFactory<>("salary"));
         removeColumn.setCellValueFactory(new PropertyValueFactory<>("archiveButton"));
-        EmployeesTableView.setItems(activeEmployees);
+        EmployeesTableView.setItems(fetchActiveEmployees());
 
     }
-
     void populateArchiveTableView() {
-        fetchInactiveEmployees();
         empId1.setCellValueFactory(new PropertyValueFactory<>("empId1"));
         fullnameColumn1.setCellValueFactory(new PropertyValueFactory<>("fullname1"));
         numberColumn1.setCellValueFactory(new PropertyValueFactory<>("phoneNumber1"));
@@ -435,7 +432,7 @@ public class HumanResource extends ResourceModel implements Initializable {
         statusColumn1.setCellValueFactory(new PropertyValueFactory<>("status1"));
         salaryColumn1.setCellValueFactory(new PropertyValueFactory<>("salary1"));
         restoreColumn.setCellValueFactory(new PropertyValueFactory<>("restoreButton"));
-        ArchivedTableView.setItems(inActiveEmployees);
+        ArchivedTableView.setItems(fetchInactiveEmployees());
     }
 
     //THIS METHOD ASSIGNED THE RETURNED COUNT ROWS FROM THE EMPLOYEES TABLE ie total Employees, active Employees and inactive Employees
