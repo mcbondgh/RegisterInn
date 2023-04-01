@@ -239,7 +239,7 @@ public class MainModel extends DatabaseConfiguration {
     public ObservableList<RoomPricesData> fetchRoomPrices() {
         ObservableList<RoomPricesData> categoryType = FXCollections.observableArrayList();
         try{
-            String selectQuery = "SELECT * FROM roomPrices ORDER BY name ASC;";
+            String selectQuery = "SELECT * FROM inn_register.roomprices ORDER BY name ASC;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
@@ -247,8 +247,9 @@ public class MainModel extends DatabaseConfiguration {
                 String categoryName = result.getString("name");
                 byte status = result.getByte("status");
                 double price = result.getDouble("price");
+                int time = result.getInt("allotedTime");
 
-                categoryType.add(new RoomPricesData(roomId, categoryName, status, price));
+                categoryType.add(new RoomPricesData(roomId, categoryName, status, price, String.valueOf(time)));
             }
             stmt.close();
             result.close();
@@ -838,9 +839,34 @@ public class MainModel extends DatabaseConfiguration {
 
         return sentMessages;
     }
+    public int getRoomIdByRoomNo(String roomName) {
+        int roomId = 0;
+        try {
+            String singleSelectQuery = "SELECT id FROM rooms WHERE roomNo = '"+roomName+"'";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(singleSelectQuery); {
+                if (result.next()){
+                    roomId = result.getInt(1);
+                }
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return roomId;
+    }
 
+    public int countCheckInList() {
+        int counter = 0;
+        try {
+            String countQuery = "SELECT COUNT(*) FROM checkIn";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(countQuery);
+            counter = result.getFetchSize();
+        }catch (SQLException ignored) {
 
-
+        }
+        return counter;
+    }
 
 
 

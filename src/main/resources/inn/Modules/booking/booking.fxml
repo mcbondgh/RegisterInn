@@ -88,7 +88,7 @@
                               <TableColumn fx:id="actionColumnField" prefWidth="103.3333740234375" text="ACTION" />
                            </columns>
                         </MFXLegacyTableView>
-                        <Pane layoutX="11.0" layoutY="11.0" prefHeight="480.0" prefWidth="367.0" style="-fx-border-color: #ddd; -fx-border-radius: 10px; -fx-background-color: #f6fcff; -fx-background-radius: 10px;">
+                        <Pane layoutX="11.0" layoutY="11.0" onMouseMoved="#inputValuesChanged" prefHeight="480.0" prefWidth="367.0" style="-fx-border-color: #ddd; -fx-border-radius: 10px; -fx-background-color: #f6fcff; -fx-background-radius: 10px;">
                            <children>
                               <Pane fx:id="cashPane" layoutX="5.0" layoutY="290.0" prefHeight="76.0" prefWidth="357.0" style="-fx-background-color: #eee; -fx-background-radius: 5;">
                                  <children>
@@ -134,7 +134,7 @@
                                   <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <MFXTextField fx:id="guestNameField" floatMode="DISABLED" floatingText="Guest Name" floatingTextGap="2.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="170.0" promptText="Guest Name" GridPane.halignment="CENTER">
+                                    <MFXTextField fx:id="guestNameField" floatMode="DISABLED" floatingText="Guest Name" floatingTextGap="2.0" minHeight="-Infinity" onKeyReleased="#inputValuesChanged" prefHeight="37.0" prefWidth="170.0" promptText="Guest Name" GridPane.halignment="CENTER">
                                        <font>
                                           <Font name="Poppins Bold" size="16.0" />
                                        </font>
@@ -187,17 +187,17 @@
                                  </children>
                               </GridPane>
                               <Accordion layoutX="33.0" layoutY="368.0" />
-                              <Label fx:id="changeField" alignment="CENTER" contentDisplay="CENTER" layoutX="267.0" layoutY="243.0" prefHeight="36.0" prefWidth="82.0" style="-fx-background-color: #ffd6d1; -fx-background-radius: 10;" text="0.00" textFill="#b50000">
+                              <Label fx:id="changeField" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="401.0" prefHeight="36.0" prefWidth="71.0" style="-fx-background-color: #ffd6d1; -fx-background-radius: 10;" text="0.00" textFill="#b50000">
                                  <font>
                                     <Font name="Colfax-Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="displayBillField" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="392.0" prefHeight="50.0" prefWidth="110.0" style="-fx-background-color: #d1ffeb; -fx-background-radius: 10;" text="0.00" textFill="#008f1f">
+                              <Label fx:id="displayBillField" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="394.0" prefHeight="50.0" prefWidth="102.0" style="-fx-background-color: #d1ffeb; -fx-background-radius: 10;" text="0.00" textFill="#008f1f">
                                  <font>
                                     <Font name="Colfax-Bold" size="21.0" />
                                  </font>
                               </Label>
-                              <MFXButton fx:id="saveBookingButton" buttonType="RAISED" disable="true" layoutX="151.0" layoutY="403.0" prefHeight="29.0" prefWidth="110.0" rippleColor="#00aadd" style="-fx-background-color: #009ad2;" text="SAVE BOOKING">
+                              <MFXButton fx:id="saveBookingButton" buttonType="RAISED" disable="true" layoutX="254.0" layoutY="379.0" onAction="#saveBookingButtonClicked" prefHeight="29.0" prefWidth="89.0" rippleColor="#00aadd" style="-fx-background-color: #009ad2;" text="SAVE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -221,17 +221,17 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </MFXButton>
-                              <Label graphicTextGap="5.0" layoutX="199.0" layoutY="246.0" lineSpacing="1.0" prefHeight="28.0" prefWidth="67.0" text="CHANGE" textFill="#cc6464" wrapText="true">
+                              <Label graphicTextGap="5.0" layoutX="21.0" layoutY="374.0" lineSpacing="1.0" prefHeight="28.0" prefWidth="67.0" text="CHANGE" textFill="#cc6464" wrapText="true">
                                  <font>
                                     <Font name="Poppins Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label graphicTextGap="5.0" layoutX="31.0" layoutY="369.0" lineSpacing="1.0" prefHeight="28.0" prefWidth="74.0" text="TOTAL BILL" textFill="#56bc56" wrapText="true">
+                              <Label graphicTextGap="5.0" layoutX="113.0" layoutY="371.0" lineSpacing="1.0" prefHeight="28.0" prefWidth="74.0" text="TOTAL BILL" textFill="#56bc56" wrapText="true">
                                  <font>
                                     <Font name="Poppins Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <MFXButton fx:id="cancelBookingField" buttonType="RAISED" layoutX="267.0" layoutY="403.0" prefHeight="28.0" prefWidth="90.0" rippleColor="#f80e0e" style="-fx-background-color: #b70000;" text="CANCEL" textFill="WHITE">
+                              <MFXButton fx:id="cancelBookingField" buttonType="RAISED" layoutX="253.0" layoutY="417.0" onAction="#cancelBookingButtonClicked" prefHeight="28.0" prefWidth="90.0" rippleColor="#f80e0e" style="-fx-background-color: #b70000;" text="CANCEL" textFill="WHITE">
                                  <font>
                                     <Font name="Poppins Bold" size="12.0" />
                                  </font>
@@ -240,6 +240,16 @@
                                  </cursor>
                               </MFXButton>
                               <Text fill="#989898" layoutX="30.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please cross check your transactions before you save" />
+                              <TextField fx:id="allocatedtimeField" alignment="CENTER" layoutX="294.0" layoutY="240.0" onKeyReleased="#validateTimeField" prefHeight="44.0" prefWidth="61.0" promptText="eg 1" style="-fx-background-color: #eee; -fx-border-color: #ffd6d1; -fx-border-width: 4; -fx-border-radius: 5;">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </TextField>
+                              <Label graphicTextGap="5.0" layoutX="194.0" layoutY="240.0" lineSpacing="1.0" prefHeight="44.0" prefWidth="95.0" text="Dudation Time In Hours" textAlignment="CENTER" textFill="#ba0000" wrapText="true">
+                                 <font>
+                                    <Font name="Poppins Bold" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                            <effect>
                               <DropShadow>
@@ -257,38 +267,14 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Circle fill="#ffd4d4" layoutX="152.0" layoutY="86.0" radius="52.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#f6f6f6" layoutX="152.0" layoutY="86.0" radius="52.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
             <Tab text="SUMMARY">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #f6fcff;">
-                     <children>
-                        <Pane layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="118.0" style="-fx-background-color: #fff; -fx-background-radius: 10;">
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="0.8684210777282715" green="0.8684210777282715" blue="0.8684210777282715" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <children>
-                              <Label layoutX="38.0" layoutY="7.0" prefHeight="50.0" prefWidth="82.0" text="10000" textFill="#00b12f">
-                                 <font>
-                                    <Font name="Poppins Black" size="23.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="4.0" layoutY="12.0" prefHeight="44.0" prefWidth="34.0" text="Ghc" textFill="#00b12f">
-                                 <font>
-                                    <Font name="Colfax-Black" size="17.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="5.0" text="Your Sales" textFill="#b10707" />
-                           </children>
-                        </Pane>
-                     </children></AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #f6fcff;" />
               </content>
             </Tab>
         </tabs>

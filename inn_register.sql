@@ -48,6 +48,7 @@ CREATE TABLE roomPrices(
     `name` VARCHAR(50),
     `status` TINYINT DEFAULT(1),
     price DECIMAL(10, 2) DEFAULT(0.00),
+    allotedTime INT,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -213,13 +214,35 @@ CREATE TABLE messageTemplates(
 
 CREATE TABLE guests(
 	guest_id INT AUTO_INCREMENT PRIMARY KEY,
-    booking_id int,
+    checkin_id int,
     guest_name VARCHAR(255),
     guest_number VARCHAR(100),
     guest_id_type VARCHAR(50),
     guest_id_number VARCHAR(50),
     date_added DATETIME DEFAULT CURRENT_TIMESTAMP(),
     added_by int   
+);
+
+CREATE TABLE checkIn(
+	checkin_id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT,
+    duration_id INT,
+    checkin_time TIME, 
+    due_time TIME, 
+    check_in_status BOOLEAN DEFAULT FALSE,
+    booked_by int,
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE booking_Transactions(
+	payment_Id INT AUTO_INCREMENT PRIMARY KEY,
+    checkin_id INT,
+	payment_method VARCHAR(50),
+    cash_amount DECIMAL(10,2),
+    momo_amount DECIMAL(10,2),
+    transaction_ID LONG,
+    booking_bill DECIMAL(10,2),
+    client_change DECIMAL(10,2)
 );
 
 

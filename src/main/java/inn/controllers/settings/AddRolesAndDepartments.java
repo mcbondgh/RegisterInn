@@ -46,7 +46,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
     /******************************************* FXML NODE EJECTIONS ********************************/
 
-    @FXML private TextField roleField, departmentField, idTypeField, roomsCategoryField,priceField;
+    @FXML private TextField roleField, departmentField, idTypeField, roomsCategoryField,priceField, timeField;
 
     @FXML private BorderPane settingsPane;
     @FXML private ScrollPane scrollPane;
@@ -66,6 +66,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML private TableColumn<DepartmentData, Integer> departmentId;
 
 
+
     //FXML NODES FOR ID TYPE TABLE VIEW.
     @FXML private TableView<IdTypesData> idTypeTableView;
     @FXML private TableColumn<IdTypesData, String> idTypeID;
@@ -76,7 +77,8 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML private TableView<RoomPricesData> roomsCategoryTableView;
     @FXML private TableColumn<RoomPricesData, Integer> roomsCatId;
     @FXML private TableColumn<RoomPricesData, String> roomsCateName;
-    @FXML private TableColumn<RolesTypesData, Double> priceColumn;
+    @FXML private TableColumn<RoomPricesData, Double> priceColumn;
+    @FXML private TableColumn<RoomPricesData, Integer> allotedTimeColumn;
 
 
     /*******************************************************************************************************************
@@ -270,13 +272,16 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML void selectedRoomsCategoryNameValue() {
         String selectedCategoryName = roomsCategoryTableView.getSelectionModel().getSelectedItem().getRoomsCateName();
         double selectedPrice= roomsCategoryTableView.getSelectionModel().getSelectedItem().getPrice();
+        int allotedTime = Integer.parseInt(roomsCategoryTableView.getSelectionModel().getSelectedItem().getAllotedTime());
 
         roomsCategoryField.setText(selectedCategoryName);
         priceField.setText(String.valueOf(selectedPrice));
+        timeField.setText(String.valueOf(allotedTime));
     }
     @FXML void addRoomsCategoryButtonOnAction() throws SQLException {
         String currentValue = roomsCategoryField.getText().trim();
         double currentPrice = Double.parseDouble(priceField.getText());
+        int allotedTime = Integer.parseInt(timeField.getText());
 
         if (checkIfRoomCategoryExist(currentValue)) {
             notificationOBJ.informationNotification("ALREADY EXIST", "Room Category name already exist.");
@@ -287,7 +292,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             alert.getButtonTypes().add(ButtonType.YES);
             alert.getButtonTypes().remove(ButtonType.OK);
             if(alert.showAndWait().get().equals(ButtonType.YES)) {
-                if (addNewRoomsCategory(currentValue, currentPrice) > 0) {
+                if (addNewRoomsCategory(currentValue, currentPrice, allotedTime) > 0) {
                     notificationOBJ.successNotification("SUCCESSFUL", "New Room Category successfully added.");
                     roomsCategoryTableView.getItems().clear();
                     roomsCategoryField.clear();
@@ -297,7 +302,6 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             }
         }
     }
-
     @FXML void deleteRoomsCategoryButtonClicked() {
         String currentValue = roomsCategoryField.getText().trim();
         if (deleteRoomsCategory(currentValue) > 0) {
@@ -417,10 +421,11 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         roomsCateName.setCellValueFactory( new PropertyValueFactory<>("roomsCateName"));
         roomsCatId.setCellValueFactory(new PropertyValueFactory<>("roomsCatId"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        allotedTimeColumn.setCellValueFactory(new PropertyValueFactory<>("allotedTime"));
         ObservableList<RoomPricesData> roleValues = FXCollections.observableArrayList();
 
         for (RoomPricesData item : fetchRoomPrices()) {
-            roleValues.add(new RoomPricesData(item.getRoomsCatId(), item.getRoomsCateName(), item.getPrice()));
+            roleValues.add(new RoomPricesData(item.getRoomsCatId(), item.getRoomsCateName(), item.getPrice(), item.getAllotedTime()));
         }
         roomsCategoryTableView.setItems(roleValues);
 

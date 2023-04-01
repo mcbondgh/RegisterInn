@@ -2,24 +2,35 @@ package inn.Controllers.booking;
 
 import inn.enumerators.PaymentMethods;
 import inn.models.MainModel;
+import inn.prompts.UserAlerts;
+import inn.prompts.UserNotification;
+import inn.tableViews.CheckInData;
 import inn.tableViews.IdTypesData;
 import inn.tableViews.RoomPricesData;
 import inn.tableViews.RoomsData;
+import inn.threads.BookingTimeGenerator;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox;
+import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Booking extends MainModel implements Initializable {
+    UserAlerts userAlerts;
+    UserNotification notify;
+    BookingTimeGenerator bookingTimeGenerator;
 
     public void initialize(java.net.URL url, ResourceBundle resourceBundle) {
         fillPaymentMethodComboBox();
@@ -33,16 +44,18 @@ public class Booking extends MainModel implements Initializable {
     @FXML private MFXLegacyComboBox<String> paymentMethodComboBox, idCombobox, roomNumberComboBox, durationComboBox;
     @FXML private MFXTextField guestNameField, guestNumberField, idNumberField;
     @FXML private Label changeField, displayBillField;
-    @FXML private TextField cashField, momoPayField, transactionIdField;
+    @FXML private TextField cashField, momoPayField, transactionIdField, allocatedtimeField;
     @FXML private Pane cashPane;
     @FXML private MFXButton saveBookingButton, cancelBookingField;
 
 
-
     /*******************************************************************************************************************
      **********************************************  CHECK-IN TABLEVIEW ITEMS ******************************************/
-
-
+    @FXML private MFXLegacyTableView<CheckInData> checkInTableView;
+    @FXML private TableColumn<CheckInData, String> roomNumberColumn;
+    @FXML private TableColumn<CheckInData, String> checkInTimeColumn;
+    @FXML private TableColumn<CheckInData, String> durationColumn;
+    @FXML private TableColumn<CheckInData, String> statusColumn;
 
 
     /*******************************************************************************************************************
@@ -56,7 +69,7 @@ public class Booking extends MainModel implements Initializable {
     boolean isTransactionIdEmpty() {
         return transactionIdField.getText().isEmpty();
     }
-    boolean isGuestFieldEmpty() {
+    boolean isGuestNameFieldEmpty() {
         return guestNameField.getText().isEmpty();
     }
     boolean isGuestNumberFieldEmpty() {
@@ -68,6 +81,7 @@ public class Booking extends MainModel implements Initializable {
     boolean isDurationEmpty() {
         return durationComboBox.getValue().isEmpty();
     }
+    boolean isTimeInputEmpty() {return allocatedtimeField.getText().isEmpty();}
     boolean isPaymentMethodEmpty() {
         return paymentMethodComboBox.getValue().isEmpty();
     }
@@ -116,30 +130,66 @@ public class Booking extends MainModel implements Initializable {
         double cashValue = Double.parseDouble(cashField.getText());
         return (momoValue + cashValue) - billValue;
     }
+    void resetFields() {
+        guestNameField.clear();
+        guestNumberField.clear();
+        idNumberField.clear();
+        idCombobox.setValue(null);
+        roomNumberComboBox.setValue(null);
+        durationComboBox.setValue(null);
+        paymentMethodComboBox.setValue(null);
+        allocatedtimeField.clear();
+        cashField.clear();
+        momoPayField.clear();
+        transactionIdField.clear();
+        changeField.setText(String.valueOf(0.00));
+        displayBillField.setText(String.valueOf(0.00));
+    }
+
+    @FXML void inputValuesChanged() {
+        try {
+            if (selectedPaymentMethod() == PaymentMethods.MOMO) {
+                saveBookingButton.setDisable(isGuestNameFieldEmpty() || isGuestNumberFieldEmpty() || isRoomNumEmpty() || isDurationEmpty() || isPaymentMethodEmpty() || isMomoFieldEmpty() || isTransactionIdEmpty() || isTimeInputEmpty());
+            } else if (selectedPaymentMethod() == PaymentMethods.CASH) {
+                saveBookingButton.setDisable(isGuestNameFieldEmpty() || isGuestNumberFieldEmpty() || isRoomNumEmpty() || isDurationEmpty() || isPaymentMethodEmpty() || isCashFieldEmpty() || isTimeInputEmpty());
+            } else {
+                saveBookingButton.setDisable(isGuestNameFieldEmpty() || isGuestNumberFieldEmpty() || isRoomNumEmpty() || isDurationEmpty() || isPaymentMethodEmpty() || isCashFieldEmpty() || isMomoFieldEmpty() || isTransactionIdEmpty() || isTimeInputEmpty());
+            }
+        }catch (NullPointerException ignored) {}
+
+    }
+
+    private void generateCheckInTime() {
+
+
+    }
 
 
     /*******************************************************************************************************************
      ********************************************** IMPLEMENTATION OF ACTION EVENT METHODS *****************************/
     @FXML PaymentMethods selectedPaymentMethod() {
         PaymentMethods method = PaymentMethods.ALL;
-        String selectedValue = paymentMethodComboBox.getValue();
-        switch(selectedValue) {
-            case "CASH" -> {
-                method =  PaymentMethods.CASH;
-                cashField.setVisible(true);
-                momoPayField.setVisible(false);
-                transactionIdField.setVisible(false);
-            } case "MOBILE MONEY" -> {
-                method =  PaymentMethods.MOMO;
-                cashField.setVisible(false);
-                momoPayField.setVisible(true);
-                transactionIdField.setVisible(true);
-            } case "ALL METHODS" -> {
-                cashField.setVisible(true);
-                momoPayField.setVisible(true);
-                transactionIdField.setVisible(true);
+        try {
+            String selectedValue = paymentMethodComboBox.getValue();
+            switch(selectedValue) {
+                case "CASH" -> {
+                    method =  PaymentMethods.CASH;
+                    cashField.setVisible(true);
+                    momoPayField.setVisible(false);
+                    transactionIdField.setVisible(false);
+                } case "MOBILE MONEY" -> {
+                    method =  PaymentMethods.MOMO;
+                    cashField.setVisible(false);
+                    momoPayField.setVisible(true);
+                    transactionIdField.setVisible(true);
+                } case "ALL METHODS" -> {
+                    cashField.setVisible(true);
+                    momoPayField.setVisible(true);
+                    transactionIdField.setVisible(true);
+                }
             }
-        }
+        }catch (NullPointerException ignored) {}
+
         return method;
     }
     @FXML void selectedRoomDuration() {
@@ -147,8 +197,17 @@ public class Booking extends MainModel implements Initializable {
         for (RoomPricesData item : fetchRoomPrices()) {
             if (Objects.equals(selectedItem, item.getRoomsCateName())) {
                 double selectedPrice = item.getPrice();
+                String allocatedTime = item.getAllotedTime();
+
                 displayBillField.setText(String.valueOf(selectedPrice));
+                allocatedtimeField.setText(allocatedTime);
             }
+        }
+    }
+
+    @FXML void validateTimeField(@NotNull KeyEvent event) {
+        if (!(event.getCode().isDigitKey() || event.getCode().isArrowKey() || event.getCode() == KeyCode.BACK_SPACE )) {
+            guestNumberField.clear();
         }
     }
     @FXML void validateGuestMobileNumber(KeyEvent event) {
@@ -199,6 +258,17 @@ public class Booking extends MainModel implements Initializable {
         }catch (NumberFormatException ex) {
             changeField.setText(String.valueOf(0));
         }
+    }
+
+    @FXML void cancelBookingButtonClicked() {
+        userAlerts = new UserAlerts("CANCEL BOOKING", "YOU HAVE REQUESTED TO CANCEL CURRENT BOOKING PROCESS,DO YOU WANT TO PROCEED?", "please confirm YES, else CANCEL to abort.");
+        if (userAlerts.confirmationAlert()) {
+            resetFields();
+        }
+    }
+
+    @FXML void saveBookingButtonClicked() {
+        generateCheckInTime();
     }
 
 

@@ -164,6 +164,9 @@ SELECT DISTINCT(lower(username)) FROM users;
    -- 14-03-2023
    ALTER TABLE sentmessages ADD COLUMN balance INT AFTER messageStatus; 
    
+   -- 31/03/2023
+   ALTER TABLE roomprices ADD COLUMN allotedTime INT AFTER price;
+   
    ALTER TABLE roomsCategory RENAME roomPrices;
    
 	DESCRIBE inn_register.employees;
@@ -197,3 +200,4 @@ DROP TABLE rooms;
 DROP TABLE ProductItems;
 DROP TABLE stocklevels;
 DROP TABLE productPrices;
+DROP TABLE checkin;

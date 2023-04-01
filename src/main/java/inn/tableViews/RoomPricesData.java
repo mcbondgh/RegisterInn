@@ -9,17 +9,20 @@ public class RoomPricesData {
     private Byte status;
     private double price;
 
-    public RoomPricesData(int roomsCatId, String roomsCateName, byte status, double price) {
+    private String allotedTime;
+
+    public RoomPricesData(int roomsCatId, String roomsCateName, byte status, double price, String allotedTime) {
         this.roomsCatId = roomsCatId;
         this.roomsCateName = roomsCateName;
         this.status = status;
         this.price = price;
+        this.allotedTime = allotedTime;
     }
 
-    public RoomPricesData(int roomsCatId, String roomsCateName, double price) {
+    public RoomPricesData(int roomsCatId, String roomsCateName, double price, String allotedTime) {
         this.roomsCatId = roomsCatId;
         this.roomsCateName = roomsCateName;
-
+        this.allotedTime = allotedTime;
         this.price = price;
     }
     public int getRoomsCatId() {
@@ -48,6 +51,14 @@ public class RoomPricesData {
 
     public double getPrice() {
         return price;
+    }
+
+    public String getAllotedTime() {
+        return allotedTime;
+    }
+
+    public void setAllotedTime(String allotedTime) {
+        this.allotedTime = allotedTime;
     }
 
     public void setPrice(double price) {
