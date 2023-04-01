@@ -4,6 +4,7 @@ import inn.Controllers.configurations.DefPassword;
 import inn.models.EmpProfileModel;
 import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;
+import inn.tableViews.IdTypesData;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -292,7 +293,9 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
     }
 
     void fillIdTypeBox() {
-        idTypeBox.setItems(fetchIdTypes());
+        for (IdTypesData item : fetchIdTypes()) {
+            idTypeBox.getItems().add(item.getIdTypeName());
+        }
     }
 
     void fillGenderBox() {

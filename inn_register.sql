@@ -43,7 +43,7 @@ CREATE TABLE designtion(
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE roomsCategory(
+CREATE TABLE roomPrices(
 	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     `name` VARCHAR(50),
     `status` TINYINT DEFAULT(1),
@@ -210,6 +210,19 @@ CREATE TABLE messageTemplates(
     dateCreated DATETIME,
     dateModified DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE guests(
+	guest_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id int,
+    guest_name VARCHAR(255),
+    guest_number VARCHAR(100),
+    guest_id_type VARCHAR(50),
+    guest_id_number VARCHAR(50),
+    date_added DATETIME DEFAULT CURRENT_TIMESTAMP(),
+    added_by int   
+);
+
+
 
 ALTER TABLE users 
 ADD FOREIGN KEY(role_id) REFERENCES roles(id) ON DELETE SET NULL;

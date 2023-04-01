@@ -104,8 +104,6 @@ public class MainModel extends DatabaseConfiguration {
             }
     }
 
-
-
     //THIS METHOD WHEN INVOKED WILL RETURN ALL NAMES UNDER THE name COLUMN IN THE roles TABLE.
     public ObservableList<String> fetchUserRoles() throws SQLException {
         //ARRAYLIST TO STORE ALL NAMES OF roles IN THE roles TABLE e,g Admin, Receptionist, Manager etc.
@@ -126,8 +124,6 @@ public class MainModel extends DatabaseConfiguration {
         }
         return UserRoles;
     }
-
-
 
     //THIS METHOD WHEN INVOKED TAKES A role_name AS AN ARGUMENT AND RETURNS THE id ASSOCIATED WITH SAME.
     public int fetchUserRoleID(String userRole) throws SQLException {
@@ -219,15 +215,16 @@ public class MainModel extends DatabaseConfiguration {
 
 
     //FETCHES THE name COLUMN FROM THE id_type TABLE
-    public ObservableList<String> fetchIdTypes() {
-        ObservableList<String> idtypes = FXCollections.observableArrayList();
+    public ObservableList<IdTypesData> fetchIdTypes() {
+        ObservableList<IdTypesData> idtypes = FXCollections.observableArrayList();
         try{
-            String selectQuery = "SELECT DISTINCT(name) FROM id_types ORDER BY name ASC;";
+            String selectQuery = "SELECT id, name FROM id_types ORDER BY name ASC;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
-                String items = result.getString(1);
-                idtypes.add(items);
+                int id = result.getInt(1);
+                String name = result.getString(2);
+                idtypes.add(new IdTypesData(id, name));
             }
             stmt.close();
             result.close();
@@ -239,10 +236,10 @@ public class MainModel extends DatabaseConfiguration {
     }
 
     //FETCHES THE name COLUMN FROM THE roomsCategory TABLE
-    public ObservableList<RoomsCategoryData> fetchCategories() {
-        ObservableList<RoomsCategoryData> categoryType = FXCollections.observableArrayList();
+    public ObservableList<RoomPricesData> fetchRoomPrices() {
+        ObservableList<RoomPricesData> categoryType = FXCollections.observableArrayList();
         try{
-            String selectQuery = "SELECT * FROM roomsCategory ORDER BY name ASC;";
+            String selectQuery = "SELECT * FROM roomPrices ORDER BY name ASC;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
@@ -251,7 +248,7 @@ public class MainModel extends DatabaseConfiguration {
                 byte status = result.getByte("status");
                 double price = result.getDouble("price");
 
-                categoryType.add(new RoomsCategoryData(roomId, categoryName, status, price));
+                categoryType.add(new RoomPricesData(roomId, categoryName, status, price));
             }
             stmt.close();
             result.close();
@@ -470,7 +467,7 @@ public class MainModel extends DatabaseConfiguration {
 
 
     //THIS METHOD WHEN INVOKED SHALL RETURN ONLY ROOM NO.s FROM THE rooms TABLE.
-    public ObservableList<String> fetchRoomNoOnly() throws SQLException {
+    public ObservableList<String> getRoomNoOnly() {
         ObservableList<String> roomItems = FXCollections.observableArrayList();
         try {
             String selectQuery = "SELECT roomNo FROM rooms";
@@ -478,6 +475,31 @@ public class MainModel extends DatabaseConfiguration {
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
                 roomItems.add( result.getString("roomNo"));
+            }
+            stmt.close();
+            result.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return roomItems;
+    }
+
+    //THIS METHOD WHEN INVOKED SHALL RETURN ALL ROWS IN THE rooms TABLE.
+    public ObservableList<RoomsData> fetchRooms() {
+        ObservableList<RoomsData> roomItems = FXCollections.observableArrayList();
+        try {
+            String selectQuery = "SELECT * FROM rooms";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+               int id = result.getInt("id");
+               String roomNo = result.getString("roomNo");
+               String CategoryName = result.getString("CategoryName");
+               byte status = result.getByte("status");
+               byte isBooked = result.getByte("isBooked");
+               double standardPrice = result.getDouble("standardPrice");
+               Timestamp dateAdded = result.getTimestamp("dateAdded");
+               roomItems.add( new RoomsData(id, roomNo, CategoryName, status, isBooked, standardPrice, dateAdded));
             }
             stmt.close();
             result.close();

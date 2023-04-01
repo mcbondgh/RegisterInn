@@ -1,22 +1,22 @@
 package inn.tableViews;
 
-public class RoomsCategoryData {
+public class RoomPricesData {
 
-    public RoomsCategoryData() {}
+    public RoomPricesData() {}
 
     private int roomsCatId;
     private String roomsCateName;
     private Byte status;
     private double price;
 
-    public RoomsCategoryData(int roomsCatId, String roomsCateName, byte status, double price) {
+    public RoomPricesData(int roomsCatId, String roomsCateName, byte status, double price) {
         this.roomsCatId = roomsCatId;
         this.roomsCateName = roomsCateName;
         this.status = status;
         this.price = price;
     }
 
-    public RoomsCategoryData(int roomsCatId, String roomsCateName, double price) {
+    public RoomPricesData(int roomsCatId, String roomsCateName, double price) {
         this.roomsCatId = roomsCatId;
         this.roomsCateName = roomsCateName;
 

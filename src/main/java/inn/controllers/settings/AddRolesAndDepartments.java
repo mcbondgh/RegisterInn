@@ -7,7 +7,7 @@ import inn.prompts.UserNotification;
 import inn.tableViews.DepartmentData;
 import inn.tableViews.IdTypesData;
 import inn.tableViews.RolesTypesData;
-import inn.tableViews.RoomsCategoryData;
+import inn.tableViews.RoomPricesData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -73,9 +73,9 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
 
     //FXML NODES FOR ROOMS CATEGORY TABLE VIEW
-    @FXML private TableView<RoomsCategoryData> roomsCategoryTableView;
-    @FXML private TableColumn<RoomsCategoryData, Integer> roomsCatId;
-    @FXML private TableColumn<RoomsCategoryData, String> roomsCateName;
+    @FXML private TableView<RoomPricesData> roomsCategoryTableView;
+    @FXML private TableColumn<RoomPricesData, Integer> roomsCatId;
+    @FXML private TableColumn<RoomPricesData, String> roomsCateName;
     @FXML private TableColumn<RolesTypesData, Double> priceColumn;
 
 
@@ -364,8 +364,8 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
     boolean checkIfIdTypeExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
-        for (String item : mainModelOBJ.fetchIdTypes()) {
-            if (Objects.equals(item.toLowerCase(), textFieldValue.toLowerCase())) {
+        for (IdTypesData item : mainModelOBJ.fetchIdTypes()) {
+            if (Objects.equals(item.getIdTypeName().toLowerCase(), textFieldValue.toLowerCase())) {
                 flag = true;
                 break;
             }
@@ -375,7 +375,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
     boolean checkIfRoomCategoryExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
-        for (RoomsCategoryData item : mainModelOBJ.fetchCategories()) {
+        for (RoomPricesData item : mainModelOBJ.fetchRoomPrices()) {
             if (Objects.equals(item.getRoomsCateName().toLowerCase(), textFieldValue.toLowerCase())) {
                 flag = true;
                 break;
@@ -400,14 +400,8 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     void populateIdTypeTable() {
         idTypeName.setCellValueFactory( new PropertyValueFactory<>("idTypeName"));
         idTypeID.setCellValueFactory(new PropertyValueFactory<>("idTypeID"));
-        ObservableList<IdTypesData> roleValues = FXCollections.observableArrayList();
-
-        for (int i = 0; i < mainModelOBJ.fetchIdTypes().size(); i++) {
-            roleValues.add(new IdTypesData(i + 1, mainModelOBJ.fetchIdTypes().get(i)));
-            idTypeTableView.setItems(roleValues);
-        }
+        idTypeTableView.setItems(fetchIdTypes());
     }
-
     void populateDepartmentTable() {
         departmentName.setCellValueFactory( new PropertyValueFactory<>("departmentName"));
         departmentId.setCellValueFactory(new PropertyValueFactory<>("departmentId"));
@@ -423,10 +417,10 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         roomsCateName.setCellValueFactory( new PropertyValueFactory<>("roomsCateName"));
         roomsCatId.setCellValueFactory(new PropertyValueFactory<>("roomsCatId"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        ObservableList<RoomsCategoryData> roleValues = FXCollections.observableArrayList();
+        ObservableList<RoomPricesData> roleValues = FXCollections.observableArrayList();
 
-        for (RoomsCategoryData item : fetchCategories()) {
-            roleValues.add(new RoomsCategoryData(item.getRoomsCatId(), item.getRoomsCateName(), item.getPrice()));
+        for (RoomPricesData item : fetchRoomPrices()) {
+            roleValues.add(new RoomPricesData(item.getRoomsCatId(), item.getRoomsCateName(), item.getPrice()));
         }
         roomsCategoryTableView.setItems(roleValues);
 

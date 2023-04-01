@@ -5,6 +5,7 @@ import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;
 import inn.tableViews.ArchivedTableData;
 import inn.tableViews.EmployeesData;
+import inn.tableViews.IdTypesData;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -302,7 +303,9 @@ public class HumanResource extends ResourceModel implements Initializable {
      * FILL id_type COMBOBOX WITH DATA.
      */
     public void fillIdTypeBox() throws SQLException {
-        idTypeBox.setItems(fetchIdTypes());
+        for (IdTypesData item : fetchIdTypes()) {
+            idTypeBox.getItems().add(item.getIdTypeName());
+        }
         idTypeBox.setVisibleRowCount(4);
     }
 

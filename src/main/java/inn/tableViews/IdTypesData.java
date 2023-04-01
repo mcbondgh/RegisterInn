@@ -1,9 +1,16 @@
 package inn.tableViews;
 
 
+import java.sql.Timestamp;
+
 public class IdTypesData {
     private String idTypeName;
     private  int idTypeID;
+
+    private int id;
+    private byte status;
+
+    private Timestamp date_created;
 
     public IdTypesData(int idTypeID, String idTypeName) {
         this.idTypeID = idTypeID;

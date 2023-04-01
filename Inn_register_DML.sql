@@ -164,6 +164,8 @@ SELECT DISTINCT(lower(username)) FROM users;
    -- 14-03-2023
    ALTER TABLE sentmessages ADD COLUMN balance INT AFTER messageStatus; 
    
+   ALTER TABLE roomsCategory RENAME roomPrices;
+   
 	DESCRIBE inn_register.employees;
     DESCRIBE employees;
     DESCRIBE activation_key;

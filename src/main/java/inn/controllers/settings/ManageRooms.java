@@ -4,7 +4,8 @@ import inn.StartInn;
 import inn.models.ManageRoomsModel;
 import inn.prompts.UserNotification;
 import inn.tableViews.ManageRoomsData;
-import inn.tableViews.RoomsCategoryData;
+import inn.tableViews.RoomPricesData;
+import inn.tableViews.RoomsData;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +29,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     //CLASS OBJECTS / CLASS INSTANTIATION FIELD;
     UserNotification notificationOBJ = new UserNotification();
     ManageRoomsData manageRoomsTableViewOBJ;
-    RoomsCategoryData roomsCategoryTableViewOBJ;
+    RoomPricesData roomsCategoryTableViewOBJ;
 
     /*******************************************************************************************************************
      *                                              FXLM NODE EJECTION.
@@ -214,7 +215,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     }
 
     void populateCategoryComboBox() {
-       for (RoomsCategoryData item : fetchCategories()) {
+       for (RoomPricesData item : fetchRoomPrices()) {
            categoryComboBox.getItems().add(item.getRoomsCateName());
        }
     }
@@ -222,7 +223,7 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     //THIS METHOD WHEN CALLED SHALL RETURN THE ASSOCIATED ROOM NUMBER FOR THE SELECTED ROOM CATEGORY.
     int returnRoomId() {
         int result = 0;
-        for(RoomsCategoryData item : fetchCategories()) {
+        for(RoomPricesData item : fetchRoomPrices()) {
             if (categoryComboBox.getValue().equals(item.getRoomsCateName())) {
                 result = item.getRoomsCatId();
             }
@@ -285,8 +286,8 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     boolean checkIfRoomExist() throws SQLException {
         boolean flag = false;
         String placeholder = roomNumberField.getText();
-        for(String item : fetchRoomNoOnly()) {
-            if (Objects.equals(item.toLowerCase().trim(), placeholder.toLowerCase().trim())) {
+        for(RoomsData item : fetchRooms()) {
+            if (Objects.equals(item.getRoomNo().toLowerCase().trim(), placeholder.toLowerCase().trim())) {
                 flag = true;
                 break;
             }
