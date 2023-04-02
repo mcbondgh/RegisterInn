@@ -234,7 +234,7 @@ CREATE TABLE checkIn(
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE booking_Transactions(
+CREATE TABLE payment_Transactions(
 	payment_Id INT AUTO_INCREMENT PRIMARY KEY,
     checkin_id INT,
 	payment_method VARCHAR(50),
@@ -242,7 +242,9 @@ CREATE TABLE booking_Transactions(
     momo_amount DECIMAL(10,2),
     transaction_ID LONG,
     booking_bill DECIMAL(10,2),
-    client_change DECIMAL(10,2)
+    client_change DECIMAL(10,2),
+    added_by INT,
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 

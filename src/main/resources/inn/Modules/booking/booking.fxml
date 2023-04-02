@@ -80,12 +80,12 @@
                               </DropShadow>
                            </effect>
                            <columns>
-                              <TableColumn fx:id="roomNumberColumn" prefWidth="94.66668701171875" text="ROOM NO." />
-                              <TableColumn fx:id="checkInTimeColumn" prefWidth="117.33331298828125" text="CHECK IN TIME" />
-                              <TableColumn fx:id="durationColumn" prefWidth="112.6666259765625" text="DURATION" />
-                              <TableColumn fx:id="statusColumn" prefWidth="107.3333740234375" text="STATUS" />
-                              <TableColumn fx:id="dueTimeColumn" prefWidth="104.0" text="DUE TIME" />
-                              <TableColumn fx:id="actionColumnField" prefWidth="103.3333740234375" text="ACTION" />
+                              <TableColumn fx:id="checkinID" prefWidth="70.0" text="BOOK ID" />
+                              <TableColumn fx:id="roomNumberColumn" prefWidth="145.99996948242188" text="ROOM NO." />
+                              <TableColumn fx:id="checkInTimeColumn" prefWidth="142.0" text="CHECK IN TIME" />
+                              <TableColumn fx:id="dueTimeColumn" prefWidth="127.99993896484375" text="DUE TIME" />
+                              <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="92.6666259765625" text="STATUS" />
+                              <TableColumn fx:id="actionColumnField" maxWidth="-Infinity" minWidth="90.0" prefWidth="90.00006103515625" text="ACTION" />
                            </columns>
                         </MFXLegacyTableView>
                         <Pane layoutX="11.0" layoutY="11.0" onMouseMoved="#inputValuesChanged" prefHeight="480.0" prefWidth="367.0" style="-fx-border-color: #ddd; -fx-border-radius: 10px; -fx-background-color: #f6fcff; -fx-background-radius: 10px;">
@@ -97,12 +97,12 @@
                                           <Font name="Poppins Regular" size="13.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="cashField" alignment="CENTER" layoutX="6.0" layoutY="27.0" onKeyReleased="#validateCashField" onKeyTyped="#cashFieldInputChanged" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: #fff; -fx-border-radius: 5;" visible="false">
+                                    <TextField fx:id="cashField" alignment="CENTER" layoutX="6.0" layoutY="27.0" onKeyReleased="#validateCashField" onKeyTyped="#cashFieldInputChanged" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: #fff; -fx-border-radius: 5;" text="0.00" visible="false">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>
                                     </TextField>
-                                    <TextField fx:id="momoPayField" alignment="CENTER" layoutX="77.0" layoutY="27.0" onKeyReleased="#validateMomoField" onKeyTyped="#momoFieldInputChanged" prefHeight="36.0" prefWidth="103.0" style="-fx-background-color: #fff; -fx-border-radius: 5;" visible="false">
+                                    <TextField fx:id="momoPayField" alignment="CENTER" layoutX="77.0" layoutY="27.0" onKeyReleased="#validateMomoField" onKeyTyped="#momoFieldInputChanged" prefHeight="36.0" prefWidth="103.0" style="-fx-background-color: #fff; -fx-border-radius: 5;" text="0.00" visible="false">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>
@@ -112,7 +112,7 @@
                                           <Font name="Poppins Regular" size="13.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="transactionIdField" layoutX="192.0" layoutY="25.0" onKeyReleased="#validateTransactionIdField" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: #fff; -fx-border-radius: 5;" visible="false">
+                                    <TextField fx:id="transactionIdField" layoutX="192.0" layoutY="25.0" onKeyReleased="#validateTransactionIdField" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: #fff; -fx-border-radius: 5;" text="0" visible="false">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>
@@ -171,7 +171,7 @@
                                     <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <MFXLegacyComboBox fx:id="roomNumberComboBox" prefHeight="37.0" prefWidth="170.0" promptText="Room Number *" style="-fx-font-size: 14; -fx-background-color: #eee; -fx-font-weight: bold; -fx-text-fill: #ff0000;" visibleRowCount="5" GridPane.halignment="CENTER" />
+                                    <MFXLegacyComboBox fx:id="roomNumberComboBox" onMouseClicked="#selectedRoomNumber" prefHeight="37.0" prefWidth="170.0" promptText="Room Number *" style="-fx-font-size: 14; -fx-background-color: #eee; -fx-font-weight: bold; -fx-text-fill: #ff0000;" visibleRowCount="5" GridPane.halignment="CENTER" />
                                     <MFXLegacyComboBox fx:id="durationComboBox" onAction="#selectedRoomDuration" prefHeight="37.0" prefWidth="170.0" promptText="Duration *" style="-fx-font-size: 14; -fx-background-color: #eee; -fx-font-weight: bold;" visibleRowCount="5" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
@@ -267,7 +267,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Circle fill="#f6f6f6" layoutX="152.0" layoutY="86.0" radius="52.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#f6f6f6" layoutX="152.0" layoutY="144.0" radius="52.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </AnchorPane>
             </content>

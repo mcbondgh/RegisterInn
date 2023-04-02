@@ -9,12 +9,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 
 import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -854,18 +856,58 @@ public class MainModel extends DatabaseConfiguration {
         }
         return roomId;
     }
-
     public int countCheckInList() {
         int counter = 0;
         try {
-            String countQuery = "SELECT COUNT(*) FROM checkIn";
+            String countQuery = "SELECT COUNT(*) AS result FROM checkIn";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(countQuery);
-            counter = result.getFetchSize();
-        }catch (SQLException ignored) {
-
+            if (result.next()) {
+                counter = result.getInt("result");
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return counter;
+    }
+
+    public ObservableList<CheckInData> fetchCheckInData() {
+        ObservableList<CheckInData> dataItems = FXCollections.observableArrayList();
+
+        Button button = new Button("Top Up");
+        Label label = new Label("Booked");
+
+        try {
+            String selectQuery = "SELECT checkin_id, roomNo, checkin_time, due_time, check_in_status FROM checkin as ci\n" +
+                    "INNER JOIN rooms as r\n" +
+                    "ON ci.checkin_id = r.id;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while(result.next()) {
+                int id = result.getInt("checkin_id");
+                String roomNo = result.getString("roomNo");
+                LocalTime checkin_time = result.getTime("checkin_time").toLocalTime();
+                LocalTime checkout_time = result.getTime("due_time").toLocalTime();
+                byte status = result.getByte("check_in_status");
+
+                if (checkout_time != checkin_time) {
+                    button.setStyle("-fx-background-color:#ff0000; -fx-text-fill#ffff");
+                }
+
+                if (status == 1) {
+                    label.setStyle("-fx-text-fill:green;");
+                } else label.setStyle("-fx-text-fill: #ff0000;");
+
+                dataItems.add(new CheckInData(id, roomNo, checkin_time, checkout_time, label, button));
+
+            }//end of while loop
+
+        }catch (SQLException ex){
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+        }
+
+        return dataItems;
     }
 
 
