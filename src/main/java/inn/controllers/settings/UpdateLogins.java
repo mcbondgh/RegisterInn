@@ -119,7 +119,7 @@ public class UpdateLogins extends UserLoginsModel implements Initializable {
                                                  OTHER METHODS IMPLEMENTATION
      ******************************************************************************************************/
     void fillUsernameBox() {
-        for (Object item: fetchUsernames()) {
+        for (Object item : fetchUsernames()) {
         usernameBox.getItems().add(item.toString());
         }
     }

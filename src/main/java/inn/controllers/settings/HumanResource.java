@@ -49,7 +49,7 @@ public class HumanResource extends ResourceModel implements Initializable {
     @FXML private TableColumn<EmployeesData, String> dateJoinedColumn;
     @FXML private TableColumn<EmployeesData, String> statusColumn;
     @FXML private TableColumn<EmployeesData, String> salaryColumn;
-    @FXML private TableColumn<EmployeesData, Button> removeColumn;
+    @FXML private TableColumn<EmployeesData, CheckBox> removeColumn;
 
     /************************************ ARCHIVED TABLEVIEW COLUMN NAMES EJECTED FROM THE FXML FILE.*/
     @FXML private TableView<ArchivedTableData> ArchivedTableView;

@@ -241,7 +241,7 @@ CREATE TABLE payment_Transactions(
     cash_amount DECIMAL(10,2),
     momo_amount DECIMAL(10,2),
     transaction_ID LONG,
-    booking_bill DECIMAL(10,2),
+    total_bill DECIMAL(10,2),
     client_change DECIMAL(10,2),
     added_by INT,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP

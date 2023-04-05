@@ -13,6 +13,8 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -58,7 +60,8 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     //******************* >>> PRODUCT STOCKS NODES
     @FXML private DatePicker expiryDatePicker;
 //    @FXML private TextField ;
-    @FXML private MFXTextField  searchProductsTextField, singleItemQtyField, boxQuantityField, qtyPerBoxField, purchasedPriceField, sellingPriceField ;
+    @FXML private MFXTextField singleItemQtyField, boxQuantityField, qtyPerBoxField, purchasedPriceField, sellingPriceField ;
+    @FXML private TextField searchProductsTextField;
     @FXML private Label totalProductDisplay, productProfitDisplay, stockLevelTotalProductDisplay;
     @FXML private TextArea productNoteField;
     @FXML private  Button saveProductButton, deleteProductButton;
@@ -367,7 +370,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     boolean checkCategoryField() {
         return categoryField.getText().isBlank();
     }
-
     boolean checkSupplierNameField() {
         return supplierNameField.getText().isBlank();
     }
@@ -375,12 +377,10 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     boolean checkLocationField() {
         return locationField.getText().isBlank();
     }
-
     boolean checkContactField() {
         return contactField.getText().isBlank();
     }
     boolean checkStoreInputField(){return storesInputField.getText().isBlank();}
-
     boolean checkIfStockCategoryAlreadyExist() {
         boolean flag = false;
         for (StocksCategoryData item : fetchStockCategories()) {
@@ -391,7 +391,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         }
         return flag;
     }
-
     boolean checkIfSupplierAlreadyExist() {
         boolean flag = false;
         for (SuppliersData item : fetchSuppliers()) {
@@ -402,11 +401,9 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         }
         return flag;
     }
-
     boolean checkUpdatePurchasePriceField() {
         return updatePurchasedPriceField.getText().isBlank();
     }
-
     boolean checkUpdateSellingPriceField() {
         return updateSellingPriceField.getText().isBlank();
 }
@@ -428,7 +425,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         });
         stocksCategoryTable.setItems(fetchStockCategories());
     }
-
     private void populateSuppliersTable() {
         supplierNameColumn.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
         supplierNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -453,13 +449,11 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
 
         suppliersTable.setItems(fetchSuppliers());
     }
-
     private void populateStoresTable() {
         storeName.setCellValueFactory(new PropertyValueFactory<>("storeName"));
         storeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         storeTypeTable.setItems(fetchStores());
     }
-
     private void populateProductItemsTable() {
         productIdColumn.setCellValueFactory(new PropertyValueFactory<>("rowId"));
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
@@ -484,8 +478,8 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         previousProfitColumn.setCellValueFactory(new PropertyValueFactory<>("previousProfit"));
         priceUpdatedByColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         priceLastUpdatedColumn.setCellValueFactory(new PropertyValueFactory<>("dateModified"));
-    }
 
+    }
     private void populateStockLevelTaleView() {
         stockIdField.setCellValueFactory(new PropertyValueFactory<>("stockId"));
         stockNameColumn.setCellValueFactory(new PropertyValueFactory<>("stockItemName"));
@@ -506,7 +500,28 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     /*********************************************************************************************************
      ****** >>                 FILTER TABLE VIEWS.....
      *********************************************************************************************************/
-
+    @FXML void filterProductsTable() {
+        try {
+            productItemTableView.getItems().clear();
+            FilteredList<ProductsStockData> filteredList =  new FilteredList<>(fetchProductDetails(), p -> true);
+            searchProductsTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredList.setPredicate(productsStockData -> {
+                    if (newValue.isEmpty() || newValue.isBlank()) {
+                        return true;
+                    }
+                    String searchKeyWord = newValue.toLowerCase();
+                    if (productsStockData.getProductName().toLowerCase().contains(searchKeyWord)) {
+                        return true;
+                    } else if (productsStockData.getItemCategory().toLowerCase().contains(searchKeyWord)) {
+                        return true;
+                    } else return productsStockData.getProductType().toLowerCase().contains(searchKeyWord);
+                });
+            });
+            SortedList<ProductsStockData> sortedResult = new SortedList<>(filteredList);
+            sortedResult.comparatorProperty().bind(productItemTableView.comparatorProperty());
+            productItemTableView.setItems(sortedResult);
+        }catch (Exception ignored) {}
+    }
 
     /*********************************************************************************************************
      ****** >>                    REFRESH TABLE VALUES.....
@@ -515,7 +530,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         stocksCategoryTable.getItems().clear();
         populateStockCategoryTable();
     }
-
     private void refreshSuppliersTable() {
         suppliersTable.getItems().clear();
         populateSuppliersTable();
@@ -531,7 +545,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     /*********************************************************************************************************
      >>  UNSET FIELDS AND BUTTONS TO DEFAULT
      *********************************************************************************************************/
-
     public void unsetStocksCategoryVariables() {
         categoryField.clear();
         saveStockCategoryButton.setDisable(true);
@@ -546,7 +559,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         updateSuppliersButton.setDisable(true);
         deleteSuppliersButton.setDisable(true);
     }
-
     void unsetProductPriceVariables() {
         updateSellingPriceField.clear();
         updatePurchasedPriceField.clear();

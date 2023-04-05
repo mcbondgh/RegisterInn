@@ -12,6 +12,7 @@ module inn {
     requires java.sql;
     requires annotations;
     requires MaterialFX;
+    requires jfoenix;
 
     exports inn;
     exports inn.Controllers;
@@ -24,6 +25,7 @@ module inn {
     exports inn.prompts;
     exports inn.tableViews;
     exports inn.enumerators;
+    exports inn.Controllers.extraTime;
 
     opens inn.Controllers;
     opens inn.Controllers.messagebox;
@@ -37,6 +39,7 @@ module inn {
     exports inn.Controllers.configurations;
     opens inn.Controllers.configurations;
     opens inn.enumerators;
+    opens inn.Controllers.extraTime;
 
 
 

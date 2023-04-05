@@ -13,27 +13,19 @@ public class CheckInData {
     private LocalTime checkin_time;
     private LocalTime due_time;
     private Label check_in_status;
+
+    private int allotedTime;
     private int booked_by;
     private Button topupButton;
     private Timestamp date_created;
 
-    public CheckInData(int checkin_id, String roomNo,  LocalTime checkin_time, LocalTime due_time, Label check_in_status, int booked_by, Button button, Timestamp date_created) {
+    public CheckInData(int checkin_id, String roomNo, LocalTime checkin_time, LocalTime due_time, Label check_in_status, int allotedTime, Button topupButton) {
         this.checkin_id = checkin_id;
         this.roomNo = roomNo;
         this.checkin_time = checkin_time;
         this.due_time = due_time;
         this.check_in_status = check_in_status;
-        this.booked_by = booked_by;
-        this.topupButton = button;
-        this.date_created = date_created;
-    }
-
-    public CheckInData(int checkin_id, String roomNo, LocalTime checkin_time, LocalTime due_time, Label check_in_status, Button topupButton) {
-        this.checkin_id = checkin_id;
-        this.roomNo = roomNo;
-        this.checkin_time = checkin_time;
-        this.due_time = due_time;
-        this.check_in_status = check_in_status;
+        this.allotedTime = allotedTime;
         this.topupButton = topupButton;
     }
 
@@ -45,16 +37,24 @@ public class CheckInData {
         this.checkin_id = checkin_id;
     }
 
-    public String getRoom_id() {
+    public String getRoomNo() {
         return roomNo;
     }
 
-    public void setRoom_id(String room_id) {
+    public void setRoomNo(String room_id) {
         this.roomNo = room_id;
     }
 
     public int getDuration_id() {
         return duration_id;
+    }
+
+    public int getAllotedTime() {
+        return allotedTime;
+    }
+
+    public void setAllotedTime(int allotedTime) {
+        this.allotedTime = allotedTime;
     }
 
     public void setDuration_id(int duration_id) {
@@ -93,11 +93,11 @@ public class CheckInData {
         this.booked_by = booked_by;
     }
 
-    public Button getButton() {
+    public Button getTopupButton() {
         return topupButton;
     }
 
-    public void setButton(Button button) {
+    public void setTopupButton(Button button) {
         this.topupButton = button;
     }
 

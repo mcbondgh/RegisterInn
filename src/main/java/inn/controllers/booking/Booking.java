@@ -1,8 +1,10 @@
 package inn.Controllers.booking;
 
 import inn.Controllers.dashboard.Homepage;
+import inn.Controllers.extraTime.ExtraTimeController;
 import inn.enumerators.PaymentMethods;
 import inn.models.BookingModel;
+import inn.multiStage.MultiStages;
 import inn.prompts.UserAlerts;
 import inn.prompts.UserNotification;
 import inn.tableViews.CheckInData;
@@ -26,6 +28,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -33,7 +36,9 @@ import java.util.ResourceBundle;
 public class Booking extends BookingModel implements Initializable {
     UserAlerts userAlerts;
     UserNotification notify = new UserNotification();
+    MultiStages multiStages = new MultiStages();
     BookingTimeGenerator bookingTimeGenerator;
+    ExtraTimeController extraTimeController = new ExtraTimeController();
 
     public void initialize(java.net.URL url, ResourceBundle resourceBundle) {
         fillPaymentMethodComboBox();
@@ -55,12 +60,13 @@ public class Booking extends BookingModel implements Initializable {
     /*******************************************************************************************************************
      **********************************************  CHECK-IN TABLEVIEW ITEMS ******************************************/
     @FXML private MFXLegacyTableView<CheckInData> checkInTableView;
-    @FXML private TableColumn<CheckInData, String> checkinID;
+    @FXML private TableColumn<CheckInData, Integer> checkinID;
     @FXML private TableColumn<CheckInData, String> roomNumberColumn;
     @FXML private TableColumn<CheckInData, LocalTime> checkInTimeColumn;
     @FXML private  TableColumn<CheckInData, LocalTime> dueTimeColumn;
-    @FXML private TableColumn<CheckInData, String> statusColumn;
+    @FXML private TableColumn<CheckInData, Label> statusColumn;
     @FXML private  TableColumn<CheckInData, Button> actionColumnField;
+    @FXML private  TableColumn<CheckInData, Integer> hoursColumn;
 
 
     /*******************************************************************************************************************
@@ -163,17 +169,16 @@ public class Booking extends BookingModel implements Initializable {
         }catch (NullPointerException ignored) {}
 
     }
-
     private void populateCheckInTable() {
         checkinID.setCellValueFactory(new PropertyValueFactory<>("checkin_id"));
         roomNumberColumn.setCellValueFactory(new PropertyValueFactory<>("roomNo"));
         checkInTimeColumn.setCellValueFactory(new PropertyValueFactory<>("checkin_time"));
         dueTimeColumn.setCellValueFactory(new PropertyValueFactory<>("due_time"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("check_in_status"));
+        hoursColumn.setCellValueFactory(new PropertyValueFactory<>("allotedTime"));
         actionColumnField.setCellValueFactory(new PropertyValueFactory<>("topupButton"));
         checkInTableView.setItems(fetchCheckInData());
     }
-
     private void refreshCheckInTable() {
         checkInTableView.getItems().clear();
         populateCheckInTable();
@@ -205,7 +210,6 @@ public class Booking extends BookingModel implements Initializable {
                 }
             }
         }catch (NullPointerException ignored) {}
-
         return method;
     }
     @FXML void selectedRoomDuration() {
@@ -359,10 +363,29 @@ public class Booking extends BookingModel implements Initializable {
             }
 
     }
+    @FXML void checkInTableClicked() {
+        for (CheckInData items : checkInTableView.getItems()) {
+            items.getTopupButton().setOnMouseClicked(event -> {
+                try {
+
+                    String roomNo = items.getRoomNo();
+                    int bookingId = items.getCheckin_id();
+
+                    String guestName = getGuestNameByCheckInId(bookingId);
+
+                    ExtraTimeController.bookingId = bookingId;
+                    ExtraTimeController.guestName = guestName;
+                    ExtraTimeController.roomNumber = roomNo;
+
+                    multiStages.extraTimeStage();
 
 
-
-
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+    }
 
 
 

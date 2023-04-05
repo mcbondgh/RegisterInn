@@ -300,6 +300,22 @@ public class MainModel extends DatabaseConfiguration {
         return usernames;
     }
 
+    public ArrayList<String> getActiveUsersOnly() {
+        ArrayList<String> users = new ArrayList<>();
+        try{
+            String selectQuery = "SELECT username FROM users WHERE(status = 1 AND is_default = 0);";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while (result.next()) {
+                users.add(result.getString("username"));
+            }
+        }catch (SQLException ex) {
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+        }
+        return users;
+    }
+
     public LinkedList<Integer> getUserId() {
         LinkedList<Integer> employeeId = new LinkedList<>();
         try {
@@ -314,7 +330,6 @@ public class MainModel extends DatabaseConfiguration {
         }
         return employeeId;
     }
-
     public int getUserIdByUsername(String username) {
         int userId = 0;
         try {
@@ -870,17 +885,15 @@ public class MainModel extends DatabaseConfiguration {
         }
         return counter;
     }
-
     public ObservableList<CheckInData> fetchCheckInData() {
         ObservableList<CheckInData> dataItems = FXCollections.observableArrayList();
-
-        Button button = new Button("Top Up");
-        Label label = new Label("Booked");
-
         try {
-            String selectQuery = "SELECT checkin_id, roomNo, checkin_time, due_time, check_in_status FROM checkin as ci\n" +
-                    "INNER JOIN rooms as r\n" +
-                    "ON ci.checkin_id = r.id;";
+            String selectQuery = "SELECT checkin_id, roomNo, checkin_time, due_time, check_in_status, allotedTime, ci.date_created FROM checkin as ci\n" +
+                    "\tINNER JOIN rooms as r\n" +
+                    "\t\tON ci.room_id = r.id\n" +
+                    "\tINNER JOIN roomprices as rp\n" +
+                    "\t\tON duration_id = rp.id\n" +
+                    "\tWHERE DATE(ci.date_created) = CURRENT_DATE();";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
@@ -889,16 +902,20 @@ public class MainModel extends DatabaseConfiguration {
                 LocalTime checkin_time = result.getTime("checkin_time").toLocalTime();
                 LocalTime checkout_time = result.getTime("due_time").toLocalTime();
                 byte status = result.getByte("check_in_status");
+                int allotedTime = result.getInt("allotedTime");
+
+
+                Button button = new Button("Top Up");
+                Label label = new Label("Booked");
 
                 if (checkout_time != checkin_time) {
-                    button.setStyle("-fx-background-color:#ff0000; -fx-text-fill#ffff");
+                    button.setStyle("-fx-background-color:#ff0000; -fx-text-fill:#ffff; -fx-font-size:10; -fx-font-weight: normal");
                 }
-
                 if (status == 1) {
                     label.setStyle("-fx-text-fill:green;");
                 } else label.setStyle("-fx-text-fill: #ff0000;");
 
-                dataItems.add(new CheckInData(id, roomNo, checkin_time, checkout_time, label, button));
+                dataItems.add(new CheckInData(id, roomNo, checkin_time, checkout_time, label, allotedTime, button));
 
             }//end of while loop
 
@@ -910,7 +927,20 @@ public class MainModel extends DatabaseConfiguration {
         return dataItems;
     }
 
-
+    public String getGuestNameByCheckInId(int checkInId){
+        String guestName = "";
+        try {
+            String selectQuery = "SELECT guest_name FROM guests WHERE (checkin_id = '"+checkInId+"') LIMIT 1";
+            stmt = CONNECTOR().createStatement();
+             result = stmt.executeQuery(selectQuery);
+            if (result.next()){
+                guestName = result.getString("guest_name");
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return guestName;
+    }
 
 
 //    public static void main(String[] args) throws SQLException {

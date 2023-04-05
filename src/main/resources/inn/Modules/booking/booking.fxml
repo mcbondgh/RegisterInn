@@ -71,7 +71,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="519.0" prefWidth="918.0" style="-fx-background-color: #f6fcff;">
                      <children>
-                        <MFXLegacyTableView fx:id="checkInTableView" fixedCellSize="30.0" layoutX="393.0" layoutY="14.0" prefHeight="476.0" prefWidth="685.0" style="-fx-background-color: #fff; -FX-FONT-SIZE: 14;" tableMenuButtonVisible="true">
+                        <MFXLegacyTableView fx:id="checkInTableView" fixedCellSize="30.0" layoutX="393.0" layoutY="14.0" onMouseClicked="#checkInTableClicked" prefHeight="488.0" prefWidth="693.0" style="-fx-background-color: #fff; -FX-FONT-SIZE: 14px; -fx-font-weight: bold; -fx-font-family: poppins;" tableMenuButtonVisible="true">
                            <effect>
                               <DropShadow height="38.52" radius="21.192500000000003" width="48.25">
                                  <color>
@@ -84,11 +84,12 @@
                               <TableColumn fx:id="roomNumberColumn" prefWidth="145.99996948242188" text="ROOM NO." />
                               <TableColumn fx:id="checkInTimeColumn" prefWidth="142.0" text="CHECK IN TIME" />
                               <TableColumn fx:id="dueTimeColumn" prefWidth="127.99993896484375" text="DUE TIME" />
-                              <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="92.6666259765625" text="STATUS" />
-                              <TableColumn fx:id="actionColumnField" maxWidth="-Infinity" minWidth="90.0" prefWidth="90.00006103515625" text="ACTION" />
+                              <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="92.6666259765625" style="-fx-alignment: center;" text="STATUS" />
+                              <TableColumn fx:id="hoursColumn" minWidth="0.0" prefWidth="92.6666259765625" style="-fx-alignment: center;" text="HOURS" />
+                              <TableColumn fx:id="actionColumnField" maxWidth="-Infinity" minWidth="90.0" prefWidth="90.00006103515625" style="-FX-FONT-SIZE: 14; -fx-alignment: center; -fx-font-weight: bold;" text="ACTION" />
                            </columns>
                         </MFXLegacyTableView>
-                        <Pane layoutX="11.0" layoutY="11.0" onMouseMoved="#inputValuesChanged" prefHeight="480.0" prefWidth="367.0" style="-fx-border-color: #ddd; -fx-border-radius: 10px; -fx-background-color: #f6fcff; -fx-background-radius: 10px;">
+                        <Pane layoutX="11.0" layoutY="11.0" onMouseMoved="#inputValuesChanged" prefHeight="493.0" prefWidth="367.0" style="-fx-border-color: #ddd; -fx-border-radius: 10px; -fx-background-color: #f6fcff; -fx-background-radius: 10px;">
                            <children>
                               <Pane fx:id="cashPane" layoutX="5.0" layoutY="290.0" prefHeight="76.0" prefWidth="357.0" style="-fx-background-color: #eee; -fx-background-radius: 5;">
                                  <children>
@@ -239,7 +240,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </MFXButton>
-                              <Text fill="#989898" layoutX="30.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please cross check your transactions before you save" />
+                              <Text fill="#989898" layoutX="30.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please cross check your transactions before you save" />
                               <TextField fx:id="allocatedtimeField" alignment="CENTER" layoutX="294.0" layoutY="240.0" onKeyReleased="#validateTimeField" prefHeight="44.0" prefWidth="61.0" promptText="eg 1" style="-fx-background-color: #eee; -fx-border-color: #ffd6d1; -fx-border-width: 4; -fx-border-radius: 5;">
                                  <font>
                                     <Font name="System Bold" size="16.0" />

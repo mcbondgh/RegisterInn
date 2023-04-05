@@ -208,6 +208,20 @@ public class MultiStages{
         stage.show();
     }
 
+    public void extraTimeStage()throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("prompts/extraTimeStage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Request Extra Time");
+        stage.setResizable(false);
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.show();
+    }
+
 
 
 }//END OF CLASS

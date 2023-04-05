@@ -40,11 +40,6 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <MFXTextField fx:id="searchProductsTextField" floatingText="Search Product By Name, Brand, Category" layoutX="6.0" layoutY="6.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="42.0" prefWidth="290.0" style="-fx-background-color: #eee; -fx-border-color: #ccc;">
-                           <font>
-                              <Font name="Poppins Regular" size="12.0" />
-                           </font>
-                        </MFXTextField>
                         <Pane layoutX="-2.0" layoutY="383.0" onMouseMoved="#validateAllProductFields" prefHeight="136.0" prefWidth="1092.0" style="-fx-background-color: #F2F2F2;">
                            <GridPane layoutX="14.0" layoutY="11.0" prefHeight="42.0" prefWidth="1067.0">
                               <columnConstraints>
@@ -186,6 +181,11 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </opaqueInsets>
                         </MFXLegacyTableView>
+                        <TextField fx:id="searchProductsTextField" layoutX="34.0" layoutY="8.0" onKeyTyped="#filterProductsTable" prefHeight="36.0" prefWidth="317.0" promptText="Search product by name, category or id" style="-fx-background-color: #eee;">
+                           <font>
+                              <Font name="Poppins Regular" size="14.0" />
+                           </font>
+                        </TextField>
                      </children></AnchorPane>
               </content>
             </Tab>

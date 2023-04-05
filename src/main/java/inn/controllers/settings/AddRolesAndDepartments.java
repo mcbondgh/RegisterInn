@@ -140,8 +140,8 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
                 priceField.clear();
             }
         });
-        addRoomCategoryBtn.setDisable(checkRoomsCategoryField() || checkPriceField());
-        deleteRoomsCategoryBtn.setDisable(checkRoomsCategoryField() || checkPriceField());
+        addRoomCategoryBtn.setDisable(checkRoomsCategoryField() || checkPriceField() || checkTimeField());
+        deleteRoomsCategoryBtn.setDisable(checkRoomsCategoryField() || checkPriceField() || checkTimeField());
 
 }
     //FOR ROLE TABLE VIEW ONLY
@@ -270,36 +270,45 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     }
 
     @FXML void selectedRoomsCategoryNameValue() {
-        String selectedCategoryName = roomsCategoryTableView.getSelectionModel().getSelectedItem().getRoomsCateName();
-        double selectedPrice= roomsCategoryTableView.getSelectionModel().getSelectedItem().getPrice();
-        int allotedTime = Integer.parseInt(roomsCategoryTableView.getSelectionModel().getSelectedItem().getAllotedTime());
+        try {
+            String selectedCategoryName = roomsCategoryTableView.getSelectionModel().getSelectedItem().getRoomsCateName();
+            double selectedPrice= roomsCategoryTableView.getSelectionModel().getSelectedItem().getPrice();
+            int allotedTime = Integer.parseInt(roomsCategoryTableView.getSelectionModel().getSelectedItem().getAllotedTime());
 
-        roomsCategoryField.setText(selectedCategoryName);
-        priceField.setText(String.valueOf(selectedPrice));
-        timeField.setText(String.valueOf(allotedTime));
+            roomsCategoryField.setText(selectedCategoryName);
+            priceField.setText(String.valueOf(selectedPrice));
+            timeField.setText(String.valueOf(allotedTime));
+        }catch (NumberFormatException ex) {
+            notificationOBJ.informationNotification("FILL ALL", "Please fill all text fields before you save.");
+        }
+
     }
     @FXML void addRoomsCategoryButtonOnAction() throws SQLException {
-        String currentValue = roomsCategoryField.getText().trim();
-        double currentPrice = Double.parseDouble(priceField.getText());
-        int allotedTime = Integer.parseInt(timeField.getText());
+        try {
+            String currentValue = roomsCategoryField.getText().trim();
+            double currentPrice = Double.parseDouble(priceField.getText());
+            int allotedTime = Integer.parseInt(timeField.getText());
 
-        if (checkIfRoomCategoryExist(currentValue)) {
-            notificationOBJ.informationNotification("ALREADY EXIST", "Room Category name already exist.");
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "please confirm to save new category name.");
-            alert.setTitle("CONFIRM TO SAVE");
-            alert.setHeaderText("ARE YOU SURE YOU WANT TO SAVE " + currentValue + " AS A ROOM CATEGORY TYPE?");
-            alert.getButtonTypes().add(ButtonType.YES);
-            alert.getButtonTypes().remove(ButtonType.OK);
-            if(alert.showAndWait().get().equals(ButtonType.YES)) {
-                if (addNewRoomsCategory(currentValue, currentPrice, allotedTime) > 0) {
-                    notificationOBJ.successNotification("SUCCESSFUL", "New Room Category successfully added.");
-                    roomsCategoryTableView.getItems().clear();
-                    roomsCategoryField.clear();
-                    validateRoomsCategoryField();
-                    populateRoomsCategoryTable();
-                } else  notificationOBJ.errorNotification("INSERT FAILED", "Unable to add room category type " + currentValue);
+            if (checkIfRoomCategoryExist(currentValue)) {
+                notificationOBJ.informationNotification("ALREADY EXIST", "Room Category name already exist.");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "please confirm to save new category name.");
+                alert.setTitle("CONFIRM TO SAVE");
+                alert.setHeaderText("ARE YOU SURE YOU WANT TO SAVE " + currentValue + " AS A ROOM CATEGORY TYPE?");
+                alert.getButtonTypes().add(ButtonType.YES);
+                alert.getButtonTypes().remove(ButtonType.OK);
+                if(alert.showAndWait().get().equals(ButtonType.YES)) {
+                    if (addNewRoomsCategory(currentValue, currentPrice, allotedTime) > 0) {
+                        notificationOBJ.successNotification("SUCCESSFUL", "New Room Category successfully added.");
+                        roomsCategoryTableView.getItems().clear();
+                        roomsCategoryField.clear();
+                        validateRoomsCategoryField();
+                        populateRoomsCategoryTable();
+                    } else  notificationOBJ.errorNotification("INSERT FAILED", "Unable to add room category type " + currentValue);
+                }
             }
+        }catch (NumberFormatException ex) {
+            notificationOBJ.informationNotification("FILL ALL", "Please fill all text fields before you save.");
         }
     }
     @FXML void deleteRoomsCategoryButtonClicked() {
@@ -342,6 +351,9 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     boolean checkDepartmentField() {return departmentField.getText().isBlank();}
     boolean checkRoomsCategoryField() {return roomsCategoryField.getText().isBlank();}
     boolean checkPriceField() {return priceField.getText().isBlank();}
+    boolean checkTimeField() {
+        return timeField.getText().isBlank();
+    }
     boolean checkIfRoleExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
         for (String item : mainModelOBJ.fetchUserRoles()) {

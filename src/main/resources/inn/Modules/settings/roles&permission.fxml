@@ -202,17 +202,17 @@
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
-                              <TextField fx:id="roomsCategoryField" layoutX="22.0" layoutY="372.0" onKeyTyped="#validateRoomsCategoryField" prefHeight="32.0" prefWidth="177.0" promptText="eg Short Time" style="-fx-background-color: #ffeaea; -fx-border-color: #037dab; -fx-border-radius: 5px;">
+                              <TextField fx:id="roomsCategoryField" layoutX="22.0" layoutY="391.0" onKeyTyped="#validateRoomsCategoryField" prefHeight="32.0" prefWidth="177.0" promptText="eg Short Time" style="-fx-background-color: #ffeaea; -fx-border-color: #037dab; -fx-border-radius: 5px;">
                                  <font>
                                     <Font name="Poppins Regular" size="14.0" />
                                  </font>
                               </TextField>
-                              <TextField fx:id="priceField" layoutX="217.0" layoutY="372.0" onKeyTyped="#validateRoomsCategoryField" prefHeight="32.0" prefWidth="77.0" promptText="eg 45.00" style="-fx-background-color: #ffeaea; -fx-border-color: #037dab; -fx-border-radius: 5px;">
+                              <TextField fx:id="priceField" layoutX="217.0" layoutY="391.0" onKeyTyped="#validateRoomsCategoryField" prefHeight="32.0" prefWidth="77.0" promptText="eg 45.00" style="-fx-background-color: #ffeaea; -fx-border-color: #037dab; -fx-border-radius: 5px;">
                                  <font>
                                     <Font name="Poppins Regular" size="14.0" />
                                  </font>
                               </TextField>
-                              <Button fx:id="addRoomCategoryBtn" disable="true" layoutX="228.0" layoutY="421.0" mnemonicParsing="false" onAction="#addRoomsCategoryButtonOnAction" prefHeight="24.0" prefWidth="70.0" style="-fx-background-color: #037dab; -fx-background-radius: 5px;" text="Save" textFill="WHITE">
+                              <Button fx:id="addRoomCategoryBtn" disable="true" layoutX="228.0" layoutY="430.0" mnemonicParsing="false" onAction="#addRoomsCategoryButtonOnAction" prefHeight="24.0" prefWidth="70.0" style="-fx-background-color: #037dab; -fx-background-radius: 5px;" text="Save" textFill="WHITE">
                                  <font>
                                     <Font name="Poppins Bold" size="11.0" />
                                  </font>
@@ -220,7 +220,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="deleteRoomsCategoryBtn" disable="true" layoutX="310.0" layoutY="421.0" mnemonicParsing="false" onAction="#deleteRoomsCategoryButtonClicked" prefHeight="24.0" prefWidth="70.0" style="-fx-background-color: #fff; -fx-border-color: #037dab; -fx-border-radius: 5px;" text="Delete" textFill="#037dab">
+                              <Button fx:id="deleteRoomsCategoryBtn" disable="true" layoutX="310.0" layoutY="430.0" mnemonicParsing="false" onAction="#deleteRoomsCategoryButtonClicked" prefHeight="24.0" prefWidth="70.0" style="-fx-background-color: #fff; -fx-border-color: #037dab; -fx-border-radius: 5px;" text="Delete" textFill="#037dab">
                                  <font>
                                     <Font name="Poppins Bold" size="11.0" />
                                  </font>
@@ -228,11 +228,22 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <TextField fx:id="timeField" layoutX="310.0" layoutY="370.0" onKeyTyped="#validateRoomsCategoryField" prefHeight="32.0" prefWidth="70.0" promptText="eg 1,12, 24" style="-fx-background-color: #ffeaea; -fx-border-color: #037dab; -fx-border-radius: 5px;">
+                              <TextField fx:id="timeField" layoutX="310.0" layoutY="389.0" onKeyTyped="#validateRoomsCategoryField" prefHeight="32.0" prefWidth="70.0" promptText="eg 1,12, 24" style="-fx-background-color: #ffeaea; -fx-border-color: #037dab; -fx-border-radius: 5px;">
                                  <font>
                                     <Font name="Poppins Regular" size="14.0" />
                                  </font>
                               </TextField>
+                              <Label layoutX="29.0" layoutY="370.0" text="Duration">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="224.0" layoutY="370.0" text="Price">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="307.0" layoutY="370.0" text="Time In Hours" />
                            </children>
                         </Pane>
                         <CheckBox fx:id="roomCategoriesCheckBox" layoutX="894.0" layoutY="18.0" mnemonicParsing="false" onAction="#CheckedBoxAction" prefHeight="20.0" prefWidth="177.0" text="BOOKING PRICE" textFill="#037dab">

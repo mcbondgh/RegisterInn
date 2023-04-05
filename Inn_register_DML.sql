@@ -22,6 +22,7 @@
     SELECT * FROM productBrand;
 	SELECT * FROM StocksCategory;
     SELECT * FROM suppliers;
+    SELECT * FROM payment_transaction;
     
     SELECT productId, productName, purchasePrice, sellingPrice, profitPerItem, previousPurchasePrice, previousSellingPrice, previousProfit, username , dateModified
           FROM productprices as pp
@@ -78,7 +79,15 @@
     SELECT sm.id, mobileNumber, messageTitle, messageBody, messageStatus, balance, sentDate, username FROM sentmessages AS sm
     INNER JOIN users AS us
     ON sm.sendBy = us.id;
-
+    
+    -- TABLE JOIN FOR CHECK _IN FOR SELECTING ONLY TODAY'S TRANSACTIONS ONLY
+    SELECT checkin_id, roomNo, checkin_time, due_time, check_in_status, allotedTime, ci.date_created FROM checkin as ci
+	INNER JOIN rooms as r
+		ON ci.room_id = r.id
+	INNER JOIN roomprices as rp
+		ON duration_id = rp.id
+	WHERE DATE(ci.date_created)= current_date();
+    
     ALTER TABLE users 
     ADD COLUMN emp_id INT AFTER confirm_password;
     
@@ -90,6 +99,7 @@
 	
     SELECT * FROM employees WHERE(status = 1 AND CONCAT(lastname,' ', firstname) = lower('MCBOND EMELIA'));
     SELECT * FROM employees WHERE(status = 1 AND CONCAT(lastname,' ', firstname) = 'MCBOND EMELIA');
+   
     
     SELECT * FROM roles;
 
@@ -106,6 +116,9 @@
     TRUNCATE TABLE StockLevels;
     TRUNCATE TABLE productprices;
     TRUNCATE TABLE messageTemplates;
+    TRUNCATE TABLE guests;
+    TRUNCATE TABLE checkin;
+    TRUNCATE TABLE payment_transaction;
 
 -- ALTER TABLE AND UPDATE STATEMENTS
 	UPDATE business_info SET bsi_name = "GUEST HOUSE", updated_date = current_timestamp();

@@ -114,3 +114,39 @@ Apr 02, 2023 12:40:59 AM inn.ErrorLogger log
 SEVERE: Sun Apr 02 00:40:59 GMT-12:00 2023 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(checkin_id, payment_method, cash_amount, momo_amount, transaction_ID, total_bil' at line 1
 Apr 02, 2023 4:41:29 AM inn.ErrorLogger log
 SEVERE: Sun Apr 02 04:41:29 GMT-12:00 2023 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '_' at line 3
+Apr 02, 2023 6:24:09 AM inn.ErrorLogger log
+SEVERE: Sun Apr 02 06:24:09 GMT-12:00 2023 - Column 'allotedTime Hours' not found.
+Apr 02, 2023 6:29:12 AM inn.ErrorLogger log
+SEVERE: Sun Apr 02 06:29:12 GMT-12:00 2023 - Column 'allotedTime Hours' not found.
+Apr 02, 2023 12:56:45 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 12:56:45 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 02, 2023 12:56:48 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 12:56:48 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 02, 2023 12:56:52 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 12:56:52 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 02, 2023 12:57:08 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 12:57:08 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 02, 2023 12:57:18 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 12:57:18 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 02, 2023 12:57:22 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 12:57:22 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 02, 2023 1:35:26 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 13:35:26 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 02, 2023 1:35:28 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 13:35:28 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 02, 2023 1:36:26 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 13:36:26 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 02, 2023 1:36:26 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 13:36:26 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 02, 2023 10:28:07 PM inn.ErrorLogger log
+SEVERE: Sun Apr 02 22:28:07 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 03, 2023 12:29:38 PM inn.ErrorLogger log
+SEVERE: Mon Apr 03 12:29:38 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 03, 2023 12:29:40 PM inn.ErrorLogger log
+SEVERE: Mon Apr 03 12:29:40 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 03, 2023 6:55:57 PM inn.ErrorLogger log
+SEVERE: Mon Apr 03 18:55:57 GMT-12:00 2023 - client login.BulkSMS.com
+Apr 03, 2023 6:57:00 PM inn.ErrorLogger log
+SEVERE: Mon Apr 03 18:57:00 GMT-12:00 2023 - client login.BulkSMS.com
+Apr 05, 2023 1:37:56 AM inn.ErrorLogger log
+SEVERE: Wed Apr 05 01:37:56 GMT-12:00 2023 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'l' at line 1
