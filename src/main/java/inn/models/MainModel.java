@@ -333,7 +333,7 @@ public class MainModel extends DatabaseConfiguration {
     public int getUserIdByUsername(String username) {
         int userId = 0;
         try {
-            String selectQuery = "SELECT emp_id FROM users WHERE(is_default = 0 AND username = '" + username + "');";
+            String selectQuery = "SELECT id FROM users WHERE(is_default = 0 AND username = '" + username + "');";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while (result.next()) {
@@ -488,7 +488,7 @@ public class MainModel extends DatabaseConfiguration {
     public ObservableList<String> getRoomNoOnly() {
         ObservableList<String> roomItems = FXCollections.observableArrayList();
         try {
-            String selectQuery = "SELECT roomNo FROM rooms";
+            String selectQuery = "SELECT roomNo FROM rooms WHERE (status = 1)";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
@@ -506,7 +506,7 @@ public class MainModel extends DatabaseConfiguration {
     public ObservableList<RoomsData> fetchRooms() {
         ObservableList<RoomsData> roomItems = FXCollections.observableArrayList();
         try {
-            String selectQuery = "SELECT * FROM rooms";
+            String selectQuery = "SELECT * FROM rooms WHERE(status = 1)";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
@@ -592,13 +592,11 @@ public class MainModel extends DatabaseConfiguration {
         }catch (Exception e) {
             e.printStackTrace();
         }
-
         return  returnStores;
     }
 
     public ObservableList<StoresTableData> fetchStores() {
         ObservableList<StoresTableData> returnStores = FXCollections.observableArrayList();
-
         try {
            String SelectQuery = "SELECT * FROM stores;";
            stmt = CONNECTOR().createStatement();
@@ -615,7 +613,6 @@ public class MainModel extends DatabaseConfiguration {
         }catch (Exception e) {
             e.printStackTrace();
         }
-
         return  returnStores;
     }
     public ObservableList<ProductsStockData> fetchProductDetails(){
@@ -674,6 +671,41 @@ public class MainModel extends DatabaseConfiguration {
             exception.printStackTrace();
         }
         return products;
+    }
+
+    public ObservableList<InternalStocksData> fetchInternalStocksDetails() {
+        ObservableList<InternalStocksData> internalStocksData = FXCollections.observableArrayList();
+        try {
+            String selectQuery = "SELECT itemId, internal_item_name, internal_item_category, remaining_quantity, current_quantity, previous_quantity, total_cost_price, username, date_created, isDeleted, date_modified FROM internal_stock_items as si \n" +
+                    "    INNER JOIN users as u\n" +
+                    "\t\tON si.added_by = u.id \n" +
+                    "    WHERE(isDeleted = 0) ORDER BY internal_item_name ASC";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while (result.next()) {
+                int itemId = result.getInt("itemId");
+                String itemName = result.getString("internal_item_name");
+                String itemCategory = result.getString("internal_item_category");
+                int remainingQuantity = result.getInt("remaining_quantity");
+                int currentQuantity = result.getInt("current_quantity");
+                int previousQuantity = result.getInt("previous_quantity");
+                double totalCost = result.getDouble("total_cost_price");
+                String username = result.getString("username");
+                Timestamp dateCreated = result.getTimestamp("date_created");
+                boolean isDeleted = result.getBoolean("isDeleted");
+                Timestamp dateModified = result.getTimestamp("date_modified");
+                internalStocksData.add(new InternalStocksData(itemId, itemName, itemCategory, remainingQuantity, currentQuantity, previousQuantity, totalCost, dateCreated, username, isDeleted, dateModified));
+            }
+            stmt.close();
+            result.close();
+            CONNECTOR().close();
+        }catch (SQLException ex) {
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+        }
+
+
+        return internalStocksData;
     }
 
     //THIS METHOD WHEN INVOKED SHALL RETURN A PRODUCT id AND Product type FROM THE productStock
@@ -888,12 +920,12 @@ public class MainModel extends DatabaseConfiguration {
     public ObservableList<CheckInData> fetchCheckInData() {
         ObservableList<CheckInData> dataItems = FXCollections.observableArrayList();
         try {
-            String selectQuery = "SELECT checkin_id, roomNo, checkin_time, due_time, check_in_status, allotedTime, ci.date_created FROM checkin as ci\n" +
+            String selectQuery = "SELECT checkin_id, roomNo, checkin_time, due_time, check_in_status, checkin_comment, allotedTime, ci.date_created FROM checkin as ci\n" +
                     "\tINNER JOIN rooms as r\n" +
                     "\t\tON ci.room_id = r.id\n" +
                     "\tINNER JOIN roomprices as rp\n" +
                     "\t\tON duration_id = rp.id\n" +
-                    "\tWHERE DATE(ci.date_created) = CURRENT_DATE();";
+                    "\tWHERE (DATE(ci.date_created) = CURRENT_DATE() OR check_in_status = 1);";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
@@ -902,20 +934,25 @@ public class MainModel extends DatabaseConfiguration {
                 LocalTime checkin_time = result.getTime("checkin_time").toLocalTime();
                 LocalTime checkout_time = result.getTime("due_time").toLocalTime();
                 byte status = result.getByte("check_in_status");
+                String checkInComment = result.getString("checkin_comment");
                 int allotedTime = result.getInt("allotedTime");
 
-
-                Button button = new Button("Top Up");
+                Button topupBtn = new Button("Top Up");
                 Label label = new Label("Booked");
+                Button checkoutBtn = new Button("Checkout");
 
+                checkoutBtn.setStyle("-fx-background-color:#00bc09; -fx-text-fill:#ffff; -fx-font-size:11; -fx-font-weight: normal");
                 if (checkout_time != checkin_time) {
-                    button.setStyle("-fx-background-color:#ff0000; -fx-text-fill:#ffff; -fx-font-size:10; -fx-font-weight: normal");
+                    topupBtn.setStyle("-fx-background-color:#ff0000; -fx-text-fill:#ffff; -fx-font-size:11; -fx-font-weight: normal");
                 }
                 if (status == 1) {
                     label.setStyle("-fx-text-fill:green;");
-                } else label.setStyle("-fx-text-fill: #ff0000;");
+                } else {
+                    label.setStyle("-fx-text-fill: #ff0000;");
+                    label.setText("Checked Out");
+                };
 
-                dataItems.add(new CheckInData(id, roomNo, checkin_time, checkout_time, label, allotedTime, button));
+                dataItems.add(new CheckInData(id, roomNo, checkin_time, checkout_time,  label, checkInComment, allotedTime, topupBtn, checkoutBtn));
 
             }//end of while loop
 
@@ -942,6 +979,31 @@ public class MainModel extends DatabaseConfiguration {
         return guestName;
     }
 
+    public int countFreeRooms() {
+        int outcome = 0;
+        try {
+            String selectQuery = "SELECT COUNT(*) FROM rooms WHERE(isBooked = 0)";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if (result.next()) {
+                outcome = result.getInt(1);
+            }
+        }catch (Exception e) {e.printStackTrace(); }
+        return outcome;
+    }
+
+    public int countBookedRooms() {
+        int outcome = 0;
+        try {
+            String selectQuery = "SELECT COUNT(*) FROM rooms WHERE(isBooked = 1)";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if (result.next()) {
+                outcome = result.getInt(1);
+            }
+        } catch (Exception e){ e.printStackTrace();}
+        return outcome;
+    }
 
 //    public static void main(String[] args) throws SQLException {
 //        DbConnection con = new DbConnection();

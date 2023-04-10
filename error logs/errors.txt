@@ -150,3 +150,45 @@ Apr 03, 2023 6:57:00 PM inn.ErrorLogger log
 SEVERE: Mon Apr 03 18:57:00 GMT-12:00 2023 - client login.BulkSMS.com
 Apr 05, 2023 1:37:56 AM inn.ErrorLogger log
 SEVERE: Wed Apr 05 01:37:56 GMT-12:00 2023 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'l' at line 1
+Apr 05, 2023 4:51:34 AM inn.ErrorLogger log
+SEVERE: Wed Apr 05 04:51:34 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 05, 2023 5:09:18 AM inn.ErrorLogger log
+SEVERE: Wed Apr 05 05:09:18 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 05, 2023 2:11:38 PM inn.ErrorLogger log
+SEVERE: Wed Apr 05 14:11:38 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 06, 2023 3:08:52 AM inn.ErrorLogger log
+SEVERE: Thu Apr 06 03:08:52 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 06, 2023 9:12:06 AM inn.ErrorLogger log
+SEVERE: Thu Apr 06 09:12:06 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 06, 2023 9:12:12 AM inn.ErrorLogger log
+SEVERE: Thu Apr 06 09:12:12 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 06, 2023 9:14:46 AM inn.ErrorLogger log
+SEVERE: Thu Apr 06 09:14:46 GMT-12:00 2023 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '60.0, added_by = 1, date_modified = DEFAULT WHERE(itemId = 5)' at line 1
+Apr 06, 2023 10:49:50 AM inn.ErrorLogger log
+SEVERE: Thu Apr 06 10:49:50 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 06, 2023 10:53:19 AM inn.ErrorLogger log
+SEVERE: Thu Apr 06 10:53:19 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 06, 2023 11:03:32 AM inn.ErrorLogger log
+SEVERE: Thu Apr 06 11:03:32 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 06, 2023 11:10:16 AM inn.ErrorLogger log
+SEVERE: Thu Apr 06 11:10:16 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 06, 2023 1:47:52 PM inn.ErrorLogger log
+SEVERE: Thu Apr 06 13:47:52 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 06, 2023 4:03:10 PM inn.ErrorLogger log
+SEVERE: Thu Apr 06 16:03:10 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 06, 2023 10:24:06 PM inn.ErrorLogger log
+SEVERE: Thu Apr 06 22:24:06 GMT-12:00 2023 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TEXT, booked_by) VALUES(1, 18, '22:24:05', '01:24:05', 1, 'Guest came alone, a t' at line 1
+Apr 06, 2023 10:28:34 PM inn.ErrorLogger log
+SEVERE: Thu Apr 06 22:28:34 GMT-12:00 2023 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+Apr 06, 2023 10:44:57 PM inn.ErrorLogger log
+SEVERE: Thu Apr 06 22:44:57 GMT-12:00 2023 - Column 'checkin_comment' not found.
+Apr 06, 2023 10:47:00 PM inn.ErrorLogger log
+SEVERE: Thu Apr 06 22:47:00 GMT-12:00 2023 - Column 'checkin_comment' not found.
+Apr 06, 2023 10:47:17 PM inn.ErrorLogger log
+SEVERE: Thu Apr 06 22:47:17 GMT-12:00 2023 - Column 'checkin_comment' not found.
+Apr 07, 2023 1:15:39 AM inn.ErrorLogger log
+SEVERE: Fri Apr 07 01:15:39 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 07, 2023 2:06:31 AM inn.ErrorLogger log
+SEVERE: Fri Apr 07 02:06:31 GMT-12:00 2023 - clientlogin.bulksmsgh.com
+Apr 08, 2023 12:52:53 AM inn.ErrorLogger log
+SEVERE: Sat Apr 08 00:52:53 GMT-12:00 2023 - Unknown column 'check_in_ststus' in 'where clause'

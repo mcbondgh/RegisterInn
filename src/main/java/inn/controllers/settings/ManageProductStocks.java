@@ -1,6 +1,7 @@
 package inn.Controllers.settings;
 
 
+import inn.Controllers.dashboard.Homepage;
 import inn.ErrorLogger;
 import inn.enumerators.AlertTypesEnum;
 import inn.models.ManageStocksModel;
@@ -10,6 +11,7 @@ import inn.prompts.UserNotification;
 import inn.tableViews.*;
 import inn.threads.ProductItemTask;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
@@ -52,7 +54,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML private Button saveStockCategoryButton, updateStockCategoryButton, deleteStockCategoryButton;
     @FXML private MFXButton updateStockLevelButton;
     @FXML private Label requiredIndicator, selectedProductNameDisplay, selectedStockTypeDisplay;
-    @FXML private TextField productNameField;
+    @FXML private TextField productNameField, filterStockLevelTable;
     @FXML private Button priceUpdateButton;
 
 
@@ -146,6 +148,20 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
 
 
 
+    //=====================> INTERNAL STOCKS TABLE VIEW ITEMS AND COLUMNS
+    @FXML private MFXLegacyTableView<InternalStocksData> internalStocksTableView;
+    @FXML private TableColumn<InternalStocksData, String> internalStockNameColumn;
+    @FXML private TableColumn<InternalStocksData, String> internalStockItemTypeColumn;
+    @FXML private TableColumn<InternalStocksData, Integer> internalStockRemainingQtyColumn;
+    @FXML private TableColumn<InternalStocksData, Integer> internalStockCurrentQtyColumn;
+    @FXML private TableColumn<InternalStocksData, Integer> internalStockPreviousQtyColumn;
+    @FXML private TableColumn<InternalStocksData, Timestamp> internalStockDateCreatedColumn;
+    @FXML private TableColumn<InternalStocksData, Double> internalStockTotalCostColumn;
+    @FXML private TableColumn<InternalStocksData, String> internalStockAddedByColumn;
+    @FXML private TableColumn<InternalStocksData, Timestamp> internalStockDateModifiedColumn;
+
+
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateStockCategoryTable();
         populateSuppliersTable();
@@ -154,6 +170,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         fillProductBrandSelector();
         fillProductCategorySelector();
         fillProductSupplierSelector();
+        fillInternalStocksComboBox();
     }
 
 
@@ -202,7 +219,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         updateSuppliersButton.setDisable(false);
         deleteSuppliersButton.setDisable(false);
     }
-
 
     //THIS METHOD IS RESPONSIBLE FOR ITERATING THROUGH THE STOCK CATEGORY TABLE AND SAVING ALL VALUES INTO THE StocksCategory TABLE..
     @FXML void updateStockCategoryButtonClicked() {
@@ -496,6 +512,21 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         stockLastUpdateColumn.setCellValueFactory(new PropertyValueFactory<>("lastModified"));
     }
 
+    void populateInternalStocksTableView() {
+        internalStockNameColumn.setCellValueFactory(new PropertyValueFactory<>("internalItemName"));
+        internalStockItemTypeColumn.setCellValueFactory(new PropertyValueFactory<>("internalItemCategory"));
+        internalStockRemainingQtyColumn.setCellValueFactory(new PropertyValueFactory<>("remainingQuantity"));
+        internalStockRemainingQtyColumn.setStyle("-fx-text-fill: #ff0000; -fx-alignment:center; -fx-font-weight:bold");
+        internalStockCurrentQtyColumn.setCellValueFactory(new PropertyValueFactory<>("currentQuantity"));
+        internalStockPreviousQtyColumn.setCellValueFactory(new PropertyValueFactory<>("previousQuantity"));
+        internalStockTotalCostColumn.setCellValueFactory(new PropertyValueFactory<>("totalCostPrice"));
+        internalStockAddedByColumn.setCellValueFactory(new PropertyValueFactory<>("addedBy"));
+        internalStockDateCreatedColumn.setCellValueFactory(new PropertyValueFactory<>("dateCreated"));
+        internalStockDateModifiedColumn.setCellValueFactory(new PropertyValueFactory<>("dateModified"));
+        internalStocksTableView.setItems(fetchInternalStocksDetails());
+
+    }
+
 
     /*********************************************************************************************************
      ****** >>                 FILTER TABLE VIEWS.....
@@ -522,6 +553,28 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             productItemTableView.setItems(sortedResult);
         }catch (Exception ignored) {}
     }
+    @FXML void filterStockLevelTable() {
+        try {
+            stockLevelTableView.getItems().clear();
+            FilteredList<StockLevelData> filteredList =  new FilteredList<>(fetchStockLevelDetails(), p -> true);
+            filterStockLevelTable.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredList.setPredicate(stockLevelData -> {
+                    if (newValue.isEmpty() || newValue.isBlank()) {
+                        return true;
+                    }
+                    String searchKeyWord = newValue.toLowerCase();
+                    if (stockLevelData.getStockItemName().toString().toLowerCase().contains(searchKeyWord)) {
+                        return true;
+                    } return true;
+                });
+            });
+            SortedList<StockLevelData> sortedResult = new SortedList<>(filteredList);
+            sortedResult.comparatorProperty().bind(stockLevelTableView.comparatorProperty());
+            stockLevelTableView.setItems(sortedResult);
+        }catch (Exception ignored) {}
+    }
+
+
 
     /*********************************************************************************************************
      ****** >>                    REFRESH TABLE VALUES.....
@@ -542,6 +595,13 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         pricesTableView.getItems().clear();
         loadTablesButtonClicked();
     }
+
+    private void refreshInternalStocksTable() {
+        internalStocksTableView.getItems().clear();
+        populateInternalStocksTableView();
+    }
+
+
     /*********************************************************************************************************
      >>  UNSET FIELDS AND BUTTONS TO DEFAULT
      *********************************************************************************************************/
@@ -576,7 +636,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         stockTypeSelector.getItems().add("Single");
         stockTypeSelector.getItems().add("Box");
     }
-
     public void fillProductCategorySelector() {
         for (StocksCategoryData item : fetchStockCategories()) {
             productCategorySelector.getItems().add(item.getCategoryName());
@@ -695,7 +754,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML void addNewBrandButton() throws IOException {
         multiStages.addBrandStage();
     }
-
     @FXML void validateProductNameOnKeyTyped() {
         if (checkIfProductExist()) {
             userAlertOBJ = new UserAlerts("PRODUCT EXIST", "'"+productNameField.getText() + "' ALREADY EXIST IN YOUR LIST OF PRODUCTS", "please make sure each product name is unique");
@@ -724,7 +782,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             }
         }catch (Exception ignored){}
     }
-
     @FXML void validateGageField(KeyEvent keypressed) {
         if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
             productGate.clear();
@@ -802,7 +859,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             updateProductProfitDisplay.setText(String.valueOf(0));
         }
     }
-
     @FXML void keyReleasedOnSellingPriceInput(KeyEvent keypressed) {
         priceUpdateButton.setDisable(checkUpdateSellingPriceField() || checkUpdatePurchasePriceField());
         try {
@@ -822,7 +878,8 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         populateProductItemsTable();
         populateStockLevelTaleView();
         populatePriceTableVIew();
-        ProductItemTask fillTablesTask = new ProductItemTask(fetchProductDetails(), fetchStockLevelDetails(), fetchProductPricesDetails(), productItemTableView, pricesTableView, stockLevelTableView);
+        populateInternalStocksTableView();
+        ProductItemTask fillTablesTask = new ProductItemTask(fetchProductDetails(), fetchStockLevelDetails(), fetchProductPricesDetails(), fetchInternalStocksDetails(), productItemTableView, pricesTableView, stockLevelTableView, internalStocksTableView);
         Thread executeTask = new Thread(fillTablesTask);
         executeTask.start();
     }
@@ -858,7 +915,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             }
         }
     }
-
     @FXML private void priceTableViewClicked() {
         boolean isNotSelected = pricesTableView.getSelectionModel().isEmpty();
         if (isNotSelected) {
@@ -873,7 +929,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             updateSellingPriceField.setDisable(false);
         }
     }
-
     @FXML void updateStockLevelButtonClicked() {
         int selectedId = stockLevelTableView.getSelectionModel().getSelectedItem().getStockId();//where condition
         String productName = stockLevelTableView.getSelectionModel().getSelectedItem().getStockItemName().getText();
@@ -910,7 +965,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             }
         }
     }
-
     @FXML void validateStockLevelSingleInput(KeyEvent keypressed) {
         try {
             if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
@@ -924,7 +978,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
             stockLevelTotalProductDisplay.setText(String.valueOf(0));
         }
     }
-
     @FXML void validateStockLevelBoxInputs(KeyEvent keypressed) {
         try {
             if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
@@ -949,7 +1002,6 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         }
 
     }
-
     @FXML void stockLevelMouseMovedEvent() {
         updateStockLevelButton.setDisable(stockLevelTotalProductDisplay.getText().equals(String.valueOf(0)));
     }
@@ -1044,4 +1096,181 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         stockLevelTotalProductDisplay.setText(String.valueOf(0));
 
     }
+    void resetInternalStocksItemParameters() {
+        refreshInternalStocksTable();
+        internalStockItemNameField.clear();
+        internalStockComboBox.setValue(null);
+        internalStockQtyField.setText(String.valueOf(0));
+        internalStockAmountField.setText(String.valueOf(0.00));
+        saveInternalStockButton.setDisable(true);
+    }
+
+
+
+    /*********************************************************************************************************
+     ******                  FXML NODE EJECTION FOR INTERNAL STOCK ITEM FIELDS
+     *********************************************************************************************************/
+    @FXML private TextField searchInternalStockItem, internalStockItemNameField, internalStockQtyField, internalStockAmountField;
+    @FXML private MFXFilterComboBox<String> internalStockComboBox;
+    @FXML private Button saveInternalStockButton, cancelInternalStockButton;
+
+    //VARIABLES ASSIGNED TO HOLD SELECTED VALUES OF THE internalStocksTableView
+        int selectedInternalStockId = 0;
+        String selectedInternalStockItemName =" ";
+        String selectedInternalStockCategory = "";
+        int selectedInternalStockCurrentQuantity = 0;
+        double selectedInternalStockCostPrice = 0.0;
+        int internalStockAvailableQuantity = 0;
+        int internalStockPreviousQuantity = 0;
+
+
+    /*********************************************************************************************************
+     ******                  TURE OR FALSE STATEMENTS FOR INTERNAL STOCK ITEMS TAB
+     *********************************************************************************************************/
+    boolean isInternalStockItemNameEmpty() {
+        return internalStockItemNameField.getText().isEmpty();
+    }
+    boolean isInternalStockQtyEmpty() {
+        return internalStockQtyField.getText().isEmpty() || internalStockQtyField.getText().isBlank();
+    }
+    boolean isInternalStockComboBoxEmpty() {
+        boolean flag = false;
+        try {
+            flag = internalStockComboBox.getValue().isEmpty();
+        }catch (NullPointerException ignored){}
+       return flag;
+    }
+    boolean checkIfInternalStockItemExist() {
+        boolean flag = false;
+        String userInput = internalStockItemNameField.getText().toLowerCase().replaceAll("\\s", "");
+        for (InternalStocksData productName : fetchInternalStocksDetails()) {
+            if ( productName.getInternalItemName().toLowerCase().replaceAll("\\s", "").equals(userInput)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+    boolean isInternalStockItemSelect() {
+       return internalStocksTableView.getSelectionModel().isEmpty();
+    }
+
+    /*********************************************************************************************************
+     ******                  IMPLEMENTATION OF OTHER METHODS FOR INTERNAL STOCK TAB
+     *********************************************************************************************************/
+    void fillInternalStocksComboBox() {
+        internalStockComboBox.getItems().clear();
+        for (StocksCategoryData item : fetchStockCategories()) {
+            internalStockComboBox.getItems().add(item.getCategoryName());
+        }
+    }
+
+    /*********************************************************************************************************
+     ******                  IMPLEMENTATION OF KEY PRESS EVENTS FOR STOCK TAB
+     *********************************************************************************************************/
+    @FXML void validateInternalStockAmountField(KeyEvent keypressed) {
+        try {
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE || keypressed.getCode() == KeyCode.PERIOD)) {
+                internalStockAmountField.clear();
+            }
+        }catch (NumberFormatException e) {
+            internalStockAmountField.setText(String.valueOf(0.00));
+        }
+    }
+    @FXML void validateInternalStockQtyFields(KeyEvent keypressed) {
+        try{
+            if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
+                internalStockQtyField.clear();
+            }
+        }catch (NumberFormatException e) {
+            internalStockQtyField.setText(String.valueOf(0));
+        }
+    }
+    @FXML void validateAllInternalStockFields() {
+        saveInternalStockButton.setDisable(isInternalStockQtyEmpty() || isInternalStockComboBoxEmpty() || isInternalStockItemNameEmpty());
+    }
+
+
+    /*********************************************************************************************************
+     ******                  IMPLEMENTATION OF ACTION EVENTS FOR INTERNAL STOCK TAB
+     *********************************************************************************************************/
+    @FXML void saveInternalStocksButtonClicked() {
+        int currentUserId =  getUserIdByUsername(Homepage.activeUsername);
+        String buttonTextValue = saveInternalStockButton.getText();
+
+        try {
+            String itemName = internalStockItemNameField.getText();
+            String itemCategory = internalStockComboBox.getValue();
+            int itemQuantity = Integer.parseInt(internalStockQtyField.getText());
+            double itemAmount = Double.parseDouble(internalStockAmountField.getText());
+
+            switch(buttonTextValue) {
+                case "Save" -> {
+                    saveInternalStockButton.setDisable(isInternalStockQtyEmpty() || isInternalStockComboBoxEmpty());
+
+                    if (checkIfInternalStockItemExist()) {
+                        notify.informationNotification("ITEM EXIST", itemName + " already exist in database, please provide a unique item name");
+                    } else {
+                        userAlertOBJ = new UserAlerts("SAVE INTERNAL ITEM", "ARE YOU SURE YOU WANT TO SAVE '"+ itemName + "'?", "please confirm with YES else CANCEL to abort.");
+                        if (userAlertOBJ.confirmationAlert()) {
+                            int flag = addNewInternalStockItem(itemName, itemCategory, itemQuantity, itemAmount, (byte)currentUserId);
+                            if (flag > 0) {
+                                notify.successNotification("SAVE SUCCESSFULLY", "Item with name '" + itemName + "' successfully saved");
+                                resetInternalStocksItemParameters();
+                            }
+                        }
+                    }
+                }
+                case "Update" -> {
+                    int computedAvailableQuantity = (internalStockAvailableQuantity + Integer.parseInt(internalStockQtyField.getText()));
+                    userAlertOBJ = new UserAlerts("UPDATE INTERNAL STOCK ITEM", "DO YOU WANT TO UPDATE '" + selectedInternalStockItemName + "'?", "please confirm your action with YES, else CANCEL to abort");
+                    if (userAlertOBJ.confirmationAlert()) {
+                        int flag = updateInternalStockItem(selectedInternalStockId, itemName, itemCategory, computedAvailableQuantity, internalStockAvailableQuantity, selectedInternalStockCurrentQuantity, itemAmount, currentUserId);
+                        if (flag > 0) {
+                            notify.successNotification("STOCK UPDATE SUCCESSFUL", "'" +selectedInternalStockItemName +"' successfully updated with provided details.");
+                            resetInternalStocksItemParameters();
+                        } else notify.errorNotification("FAILED UPDATE ", "update of item '" + selectedInternalStockItemName + "' has failed.");
+                    }
+                }
+            }
+        }catch (NumberFormatException ignored) { }
+    }
+    
+    @FXML void internalStockTableClicked() {
+        if (!isInternalStockItemSelect()) {
+            saveInternalStockButton.setText("Update");
+            saveInternalStockButton.setDisable(false);
+
+            selectedInternalStockId = internalStocksTableView.getSelectionModel().getSelectedItem().getItemId();
+            selectedInternalStockItemName = internalStocksTableView.getSelectionModel().getSelectedItem().getInternalItemName();
+            selectedInternalStockCategory = internalStocksTableView.getSelectionModel().getSelectedItem().getInternalItemCategory();
+            selectedInternalStockCurrentQuantity = internalStocksTableView.getSelectionModel().getSelectedItem().getCurrentQuantity();
+            selectedInternalStockCostPrice = internalStocksTableView.getSelectionModel().getSelectedItem().getTotalCostPrice();
+            internalStockAvailableQuantity = internalStocksTableView.getSelectionModel().getSelectedItem().getRemainingQuantity();
+            internalStockPreviousQuantity = internalStocksTableView.getSelectionModel().getSelectedItem().getPreviousQuantity();
+
+            internalStockItemNameField.setText(selectedInternalStockItemName);
+            internalStockComboBox.setValue(selectedInternalStockCategory);
+            internalStockQtyField.setText(String.valueOf(selectedInternalStockCurrentQuantity));
+            internalStockAmountField.setText(String.valueOf(selectedInternalStockCostPrice));
+        }
+
+    }
+    @FXML void cancelInternalStockButtonClicked() {
+        internalStockItemNameField.clear();
+        internalStockComboBox.setValue(null);
+        internalStockQtyField.setText(String.valueOf(0));
+        internalStockAmountField.setText(String.valueOf(0.00));
+        saveInternalStockButton.setDisable(true);
+        saveInternalStockButton.setText("Save");
+        refreshInternalStocksTable();
+    }
+    @FXML void loadInternalComboBoxOnMouseClick() {
+        fillInternalStocksComboBox();
+    }
+
+
+
+
+
 }//END OF CLASS

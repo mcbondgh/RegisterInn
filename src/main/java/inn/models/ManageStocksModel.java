@@ -58,7 +58,6 @@ public class ManageStocksModel extends MainModel {
         return flag;
     }
 
-
     //THIS METHOD WHEN INVOKED SHALL INSERT A NEW RECORD INTO THE suppliers TABLE...
     public void insertNewSupplier(@NamedArg("Supplier Name") String name, @NamedArg("Contact") String contact, @NamedArg("Location") String location) {
         try {
@@ -74,7 +73,6 @@ public class ManageStocksModel extends MainModel {
             ex.printStackTrace();
         }
     }
-
 
     //THIS METHOD WHEN INVOKED TAKES IN TWO PARAMETER i.e. stocksCategory DateType AS AN ARGUMENT AND UPDATES SAME IN THE StocksCategory TABLE..
     public int updateSupplier(String supplierName, String contact, String location, int itemId) {
@@ -92,7 +90,6 @@ public class ManageStocksModel extends MainModel {
         }
         return flag;
     }
-
     public void deleteSelectedSupplier(@NamedArg("Item Id") int itemId) {
         try {
             String updateQuery = "DELETE FROM Suppliers  WHERE(id = ?)";
@@ -105,7 +102,6 @@ public class ManageStocksModel extends MainModel {
             e.printStackTrace();
         }
     }
-
     public int addNewStore(String storeName, String desc) {
         int flag = 0;
         try {
@@ -121,7 +117,6 @@ public class ManageStocksModel extends MainModel {
 
         return flag;
     }
-
     public int deleteStore(int id) {
         int flag = 0;
         try {
@@ -134,9 +129,6 @@ public class ManageStocksModel extends MainModel {
     }
 
     //THIS METHOD WHEN INVOKED SHALL TAKE A NUMBER OF ARGUMENTS AND INTERS SAME INTO THE ProductItems Table...
-
-
-
     public boolean addNewBrand(String brandName) {
         boolean flag = true;
         try {
@@ -170,8 +162,6 @@ public class ManageStocksModel extends MainModel {
         }
         return flag;
     }
-
-
     public int updateStockLevel(int itemId, int stockLevel, int currentStockLevel, int currentBoxQuantity, int currentQuantityPerBox, int oldStockLevel, int previousStockLevel, int previousBoxQuantity, int previousQuantityPerBox, int gage, int modifiedBy) {
         int flag = 0;
          try {
@@ -216,7 +206,6 @@ public class ManageStocksModel extends MainModel {
 
         return flag;
     }
-
     public int addNewProductPrice(int productId, double purchasePrice, double sellingPrice, double profitPerItem, int modifiedBy) {
         int flag = 0;
             try {
@@ -234,7 +223,6 @@ public class ManageStocksModel extends MainModel {
             }
         return flag;
     }
-
     public int deleteSelectedProduct(int itemId)  {
         int flag = 0;
         try {
@@ -247,7 +235,6 @@ public class ManageStocksModel extends MainModel {
         }
         return flag;
     }
-
     protected int updateProductPrices(@NamedArg("productId")int productId, float purchasePrice, float sellingPrice, float profitPerItem, float previousPurchasePrice, float previousSellingPrice, float previousProfit, int modifiedBy) {
         int flag = 0;
         try {
@@ -268,5 +255,51 @@ public class ManageStocksModel extends MainModel {
         }
         return flag;
     }
+    protected int addNewInternalStockItem(String itemName, String itemCategory, int itemQuantity, double itemCost, byte addedBy) {
+        int flag = 0;
+        try {
+            String intertQuery = "INSERT INTO internal_stock_items(internal_item_name, internal_item_category, remaining_quantity, current_quantity, total_cost_price, added_by) VALUES(?, ?, ?, ?, ?, ?)";
+            prepare = CONNECTOR().prepareStatement(intertQuery);
+            prepare.setString(1, itemName);
+            prepare.setString(2, itemCategory);
+            prepare.setInt(3, itemQuantity);
+            prepare.setInt(4, itemQuantity);
+            prepare.setDouble(5, itemCost);
+            prepare.setByte(6, addedBy);
+            flag = prepare.executeUpdate();
+            prepare.close();
+            CONNECTOR().close();
+        } catch (SQLException ex) {
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+        }
+        return flag;
+    }
+    protected int updateInternalStockItem(int itemId, String itemName, String itemCategory, int availableQty, int currentQty, int previousQty, double cost, int activeUserId) {
+        int flag = 0;
+        try {
+
+            String updateQuery = "UPDATE internal_stock_items SET internal_item_name = ?, internal_item_category = ?,  remaining_quantity = ?, current_quantity = ?, previous_quantity = ?, total_cost_price = ?, added_by = ?, date_modified = DEFAULT WHERE(itemId = ?)";
+            prepare = CONNECTOR().prepareStatement(updateQuery);
+            prepare.setString(1, itemName);
+            prepare.setString(2, itemCategory);
+            prepare.setInt(3, availableQty);
+            prepare.setInt(4, currentQty);
+            prepare.setInt(5, previousQty);
+            prepare.setDouble(6, cost);
+            prepare.setInt(7, activeUserId);
+            prepare.setInt(8, itemId);
+            flag = prepare.executeUpdate();
+
+            prepare.close();
+            CONNECTOR().close();
+
+        }catch (SQLException ex) {
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+        }
+        return  flag;
+    }
+
 
 }//END OF CLASS...

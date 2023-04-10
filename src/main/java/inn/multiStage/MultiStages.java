@@ -203,11 +203,9 @@ public class MultiStages{
         stage.setResizable(false);
         stage.setTitle("Add Brand");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.UTILITY);
         stage.setAlwaysOnTop(true);
         stage.show();
     }
-
     public void extraTimeStage()throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("prompts/extraTimeStage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -221,7 +219,18 @@ public class MultiStages{
         stage.setResizable(false);
         stage.show();
     }
-
-
+    public void checkOutStage()throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("prompts/checkOutStage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Checkout Guest");
+        stage.setResizable(false);
+        Image logo = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\logo.png");
+        stage.getIcons().add(logo);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.show();
+    }
 
 }//END OF CLASS

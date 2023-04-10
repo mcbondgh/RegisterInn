@@ -23,6 +23,8 @@
 	SELECT * FROM StocksCategory;
     SELECT * FROM suppliers;
     SELECT * FROM payment_transaction;
+    SELECT * FROM internal_stock_items;
+    SELECT * FROM checkin;
     
     SELECT productId, productName, purchasePrice, sellingPrice, profitPerItem, previousPurchasePrice, previousSellingPrice, previousProfit, username , dateModified
           FROM productprices as pp
@@ -86,7 +88,17 @@
 		ON ci.room_id = r.id
 	INNER JOIN roomprices as rp
 		ON duration_id = rp.id
-	WHERE DATE(ci.date_created)= current_date();
+	WHERE DATE(ci.date_created)=current_date() or check_in_status = 1;
+    
+    -- TABLE JOIN FOR INTERNAL_STOCK_ITEMS ON USERS TABLE TO GET USERNAME BY ID
+    SELECT itemId, internal_item_name, internal_item_category, remaining_quantity, current_quantity, previous_quantity, total_cost_price, username, date_created, isDeleted, date_modified FROM internal_stock_items as si 
+    INNER JOIN users as u
+		ON si.added_by = u.id 
+    WHERE(isDeleted = 0) ORDER BY internal_item_name ASC;
+    
+    
+    SELECT itemId, internal_item_name, remaining_quantity FROM internal_stock_items
+    WHERE(internal_item_category = "WASHING SOAP");
     
     ALTER TABLE users 
     ADD COLUMN emp_id INT AFTER confirm_password;

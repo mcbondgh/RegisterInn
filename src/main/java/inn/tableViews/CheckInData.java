@@ -13,20 +13,23 @@ public class CheckInData {
     private LocalTime checkin_time;
     private LocalTime due_time;
     private Label check_in_status;
-
     private int allotedTime;
     private int booked_by;
+    private String checkInComment;
     private Button topupButton;
+    private Button checkOutButton;
     private Timestamp date_created;
 
-    public CheckInData(int checkin_id, String roomNo, LocalTime checkin_time, LocalTime due_time, Label check_in_status, int allotedTime, Button topupButton) {
+    public CheckInData(int checkin_id, String roomNo, LocalTime checkin_time, LocalTime due_time, Label check_in_status, String checkInComment, int allotedTime, Button topupButton, Button checkOutButton) {
         this.checkin_id = checkin_id;
         this.roomNo = roomNo;
         this.checkin_time = checkin_time;
         this.due_time = due_time;
         this.check_in_status = check_in_status;
+        this.checkInComment = checkInComment;
         this.allotedTime = allotedTime;
         this.topupButton = topupButton;
+        this.checkOutButton = checkOutButton;
     }
 
     public int getCheckin_id() {
@@ -81,8 +84,17 @@ public class CheckInData {
         return check_in_status;
     }
 
+
     public void setCheck_in_status(Label check_in_status) {
         this.check_in_status = check_in_status;
+    }
+
+    public String getCheckInComment() {
+        return checkInComment;
+    }
+
+    public void setCheckInComment(String checkInComment) {
+        this.checkInComment = checkInComment;
     }
 
     public int getBooked_by() {
@@ -99,6 +111,15 @@ public class CheckInData {
 
     public void setTopupButton(Button button) {
         this.topupButton = button;
+    }
+
+
+    public Button getCheckOutButton() {
+        return checkOutButton;
+    }
+
+    public void setCheckOutButton(Button checkOutButton) {
+        this.checkOutButton = checkOutButton;
     }
 
     public Timestamp getDate_created() {

@@ -23,7 +23,7 @@ public class SysActivator{
         String bisAlias = activationOBJ.businessAlias();
         String key = "";
         Random random = new Random();
-        String alphaNumeric = "abcdefghijkl1234567890MNOPQRSTUVWXYZ";
+        String alphaNumeric = "abcdefghijkl12345MNOPQRSTUVWXYZ67890";
         int charSize = alphaNumeric.length();
         for(int x = 0; x <= 16; x++) {
             key = key.concat(String.valueOf(alphaNumeric.charAt(random.nextInt(charSize))));

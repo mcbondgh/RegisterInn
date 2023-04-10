@@ -13,17 +13,18 @@ public class BookingModel extends MainModel{
 
     //THIS METHOD WHEN INVOKED SHALL INSERT NEW RECORDS INTO THE checkIn TABLE.
 
-    protected  int createNewCheckIn(int room_id, int duration_id, LocalTime checkin_time, LocalTime due_time, Byte check_in_status, int booked_by ) {
+    protected  int createNewCheckIn(int room_id, int duration_id, LocalTime checkin_time, LocalTime due_time, Byte check_in_status, String chechin_comment, int booked_by ) {
         int flag =0;
         try {
-            String insertQuery = "INSERT INTO checkIn(room_id, duration_id, checkin_time, due_time, check_in_status, booked_by) VALUES(?, ?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO checkIn(room_id, duration_id, checkin_time, due_time, check_in_status, checkin_comment, booked_by) VALUES(?, ?, ?, ?, ?, ?, ?)";
             prepare = CONNECTOR().prepareStatement(insertQuery);
             prepare.setInt(1, room_id);
             prepare.setInt(2, duration_id);
             prepare.setTime(3, Time.valueOf(checkin_time));
             prepare.setTime(4, Time.valueOf(due_time));
             prepare.setByte(5, check_in_status);
-            prepare.setInt(6, booked_by);
+            prepare.setString(6, chechin_comment);
+            prepare.setInt(7, booked_by);
 
             flag = prepare.executeUpdate();
 
@@ -78,10 +79,17 @@ public class BookingModel extends MainModel{
         return flag;
     }
 
-    protected  int updateRoomStatus(int roomId) {
+    protected  int createNewCheckout(int checkinId, String guestName, String roomNo, LocalTime checkOutTime, String overTime, int userId ) {
         int flag = 0;
         try {
-            prepare = CONNECTOR().prepareStatement("UPDATE rooms SET isBooked = 1 WHERE (Id = '"+ roomId +"') ");
+            String insertQuery = "INSERT INTO checkout(checkin_id, guestName, roomNo, checkout_time, overtime, checkedout_by) VALUES(?, ?, ?, ?, ?, ?)";
+            prepare = CONNECTOR().prepareStatement(insertQuery);
+            prepare.setInt(1, checkinId);
+            prepare.setString(2, guestName);
+            prepare.setString(3, roomNo);
+            prepare.setTime(4, Time.valueOf(checkOutTime));
+            prepare.setString(5, overTime);
+            prepare.setInt(6, userId);
             flag = prepare.executeUpdate();
         }catch (SQLException ex) {
             logger = new ErrorLogger();
@@ -91,7 +99,29 @@ public class BookingModel extends MainModel{
     }
 
 
+    protected  int updateRoomStatus(int roomId, int statusValue) {
+        int flag = 0;
+        try {
+            prepare = CONNECTOR().prepareStatement("UPDATE rooms SET isBooked = '"+ statusValue + "' WHERE (Id = '"+ roomId +"') ");
+            flag = prepare.executeUpdate();
+        }catch (SQLException ex) {
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+        }
+        return flag;
+    }
 
+    protected  int updateCheckInStatus(int bookingId, int checkInValue) {
+        int flag = 0;
+        try {
+            prepare = CONNECTOR().prepareStatement("UPDATE checkin SET check_in_status = '"+ checkInValue + "' WHERE (checkin_id = '"+ bookingId +"') ");
+            flag = prepare.executeUpdate();
+        }catch (SQLException ex) {
+            logger = new ErrorLogger();
+            logger.log(ex.getMessage());
+        }
+        return flag;
+    }
 
 
 

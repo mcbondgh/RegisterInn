@@ -23,8 +23,6 @@ public class Index extends Homepage implements Initializable {
         private Parent root;
 
 
-
-
     /*******************************************************************************************************************
      INITIALIZER METHOD */
 

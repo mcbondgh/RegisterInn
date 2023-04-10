@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
@@ -12,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1093.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.inventory.Inventory">
    <effect>
       <DropShadow height="8.855" radius="4.63375" spread="0.04" width="11.68">
          <color>
@@ -27,12 +34,12 @@
                <stops>
                   <Stop>
                      <color>
-                        <Color red="0.09058595448732376" green="0.07150000333786011" blue="0.550000011920929" opacity="0.6899999976158142" />
+                        <Color red="0.0941176488995552" green="0.0784313753247261" blue="0.5490196347236633" opacity="0.75" />
                      </color>
                   </Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color red="0.45098039507865906" green="0.6784313917160034" blue="1.0" />
+                        <Color red="0.0927666649222374" green="0.07699999958276749" blue="0.550000011920929" opacity="0.7255329489707947" />
                      </color>
                   </Stop>
                </stops>
@@ -48,6 +55,98 @@
             <Image url="@../../images/stock%20copy.png" />
          </image>
       </ImageView>
+      <TabPane fx:id="stocksControlTabPane" layoutX="-1.0" layoutY="50.0" prefHeight="549.0" prefWidth="1099.0" style="-fx-background-color: #fff; -fx-font-size: 10px; -fx-font-family: poppins; -fx-padding: 1px; -fx-border-color: #fff;">
+         <tabs>
+            <Tab fx:id="makeSalesTab" style="-fx-background-color: #fff; -fx-border-color: #fff; -fx-text-base-color: #18148c; -fx-font-weight: bold; -fx-cursor: hand;" text="Make Sales">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="59.0" prefWidth="253.0" style="-fx-background-color: #e4e3ff; -fx-background-radius: 10;" text="MAKE SALES" textFill="#0c079f">
+                           <font>
+                              <Font name="Poppins Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="makeSalesTab1" style="-fx-background-color: #fff; -fx-border-color: #fff; -fx-text-base-color: #18148c; -fx-font-weight: bold; -fx-cursor: hand;" text="Check Stock Level">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="59.0" prefWidth="253.0" style="-fx-background-color: #e4e3ff; -fx-background-radius: 10;" text="MAKE SALES" textFill="#0c079f">
+                           <font>
+                              <Font name="Poppins Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="requestItemTab" style="-fx-background-color: #fff; -fx-border-color: lightgray; -fx-text-base-color: #18148c; -fx-font-weight: bold; -fx-cursor: hand;" text="Request Item">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="519.0" prefWidth="1093.0" style="-fx-background-color: #f7fbff;">
+                     <children>
+                        <Pane layoutX="8.0" layoutY="14.0" prefHeight="155.0" prefWidth="245.0" style="-fx-background-color: #e4e3ff; -fx-background-radius: 10;">
+                           <children>
+                              <MFXFilterComboBox fx:id="requestComboBox" borderGap="5.0" floatingTextGap="10.0" layoutX="4.0" layoutY="60.0" measureUnitGap="10.0" onAction="#selectedCategoryValueOnAction" popupOffsetY="5.0" prefHeight="44.0" prefWidth="237.0" promptText="Sort By Category" searchText="" style="-fx-background-color: #fff; -fx-border-color: #fff;">
+                                 <font>
+                                    <Font name="Poppins Bold" size="14.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" />
+                                 </padding>
+                              </MFXFilterComboBox>
+                           </children>
+                           <effect>
+                              <DropShadow height="11.27" radius="3.675" width="5.43">
+                                 <color>
+                                    <Color red="0.7719298005104065" green="0.7647823095321655" blue="0.7647823095321655" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Pane>
+                        <Label alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="59.0" prefWidth="224.0" style="-fx-background-color: #e4e3ff; -fx-background-radius: 10;" text="REQUEST AN ITEM" textFill="#18148c">
+                           <font>
+                              <Font name="Poppins Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="requestsTableView" editable="true" fixedCellSize="40.0" layoutX="266.0" layoutY="7.0" onMouseClicked="#requestTableOnMouseClicked" prefHeight="501.0" prefWidth="821.0" style="-fx-font-size: 14; -fx-font-family: poppins; -fx-background-color: #fff;" tableMenuButtonVisible="true">
+                           <columns>
+                              <TableColumn fx:id="requestedItemNameColumn" maxWidth="250.0" minWidth="200.0" prefWidth="198.66665649414062" style="-fx-font-weight: bold;" text="ITEM NAME" />
+                              <TableColumn fx:id="availableQtyColumn" maxWidth="130.0" minWidth="100.0" prefWidth="134.66665649414062" style="-fx-alignment: center;" text="AVAILABLE QTY" />
+                              <TableColumn fx:id="requestedQtyColumn" maxWidth="100.0" minWidth="100.0" prefWidth="87.3333740234375" style="-fx-alignment: center;" text="REQUEST QTY" />
+                              <TableColumn fx:id="makeRequestButtonColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.6666259765625" style="-fx-alignment: center;" text="ACTION" />
+                              <TableColumn fx:id="requestStatusColumn" maxWidth="140.0" minWidth="100.0" prefWidth="163.33331298828125" style="-fx-alignment: center;" text="REQUEST STATUS" />
+                              <TableColumn fx:id="requestDateColumn" maxWidth="130.0" minWidth="100.0" prefWidth="160.6666259765625" text="REQUEST DATE" />
+                           </columns>
+                           <effect>
+                              <DropShadow>
+                                 <color>
+                                    <Color red="0.7368420958518982" green="0.7368420958518982" blue="0.7368420958518982" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="approvedItemTab" style="-fx-background-color: #fff; -fx-border-color: #fff; -fx-text-base-color: #18148c; -fx-font-weight: bold; -fx-cursor: hand;" text="Approved Items">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="59.0" prefWidth="253.0" style="-fx-background-color: #e4e3ff; -fx-background-radius: 10;" text="approved requests" textFill="#0c079f">
+                           <font>
+                              <Font name="Poppins Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
    </children>
    <opaqueInsets>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

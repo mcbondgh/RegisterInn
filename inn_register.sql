@@ -192,6 +192,19 @@ CREATE TABLE productPrices(
     dateModified DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE internal_stock_items(
+	itemId INT AUTO_INCREMENT PRIMARY KEY,
+    internal_item_name VARCHAR(255),
+    internal_item_category VARCHAR(100), 
+    remaining_quantity INT NOT NULL,
+    current_quantity INT NOT NULL,
+    previous_quantity INT NOT NULL,
+    total_cost_price DECIMAL(10,2),
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    added_by INT,
+    isDeleted BOOLEAN DEFAULT FALSE,
+    date_modified DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
 CREATE TABLE sentMessages(
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -230,7 +243,19 @@ CREATE TABLE checkIn(
     checkin_time TIME, 
     due_time TIME, 
     check_in_status BOOLEAN DEFAULT FALSE,
+	checkin_comment TEXT,
     booked_by int,
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE checkout(
+	checkout_id INT AUTO_INCREMENT PRIMARY KEY,
+    checkin_id INT,
+    guestName VARCHAR(100),
+    roomNo VARCHAR(100),
+    checkout_time TIME,
+    overtime VARCHAR(50),
+    checkedout_by INT,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -246,6 +271,8 @@ CREATE TABLE payment_Transactions(
     added_by INT,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+
 
 
 

@@ -105,4 +105,11 @@
          </children>
       </Pane>
    </children>
+   <effect>
+      <DropShadow>
+         <color>
+            <Color red="0.6842105388641357" green="0.6842105388641357" blue="0.6842105388641357" />
+         </color>
+      </DropShadow>
+   </effect>
 </AnchorPane>

@@ -25,7 +25,8 @@ module inn {
     exports inn.prompts;
     exports inn.tableViews;
     exports inn.enumerators;
-    exports inn.Controllers.extraTime;
+    exports inn.Controllers.bookingPops;
+    exports inn.Controllers.inventory;
 
     opens inn.Controllers;
     opens inn.Controllers.messagebox;
@@ -39,7 +40,8 @@ module inn {
     exports inn.Controllers.configurations;
     opens inn.Controllers.configurations;
     opens inn.enumerators;
-    opens inn.Controllers.extraTime;
+    opens inn.Controllers.bookingPops;
+    opens inn.Controllers.inventory;
 
 
 

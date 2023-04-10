@@ -49,7 +49,7 @@
             </Label>
             <Label fx:id="occupiedRoomsLabel" layoutX="14.0" layoutY="32.0" prefHeight="35.0" prefWidth="122.0" text="1000" textFill="#1bc97e">
                <font>
-                  <Font name="Poppins Bold" size="38.0" />
+                  <Font name="Poppins Bold" size="50.0" />
                </font>
             </Label>
             <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="136.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
@@ -84,7 +84,7 @@
             </Label>
             <Label fx:id="availableRoomsLabel" layoutX="19.0" layoutY="28.0" prefHeight="35.0" prefWidth="122.0" text="1000" textFill="#4cbfe2">
                <font>
-                  <Font name="Poppins Bold" size="38.0" />
+                  <Font name="Poppins Bold" size="50.0" />
                </font>
             </Label>
             <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="139.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">

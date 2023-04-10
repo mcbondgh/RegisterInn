@@ -1,7 +1,8 @@
 package inn.Controllers.booking;
 
+import inn.Controllers.bookingPops.CheckoutController;
+import inn.Controllers.bookingPops.ExtraTimeController;
 import inn.Controllers.dashboard.Homepage;
-import inn.Controllers.extraTime.ExtraTimeController;
 import inn.enumerators.PaymentMethods;
 import inn.models.BookingModel;
 import inn.multiStage.MultiStages;
@@ -18,10 +19,7 @@ import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -30,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -45,16 +44,21 @@ public class Booking extends BookingModel implements Initializable {
         fillDurationComBox();
         fillIdTypeComboBox();
         populateCheckInTable();
+        displayFreeRoomsLabel.setText(String.valueOf(countFreeRooms()));
+        displayOccupiedRoomsLabel.setText(String.valueOf(countBookedRooms()));
     }
 
     /*******************************************************************************************************************
      **********************************************  FXML NODE EJECTION  ***********************************************/
     @FXML private MFXLegacyComboBox<String> paymentMethodComboBox, idCombobox, roomNumberComboBox, durationComboBox;
     @FXML private MFXTextField guestNameField, guestNumberField, idNumberField;
-    @FXML private Label changeField, displayBillField;
+    @FXML private Label changeField, displayBillField, displayFreeRoomsLabel, displayOccupiedRoomsLabel;
     @FXML private TextField cashField, momoPayField, transactionIdField, allocatedtimeField;
     @FXML private Pane cashPane;
     @FXML private MFXButton saveBookingButton, cancelBookingField;
+    @FXML private TextArea checkInCommentBox;
+
+
 
 
     /*******************************************************************************************************************
@@ -67,10 +71,11 @@ public class Booking extends BookingModel implements Initializable {
     @FXML private TableColumn<CheckInData, Label> statusColumn;
     @FXML private  TableColumn<CheckInData, Button> actionColumnField;
     @FXML private  TableColumn<CheckInData, Integer> hoursColumn;
+    @FXML private  TableColumn<CheckInData, Button> checkOutButtonColumn;
 
 
     /*******************************************************************************************************************
-     **********************************************  TRUE OR FALSE STATEMENTS  *****************************************/
+     **********************************************  TRUE OR FALSE STATEMENTS FOR CHECKIN *****************************/
     boolean isCashFieldEmpty() {
         return cashField.getText().isBlank();
     }
@@ -99,7 +104,7 @@ public class Booking extends BookingModel implements Initializable {
 
 
     /*******************************************************************************************************************
-     **********************************************  IMPLEMENTATION OF OTHER METHODS  **********************************/
+     **********************************************  IMPLEMENTATION OF OTHER METHODS FOR CHECKIN ***********************/
     void fillPaymentMethodComboBox() {
         String[] constants = new String[]{"ALL METHODS", "CASH", "MOBILE MONEY"};
         for (String items : constants) {
@@ -156,6 +161,7 @@ public class Booking extends BookingModel implements Initializable {
         transactionIdField.setText(String.valueOf(0));
         changeField.setText(String.valueOf(0.00));
         displayBillField.setText(String.valueOf(0.00));
+        checkInCommentBox.clear();
     }
     @FXML void inputValuesChanged() {
         try {
@@ -176,18 +182,23 @@ public class Booking extends BookingModel implements Initializable {
         dueTimeColumn.setCellValueFactory(new PropertyValueFactory<>("due_time"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("check_in_status"));
         hoursColumn.setCellValueFactory(new PropertyValueFactory<>("allotedTime"));
+        checkOutButtonColumn.setCellValueFactory(new PropertyValueFactory<>("checkOutButton"));
         actionColumnField.setCellValueFactory(new PropertyValueFactory<>("topupButton"));
         checkInTableView.setItems(fetchCheckInData());
     }
-    private void refreshCheckInTable() {
+    public void refreshCheckInTable() {
         checkInTableView.getItems().clear();
         populateCheckInTable();
     }
 
+    public String formatDate(LocalTime localTime) {
+        DateTimeFormatter checkInFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+        return localTime.format(checkInFormatter);
+    }
 
 
     /*******************************************************************************************************************
-     ********************************************** IMPLEMENTATION OF ACTION EVENT METHODS *****************************/
+     ********************************************** IMPLEMENTATION OF ACTION EVENT METHODS FOR CHECKIN ****************/
     @FXML PaymentMethods selectedPaymentMethod() {
         PaymentMethods method = PaymentMethods.ALL;
         try {
@@ -312,6 +323,7 @@ public class Booking extends BookingModel implements Initializable {
         double momo = Double.parseDouble(momoPayField.getText());
         long transactionId = Long.parseLong(transactionIdField.getText());
         int allocatedTime = Integer.parseInt(allocatedtimeField.getText());
+        String checkinComment = checkInCommentBox.getText();
 
         double change = Double.parseDouble(changeField.getText());
         double totalAmount = Double.parseDouble(displayBillField.getText());
@@ -324,10 +336,10 @@ public class Booking extends BookingModel implements Initializable {
             userAlerts = new UserAlerts("SAVE BOOKING", "ARE YOU SURE YOU WANT TO SAVE YOUR CURRENT BOOKING?", "please confirm YES, else CANCEL to abort");
             if (userAlerts.confirmationAlert()) {
                 if(selectedPaymentMethod() == PaymentMethods.CASH) {
-                    flag = createNewCheckIn(roomId, durationId, checkInTime, checkoutTime, (byte) 1, userId);
+                    flag = createNewCheckIn(roomId, durationId, checkInTime, checkoutTime,  (byte) 1, checkinComment ,userId);
                     flag = flag +  createNewGuest(countCheckInList(), guestName, mobileNumber, idType, idNumber, userId);
                     flag = flag + createNewPayment(countCheckInList(), paymentMethod, cash, 0.00, 0, totalAmount, change, userId);
-                    flag = flag + updateRoomStatus(roomId);
+                    flag = flag + updateRoomStatus(roomId, 1);
                     if (flag == 4) {
                         notify.successNotification("SAVED", "BOOKING SAVED SUCCESSFULLY");
                         resetFields();
@@ -336,10 +348,10 @@ public class Booking extends BookingModel implements Initializable {
                         notify.errorNotification("FAILED", "YOUR REQUEST TO SAVE CURRENT BOOKING FAILED.");
                     }
                 } else if(selectedPaymentMethod() == PaymentMethods.MOMO) {
-                    flag = createNewCheckIn(roomId, durationId, checkInTime, checkoutTime, (byte) 1, userId);
+                    flag = createNewCheckIn(roomId, durationId, checkInTime, checkoutTime, (byte) 1,checkinComment, userId);
                     flag = flag +  createNewGuest(countCheckInList(), guestName, mobileNumber, idType, idNumber, userId);
                     flag = flag + createNewPayment(countCheckInList(), paymentMethod, 0.00, momo, transactionId, totalAmount, change, userId);
-                    flag = flag + updateRoomStatus(roomId);
+                    flag = flag + updateRoomStatus(roomId, 1);
                     if (flag == 4) {
                         notify.successNotification("SAVED", "BOOKING SAVED SUCCESSFULLY");
                         resetFields();
@@ -348,10 +360,10 @@ public class Booking extends BookingModel implements Initializable {
                         notify.errorNotification("FAILED", "YOUR REQUEST TO SAVE CURRENT BOOKING FAILED.");
                     }
                 } else {
-                    flag = createNewCheckIn(roomId, durationId, checkInTime, checkoutTime, (byte) 1, userId);
+                    flag = createNewCheckIn(roomId, durationId, checkInTime, checkoutTime, (byte) 1, checkinComment, userId);
                     flag = flag +  createNewGuest(countCheckInList(), guestName, mobileNumber, idType, idNumber, userId);
                     flag = flag + createNewPayment(countCheckInList(), paymentMethod, cash, momo, transactionId, totalAmount, change, userId);
-                    flag = flag + updateRoomStatus(roomId);
+                    flag = flag + updateRoomStatus(roomId, 1);
                     if (flag == 4) {
                         notify.successNotification("SAVED", "BOOKING SAVED SUCCESSFULLY");
                         resetFields();
@@ -365,40 +377,63 @@ public class Booking extends BookingModel implements Initializable {
     }
     @FXML void checkInTableClicked() {
         for (CheckInData items : checkInTableView.getItems()) {
-            items.getTopupButton().setOnMouseClicked(event -> {
-                try {
+            String bookedStatus = items.getCheck_in_status().getText();
+            if (bookedStatus.equals("Checked Out")) {
+                items.getCheckOutButton().setDisable(true);
+                items.getTopupButton().setDisable(true);
+            } else {
+                items.getTopupButton().setOnMouseClicked(event -> {
+                    try {
+                        String roomNo = items.getRoomNo();
+                        int bookingId = items.getCheckin_id();
 
-                    String roomNo = items.getRoomNo();
-                    int bookingId = items.getCheckin_id();
+                        String guestName = getGuestNameByCheckInId(bookingId);
 
-                    String guestName = getGuestNameByCheckInId(bookingId);
+                        ExtraTimeController.bookingId = bookingId;
+                        ExtraTimeController.guestName = guestName;
+                        ExtraTimeController.roomNumber = roomNo;
 
-                    ExtraTimeController.bookingId = bookingId;
-                    ExtraTimeController.guestName = guestName;
-                    ExtraTimeController.roomNumber = roomNo;
+                        multiStages.extraTimeStage();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
 
-                    multiStages.extraTimeStage();
+                items.getCheckOutButton().setOnMouseClicked(MouseEvent -> {
+                    try {
+                        int bookingId = checkInTableView.getSelectionModel().getSelectedItem().getCheckin_id();
+                        String clientName = getGuestNameByCheckInId(bookingId);
+                        String roomNumber = checkInTableView.getSelectionModel().getSelectedItem().getRoomNo();
 
+                        LocalTime checkInTime = checkInTableView.getSelectionModel().getSelectedItem().getCheckin_time();
+                        LocalTime dueTimeValue = checkInTableView.getSelectionModel().getSelectedItem().getDue_time();
+                        LocalTime checkOutTime = LocalTime.now();
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+                        CheckoutController.guestName = clientName;
+                        CheckoutController.roomNo = roomNumber;
+                        CheckoutController.checkinTime = formatDate(checkInTime);
+                        CheckoutController.dueTime = formatDate(dueTimeValue);
+                        CheckoutController.bookingId = bookingId;
+                        CheckoutController.checkoutTime = checkOutTime.withNano(0).toString();
+
+                        int overtimeValue = dueTimeValue.compareTo(checkOutTime);
+                        if (overtimeValue <= 0) {
+                           int hour = checkOutTime.getHour() - dueTimeValue.getHour();
+                           int min = checkOutTime.getMinute() - dueTimeValue.getMinute();
+                           int sec = checkOutTime.getSecond() - dueTimeValue.getSecond();
+                           CheckoutController.overTime = hour + ":" + min + ":" + sec;
+                        } else {
+                            CheckoutController.overTime = "00:00:00";
+                        }
+
+                        multiStages.checkOutStage();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
