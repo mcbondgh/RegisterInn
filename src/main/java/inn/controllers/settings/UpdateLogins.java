@@ -1,6 +1,6 @@
-package inn.Controllers.settings;
+package inn.controllers.settings;
 
-import inn.Controllers.configurations.SysActivator;
+import inn.controllers.configurations.SysActivator;
 import inn.models.UserLoginsModel;
 import inn.multiStage.MultiStages;
 import javafx.fxml.FXML;

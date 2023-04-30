@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
@@ -28,7 +30,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.booking.Booking">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.booking.Booking">
    <effect>
       <DropShadow height="8.855" radius="4.63375" spread="0.04" width="11.68">
          <color>
@@ -43,7 +45,7 @@
                <stops>
                   <Stop>
                      <color>
-                        <Color red="0.6700000166893005" green="0.12060000002384186" blue="0.5573323965072632" />
+                        <Color red="0.6705882549285889" green="0.12156862765550613" blue="0.5568627715110779" />
                      </color>
                   </Stop>
                   <Stop offset="1.0">
@@ -283,6 +285,18 @@
                               </DropShadow>
                            </effect>
                         </Pane>
+                        <Pane layoutX="30.0" layoutY="135.0" prefHeight="200.0" prefWidth="225.0" style="-fx-background-color: #fff; -fx-background-radius: 8px;">
+                           <effect>
+                              <DropShadow>
+                                 <color>
+                                    <Color red="0.9035087823867798" green="0.9035087823867798" blue="0.9035087823867798" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <children>
+                              <MFXCheckbox fx:id="sendMessageCheckBox" layoutX="22.0" layoutY="14.0" text="Send Guest Message" />
+                           </children>
+                        </Pane>
                      </children>
                   </AnchorPane>
             </content>
@@ -326,17 +340,43 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #f6fcff;">
                      <children>
-                        <MFXLegacyTableView layoutX="7.0" layoutY="65.0" prefHeight="431.0" prefWidth="1077.0" />
+                        <MFXLegacyTableView fx:id="summaryTabelView" fixedCellSize="35.0" layoutX="7.0" layoutY="65.0" prefHeight="431.0" prefWidth="1077.0" tableMenuButtonVisible="true">
+                           <columns>
+                              <TableColumn prefWidth="58.6666898727417" text="BOOK ID" />
+                              <TableColumn prefWidth="144.66661834716797" text="GUEST NAME" />
+                              <TableColumn prefWidth="144.66661834716797" text="MOBILE NUMBER" />
+                              <TableColumn prefWidth="92.0" text="ROOM NO." />
+                              <TableColumn prefWidth="107.33334350585938" text="BOOKING TYPE" />
+                              <TableColumn prefWidth="107.33334350585938" text="PAYMENT MTHD" />
+                              <TableColumn prefWidth="107.33334350585938" text="AMOUNT" />
+                              <TableColumn prefWidth="107.33334350585938" text="CHECK IN TIME" />
+                              <TableColumn prefWidth="107.33334350585938" text="CHECK OUT TIME" />
+                              <TableColumn prefWidth="107.33334350585938" text="NOTES" />
+                              <TableColumn prefWidth="107.33334350585938" text="BOOKED BY" />
+                              <TableColumn prefWidth="107.33334350585938" text="BOOKING DATE" />
+                           </columns></MFXLegacyTableView>
                         <Label alignment="CENTER" layoutX="7.0" layoutY="10.0" prefHeight="44.0" prefWidth="215.0" style="-fx-background-color: #b32d53;" text="Today's Booking Summary" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Roboto Black" size="14.0" />
                            </font>
                         </Label>
+                        <MFXDatePicker fx:id="startDatePicker" allowEdit="false" layoutX="242.0" layoutY="13.0" prefHeight="38.0" prefWidth="142.0" promptText="Start Date">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </MFXDatePicker>
+                        <MFXDatePicker fx:id="endDatePicker" allowEdit="false" layoutX="404.0" layoutY="13.0" prefHeight="38.0" prefWidth="142.0" promptText="End Date">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </MFXDatePicker>
+                        <MFXButton fx:id="generateSummaryButton" layoutX="568.0" layoutY="22.0" style="-fx-background-color: #b32d53;" text="Generate" textFill="WHITE" />
                      </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
       </TabPane>
+      <MFXButton fx:id="refreshBookingTables" layoutX="990.0" layoutY="54.0" style="-fx-background-color: #b32d53;" text="🔁 Refresh" textFill="WHITE" />
    </children>
    <opaqueInsets>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

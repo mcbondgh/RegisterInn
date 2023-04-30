@@ -1,4 +1,4 @@
-package inn.Controllers.settings;
+package inn.controllers.settings;
 
 import inn.StartInn;
 import inn.models.ManageRoomsModel;

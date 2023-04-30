@@ -1,6 +1,6 @@
-package inn.Controllers.settings;
+package inn.controllers.settings;
 
-import inn.Controllers.configurations.SysActivator;
+import inn.controllers.configurations.SysActivator;
 import inn.models.MainModel;
 import inn.models.InnActivationModel;
 import inn.multiStage.MultiStages;

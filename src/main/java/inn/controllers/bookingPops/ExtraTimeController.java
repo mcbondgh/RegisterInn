@@ -1,4 +1,4 @@
-package inn.Controllers.bookingPops;
+package inn.controllers.bookingPops;
 
 import inn.enumerators.PaymentMethods;
 import inn.models.ExtraTimeModel;

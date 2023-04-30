@@ -1,4 +1,4 @@
-package inn.Controllers.report;
+package inn.controllers.report;
 
 public class Report {
 }

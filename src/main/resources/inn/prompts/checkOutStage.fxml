@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="377.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.bookingPops.CheckoutController">
+   <children>
+      <Pane layoutX="18.0" layoutY="46.0" prefHeight="350.0" prefWidth="336.0" style="-fx-background-color: #fff; -fx-border-color: #eee; -fx-background-radius: 10px; -fx-border-width: 2; -fx-border-radius: 10px;">
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.9385964870452881" green="0.9385964870452881" blue="0.9385964870452881" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <TextField fx:id="guestNameField" editable="false" layoutX="38.0" layoutY="32.0" prefHeight="35.0" prefWidth="263.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </TextField>
+            <Label layoutX="38.0" layoutY="13.0" text="Guest Name">
+               <font>
+                  <Font name="Roboto" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="checkInTimeField" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="149.0" prefHeight="46.0" prefWidth="131.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="#575757">
+               <font>
+                  <Font name="Roboto Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="133.0" text="Check In Time">
+               <font>
+                  <Font name="Roboto" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="DueTimeField" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="149.0" prefHeight="46.0" prefWidth="121.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="#575757">
+               <font>
+                  <Font name="Roboto Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="182.0" layoutY="133.0" text="Due Time">
+               <font>
+                  <Font name="Roboto" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="overtimeField" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="221.0" prefHeight="46.0" prefWidth="263.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font name="Roboto Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="205.0" text="Overtime">
+               <font>
+                  <Font name="Roboto" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="roomNoField" editable="false" layoutX="35.0" layoutY="90.0" prefHeight="35.0" prefWidth="131.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </TextField>
+            <Label layoutX="35.0" layoutY="74.0" text="Room No.">
+               <font>
+                  <Font name="Roboto" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="bookingIdField" editable="false" layoutX="179.0" layoutY="89.0" prefHeight="35.0" prefWidth="121.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </TextField>
+            <Label layoutX="185.0" layoutY="74.0" text="Booking Id">
+               <font>
+                  <Font name="Roboto" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="checkoutTimeField" alignment="CENTER" contentDisplay="CENTER" layoutX="33.0" layoutY="295.0" prefHeight="46.0" prefWidth="263.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="#626262">
+               <font>
+                  <Font name="Roboto Bold" size="32.0" />
+               </font>
+            </Label>
+            <Label layoutX="119.0" layoutY="279.0" text="Checkout Time" textFill="#ae0000">
+               <font>
+                  <Font name="Roboto Bold" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label layoutX="114.0" layoutY="14.0" text="Checkout Guest" textFill="#777777">
+         <font>
+            <Font name="Roboto Bold" size="20.0" />
+         </font>
+      </Label>
+      <MFXButton fx:id="cancelButton" layoutX="192.0" layoutY="405.0" onAction="#closeStage" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: #eee;" text="Cancel" textFill="#4a4848">
+         <font>
+            <Font name="Poppins Regular" size="14.0" />
+         </font>
+      </MFXButton>
+      <MFXButton fx:id="checkoutButton" layoutX="103.0" layoutY="408.0" onAction="#checkoutButtonClicked" prefHeight="26.0" prefWidth="76.0" rippleColor="#cc2700" style="-fx-background-color: #ff0000;" text="Checkout" textFill="WHITE">
+         <font>
+            <Font name="Poppins Regular" size="13.0" />
+         </font>
+      </MFXButton>
+   </children>
+</AnchorPane>

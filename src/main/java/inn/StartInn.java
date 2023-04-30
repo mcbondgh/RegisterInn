@@ -19,6 +19,7 @@ public class StartInn extends Application implements Initializable {
     public void start(Stage stage) throws IOException {
         MultiStages multiStages = new MultiStages();
         try {
+            //WE SHALL MAKE SOME NEW CHANGES HERE LATER IN THE PROJECT...
             multiStages.LoginForm();
         }catch (IndexOutOfBoundsException e) {
             ErrorLogger errorLogger = new ErrorLogger();
@@ -27,7 +28,7 @@ public class StartInn extends Application implements Initializable {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         launch();
     }
 

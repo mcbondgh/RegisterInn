@@ -1,11 +1,12 @@
-package inn.Controllers.dashboard;
+package inn.controllers.dashboard;
 
 import inn.StartInn;
-import inn.models.MainModel;
 import inn.models.InnActivationModel;
+import inn.models.MainModel;
 import inn.multiStage.MultiStages;
 import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
 import io.github.palexdev.materialfx.controls.MFXToggleButton;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -63,6 +65,7 @@ public class Homepage extends MainModel implements Initializable{
 
 
 
+
 //    General general = new General();
     /*******************************************************************************************************************
      IMPLEMENTATION OF INITIALIZER METHOD*/
@@ -70,6 +73,12 @@ public class Homepage extends MainModel implements Initializable{
         activeUserLabel.setText(activeUsername);userFlag.setText(activeUserLabel.getText());
         setDashboardVariables();
         beepActiveUser();
+        notificationIcon.setHeaderTextProperty("INN NOTIFIER");
+        for (String item : fetchUsernames()) {
+            notificationIcon.setUserData(item);
+        }
+
+
     }
     public void checkFLOW(){
 //        timer.scheduleAtFixedRate(task,0,1000);
@@ -91,7 +100,11 @@ public class Homepage extends MainModel implements Initializable{
      SPECIAL METHODS IMPLEMENTATION*/
     public void FlipView(String fxmlFileName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource(fxmlFileName));
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(2000),displayContainer);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1.0);
         displayContainer.setCenter(fxmlLoader.load());
+        fadeTransition.play();
     }
 
     /*******************************************************************************************************************
@@ -185,7 +198,8 @@ public class Homepage extends MainModel implements Initializable{
         }
     }
     public void updateBtnAction() throws IOException {
-        multiStagesOBJ.UpdateLoginDetails();
+        FlipView("Modules/settings/updateUserLogin.fxml");
+//        multiStagesOBJ.UpdateLoginDetails();
     }
 
 

@@ -1,6 +1,6 @@
-package inn.Controllers.messagebox;
+package inn.controllers.messagebox;
 
-import inn.Controllers.dashboard.Homepage;
+import inn.controllers.dashboard.Homepage;
 import inn.ErrorLogger;
 import inn.StartInn;
 import inn.models.MainModel;
@@ -38,7 +38,6 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
     UserAlerts userAlerts;
     UserNotification notify = new UserNotification();
     ErrorLogger logger;
-    
 
     /*******************************************************************************************************************
      *                                              FXLM NODE EJECTION.

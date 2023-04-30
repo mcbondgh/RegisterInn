@@ -1,4 +1,4 @@
-package inn.Controllers.settings;
+package inn.controllers.settings;
 
 import inn.threads.NumberCounterTask;
 import io.github.palexdev.materialfx.controls.MFXProgressBar;

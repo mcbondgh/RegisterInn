@@ -1,19 +1,18 @@
-package inn.Controllers.booking;
+package inn.controllers.booking;
 
-import inn.Controllers.bookingPops.CheckoutController;
-import inn.Controllers.bookingPops.ExtraTimeController;
-import inn.Controllers.dashboard.Homepage;
+import inn.controllers.bookingPops.CheckoutController;
+import inn.controllers.bookingPops.ExtraTimeController;
+import inn.controllers.dashboard.Homepage;
 import inn.enumerators.PaymentMethods;
 import inn.models.BookingModel;
 import inn.multiStage.MultiStages;
 import inn.prompts.UserAlerts;
 import inn.prompts.UserNotification;
-import inn.tableViews.CheckInData;
-import inn.tableViews.IdTypesData;
-import inn.tableViews.RoomPricesData;
-import inn.tableViews.RoomsData;
+import inn.smsApi.SendMessage;
+import inn.tableViews.*;
 import inn.threads.BookingTimeGenerator;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
@@ -38,6 +37,7 @@ public class Booking extends BookingModel implements Initializable {
     MultiStages multiStages = new MultiStages();
     BookingTimeGenerator bookingTimeGenerator;
     ExtraTimeController extraTimeController = new ExtraTimeController();
+    SendMessage sendMessage;
 
     public void initialize(java.net.URL url, ResourceBundle resourceBundle) {
         fillPaymentMethodComboBox();
@@ -57,6 +57,7 @@ public class Booking extends BookingModel implements Initializable {
     @FXML private Pane cashPane;
     @FXML private MFXButton saveBookingButton, cancelBookingField;
     @FXML private TextArea checkInCommentBox;
+    @FXML private MFXCheckbox sendMessageCheckBox;
 
 
 
@@ -72,6 +73,14 @@ public class Booking extends BookingModel implements Initializable {
     @FXML private  TableColumn<CheckInData, Button> actionColumnField;
     @FXML private  TableColumn<CheckInData, Integer> hoursColumn;
     @FXML private  TableColumn<CheckInData, Button> checkOutButtonColumn;
+
+
+    /*******************************************************************************************************************
+     **********************************************  CHECK-IN TABLEVIEW ITEMS ******************************************/
+    @FXML private MFXLegacyTableView<CheckInData> summaryTabelView;
+
+
+
 
 
     /*******************************************************************************************************************
@@ -101,10 +110,13 @@ public class Booking extends BookingModel implements Initializable {
     boolean isPaymentMethodEmpty() {
         return paymentMethodComboBox.getValue().isEmpty();
     }
+    boolean isSendMessageChecked() {
+        return sendMessageCheckBox.isSelected();
+    }
 
 
     /*******************************************************************************************************************
-     **********************************************  IMPLEMENTATION OF OTHER METHODS FOR CHECKIN ***********************/
+     **********************************************  IMPLEMENTATION OF OTHER METHODS FOR CHECK-IN ***********************/
     void fillPaymentMethodComboBox() {
         String[] constants = new String[]{"ALL METHODS", "CASH", "MOBILE MONEY"};
         for (String items : constants) {
@@ -195,10 +207,24 @@ public class Booking extends BookingModel implements Initializable {
         DateTimeFormatter checkInFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         return localTime.format(checkInFormatter);
     }
-
+    void sendMessageCheckBoxChecked() {
+        String guestMobileNumber = guestNumberField.getText();
+        String body = "";
+            for (MessageTemplatesData item : fetchMessageTemplates()) {
+                if (item.getTemplateTitle().equalsIgnoreCase("CHECK IN")) {
+                    body = item.getTemplateBody();
+                    break;
+                }
+            }
+            if (body.contains("[NAME]")) {
+                String newMessage  = body.replace("[NAME]", guestNameField.getText());
+                sendMessage = new SendMessage(guestMobileNumber, newMessage);
+                sendMessage.submitMessage();
+            }
+    }
 
     /*******************************************************************************************************************
-     ********************************************** IMPLEMENTATION OF ACTION EVENT METHODS FOR CHECKIN ****************/
+     ********************************************** IMPLEMENTATION OF ACTION EVENT METHODS FOR CHECK-IN ****************/
     @FXML PaymentMethods selectedPaymentMethod() {
         PaymentMethods method = PaymentMethods.ALL;
         try {
@@ -372,8 +398,10 @@ public class Booking extends BookingModel implements Initializable {
                         notify.errorNotification("FAILED", "YOUR REQUEST TO SAVE CURRENT BOOKING FAILED.");
                     }
                 }
+                if (isSendMessageChecked()) {
+                    sendMessageCheckBoxChecked();
+                }
             }
-
     }
     @FXML void checkInTableClicked() {
         for (CheckInData items : checkInTableView.getItems()) {
@@ -434,8 +462,6 @@ public class Booking extends BookingModel implements Initializable {
             }
         }
     }
-
-
 
 
 

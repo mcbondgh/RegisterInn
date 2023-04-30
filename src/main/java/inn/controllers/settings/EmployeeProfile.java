@@ -1,6 +1,6 @@
-package inn.Controllers.settings;
+package inn.controllers.settings;
 
-import inn.Controllers.configurations.DefPassword;
+import inn.controllers.configurations.DefPassword;
 import inn.models.EmpProfileModel;
 import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;

@@ -1,7 +1,7 @@
-package inn.Controllers;
+package inn.controllers;
 
 
-import inn.Controllers.dashboard.Homepage;
+import inn.controllers.dashboard.Homepage;
 import inn.ErrorLogger;
 import inn.models.MainModel;
 import inn.multiStage.MultiStages;

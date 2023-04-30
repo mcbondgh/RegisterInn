@@ -8,10 +8,7 @@ import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -855,9 +852,8 @@ public class MainModel extends DatabaseConfiguration {
     public ObservableList<SentMessagesData> getAllSentMessages() {
         ObservableList<SentMessagesData> sentMessages = FXCollections.observableArrayList();
         try {
-            String selectQuery = " SELECT sm.id, mobileNumber, messageTitle, messageBody, messageStatus, balance, username, sentDate FROM sentmessages AS sm\n" +
-                    "    INNER JOIN users AS us\n" +
-                    "    ON sm.sendBy = us.id;";
+            String selectQuery = "SELECT sm.id, mobileNumber, messageTitle, messageBody, messageStatus, balance, username, sentDate FROM sentmessages AS sm\n" +
+                    "INNER JOIN users AS us ON sm.sendBy = us.id ORDER BY sm.id DESC;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while (result.next()) {
@@ -1004,6 +1000,44 @@ public class MainModel extends DatabaseConfiguration {
         } catch (Exception e){ e.printStackTrace();}
         return outcome;
     }
+
+
+    public void getCheckInSummary(DatePicker startDate, DatePicker endDate) {
+        try  {
+            String select = "SELECT ci.checkin_id, guest_name, guest_number, r.roomNo, rp.name, pt.payment_method, total_bill, checkin_time, co.checkout_time, checkin_comment, username, ci.date_created FROM guests AS g\n" +
+                    "JOIN checkin as ci \n" +
+                    "\tON ci.checkin_id = g.checkin_id\n" +
+                    "JOIN rooms as r\n" +
+                    "\tON ci.room_id = r.id\n" +
+                    "JOIN roomprices as rp\n" +
+                    "\tON duration_id = rp.id\n" +
+                    "JOIN payment_transaction as pt\n" +
+                    "\tON ci.checkin_id = pt.checkin_id\n" +
+                    "JOIN checkout AS co\n" +
+                    "\tON ci.checkin_id = co.checkin_id\n" +
+                    "JOIN users as u\n" +
+                    "\tON ci.booked_by = u.id " +
+                    "WHERE ci.date_created BETWEEN DATE('"+startDate+"' AND '"+endDate+"')";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(select);
+            while(result.next()) {
+                int checkinID = result.getInt("ci.checkin_id");
+                String guestName = result.getString("guest_name");
+                String guestNumber = result.getString("guest_number");
+                String roomNo = result.getString("r.roomNo");
+                String bookingType = result.getString("rp.name");
+                String paymentMethod = result.getString("pt.paymentMethod");
+                double amount = result.getDouble("total_bill");
+                LocalTime checkinTime = result.getTime("checkin_time").toLocalTime();
+                LocalTime checkoutTime = result.getTime("co.checkout_time").toLocalTime();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 //    public static void main(String[] args) throws SQLException {
 //        DbConnection con = new DbConnection();

@@ -1,4 +1,4 @@
-package inn.Controllers.configurations;
+package inn.controllers.configurations;
 
 public class DefPassword extends SysActivator{
     public DefPassword() {}

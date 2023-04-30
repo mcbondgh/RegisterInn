@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1093.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.inventory.Inventory">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1093.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.inventory.Inventory">
    <effect>
       <DropShadow height="8.855" radius="4.63375" spread="0.04" width="11.68">
          <color>
@@ -89,9 +89,9 @@
                      <children>
                         <Pane layoutX="8.0" layoutY="14.0" prefHeight="155.0" prefWidth="245.0" style="-fx-background-color: #e4e3ff; -fx-background-radius: 10;">
                            <children>
-                              <MFXFilterComboBox fx:id="requestComboBox" borderGap="5.0" floatingTextGap="10.0" layoutX="4.0" layoutY="60.0" measureUnitGap="10.0" onAction="#selectedCategoryValueOnAction" popupOffsetY="5.0" prefHeight="44.0" prefWidth="237.0" promptText="Sort By Category" searchText="" style="-fx-background-color: #fff; -fx-border-color: #fff;">
+                              <MFXFilterComboBox fx:id="requestComboBox" borderGap="5.0" floatingTextGap="10.0" layoutX="4.0" layoutY="60.0" measureUnitGap="10.0" onAction="#selectedCategoryValueOnAction" popupOffsetY="5.0" prefHeight="44.0" prefWidth="237.0" promptText="Sort By Category" scrollOnOpen="true" searchText="" selectable="true" style="-fx-background-color: #fff; -fx-border-color: #fff;">
                                  <font>
-                                    <Font name="Poppins Bold" size="14.0" />
+                                    <Font name="Poppins Bold" size="16.0" />
                                  </font>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" />
@@ -115,10 +115,10 @@
                            <columns>
                               <TableColumn fx:id="requestedItemNameColumn" maxWidth="250.0" minWidth="200.0" prefWidth="198.66665649414062" style="-fx-font-weight: bold;" text="ITEM NAME" />
                               <TableColumn fx:id="availableQtyColumn" maxWidth="130.0" minWidth="100.0" prefWidth="134.66665649414062" style="-fx-alignment: center;" text="AVAILABLE QTY" />
+                              <TableColumn fx:id="requestStatusColumn" maxWidth="140.0" minWidth="100.0" prefWidth="163.33331298828125" style="-fx-alignment: center;" text="REQUEST STATUS" />
+                              <TableColumn fx:id="requestDateColumn" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" text="REQUEST DATE" />
                               <TableColumn fx:id="requestedQtyColumn" maxWidth="100.0" minWidth="100.0" prefWidth="87.3333740234375" style="-fx-alignment: center;" text="REQUEST QTY" />
                               <TableColumn fx:id="makeRequestButtonColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.6666259765625" style="-fx-alignment: center;" text="ACTION" />
-                              <TableColumn fx:id="requestStatusColumn" maxWidth="140.0" minWidth="100.0" prefWidth="163.33331298828125" style="-fx-alignment: center;" text="REQUEST STATUS" />
-                              <TableColumn fx:id="requestDateColumn" maxWidth="130.0" minWidth="100.0" prefWidth="160.6666259765625" text="REQUEST DATE" />
                            </columns>
                            <effect>
                               <DropShadow>
@@ -132,7 +132,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="approvedItemTab" style="-fx-background-color: #fff; -fx-border-color: #fff; -fx-text-base-color: #18148c; -fx-font-weight: bold; -fx-cursor: hand;" text="Approved Items">
+            <Tab fx:id="approvedItemTab" style="-fx-background-color: #fff; -fx-border-color: #fff; -fx-text-base-color: #18148c; -fx-font-weight: bold; -fx-cursor: hand;" text="View Requests">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

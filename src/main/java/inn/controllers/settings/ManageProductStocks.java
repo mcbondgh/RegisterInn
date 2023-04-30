@@ -1,7 +1,7 @@
-package inn.Controllers.settings;
+package inn.controllers.settings;
 
 
-import inn.Controllers.dashboard.Homepage;
+import inn.controllers.dashboard.Homepage;
 import inn.ErrorLogger;
 import inn.enumerators.AlertTypesEnum;
 import inn.models.ManageStocksModel;

@@ -11,37 +11,33 @@ module inn {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires annotations;
-    requires MaterialFX;
-    requires jfoenix;
+    requires materialfx;
 
     exports inn;
-    exports inn.Controllers;
-    exports inn.Controllers.dashboard;
-    exports inn.Controllers.settings;
-    exports inn.Controllers.accounting;
-    exports inn.Controllers.booking;
-    exports inn.Controllers.report;
-    exports inn.Controllers.messagebox;
+    exports inn.controllers;
+    exports inn.controllers.dashboard;
+    exports inn.controllers.settings;
+    exports inn.controllers.report;
+    exports inn.controllers.messagebox;
     exports inn.prompts;
     exports inn.tableViews;
     exports inn.enumerators;
-    exports inn.Controllers.bookingPops;
-    exports inn.Controllers.inventory;
+    exports inn.controllers.bookingPops;
+    exports inn.controllers.inventory;
 
-    opens inn.Controllers;
-    opens inn.Controllers.messagebox;
-    opens inn.Controllers.dashboard;
-    opens inn.Controllers.settings;
-    opens inn.Controllers.booking;
-    opens inn.Controllers.report;
-    opens inn.Controllers.accounting;
+    opens inn.controllers;
+    opens inn.controllers.messagebox;
+    opens inn.controllers.dashboard;
+    opens inn.controllers.settings;
+    opens inn.controllers.booking;
+    opens inn.controllers.report;
     opens inn.prompts;
     opens inn.tableViews;
-    exports inn.Controllers.configurations;
-    opens inn.Controllers.configurations;
+
+    opens inn.controllers.configurations;
     opens inn.enumerators;
-    opens inn.Controllers.bookingPops;
-    opens inn.Controllers.inventory;
+    opens inn.controllers.bookingPops;
+    opens inn.controllers.inventory;
 
 
 

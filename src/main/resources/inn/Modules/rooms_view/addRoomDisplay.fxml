@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="addRoomsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="895.0" style="-fx-border-color: lightgray; -fx-background-color: #fff; -fx-border-radius: 5px; -fx-background-radius: 5px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.Controllers.settings.ManageRooms">
+<AnchorPane fx:id="addRoomsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="895.0" style="-fx-border-color: lightgray; -fx-background-color: #fff; -fx-border-radius: 5px; -fx-background-radius: 5px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.settings.ManageRooms">
    <children>
       <Pane fx:id="controlPanel" layoutX="17.0" layoutY="435.0" onMouseClicked="#refreshRoomsTable" prefHeight="91.0" prefWidth="869.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 5px;">
          <children>

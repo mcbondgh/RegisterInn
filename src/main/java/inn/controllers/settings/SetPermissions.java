@@ -1,4 +1,4 @@
-package inn.Controllers.settings;
+package inn.controllers.settings;
 
 import inn.models.MainModel;
 import javafx.fxml.FXML;

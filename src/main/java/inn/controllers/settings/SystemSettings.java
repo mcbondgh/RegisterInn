@@ -24,17 +24,18 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class General extends MainModel implements Initializable {
+public class SystemSettings extends MainModel implements Initializable {
 
-/************************************ CLASS INSTANTIATION FIELD ***********************************************/
+    /************************************ CLASS INSTANTIATION FIELD ***********************************************/
     MultiStages multiStagesOBJ = new MultiStages();
 
 
 
 
-/************************************ FXML OBJECTS EJECTION ***********************************************/
+    /************************************ FXML OBJECTS EJECTION ***********************************************/
 
-    @FXML private TextField businessNameField, businessNumberField, otherNumberField, digitalAddressField, emailAddressField;
+    @FXML
+    private TextField businessNameField, businessNumberField, otherNumberField, digitalAddressField, emailAddressField;
     @FXML private TextField managerNameField, managerEmailField, managerNumberField, totalWorkersField, aliasField;
     @FXML private TextArea descriptionField;
     @FXML private DatePicker datePickerField;
@@ -52,7 +53,7 @@ public class General extends MainModel implements Initializable {
 
 
 
-/************************************ INITIALIZER METHOD IMPLEMENTATION ***********************************************/
+    /************************************ INITIALIZER METHOD IMPLEMENTATION ***********************************************/
     public void initialize(URL location, ResourceBundle resourceBundle) {
         try {
             settingsPane.setCenter(infoPane);
@@ -62,7 +63,7 @@ public class General extends MainModel implements Initializable {
         }
     }
 
-/************************************ GETTER AND SETTER FIELDS ***********************************************/
+    /************************************ GETTER AND SETTER FIELDS ***********************************************/
     public void setBusinessNameField(String businessNameField) {
         this.businessNameField.setText(businessNameField);
     }
@@ -176,10 +177,10 @@ public class General extends MainModel implements Initializable {
         try {
             stream = new FileInputStream(selectedFile);
         } catch (NullPointerException | FileNotFoundException ignored) {
-             selectedFile = new File(heroImage.getImage().getUrl());
-             stream = new FileInputStream(selectedFile);
+            selectedFile = new File(heroImage.getImage().getUrl());
+            stream = new FileInputStream(selectedFile);
         }
-       return stream;
+        return stream;
     }
 
     public void updateButtonClicked() {
@@ -343,6 +344,4 @@ public class General extends MainModel implements Initializable {
     }
 
 
-
-
-}//END OF CLASS
+}//end of class

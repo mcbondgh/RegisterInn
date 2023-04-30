@@ -123,7 +123,6 @@ CREATE TABLE activation_password(
     date_added DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-
 CREATE TABLE rooms(
 	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     roomNo VARCHAR(50),
@@ -270,6 +269,18 @@ CREATE TABLE payment_Transactions(
     client_change DECIMAL(10,2),
     added_by INT,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE internal_stock_request(
+	request_id INT AUTO_INCREMENT PRIMARY KEY,
+    stock_id INT,
+    requested_quantity INT NOT NULL,
+    request_status BOOLEAN DEFAULT FALSE,
+    requested_date VARCHAR(50),
+    requested_by INT,
+    approved_date VARCHAR(50),
+    approved_by INT,
+    date_created DATETIME DEFAULT NOW()
 );
 
 

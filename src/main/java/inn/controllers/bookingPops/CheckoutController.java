@@ -1,7 +1,7 @@
-package inn.Controllers.bookingPops;
+package inn.controllers.bookingPops;
 
-import inn.Controllers.booking.Booking;
-import inn.Controllers.dashboard.Homepage;
+import inn.controllers.booking.Booking;
+import inn.controllers.dashboard.Homepage;
 import inn.models.BookingModel;
 import inn.prompts.UserAlerts;
 import inn.prompts.UserNotification;
