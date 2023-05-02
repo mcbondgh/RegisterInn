@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="484.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.prompts.UserPrompts">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="484.0" style="-fx-background-color: white;"  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.prompts.UserPrompts">
    <children>
       <TextField fx:id="brandInputField" layoutX="92.0" layoutY="69.0" onKeyReleased="#brandInputAction" prefHeight="37.0" prefWidth="291.0" style="-fx-background-color: #eee; -fx-border-color: lightblue; -fx-border-width: 5px; -fx-border-radius: 10px; -fx-background-radius: 10px;">
          <font>

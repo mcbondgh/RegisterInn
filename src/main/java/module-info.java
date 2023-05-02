@@ -11,7 +11,9 @@ module inn {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires annotations;
-    requires materialfx;
+//    requires materialfx;
+    requires MaterialFX;
+
 
     exports inn;
     exports inn.controllers;

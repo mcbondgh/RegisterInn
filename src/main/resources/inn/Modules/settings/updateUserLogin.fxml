@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="updateLoginsForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#validateInputFields" prefHeight="503.0" prefWidth="458.0" style="-fx-background-color: #fff; -fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.settings.UpdateLogins">
+<AnchorPane fx:id="updateLoginsForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#validateInputFields" prefHeight="503.0" prefWidth="458.0" style="-fx-background-color: #fff; -fx-border-radius: 10px;"  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.settings.UpdateLogins">
    <children>
       <Pane layoutX="24.0" layoutY="76.0" prefHeight="410.0" prefWidth="411.0" style="-fx-border-radius: 10px; -fx-border-color: #ccc;">
          <children>

@@ -4,7 +4,6 @@ import javafx.beans.NamedArg;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.action.Action;
@@ -12,7 +11,7 @@ import org.controlsfx.control.action.Action;
 public class UserNotification {
     Notifications notifications = Notifications.create();
     public void  successNotification(String title, String text) {
-        Image logo = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\successIcon.png");
+        Image logo = new Image("F:\\InnRegister\\InnRegister\\src\\main\\resources\\inn\\images\\successIcon.png");
         notifications.graphic(new ImageView(logo));
         notifications.title(title);
         notifications.text(text);
