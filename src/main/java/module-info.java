@@ -11,7 +11,8 @@ module inn {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires annotations;
-//    requires materialfx;
+    requires com.fasterxml.jackson.databind;
+    requires com.jfoenix;
     requires MaterialFX;
 
 
@@ -22,26 +23,29 @@ module inn {
     exports inn.controllers.report;
     exports inn.controllers.messagebox;
     exports inn.prompts;
-    exports inn.tableViews;
+    exports inn.fetchedData;
     exports inn.enumerators;
     exports inn.controllers.bookingPops;
     exports inn.controllers.inventory;
+    exports inn.controllers.accounting;
+    exports inn.config.database;
 
     opens inn.controllers;
     opens inn.controllers.messagebox;
     opens inn.controllers.dashboard;
+    opens inn.controllers.accounting;
     opens inn.controllers.settings;
     opens inn.controllers.booking;
     opens inn.controllers.report;
     opens inn.prompts;
-    opens inn.tableViews;
+    opens inn.fetchedData;
 
     opens inn.controllers.configurations;
     opens inn.enumerators;
     opens inn.controllers.bookingPops;
     opens inn.controllers.inventory;
-
-
+    exports inn.tableViewClasses;
+    opens inn.tableViewClasses;
 
 
 }

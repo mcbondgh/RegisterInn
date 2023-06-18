@@ -1,5 +1,6 @@
 package inn.controllers.settings;
 
+import inn.controllers.Homepage;
 import inn.controllers.configurations.SysActivator;
 import inn.models.UserLoginsModel;
 import inn.multiStage.MultiStages;
@@ -83,9 +84,10 @@ public class UpdateLogins extends UserLoginsModel implements Initializable {
                         }
 
                         //HASH USER PASSWORD BEFORE SAVING TO DATABASE.
-                        String password1 = sysActivatorOBJ.passwordEncryptor(passwordField.getText());
-                        String password2 = sysActivatorOBJ.passwordEncryptor(confirmField.getText());
-                        int returnValue = updateUserLogins(usernameField.getText(), password1, password2, selectedRoleId, statusId, 1, usernameBox.getValue());
+                        String password1 = SysActivator.passwordEncryptor(passwordField.getText());
+                        String password2 = SysActivator.passwordEncryptor(confirmField.getText());
+                        int userId = getUserIdByUsername(Homepage.activeUsername);
+                        int returnValue = updateUserLogins(usernameField.getText(), password1, password2, selectedRoleId, statusId, userId, usernameBox.getValue());
                         if (returnValue > 0) {
                             multiStagesOBJ.showSuccessPrompt();
                             clearFields();

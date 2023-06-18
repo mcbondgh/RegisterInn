@@ -1,7 +1,10 @@
 package inn.models;
 
 import inn.ErrorLogger;
+import inn.fetchedData.RequestedItemsData;
 import javafx.beans.NamedArg;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -278,7 +281,6 @@ public class ManageStocksModel extends MainModel {
     protected int updateInternalStockItem(int itemId, String itemName, String itemCategory, int availableQty, int currentQty, int previousQty, double cost, int activeUserId) {
         int flag = 0;
         try {
-
             String updateQuery = "UPDATE internal_stock_items SET internal_item_name = ?, internal_item_category = ?,  remaining_quantity = ?, current_quantity = ?, previous_quantity = ?, total_cost_price = ?, added_by = ?, date_modified = DEFAULT WHERE(itemId = ?)";
             prepare = CONNECTOR().prepareStatement(updateQuery);
             prepare.setString(1, itemName);
@@ -301,5 +303,95 @@ public class ManageStocksModel extends MainModel {
         return  flag;
     }
 
+    protected ObservableList<RequestedItemsData> fetchAllRequestedItems() {
+        ObservableList<RequestedItemsData> data = FXCollections.observableArrayList();
+        try{
+            String select = "SELECT request_id, stock_id, internal_item_name, request_status, requested_quantity, requested_date, username FROM internal_stock_request AS isr\n" +
+                    "INNER JOIN internal_stock_items isi\n" +
+                    "\tON itemId = stock_id\n" +
+                    "INNER JOIN users AS u\n" +
+                    "\tON requested_by = u.id\n" +
+                    "WHERE request_status = 0;";
+            prepare = CONNECTOR().prepareStatement(select);
+            result = prepare.executeQuery();
+            while (result.next()) {
+                int item_id = result.getInt("request_id");
+                int stock_id = result.getInt("stock_id");
+                String itemName = result.getString("internal_item_name");
+                byte request_status = result.getByte("request_status");
+                int request_quantity = result.getInt("requested_quantity");
+                String request_date = result.getString("requested_date");
+                String username = result.getString("username");
+
+                String itemStatus = "";
+                switch (request_status) {
+                    case 0 -> itemStatus = "Pending Approval";
+                    case 1 -> itemStatus = "Approved";
+                }
+                data.addAll(new RequestedItemsData(item_id, stock_id, itemName, itemStatus, request_quantity, request_date, username));
+            }
+            prepare.close();
+            result.close();
+            CONNECTOR().close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    protected int updateInternalStockItem(int stockId, int remainingQuantity) {
+        int flag = 0;
+        try {
+            String updateQuery = "UPDATE internal_stock_items SET remaining_quantity = ?, is_requested = 0, date_modified = DEFAULT WHERE(itemId = ?)";
+            prepare = CONNECTOR().prepareStatement(updateQuery);
+            prepare.setInt(1, remainingQuantity);
+            prepare.setInt(2, stockId);
+            flag = prepare.executeUpdate();
+
+        }catch(Exception ignored){}
+        return flag;
+    }
+
+    protected int updateInternalStockItemOnCancelled(int stockId) {
+        int flag = 0;
+        try {
+            String updateQuery = "UPDATE internal_stock_items SET is_requested = 0, date_modified = DEFAULT WHERE(itemId = ?)";
+            prepare = CONNECTOR().prepareStatement(updateQuery);
+            prepare.setInt(1, stockId);
+            flag = prepare.executeUpdate();
+
+        }catch(Exception ignored){}
+        return flag;
+    }
+
+    protected int updateRequestTable(int requestId, int userId, String approvedDate ) {
+        int flag = 0;
+        try {
+            String updateQuery = "UPDATE internal_stock_request SET approved_date = ?, approved_by = ?, request_status = 1 WHERE(request_id = ?);";
+            prepare = CONNECTOR().prepareStatement(updateQuery);
+            prepare.setString(1, approvedDate);
+            prepare.setInt(2, userId);
+            prepare.setInt(3, requestId);
+            flag = prepare.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return flag;
+    }
+
+    protected int updateRequestTableOnCancelled(int requestId, int userId) {
+        int flag = 0;
+        try {
+            String updateQuery = "UPDATE internal_stock_request SET approved_date = 'cancelled', approved_by = ?, request_status = 2 WHERE(request_id = ?);";
+            prepare = CONNECTOR().prepareStatement(updateQuery);
+            prepare.setInt(1, userId);
+            prepare.setInt(2, requestId);
+            flag = prepare.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return flag;
+    }
 
 }//END OF CLASS...

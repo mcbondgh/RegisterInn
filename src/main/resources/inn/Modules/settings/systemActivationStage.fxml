@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="625.0" style="-fx-background-color: #fff;"  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.settings.ActivationStatus">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="867.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.settings.ActivationStatus">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="345.0" layoutX="31.0" layoutY="65.0" stroke="#fffefe" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="20.0" strokeType="OUTSIDE" style="-fx-border-radius: 10px; -fx-background-radius: 10px;" width="566.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="314.0" layoutX="25.0" layoutY="11.0" stroke="#fffefe" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="20.0" strokeType="OUTSIDE" style="-fx-border-radius: 10px; -fx-background-radius: 10px;" width="813.0">
          <effect>
-            <DropShadow height="8.6" radius="3.9800000000000004" spread="0.05" width="9.32">
+            <DropShadow height="8.96" radius="4.07" spread="0.05" width="9.32">
                <color>
-                  <Color red="0.7894737124443054" green="0.7894737124443054" blue="0.7894737124443054" />
+                  <Color red="0.7982456088066101" green="0.7957819104194641" blue="0.7957819104194641" />
                </color>
             </DropShadow>
          </effect>
       </Rectangle>
-      <GridPane layoutX="92.0" layoutY="80.0" prefHeight="171.0" prefWidth="448.0">
+      <GridPane layoutX="92.0" layoutY="61.0" prefHeight="171.0" prefWidth="734.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.33331298828125" minWidth="10.0" prefWidth="146.66668701171875" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="352.66661071777344" minWidth="10.0" prefWidth="281.33331298828125" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="380.66669718424475" minWidth="10.0" prefWidth="147.99998982747394" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="578.6666666666667" minWidth="10.0" prefWidth="566.0000101725261" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -54,36 +61,45 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="activationKeyField" accessibleText="readOnly" editable="false" prefHeight="42.0" prefWidth="300.0" promptText="eg. INNR-JJDJF-xdsd-27EE-DJS" GridPane.columnIndex="1">
+            <TextField fx:id="activationKeyField" accessibleText="readOnly" editable="false" prefHeight="42.0" prefWidth="300.0" promptText="eg. INNR-JJDJF-xdsd-27EE-DJS" style="-fx-background-color: #eee;" GridPane.columnIndex="1">
                <font>
                   <Font name="Times New Roman Bold" size="18.0" />
                </font>
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </TextField>
-            <TextField fx:id="startDateField" accessibleText="readOnly" editable="false" prefHeight="42.0" prefWidth="300.0" promptText="2024-01-10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="startDateField" accessibleText="readOnly" editable="false" prefHeight="32.0" prefWidth="441.0" promptText="2024-01-10" style="-fx-background-color: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="Times New Roman Bold" size="18.0" />
                </font>
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </TextField>
-            <TextField fx:id="expiryDateField" accessibleText="readOnly" editable="false" prefHeight="42.0" prefWidth="300.0" promptText="2024-01-10" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="expiryDateField" accessibleText="readOnly" editable="false" prefHeight="42.0" prefWidth="300.0" promptText="2024-01-10" style="-fx-background-color: #eee;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="Times New Roman Bold" size="18.0" />
                </font>
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </TextField>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </GridPane>
-      <Pane layoutX="269.0" layoutY="272.0" prefHeight="115.0" prefWidth="231.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;">
+      <Pane layoutX="343.0" layoutY="229.0" prefHeight="80.0" prefWidth="305.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;">
          <effect>
             <DropShadow>
                <color>
@@ -92,23 +108,7 @@
             </DropShadow>
          </effect>
          <children>
-            <Pane fx:id="daysCounterTextBackground" layoutX="152.0" prefHeight="115.0" prefWidth="80.0" style="-fx-background-color: lightgreen; -fx-background-radius: 0px 5px 5px 0px;">
-               <effect>
-                  <DropShadow height="3.48" radius="1.725" spread="0.08" width="5.42">
-                     <color>
-                        <Color red="0.9035087823867798" green="0.8588910698890686" blue="0.8588910698890686" />
-                     </color>
-                  </DropShadow>
-               </effect>
-               <children>
-                  <Label layoutX="8.0" layoutY="17.0" prefHeight="81.0" prefWidth="65.0" text="Day(s) To Expire" textAlignment="CENTER" textFill="#048d3d" wrapText="true">
-                     <font>
-                        <Font name="Roboto Black" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <Label fx:id="daysCounterLabel" layoutX="7.0" layoutY="11.0" prefHeight="88.0" prefWidth="125.0" text="366" textFill="#00c274">
+            <Label fx:id="daysCounterLabel" alignment="CENTER" layoutX="2.0" layoutY="-3.0" prefHeight="88.0" prefWidth="155.0" text="0" textFill="#00c274">
                <font>
                   <Font name="Poppins Bold" size="46.0" />
                </font>
@@ -120,16 +120,69 @@
                   </DropShadow>
                </effect>
             </Label>
+            <Label alignment="CENTER" layoutX="157.0" prefHeight="81.0" prefWidth="148.0" style="-fx-background-color: lightgreen; -fx-background-radius: 0 10 10 0;" text="Day(s) To Expire" textAlignment="CENTER" textFill="#048d3d" wrapText="true">
+               <font>
+                  <Font name="Roboto Black" size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Pane layoutX="31.0" layoutY="18.0" prefHeight="31.0" prefWidth="329.0" style="-fx-background-color: #ededed; -fx-background-radius: 5px;">
+      <Pane layoutX="24.0" layoutY="10.0" prefHeight="47.0" prefWidth="556.0" style="-fx-background-color: #ededed; -fx-background-radius: 5px;">
          <children>
-            <Label layoutX="16.0" layoutY="-2.0" prefHeight="35.0" prefWidth="298.0" text="SYSTEM ACTIVATION STATUS" textFill="#777575">
+            <Label layoutX="33.0" layoutY="5.0" prefHeight="35.0" prefWidth="493.0" text="SYSTEM ACTIVATION STATUS &amp; SMS API SETUP" textFill="#777575">
                <font>
                   <Font name="Poppins Bold" size="20.0" />
                </font>
             </Label>
          </children>
       </Pane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="193.0" layoutX="28.0" layoutY="348.0" stroke="#fffefe" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="20.0" strokeType="OUTSIDE" style="-fx-border-radius: 10px; -fx-background-radius: 10px;" width="817.0">
+         <effect>
+            <DropShadow height="8.96" radius="4.07" spread="0.05" width="9.32">
+               <color>
+                  <Color red="0.7982456088066101" green="0.7957819104194641" blue="0.7957819104194641" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Rectangle>
+      <Pane layoutX="27.0" layoutY="347.0" prefHeight="47.0" prefWidth="556.0" style="-fx-background-color: #ededed; -fx-background-radius: 5px;">
+         <children>
+            <Label layoutX="33.0" layoutY="5.0" prefHeight="35.0" prefWidth="204.0" text=" SMS API SETUP" textFill="#777575">
+               <font>
+                  <Font name="Poppins Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label layoutX="125.0" layoutY="417.0" text="SMS API Key" textFill="#777575">
+         <font>
+            <Font name="Times New Roman" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="apiKeyField" accessibleText="readOnly" layoutX="263.0" layoutY="402.0" prefHeight="42.0" prefWidth="547.0" promptText="eg. INNR-JJDJF-xdsd-27EE-DJS" style="-fx-background-color: #eee;">
+         <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </TextField>
+      <Label layoutX="124.0" layoutY="463.0" text="Sender Id" textFill="#777575">
+         <font>
+            <Font name="Times New Roman" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="senderIdField" accessibleText="readOnly" layoutX="262.0" layoutY="450.0" onKeyTyped="#checkSenderIdLength" prefHeight="42.0" prefWidth="547.0" promptText="eg InnRegister" style="-fx-background-color: #eee;">
+         <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </TextField>
+      <MFXButton fx:id="saveApiButton" layoutX="721.0" layoutY="500.0" onAction="#saveApiButtonClick" prefHeight="35.0" prefWidth="88.0" style="-fx-background-color: #00aadd;" text="Save" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></MFXButton>
    </children>
 </AnchorPane>

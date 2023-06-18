@@ -2,39 +2,67 @@ package inn.models;
 
 import inn.ErrorLogger;
 import inn.config.database.DatabaseConfiguration;
+import inn.controllers.configurations.FormatLocalDateTime;
+import inn.controllers.configurations.SysActivator;
+import inn.fetchedData.*;
 import inn.multiStage.MultiStages;
-import inn.tableViews.*;
+import inn.tableViewClasses.*;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 
 import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class MainModel extends DatabaseConfiguration {
-    public MainModel() {}
 
-    protected Connection CONNECTOR() throws SQLException {
-           return DriverManager.getConnection(URL, SERVER_NAME, PASSWORD);
-    }
 
     /**********************************************************************************************************************/
     MultiStages multiStagesOBJ = new MultiStages();
-    ErrorLogger logger;
+    private ErrorLogger logger;
     ButtonType YES = ButtonType.YES;
-
     protected Statement stmt = null;
     protected PreparedStatement prepare = null;
 
     protected ResultSet result = null;
 
+    protected ArrayList<String> fetchDatabaseInfo() {
+        SysActivator ACTIVATOR = new SysActivator();
+        ArrayList<String> data = new ArrayList<>();
+        try {
+            String selectStatement = "SELECT * FROM db_connection";
+            prepare = CONNECTOR().prepareStatement(selectStatement);
+            result = prepare.executeQuery();
+            if (result.next()) {
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
 
+    public int saveDbData(String servername, String databaseName, String username, String password) {
+        int flag = 0;
+        try {
+            String insertData = "INSERT INTO db_connection(server_name, database_name, db_username, db_password)";
+            prepare = CONNECTOR().prepareStatement(insertData);
+            prepare.setString(1, servername);
+            prepare.setString(2, databaseName);
+            prepare.setString(3, username);
+            prepare.setString(4, password);
+            flag = prepare.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
 
     //THIS METHOD WHEN CALL WILL RETURN ALL COLUMNS FROM THE business_info TABLE;
     public ArrayList<Object> fetchBusinessInfo(){
@@ -65,6 +93,29 @@ public class MainModel extends DatabaseConfiguration {
         return businessInfo;
     }
 
+
+    public ArrayList<Object> fetchSmsApiInfo() {
+        ArrayList<Object> data = new ArrayList<>();
+        try {
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery("SELECT * FROM sms_api_key");
+            while (result.next()) {
+                byte id = result.getByte("id");
+                String key = result.getString("api_key");
+                String name = result.getString("sender_name");
+                Timestamp timestamp = result.getTimestamp("date_added");
+                data.add(id);//0
+                data.add(key);//1
+                data.add(name);//2
+                data.add(timestamp);//3
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
     //THIS METHOD WHEN INVOKED WILL UPDATE THE SYSTEM GENERAL FIELDS WITH THE SPECIFIED NEW DETAILS OF THE ORGANIZATION.
     public void updateBusinessInfo(@NamedArg("businessName") String bsi_name, @NamedArg("alias")String alias,  @NamedArg("businessEmail") String email, @NamedArg("businessAddress") String address, @NamedArg("bsinessNumner") int bsi_num,
                                    @NamedArg("otherNumber") int alt_num, @NamedArg("date") LocalDate date, InputStream hero_image, @NamedArg("totalWorkers") int workers, @NamedArg("description") String desc, @NamedArg("mng_name") String mng_name, @NamedArg("mng_number") int mng_number, @NamedArg("mng_email") String mng_email) {
@@ -89,11 +140,7 @@ public class MainModel extends DatabaseConfiguration {
                 prepare.setInt(12, mng_number);
                 prepare.setString(13, mng_email);
                 prepare.execute();
-                Alert success = new Alert(Alert.AlertType.INFORMATION);
                 multiStagesOBJ.showSuccessPrompt();
-//                success.setTitle("Update Successful");
-//                success.setHeaderText("PERFECT, RECORDS UPDATED SUCCESSFULLY");
-//                success.showAndWait();
             } catch (Exception e) {
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setTitle("Exception");
@@ -160,7 +207,7 @@ public class MainModel extends DatabaseConfiguration {
     public ObservableList<String> fetchEmployeeFullnames() {
         ObservableList<String> Employees = FXCollections.observableArrayList();
         try {
-            String selectQuery = "SELECT firstname, lastname FROM employees WHERE(status = 1) ORDER BY lastname ASC;";
+            String selectQuery = "SELECT firstname, lastname FROM employees WHERE(status = 1  AND is_deleted = 0) ORDER BY lastname ASC;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
@@ -211,7 +258,6 @@ public class MainModel extends DatabaseConfiguration {
         }
         return employees;
    }
-
 
     //FETCHES THE name COLUMN FROM THE id_type TABLE
     public ObservableList<IdTypesData> fetchIdTypes() {
@@ -279,6 +325,32 @@ public class MainModel extends DatabaseConfiguration {
         return idtypes;
     }
 
+    public ArrayList<UsersData> fetchAllUsers()  {
+        ArrayList<UsersData> data = new ArrayList<UsersData>();
+        try {
+            String selectStatement = "SELECT * FROM users;";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectStatement);
+            while (result.next()) {
+                int id = result.getInt("id");
+                String userName = result.getString("username");
+                String password = result.getString("password");
+                int empId = result.getInt("emp_id");
+                int roleId = result.getInt("role_id");
+                int isDefault = result.getInt("is_default");
+                int status = result.getInt("status");
+                int addedBy = result.getInt("added_by");
+                Timestamp dateAdded = result.getTimestamp("date_added");
+                Timestamp dateModified = result.getTimestamp("modified_date");
+                data.add(new UsersData(id, userName, password, empId, roleId, isDefault, status, addedBy, dateAdded, dateModified));
+            }
+        }catch (Exception e) {
+            logger = new ErrorLogger();
+            logger.log(e.getMessage());
+        }
+        return data;
+    }
+
     public ArrayList<String> fetchUsernames(){
         ArrayList<String> usernames = new ArrayList<>();
         try {
@@ -340,6 +412,21 @@ public class MainModel extends DatabaseConfiguration {
             e.printStackTrace();
         }
         return userId;
+    }
+
+    public String getUserUsernameById(int userId) {
+        String userName = "";
+        try {
+            String selectQuery = "SELECT username FROM users WHERE(is_default = 0 AND id = '" + userId + "');";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            while (result.next()) {
+                userName = result.getString(1);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userName;
     }
 
     public ArrayList<Object> fetchUserLoginsDetails(String username) {
@@ -518,6 +605,7 @@ public class MainModel extends DatabaseConfiguration {
             }
             stmt.close();
             result.close();
+            CONNECTOR().close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -769,19 +857,13 @@ public class MainModel extends DatabaseConfiguration {
                 String userName = result.getString("username");
                 Timestamp lastModified = result.getTimestamp("lastModified");
 
-                Label productNameLabel = new Label();
+                Label productNameLabel = new Label(productName);
                 if (stockLevel >= gage ) {
-                    productNameLabel.setText(productName);
-                    productNameLabel.setStyle("-fx-text-fill:#00a113;");
-                    productNameLabel.setPadding(new Insets(2));
+                    productNameLabel.setStyle("-fx-text-fill:#00a113;-fx-padding:2");
                 } else if (stockLevel > 0){
-                    productNameLabel.setText(productName);
-                    productNameLabel.setStyle("-fx-text-fill:#f4a30d;");
-                    productNameLabel.setPadding(new Insets(2));
+                    productNameLabel.setStyle("-fx-text-fill:#f4a30d; -fx-padding:2");
                 } else {
-                    productNameLabel.setText(productName);
-                    productNameLabel.setStyle("-fx-text-fill: #ff1f1f;");
-                    productNameLabel.setPadding(new Insets(2));
+                    productNameLabel.setStyle("-fx-text-fill: #ff1f1f;-fx-padding:2");
                 }
 
                 stockLevelData.add( new StockLevelData(stockId, productNameLabel, stockLevel, currentStockLeve, currentBoxQuantity, currentQuantityPerBox, oldStockLevel, previousStockLevel, previousBoxQuantity, previousQuantityPerBox, gage, userName, lastModified));
@@ -791,6 +873,7 @@ public class MainModel extends DatabaseConfiguration {
         }
         return stockLevelData;
     }
+
     public ObservableList<ProductPricesData> fetchProductPricesDetails() {
         ObservableList<ProductPricesData> productPrices = FXCollections.observableArrayList();
         try {
@@ -902,7 +985,7 @@ public class MainModel extends DatabaseConfiguration {
     public int countCheckInList() {
         int counter = 0;
         try {
-            String countQuery = "SELECT COUNT(*) AS result FROM checkIn";
+            String countQuery = "SELECT COUNT(checkin_id) AS result FROM checkIn";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(countQuery);
             if (result.next()) {
@@ -916,21 +999,20 @@ public class MainModel extends DatabaseConfiguration {
     public ObservableList<CheckInData> fetchCheckInData() {
         ObservableList<CheckInData> dataItems = FXCollections.observableArrayList();
         try {
-            String selectQuery = "SELECT checkin_id, roomNo, checkin_time, due_time, check_in_status, checkin_comment, allotedTime, ci.date_created FROM checkin as ci\n" +
-                    "\tINNER JOIN rooms as r\n" +
-                    "\t\tON ci.room_id = r.id\n" +
-                    "\tINNER JOIN roomprices as rp\n" +
+            String selectQuery = "SELECT checkin_id, roomNo, checkin_date, due_date, check_in_status, allotedTime FROM checkin AS ci\n" +
+                    "    INNER JOIN rooms AS rm\n" +
+                    "\t\tON room_id = rm.id\n" +
+                    "\tINNER JOIN roomprices AS rp\n" +
                     "\t\tON duration_id = rp.id\n" +
-                    "\tWHERE (DATE(ci.date_created) = CURRENT_DATE() OR check_in_status = 1);";
+                    "\tWHERE DATE(checkin_date) = CURRENT_DATE() OR check_in_status = 1;";
             stmt = CONNECTOR().createStatement();
             result = stmt.executeQuery(selectQuery);
             while(result.next()) {
                 int id = result.getInt("checkin_id");
                 String roomNo = result.getString("roomNo");
-                LocalTime checkin_time = result.getTime("checkin_time").toLocalTime();
-                LocalTime checkout_time = result.getTime("due_time").toLocalTime();
-                byte status = result.getByte("check_in_status");
-                String checkInComment = result.getString("checkin_comment");
+                String checkInDate = FormatLocalDateTime.formatDateTime(result.getTimestamp("checkin_date").toLocalDateTime());
+                String dueDate = FormatLocalDateTime.formatDateTime(result.getTimestamp("due_date").toLocalDateTime());
+                int status = result.getInt("check_in_status");
                 int allotedTime = result.getInt("allotedTime");
 
                 Button topupBtn = new Button("Top Up");
@@ -938,18 +1020,14 @@ public class MainModel extends DatabaseConfiguration {
                 Button checkoutBtn = new Button("Checkout");
 
                 checkoutBtn.setStyle("-fx-background-color:#00bc09; -fx-text-fill:#ffff; -fx-font-size:11; -fx-font-weight: normal");
-                if (checkout_time != checkin_time) {
-                    topupBtn.setStyle("-fx-background-color:#ff0000; -fx-text-fill:#ffff; -fx-font-size:11; -fx-font-weight: normal");
-                }
+                topupBtn.setStyle("-fx-background-color:#ff0000; -fx-text-fill:#ffff; -fx-font-size:11; -fx-font-weight: normal");
                 if (status == 1) {
                     label.setStyle("-fx-text-fill:green;");
                 } else {
-                    label.setStyle("-fx-text-fill: #ff0000;");
+                    label.setStyle("-fx-text-fill: #ff0000;-fx-font-size:11");
                     label.setText("Checked Out");
-                };
-
-                dataItems.add(new CheckInData(id, roomNo, checkin_time, checkout_time,  label, checkInComment, allotedTime, topupBtn, checkoutBtn));
-
+                }
+                dataItems.addAll(new CheckInData(id, roomNo, checkInDate, dueDate, label, allotedTime, topupBtn, checkoutBtn));
             }//end of while loop
 
         }catch (SQLException ex){
@@ -974,6 +1052,59 @@ public class MainModel extends DatabaseConfiguration {
         }
         return guestName;
     }
+
+    public int countTotalBookings() {
+        int outcome = 0;
+        try {
+            String selectQuery = "SELECT COUNT(*) FROM checkin WHERE(DATE(checkin_date) = CURRENT_DATE())";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if (result.next()) {
+                outcome = result.getInt(1);
+            }
+        }catch (Exception e) {e.printStackTrace(); }
+        return outcome;
+    }
+
+    public int countOutOfStock() {
+        int outcome = 0;
+        try {
+            String selectQuery = "SELECT COUNT(id) FROM stockLevels WHERE (stockLevel = 0);";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if (result.next()) {
+                outcome = result.getInt(1);
+            }
+        }catch (Exception e) {e.printStackTrace(); }
+        return outcome;
+    }
+
+    public int countLowOnStock() {
+        int outcome = 0;
+        try {
+            String selectQuery = "SELECT COUNT(id) FROM stocklevels WHERE (stockLevel BETWEEN 1 AND gage);";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if (result.next()) {
+                outcome = result.getInt(1);
+            }
+        }catch (Exception e) {e.printStackTrace(); }
+        return outcome;
+    }
+
+    public int countAvailableItems() {
+        int outcome = 0;
+        try {
+            String selectQuery = "SELECT COUNT(id) FROM productItems WHERE (deleteStatus = 0)";
+            stmt = CONNECTOR().createStatement();
+            result = stmt.executeQuery(selectQuery);
+            if (result.next()) {
+                outcome = result.getInt(1);
+            }
+        }catch (Exception e) {e.printStackTrace(); }
+        return outcome;
+    }
+
 
     public int countFreeRooms() {
         int outcome = 0;
@@ -1001,43 +1132,110 @@ public class MainModel extends DatabaseConfiguration {
         return outcome;
     }
 
-
-    public void getCheckInSummary(DatePicker startDate, DatePicker endDate) {
-        try  {
-            String select = "SELECT ci.checkin_id, guest_name, guest_number, r.roomNo, rp.name, pt.payment_method, total_bill, checkin_time, co.checkout_time, checkin_comment, username, ci.date_created FROM guests AS g\n" +
-                    "JOIN checkin as ci \n" +
-                    "\tON ci.checkin_id = g.checkin_id\n" +
-                    "JOIN rooms as r\n" +
-                    "\tON ci.room_id = r.id\n" +
-                    "JOIN roomprices as rp\n" +
-                    "\tON duration_id = rp.id\n" +
-                    "JOIN payment_transaction as pt\n" +
-                    "\tON ci.checkin_id = pt.checkin_id\n" +
-                    "JOIN checkout AS co\n" +
-                    "\tON ci.checkin_id = co.checkin_id\n" +
-                    "JOIN users as u\n" +
-                    "\tON ci.booked_by = u.id " +
-                    "WHERE ci.date_created BETWEEN DATE('"+startDate+"' AND '"+endDate+"')";
+    public int countRequestedItems() {
+        int outcome = 0;
+        try {
+            String selectQuery = "SELECT COUNT(is_requested) FROM internal_stock_items WHERE is_requested = 1;";
             stmt = CONNECTOR().createStatement();
-            result = stmt.executeQuery(select);
-            while(result.next()) {
-                int checkinID = result.getInt("ci.checkin_id");
-                String guestName = result.getString("guest_name");
-                String guestNumber = result.getString("guest_number");
-                String roomNo = result.getString("r.roomNo");
-                String bookingType = result.getString("rp.name");
-                String paymentMethod = result.getString("pt.paymentMethod");
-                double amount = result.getDouble("total_bill");
-                LocalTime checkinTime = result.getTime("checkin_time").toLocalTime();
-                LocalTime checkoutTime = result.getTime("co.checkout_time").toLocalTime();
+            result = stmt.executeQuery(selectQuery);
+            if (result.next()) {
+                outcome = result.getInt(1);
             }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e){ e.printStackTrace();}
+        return outcome;
     }
 
+    protected double computeTotalBookingAmount(LocalDate startDate, LocalDate endDate){
+        double value = 0.0;
+        try {
+            String sumQuery = "SELECT SUM(cash_amount + momo_amount) AS total_booking FROM payment_transaction WHERE DATE(date_created) BETWEEN ? AND ?;";
+            prepare = CONNECTOR().prepareStatement(sumQuery);
+            prepare.setDate(1, Date.valueOf(startDate));
+            prepare.setDate(2, Date.valueOf(endDate));
+            result = prepare.executeQuery();
+            if (result.next()) {
+                value = result.getDouble(1);
+            }
+        }catch (Exception ignored){}
 
+        return value;
+    }
 
+    protected double computeCashBookingAmount(LocalDate startDate, LocalDate endDate){
+        double value = 0.0;
+        try {
+            String sumQuery = "SELECT SUM(cash_amount) as cash_amount FROM payment_transaction WHERE DATE(date_created) BETWEEN ? AND ?;";
+            prepare = CONNECTOR().prepareStatement(sumQuery);
+            prepare.setDate(1, Date.valueOf(startDate));
+            prepare.setDate(2, Date.valueOf(endDate));
+            result = prepare.executeQuery();
+            if (result.next()) {
+                value = result.getDouble(1);
+            }
+        }catch (Exception ignored){}
+
+        return value;
+    }
+    protected double computeMomoBookingAmount(LocalDate startDate, LocalDate endDate){
+        double value = 0.0;
+        try {
+            String sumQuery = "SELECT SUM(momo_amount) AS momo_amount FROM payment_transaction WHERE DATE(date_created) BETWEEN ? AND ?;";
+            prepare = CONNECTOR().prepareStatement(sumQuery);
+            prepare.setDate(1, Date.valueOf(startDate));
+            prepare.setDate(2, Date.valueOf(endDate));
+            result = prepare.executeQuery();
+            if (result.next()) {
+                value = result.getDouble(1);
+            }
+        }catch (Exception ignored){}
+
+        return value;
+    }
+    protected double computeTotalSalesAmount(LocalDate startDate, LocalDate endDate){
+        double value = 0.0;
+        try {
+            String sumQuery = "SELECT SUM(total_bill) FROM sales_payments  WHERE DATE(payment_date) BETWEEN ? AND ?;";
+            prepare = CONNECTOR().prepareStatement(sumQuery);
+            prepare.setDate(1, Date.valueOf(startDate));
+            prepare.setDate(2, Date.valueOf(endDate));
+            result = prepare.executeQuery();
+            if (result.next()) {
+                value = result.getDouble(1);
+            }
+        }catch (Exception ignored){}
+
+        return value;
+    }
+    protected double computeSalesCashAmount(LocalDate startDate, LocalDate endDate){
+        double value = 0.0;
+        try {
+            String sumQuery = "SELECT SUM(total_bill) FROM sales_payments WHERE payment_method = 'cash' AND DATE(payment_date) BETWEEN ? AND ?;";
+            prepare = CONNECTOR().prepareStatement(sumQuery);
+            prepare.setDate(1, Date.valueOf(startDate));
+            prepare.setDate(2, Date.valueOf(endDate));
+            result = prepare.executeQuery();
+            if (result.next()) {
+                value = result.getDouble(1);
+            }
+        }catch (Exception ignored){}
+
+        return value;
+    }
+    protected double computeSalesMomoAmount(LocalDate startDate, LocalDate endDate){
+        double value = 0.0;
+        try {
+            String sumQuery = "SELECT SUM(total_bill) FROM sales_payments WHERE payment_method = 'momo' AND DATE(payment_date) BETWEEN ? AND ?;";
+            prepare = CONNECTOR().prepareStatement(sumQuery);
+            prepare.setDate(1, Date.valueOf(startDate));
+            prepare.setDate(2, Date.valueOf(endDate));
+            result = prepare.executeQuery();
+            if (result.next()) {
+                value = result.getDouble(1);
+            }
+        }catch (Exception ignored){}
+
+        return value;
+    }
 
 //    public static void main(String[] args) throws SQLException {
 //        DbConnection con = new DbConnection();

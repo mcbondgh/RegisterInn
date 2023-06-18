@@ -1,7 +1,7 @@
 package inn.controllers.configurations;
 
-import inn.models.MainModel;
 import inn.models.InnActivationModel;
+import inn.models.MainModel;
 import inn.multiStage.MultiStages;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class InnRegisterActivator extends InnActivationModel implements Initializable {
@@ -19,7 +20,6 @@ public class InnRegisterActivator extends InnActivationModel implements Initiali
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         paneDisplay();
-
     }
 
 
@@ -155,23 +155,32 @@ public class InnRegisterActivator extends InnActivationModel implements Initiali
         Date expiryDate = fetchExpiryAndUpdatedDates().get(0);
         Date expiryCheckerDate = fetchExpiryAndUpdatedDates().get(1);
 
-        //GET MONTH VALUES FROM RESPECTIVE DATES RETURNED.
-        int expiryMonthValue = expiryDate.toLocalDate().getMonthValue();
-        int expiryCheckerMonthValue = expiryCheckerDate.toLocalDate().getMonthValue();
+        long daysLeft = ChronoUnit.DAYS.between(expiryCheckerDate.toLocalDate(), expiryDate.toLocalDate());
 
-        int differenceInMonth = expiryMonthValue - expiryCheckerMonthValue;
-
-        //GET DAY OF MONTH FROM EACH RETURNED MONTH
-        int expiryMonth = expiryDate.toLocalDate().getDayOfMonth();
-        int expiryCheckerMonth = expiryCheckerDate.toLocalDate().getDayOfMonth();
-
-        int differenceInDays = expiryMonth - expiryCheckerMonth;
-
-        if (differenceInMonth <= 1) {
+        if(daysLeft < 30) {
             authenticationPane.setVisible(true);
         } else {
-            statusDisplayPane.setVisible(true);
+        statusDisplayPane.setVisible(true);
         }
+
+//        //GET MONTH VALUES FROM RESPECTIVE DATES RETURNED.
+//        int expiryMonthValue = expiryDate.toLocalDate().getMonthValue();
+//        int expiryCheckerMonthValue = expiryCheckerDate.toLocalDate().getMonthValue();
+//
+//        int differenceInMonth = expiryMonthValue - expiryCheckerMonthValue;
+//
+//        //GET DAY OF MONTH FROM EACH RETURNED MONTH
+//        int expiryMonth = expiryDate.toLocalDate().getDayOfMonth();
+//        int expiryCheckerMonth = expiryCheckerDate.toLocalDate().getDayOfMonth();
+//
+//        int differenceInDays = expiryMonth - expiryCheckerMonth;
+//
+//        if (differenceInMonth <= 1) {
+//            authenticationPane.setVisible(true);
+//        } else {
+//            statusDisplayPane.setVisible(true);
+//        }
+
     }
 
 
@@ -193,7 +202,7 @@ public class InnRegisterActivator extends InnActivationModel implements Initiali
         for (String item: getSystemActivationPassword()) {
             output = item;
         }
-       return sysActivatorOBJ.passwordVerify(output, getAuthenticationKeyValue());
+       return SysActivator.passwordVerify(output, getAuthenticationKeyValue());
     }
 
     protected boolean validateActivationKey() {

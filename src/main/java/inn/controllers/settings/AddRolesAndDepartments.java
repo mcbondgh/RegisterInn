@@ -1,13 +1,12 @@
 package inn.controllers.settings;
 
 import inn.StartInn;
-import inn.models.MainModel;
+import inn.fetchedData.DepartmentData;
+import inn.fetchedData.IdTypesData;
+import inn.fetchedData.RolesTypesData;
 import inn.models.AddRolesAndDepartmentModel;
+import inn.models.MainModel;
 import inn.prompts.UserNotification;
-import inn.tableViews.DepartmentData;
-import inn.tableViews.IdTypesData;
-import inn.tableViews.RolesTypesData;
-import inn.tableViews.RoomPricesData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
@@ -37,8 +35,6 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             populateRolesTable();
             populateDepartmentTable();
             populateIdTypeTable();
-            populateRoomsCategoryTable();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -46,15 +42,15 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
 
     /******************************************* FXML NODE EJECTIONS ********************************/
 
-    @FXML private TextField roleField, departmentField, idTypeField, roomsCategoryField,priceField, timeField;
+    @FXML private TextField roleField, departmentField, idTypeField;
 
     @FXML private BorderPane settingsPane;
     @FXML private ScrollPane scrollPane;
-    @FXML private Pane infoPane, setRolePane, setDepartmentPane, setIdTypePane, setRoomsCatPannel;
+    @FXML private Pane infoPane, setRolePane, setDepartmentPane, setIdTypePane;
     @FXML private Button deleteRoleButton, addRoleCatgButton, setPermissionBtn, addRoleButton;
-    @FXML private Button addDepartmentButton, deleteDepartmentButton, addRoomCategoryBtn, deleteRoomsCategoryBtn;
+    @FXML private Button addDepartmentButton, deleteDepartmentButton;
     @FXML private Button addIdTypeButton, deleteIdTypeButton;
-    @FXML private CheckBox roleCheckBox, departmentCheckBox, idTypeCheckBox, roomCategoriesCheckBox;
+    @FXML private CheckBox roleCheckBox, departmentCheckBox, idTypeCheckBox;
     @FXML private TableView<RolesTypesData> roleTableView;
     @FXML private TableColumn<RolesTypesData, String> roleName;
     @FXML private TableColumn<RolesTypesData, Integer> roleId;
@@ -73,12 +69,6 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML private TableColumn<RolesTypesData, Integer> idTypeName;
 
 
-    //FXML NODES FOR ROOMS CATEGORY TABLE VIEW
-    @FXML private TableView<RoomPricesData> roomsCategoryTableView;
-    @FXML private TableColumn<RoomPricesData, Integer> roomsCatId;
-    @FXML private TableColumn<RoomPricesData, String> roomsCateName;
-    @FXML private TableColumn<RoomPricesData, Double> priceColumn;
-    @FXML private TableColumn<RoomPricesData, Integer> allotedTimeColumn;
 
 
     /*******************************************************************************************************************
@@ -96,27 +86,18 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             setRolePane.setDisable(false);
             setDepartmentPane.setDisable(true);
             setIdTypePane.setDisable(true);
-            setRoomsCatPannel.setDisable(true);
         } else if (departmentCheckBox.isSelected()) {
             setDepartmentPane.setDisable(false);
             setRolePane.setDisable(true);
             setIdTypePane.setDisable(true);
-            setRoomsCatPannel.setDisable(true);
         } else if(idTypeCheckBox.isSelected()) {
             setIdTypePane.setDisable(false);
-            setRolePane.setDisable(true);
-            setDepartmentPane.setDisable(true);
-            setRoomsCatPannel.setDisable(true);
-        } else if(roomCategoriesCheckBox.isSelected()) {
-            setRoomsCatPannel.setDisable(false);
-            setIdTypePane.setDisable(true);
             setRolePane.setDisable(true);
             setDepartmentPane.setDisable(true);
         } else {
             setDepartmentPane.setDisable(true);
             setRolePane.setDisable(true);
             setIdTypePane.setDisable(true);
-            setRoomsCatPannel.setDisable(true);
         }
     }
 
@@ -134,16 +115,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         addIdTypeButton.setDisable(checkIdTypeField());
         deleteIdTypeButton.setDisable(checkIdTypeField());
     }
-@FXML void validateRoomsCategoryField() {
-        priceField.setOnKeyReleased(KeyEvent ->  {
-            if(!(KeyEvent.getCode().isDigitKey() || KeyEvent.getCode().equals(KeyCode.BACK_SPACE) || KeyEvent.getCode().equals(KeyCode.PERIOD))) {
-                priceField.clear();
-            }
-        });
-        addRoomCategoryBtn.setDisable(checkRoomsCategoryField() || checkPriceField() || checkTimeField());
-        deleteRoomsCategoryBtn.setDisable(checkRoomsCategoryField() || checkPriceField() || checkTimeField());
 
-}
     //FOR ROLE TABLE VIEW ONLY
     @FXML void deleteRoleButtonClicked() throws SQLException {
         String currentValue = roleField.getText().trim();
@@ -269,58 +241,7 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         } else notificationOBJ.errorNotification("DELETE FAILED", "Unable to delete Id type " + currentValue);
     }
 
-    @FXML void selectedRoomsCategoryNameValue() {
-        try {
-            String selectedCategoryName = roomsCategoryTableView.getSelectionModel().getSelectedItem().getRoomsCateName();
-            double selectedPrice= roomsCategoryTableView.getSelectionModel().getSelectedItem().getPrice();
-            int allotedTime = Integer.parseInt(roomsCategoryTableView.getSelectionModel().getSelectedItem().getAllotedTime());
 
-            roomsCategoryField.setText(selectedCategoryName);
-            priceField.setText(String.valueOf(selectedPrice));
-            timeField.setText(String.valueOf(allotedTime));
-        }catch (NumberFormatException ex) {
-            notificationOBJ.informationNotification("FILL ALL", "Please fill all text fields before you save.");
-        }
-
-    }
-    @FXML void addRoomsCategoryButtonOnAction() throws SQLException {
-        try {
-            String currentValue = roomsCategoryField.getText().trim();
-            double currentPrice = Double.parseDouble(priceField.getText());
-            int allotedTime = Integer.parseInt(timeField.getText());
-
-            if (checkIfRoomCategoryExist(currentValue)) {
-                notificationOBJ.informationNotification("ALREADY EXIST", "Room Category name already exist.");
-            } else {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "please confirm to save new category name.");
-                alert.setTitle("CONFIRM TO SAVE");
-                alert.setHeaderText("ARE YOU SURE YOU WANT TO SAVE " + currentValue + " AS A ROOM CATEGORY TYPE?");
-                alert.getButtonTypes().add(ButtonType.YES);
-                alert.getButtonTypes().remove(ButtonType.OK);
-                if(alert.showAndWait().get().equals(ButtonType.YES)) {
-                    if (addNewRoomsCategory(currentValue, currentPrice, allotedTime) > 0) {
-                        notificationOBJ.successNotification("SUCCESSFUL", "New Room Category successfully added.");
-                        roomsCategoryTableView.getItems().clear();
-                        roomsCategoryField.clear();
-                        validateRoomsCategoryField();
-                        populateRoomsCategoryTable();
-                    } else  notificationOBJ.errorNotification("INSERT FAILED", "Unable to add room category type " + currentValue);
-                }
-            }
-        }catch (NumberFormatException ex) {
-            notificationOBJ.informationNotification("FILL ALL", "Please fill all text fields before you save.");
-        }
-    }
-    @FXML void deleteRoomsCategoryButtonClicked() {
-        String currentValue = roomsCategoryField.getText().trim();
-        if (deleteRoomsCategory(currentValue) > 0) {
-            notificationOBJ.successNotification("SUCCESSFUL", "Selected room category successfully deleted.");
-            roomsCategoryField.clear();
-            validateRoomsCategoryField();
-            roomsCategoryTableView.getItems().clear();
-            populateRoomsCategoryTable();
-        } else notificationOBJ.errorNotification("DELETE FAILED", "Unable to delete " + currentValue);
-    }
     @FXML void addCategoryBtnClicked() {
         settingsPane.setCenter(scrollPane);
     }
@@ -328,12 +249,11 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     @FXML void HoverEffectForCategoryBtn() {
         addRoleCatgButton.setStyle("-fx-background-color: #037dab; -fx-text-fill:#fff");
     }
-
     @FXML void mouseExitedForCategoryBtn() {
         addRoleCatgButton.setStyle("-fx-background-color:none; -fx-text-fill: #037dab; -fx-border-color: #037dab");
     }
     @FXML void setPermissionBtnClicked() throws IOException {
-       FlipView("Modules/Settings/setPermissions.fxml");
+       FlipView("Modules/settings/setPermissions.fxml");
     }
     @FXML void hoverEffectForSetPermissionBtn() {
         setPermissionBtn.setStyle("-fx-background-color: #037dab; -fx-text-fill:#fff");
@@ -349,11 +269,6 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
     }
     boolean checkIdTypeField() {return idTypeField.getText().isBlank();}
     boolean checkDepartmentField() {return departmentField.getText().isBlank();}
-    boolean checkRoomsCategoryField() {return roomsCategoryField.getText().isBlank();}
-    boolean checkPriceField() {return priceField.getText().isBlank();}
-    boolean checkTimeField() {
-        return timeField.getText().isBlank();
-    }
     boolean checkIfRoleExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
         for (String item : mainModelOBJ.fetchUserRoles()) {
@@ -364,8 +279,6 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         }
         return flag;
     }
-
-
     boolean checkIfDepartmentExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
         for (String item : mainModelOBJ.fetchDesignation()) {
@@ -376,23 +289,10 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
         }
         return flag;
     }
-
-
     boolean checkIfIdTypeExist(String textFieldValue) throws SQLException {
         boolean flag =  false;
         for (IdTypesData item : mainModelOBJ.fetchIdTypes()) {
             if (Objects.equals(item.getIdTypeName().toLowerCase(), textFieldValue.toLowerCase())) {
-                flag = true;
-                break;
-            }
-        }
-        return flag;
-    }
-
-    boolean checkIfRoomCategoryExist(String textFieldValue) throws SQLException {
-        boolean flag =  false;
-        for (RoomPricesData item : mainModelOBJ.fetchRoomPrices()) {
-            if (Objects.equals(item.getRoomsCateName().toLowerCase(), textFieldValue.toLowerCase())) {
                 flag = true;
                 break;
             }
@@ -427,20 +327,6 @@ public class AddRolesAndDepartments extends AddRolesAndDepartmentModel implement
             roleValues.add(new DepartmentData(i + 1, mainModelOBJ.fetchDesignation().get(i)));
             departmentsTableView.setItems(roleValues);
         }
-    }
-
-    void populateRoomsCategoryTable() {
-        roomsCateName.setCellValueFactory( new PropertyValueFactory<>("roomsCateName"));
-        roomsCatId.setCellValueFactory(new PropertyValueFactory<>("roomsCatId"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        allotedTimeColumn.setCellValueFactory(new PropertyValueFactory<>("allotedTime"));
-        ObservableList<RoomPricesData> roleValues = FXCollections.observableArrayList();
-
-        for (RoomPricesData item : fetchRoomPrices()) {
-            roleValues.add(new RoomPricesData(item.getRoomsCatId(), item.getRoomsCateName(), item.getPrice(), item.getAllotedTime()));
-        }
-        roomsCategoryTableView.setItems(roleValues);
-
     }
 
 

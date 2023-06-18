@@ -56,6 +56,10 @@ public class InnActivationModel extends MainModel {
             return prepare.executeUpdate();
     }
 
+    protected int updateSMSAPI(String key, String senderId) throws SQLException {
+        prepare = CONNECTOR().prepareStatement("UPDATE sms_api_key SET api_key = '"+key+"', sender_name = '"+senderId+"' WHERE id = 1;");
+        return prepare.executeUpdate();
+    }
 
 
 }//END OF CLASS

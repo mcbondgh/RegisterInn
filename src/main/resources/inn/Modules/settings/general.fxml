@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;"  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.settings.General">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.settings.General">
    <children>
       <BorderPane fx:id="settingsPane" layoutX="190.0" layoutY="60.0" prefHeight="532.0" prefWidth="893.0" style="-fx-background-color: #fff; -fx-background-radius: 5px; -fx-border-radius: 5px;">
          <effect>
@@ -332,7 +332,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="authenBtn" layoutX="12.0" layoutY="135.0" mnemonicParsing="false" onMouseClicked="#AuthenKeyBtnClicked" onMouseEntered="#mouseHoverForAuthenBtn" onMouseExited="#mouseExitedForAuthenBtn" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="Athen Key Reset" textFill="#ac022c">
+            <Button fx:id="userLogsButton" layoutX="12.0" layoutY="133.0" mnemonicParsing="false" onMouseClicked="#userLogsBtnClicked" onMouseEntered="#HoverEffectForUserLogsBtn" onMouseExited="#mouseExitedForUserLogsBtn" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="User Logs" textFill="#ac022c">
                <font>
                   <Font name="Poppins Regular" size="12.0" />
                </font>
@@ -340,7 +340,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="userLogsButton" layoutX="12.0" layoutY="178.0" mnemonicParsing="false" onMouseClicked="#userLogsBtnClicked" onMouseEntered="#HoverEffectForUserLogsBtn" onMouseExited="#mouseExitedForUserLogsBtn" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="User Logs" textFill="#ac022c">
+            <Button fx:id="backUpButton" layoutX="12.0" layoutY="174.0" mnemonicParsing="false" onMouseClicked="#backUpButtonOnClick" onMouseEntered="#HoverEffectForBackupBtn" onMouseExited="#mouseExitedForBackupBtn" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="Backup" textFill="#ac022c">
                <font>
                   <Font name="Poppins Regular" size="12.0" />
                </font>
@@ -348,7 +348,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="backUpButton" layoutX="13.0" layoutY="219.0" mnemonicParsing="false" onMouseClicked="#backUpButtonOnClick" onMouseEntered="#HoverEffectForBackupBtn" onMouseExited="#mouseExitedForBackupBtn" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="Backup" textFill="#ac022c">
+            <Button fx:id="resetApplicationBtn" layoutX="12.0" layoutY="216.0" mnemonicParsing="false" onMouseClicked="#resetButtonClicked" onMouseEntered="#HoverEffectForResetButton" onMouseExited="#mouseExitedForResetButton" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="Reset Application" textFill="#ac022c">
                <font>
                   <Font name="Poppins Regular" size="12.0" />
                </font>
@@ -356,7 +356,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="resetApplicationBtn" layoutX="13.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#resetButtonClicked" onMouseEntered="#HoverEffectForResetButton" onMouseExited="#mouseExitedForResetButton" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="Reset Application" textFill="#ac022c">
+            <Button fx:id="authenBtn" layoutX="12.0" layoutY="256.0" mnemonicParsing="false" onMouseClicked="#AuthenKeyBtnClicked" onMouseEntered="#mouseHoverForAuthenBtn" onMouseExited="#mouseExitedForAuthenBtn" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: none; -fx-border-color: #ab0303; -fx-border-radius: 5px;" text="Athen Key Reset" textFill="#ac022c">
                <font>
                   <Font name="Poppins Regular" size="12.0" />
                </font>

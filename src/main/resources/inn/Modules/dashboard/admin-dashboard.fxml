@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.dashboard.AdminDashboard">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="616.0" prefWidth="1120.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.dashboard.AdminDashboard">
    <effect>
       <DropShadow height="10.27" radius="4.9875" spread="0.04" width="11.68">
          <color>
@@ -22,10 +21,10 @@
       </DropShadow>
    </effect>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0383" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1092.0" />
-      <Text fill="WHITE" layoutX="114.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DASHBOARD" wrappingWidth="262.1366958618164">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ab0383" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1121.0" />
+      <Text fill="WHITE" layoutX="114.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DASHBOARD" wrappingWidth="262.1366958618164">
          <font>
-            <Font name="Poppins Bold" size="36.0" />
+            <Font name="Poppins Bold" size="20.0" />
          </font>
       </Text>
       <ImageView fitHeight="44.0" fitWidth="49.0" layoutX="56.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
@@ -33,7 +32,7 @@
             <Image url="@../../images/Dashboard.png" />
          </image>
       </ImageView>
-      <Pane layoutX="51.0" layoutY="67.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px; -fx-font-family: poppins;">
+      <Pane layoutX="86.0" layoutY="67.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px; -fx-font-family: poppins;">
          <effect>
             <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
                <color>
@@ -47,7 +46,7 @@
                   <Font name="Poppins Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="occupiedRoomsLabel" layoutX="14.0" layoutY="32.0" prefHeight="35.0" prefWidth="122.0" text="1000" textFill="#1bc97e">
+            <Label fx:id="occupiedRoomsLabel" layoutX="14.0" layoutY="32.0" prefHeight="35.0" prefWidth="122.0" text="0" textFill="#1bc97e">
                <font>
                   <Font name="Poppins Bold" size="50.0" />
                </font>
@@ -68,7 +67,7 @@
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="293.0" layoutY="68.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px;">
+      <Pane layoutX="328.0" layoutY="68.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px;">
          <effect>
             <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
                <color>
@@ -82,7 +81,7 @@
                   <Font name="Poppins Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="availableRoomsLabel" layoutX="19.0" layoutY="28.0" prefHeight="35.0" prefWidth="122.0" text="1000" textFill="#4cbfe2">
+            <Label fx:id="availableRoomsLabel" layoutX="19.0" layoutY="28.0" prefHeight="35.0" prefWidth="122.0" text="0" textFill="#4cbfe2">
                <font>
                   <Font name="Poppins Bold" size="50.0" />
                </font>
@@ -103,7 +102,7 @@
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="539.0" layoutY="67.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px;">
+      <Pane layoutX="574.0" layoutY="67.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px;">
          <effect>
             <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
                <color>
@@ -112,19 +111,19 @@
             </DropShadow>
          </effect>
          <children>
-            <Label fx:id="TodaySalesLabel" layoutX="19.0" prefHeight="35.0" prefWidth="170.0" text="Today's Sales" textFill="#fc990a">
+            <Label fx:id="TodaySalesLabel" layoutX="19.0" layoutY="-1.0" prefHeight="35.0" prefWidth="170.0" text="Today's Booking" textFill="#fc990a">
                <font>
                   <Font name="Poppins Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="salesLabel" layoutX="17.0" layoutY="28.0" prefHeight="35.0" prefWidth="122.0" text="1000" textFill="#fc990a">
+            <Label fx:id="todayBookingLabel" layoutX="17.0" layoutY="28.0" prefHeight="35.0" prefWidth="122.0" text="0" textFill="#fc990a">
                <font>
                   <Font name="Poppins Bold" size="38.0" />
                </font>
             </Label>
-            <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="137.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="55.0" fitWidth="62.0" layoutX="139.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/payment%20icon%20copy.png" />
+                  <Image url="@../../images/booking%20copy.png" />
                </image>
             </ImageView>
             <Pane prefHeight="97.0" prefWidth="7.0" style="-fx-background-color: #fc990a; -fx-background-radius: 8px;">
@@ -138,7 +137,7 @@
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="774.0" layoutY="67.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px;">
+      <Pane layoutX="809.0" layoutY="67.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px;">
          <effect>
             <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
                <color>
@@ -152,7 +151,7 @@
                   <Font name="Poppins Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="stockLabel" layoutX="12.0" layoutY="30.0" prefHeight="35.0" prefWidth="122.0" text="1000" textFill="#ff386c">
+            <Label fx:id="outOfStockLabel" layoutX="12.0" layoutY="30.0" prefHeight="35.0" prefWidth="122.0" text="0" textFill="#ff386c">
                <font>
                   <Font name="Poppins Bold" size="38.0" />
                </font>
@@ -173,11 +172,181 @@
             </Pane>
          </children>
       </Pane>
-      <ScrollPane layoutX="10.0" layoutY="170.0" prefHeight="415.0" prefWidth="1046.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="1040.0" />
-        </content>
-      </ScrollPane>
+      <Pane layoutX="86.0" layoutY="193.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px; -fx-font-family: poppins;">
+         <effect>
+            <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
+               <color>
+                  <Color red="0.9200000166893005" green="0.9200000166893005" blue="0.9200000166893005" opacity="0.6091370582580566" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label layoutX="14.0" prefHeight="35.0" prefWidth="170.0" text="Low On Stock" textFill="#ffe500">
+               <font>
+                  <Font name="Poppins Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lowOnStockLabel" layoutX="14.0" layoutY="32.0" prefHeight="35.0" prefWidth="122.0" text="0" textFill="#ffe500">
+               <font>
+                  <Font name="Poppins Bold" size="50.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="55.0" fitWidth="101.0" layoutX="101.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/stocks.jpg" />
+               </image>
+            </ImageView>
+            <Pane layoutX="-2.0" prefHeight="97.0" prefWidth="7.0" style="-fx-background-color: #ffe500; -fx-background-radius: 8px;">
+               <effect>
+                  <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
+                     <color>
+                        <Color red="0.9200000166893005" green="0.9200000166893005" blue="0.9200000166893005" opacity="0.6091370582580566" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane layoutX="328.0" layoutY="193.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px;">
+         <effect>
+            <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
+               <color>
+                  <Color red="0.9200000166893005" green="0.9200000166893005" blue="0.9200000166893005" opacity="0.6091370582580566" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label layoutX="21.0" prefHeight="35.0" prefWidth="170.0" text="Available Items" textFill="#a15813">
+               <font>
+                  <Font name="Poppins Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="availableItemsLabel" layoutX="19.0" layoutY="28.0" prefHeight="35.0" prefWidth="122.0" text="0" textFill="#a15813">
+               <font>
+                  <Font name="Poppins Bold" size="50.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="139.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/stock%20copy.png" />
+               </image>
+            </ImageView>
+            <Pane layoutX="-3.0" prefHeight="97.0" prefWidth="7.0" style="-fx-background-color: #a15813; -fx-background-radius: 8px;">
+               <effect>
+                  <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
+                     <color>
+                        <Color red="0.9200000166893005" green="0.9200000166893005" blue="0.9200000166893005" opacity="0.6091370582580566" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane layoutX="574.0" layoutY="193.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px;">
+         <effect>
+            <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
+               <color>
+                  <Color red="0.9200000166893005" green="0.9200000166893005" blue="0.9200000166893005" opacity="0.6091370582580566" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label fx:id="TodaySalesLabel2" layoutX="19.0" layoutY="-1.0" prefHeight="35.0" prefWidth="170.0" text="Total Employees" textFill="#05118d">
+               <font>
+                  <Font name="Poppins Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalEmployeesLabel" layoutX="17.0" layoutY="28.0" prefHeight="55.0" prefWidth="101.0" text="0" textFill="#05118d">
+               <font>
+                  <Font name="Poppins Bold" size="38.0" />
+               </font>
+            </Label>
+            <Pane prefHeight="97.0" prefWidth="7.0" style="-fx-background-color: #05118d; -fx-background-radius: 8px;">
+               <effect>
+                  <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
+                     <color>
+                        <Color red="0.9200000166893005" green="0.9200000166893005" blue="0.9200000166893005" opacity="0.6091370582580566" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Pane>
+            <ImageView fitHeight="55.0" fitWidth="82.0" layoutX="122.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/multi-users.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="809.0" layoutY="193.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px;">
+         <effect>
+            <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
+               <color>
+                  <Color red="0.9200000166893005" green="0.9200000166893005" blue="0.9200000166893005" opacity="0.6091370582580566" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label fx:id="TodaySalesLabel11" layoutX="14.0" layoutY="2.0" prefHeight="35.0" prefWidth="170.0" text="Requested Items" textFill="RED">
+               <font>
+                  <Font name="Poppins Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="itemRequestLabel" layoutX="12.0" layoutY="30.0" prefHeight="35.0" prefWidth="122.0" text="0" textFill="RED">
+               <font>
+                  <Font name="Poppins Bold" size="38.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="55.0" fitWidth="62.0" layoutX="140.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/marketing-analysis-icon-32.png" />
+               </image>
+            </ImageView>
+            <Pane layoutX="-1.0" prefHeight="97.0" prefWidth="7.0" style="-fx-background-color: #ff0000; -fx-background-radius: 8px;">
+               <effect>
+                  <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
+                     <color>
+                        <Color red="0.9200000166893005" green="0.9200000166893005" blue="0.9200000166893005" opacity="0.6091370582580566" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane layoutX="84.0" layoutY="317.0" prefHeight="97.0" prefWidth="211.0" style="-fx-background-color: #ffff; -fx-background-radius: 8px; -fx-font-family: poppins;">
+         <effect>
+            <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
+               <color>
+                  <Color red="0.9200000166893005" green="0.9200000166893005" blue="0.9200000166893005" opacity="0.6091370582580566" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label layoutX="14.0" prefHeight="35.0" prefWidth="194.0" text="Approved Request" textFill="#797977">
+               <font>
+                  <Font name="Poppins Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="requestedItemsLabel" layoutX="14.0" layoutY="32.0" prefHeight="35.0" prefWidth="122.0" text="0" textFill="#8b8a89">
+               <font>
+                  <Font name="Poppins Bold" size="50.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="55.0" fitWidth="101.0" layoutX="101.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/stock.png" />
+               </image>
+            </ImageView>
+            <Pane layoutX="-2.0" prefHeight="97.0" prefWidth="7.0" style="-fx-background-color: #ffe500; -fx-background-radius: 8px; -fx-background-color: #8b8a89;">
+               <effect>
+                  <DropShadow height="45.14" radius="24.795" spread="0.64" width="56.04">
+                     <color>
+                        <Color red="0.9200000166893005" green="0.9200000166893005" blue="0.9200000166893005" opacity="0.6091370582580566" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Pane>
+         </children>
+      </Pane>
    </children>
    <opaqueInsets>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

@@ -11,16 +11,12 @@ public class BookingTimeGenerator extends Thread{
         this.durationTimeInHours = durationTimeInHours;
     }
 
-
     public void run() {
         checkInTime = LocalTime.now();
         checkOutTime = checkInTime.plusHours(durationTimeInHours);
         timeIntervalInMinutes = checkOutTime.getMinute() - checkInTime.getMinute();
         System.out.println(checkOutTime);
-
     }
-
-    //
 //
 //
 //

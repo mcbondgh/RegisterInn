@@ -1,6 +1,14 @@
 CREATE DATABASE IF NOT EXISTS inn_register;
 USE inn_register;
 
+CREATE TABLE IF NOT EXISTS db_connection(
+	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    server_name VARCHAR(100) NOT NULL,
+    database_name VARCHAR(100) NOT NULL,
+    db_username VARCHAR(100) NOT NULL,
+    db_password VARCHAR(100),
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 -- FIRST TABLE IS THE BUSINESS_INFO TABLE.
 CREATE TABLE business_info (
 	id INT AUTO_INCREMENT NOT NULL,
@@ -123,6 +131,13 @@ CREATE TABLE activation_password(
     date_added DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE sms_api_key(
+	id iNT  PRIMARY KEY,
+    api_key VARCHAR(255),
+    sender_name VARCHAR(20) NOT NULL,
+    dae_added DATETIME DEFAULT NOW()
+);
+
 CREATE TABLE rooms(
 	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     roomNo VARCHAR(50),
@@ -150,7 +165,7 @@ CREATE TABLE ProductItems(
     storeId INT DEFAULT 1,
     ExpiryDate DATE,
     note TEXT,
-    activeStatus TINYINT DEFAULT 0,
+    activeStatus TINYINT DEFAULT 1,
     DeleteStatus TINYINT DEFAULT 0,
     addedBy INT,
     dateCreated DATETIME 
@@ -201,9 +216,12 @@ CREATE TABLE internal_stock_items(
     total_cost_price DECIMAL(10,2),
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     added_by INT,
+    is_requested BOOLEAN DEFAULT 0,
     isDeleted BOOLEAN DEFAULT FALSE,
     date_modified DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ALTER TABLE internal_stock_items ADD COLUMN is_requested BOOLEAN DEFAULT 0 AFTER added_by;
 
 CREATE TABLE sentMessages(
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -258,6 +276,23 @@ CREATE TABLE checkout(
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS extra_time(
+	extra_id INT AUTO_INCREMENT,
+    booking_id INT,
+    duration_id int,
+    is_active BOOLEAN DEFAULT 1, -- (0) MEANS THE EXTRA-TIME IS CHECKED OUT (1) MEANS THE CHECK OUT IS active
+    exit_time DATETIME,
+    payment_method VARCHAR(20),
+    cash DOUBLE(10,2),
+    momo DOUBLE(10,2),
+    momo_trans_id LONG,
+    booked_by INT NOT NULL,
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(extra_id),
+    FOREIGN KEY(booking_id) REFERENCES checkin(checkin_id) ON DELETE SET NULL,
+    FOREIGN KEY(duration_id) REFERENCES roomprices(id) ON DELETE SET NULL
+);
+
 CREATE TABLE payment_Transactions(
 	payment_Id INT AUTO_INCREMENT PRIMARY KEY,
     checkin_id INT,
@@ -269,6 +304,29 @@ CREATE TABLE payment_Transactions(
     client_change DECIMAL(10,2),
     added_by INT,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE sales_payments(
+	payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    sales_trans_id VARCHAR(50) NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
+    momo_trans_id VARCHAR(50) DEFAULT '0',
+    total_bill DECIMAL(10,2) NOT NULL,
+    sales_change DECIMAL(5,2),
+    sales_note VARCHAR(255),
+    payment_added_by INT NOT NULL,
+    payment_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE sales_transaction(
+	sales_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    item_id INT NOT NULL,
+    item_quantity INT NOT NULL,
+    item_cost DECIMAL(5,2) NOT NULL,
+    sales_trans_id VARCHAR(50),
+    payment_id INT NOT NULL,
+    sales_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(payment_id) REFERENCES sales_payments(payment_id)
 );
 
 CREATE TABLE internal_stock_request(

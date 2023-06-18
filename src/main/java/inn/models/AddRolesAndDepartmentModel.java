@@ -81,32 +81,4 @@ public class AddRolesAndDepartmentModel extends MainModel {
         return flag;
     }
 
-    //THIS METHOD WHEN INVOKED TAKES IN CATEGORY NAME AS AN ARGUMENT AND INSERTS SAME FROM THE roomsCategory TABLE.
-    public int addNewRoomsCategory(String categoryName, Double price, int allotedTime) {
-        int flag = 0;
-        try {
-            String insertQuery = "INSERT INTO roomprices VALUES(DEFAULT, '"+categoryName+"', DEFAULT, '"+price+"', '"+allotedTime+"', DEFAULT)";
-            prepare = CONNECTOR().prepareStatement(insertQuery);
-            flag = prepare.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return flag;
-    }
-
-    //THIS METHOD WHEN INVOKED TAKES IN CATEGORY NAME AS AN ARGUMENT AND DELETES SAME FROM THE roomsCategory TABLE.
-    public int deleteRoomsCategory(String categoryName) {
-        int flag = 0;
-        try {
-            String deleteQuery = "DELETE FROM roomprices WHERE(name = '"+categoryName+"')";
-            prepare = CONNECTOR().prepareStatement(deleteQuery);
-            flag = prepare.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return flag;
-    }
-
-
-
 }//END CLASS

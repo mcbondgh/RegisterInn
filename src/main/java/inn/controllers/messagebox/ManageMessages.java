@@ -1,18 +1,16 @@
 package inn.controllers.messagebox;
 
-import inn.controllers.dashboard.Homepage;
 import inn.ErrorLogger;
 import inn.StartInn;
-import inn.models.MainModel;
+import inn.config.database.SmsConfig;
+import inn.controllers.Homepage;
+import inn.fetchedData.EmployeesData;
+import inn.fetchedData.MessageTemplatesData;
+import inn.fetchedData.SentMessagesData;
 import inn.models.ManageMessageModel;
 import inn.models.ResourceModel;
 import inn.prompts.UserAlerts;
 import inn.prompts.UserNotification;
-import inn.smsApi.SendMessage;
-import inn.tableViews.EmployeesData;
-import inn.tableViews.MessageTemplatesData;
-import inn.tableViews.SentMessagesData;
-import inn.threads.CheckSmsBalanceTask;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -30,14 +29,20 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ManageMessages extends ManageMessageModel implements Initializable{
 
-    SendMessage sendMessageOBJ;
+    //CLASS INSTANTIATION FIELD
+    SmsConfig smsConfigOBJ = new SmsConfig();
     UserAlerts userAlerts;
     UserNotification notify = new UserNotification();
     ErrorLogger logger;
+
+
 
     /*******************************************************************************************************************
      *                                              FXLM NODE EJECTION.
@@ -52,6 +57,7 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
     @FXML private  Tab messageInboxTab, sendMessageTab, messageLogsTab, messageTemplateTab, topUpCreditTab;
     @FXML private CheckBox chooseFromTemplateCheckBox, sendToEmployeesCheckBox;
     @FXML private  ComboBox<String> chooseFromTemplateComboBox, sendToEmployeesComboBox;
+    @FXML private Pane showConnectionPane;
 
 
 
@@ -66,12 +72,9 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
     @FXML private TableColumn<SentMessagesData, Timestamp> dateColumn;
     @FXML private TableColumn<SentMessagesData, String> sentByColumn;
 
-    //CLASS INSTANTIATION FIELD
-    CheckSmsBalanceTask messageTask = new CheckSmsBalanceTask();
 
-    MainModel DOA = new MainModel();
 
-    String alias = (String) DOA.fetchBusinessInfo().get(1);
+    String alias = smsConfigOBJ.getSmsAlias();
 
     /*******************************************************************************************************************
      SPECIAL METHODS IMPLEMENTATION*/
@@ -86,12 +89,13 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
         populateSentMessageTable();
         fillSendToEmployeesComboBox();
         fillChooseFromTemplateComboBox();
-        int returnedBalance = SendMessage.checkSmsBalance();
+        int returnedBalance = smsConfigOBJ.checkSmsBalance();
              aliasDisplay.setText(alias);
         if (returnedBalance == 20000) {
             smsBalanceValue.setText("No internet");
             smsBalanceValue.setStyle("-fx-text-fill:#ff0000");
-            smsBalancePane.setWidth(120);
+            smsBalancePane.setWidth(100);
+            showConnectionPane.setVisible(true);
         } else {
             smsBalanceValue.setText(String.valueOf(returnedBalance));
         }
@@ -174,9 +178,9 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
                         String messageTitle = messageTitleField.getText();
                         String messageBody = messageContentField.getText();
                         Platform.runLater(()-> {
-                            int returnedBalance = SendMessage.checkSmsBalance();
-                            sendMessageOBJ = new SendMessage(contactList, messageBody);
-                            String status = sendMessageOBJ.submitMessage();
+                            int returnedBalance = smsConfigOBJ.checkSmsBalance();
+                            smsConfigOBJ = new SmsConfig(contactList, messageBody);
+                            String status = smsConfigOBJ.submitMessage();
                             if(Objects.equals(status,"1000")){
                                     sentStatus = 1;
                                     flag = submitNewMessage(contactList, messageTitle, messageBody, sentStatus, returnedBalance, 1);
@@ -220,7 +224,7 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
             }
         } catch (Exception e) {
             logger = new ErrorLogger();
-            logger.log(Arrays.toString(e.getStackTrace()));
+            logger.log(e.getMessage());
         }
     }
 
@@ -374,7 +378,7 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
         if (saveTemplateButton.getText().equals("Save")) {
             userAlerts = new UserAlerts("SAVE TEMPLATE", "ARE YOU SURE YOU WANT TO SAVE THIS TEMPLATE?", "please confirm to save template else cancel to abort.");
             if (userAlerts.confirmationAlert()) {
-                int savedResult = saveNewMessageTemplate(title, body, (byte) 1, currentDatetime);
+                int savedResult = saveNewMessageTemplate(title, body, activeUserId, currentDatetime);
                 if (savedResult == 1) {
                     notify.successNotification("SAVE SUCCESSFUL", "Perfect, message template saved successfully");
                     clearTemplateFields();
@@ -469,7 +473,7 @@ public class ManageMessages extends ManageMessageModel implements Initializable{
 
     private  void loadWebpage() {
             webEngine = webviewSection.getEngine();
-            webEngine.load("https://www.tester.kwegyiraggrey.com/");
+            webEngine.load("https://www.google.com/");
     }
 
 

@@ -1,10 +1,10 @@
 package inn.threads;
 
 import inn.ErrorLogger;
-import inn.tableViews.InternalStocksData;
-import inn.tableViews.ProductPricesData;
-import inn.tableViews.ProductsStockData;
-import inn.tableViews.StockLevelData;
+import inn.tableViewClasses.InternalStocksData;
+import inn.tableViewClasses.ProductPricesData;
+import inn.tableViewClasses.ProductsStockData;
+import inn.fetchedData.StockLevelData;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +16,6 @@ public class ProductItemTask extends Task<Void> {
     ObservableList<StockLevelData> stockLevelData = FXCollections.observableArrayList();
     ObservableList<ProductPricesData> productPricesData = FXCollections.observableArrayList();
     ObservableList<InternalStocksData> internalStocksData = FXCollections.observableArrayList();
-
     MFXLegacyTableView<ProductsStockData> productStockTableView;
     MFXLegacyTableView<ProductPricesData>productPriceTableView;
     MFXLegacyTableView<StockLevelData> stockLevelTableView;
@@ -31,7 +30,6 @@ public class ProductItemTask extends Task<Void> {
         this.stockLevelTableView = stockLevelTableView;
         this.internalStocksData = internalStocksData;
     }
-
     @Override
     protected Void call() throws Exception {
         try{
@@ -43,7 +41,6 @@ public class ProductItemTask extends Task<Void> {
             ErrorLogger logger = new ErrorLogger();
             logger.log(e.getMessage());
         }
-
         return null;
     }
 }

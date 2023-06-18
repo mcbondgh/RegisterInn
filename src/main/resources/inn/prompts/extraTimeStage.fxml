@@ -10,96 +10,105 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="377.0" style="-fx-background-color: #fff;"  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.bookingPops.ExtraTimeController">
+<AnchorPane fx:id="extraTimeAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="377.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.bookingPops.ExtraTimeController">
    <children>
-      <Pane layoutX="18.0" layoutY="46.0" prefHeight="339.0" prefWidth="336.0" style="-fx-background-color: #fff; -fx-border-color: #eee; -fx-background-radius: 10px; -fx-border-width: 2; -fx-border-radius: 10px;">
+      <Pane layoutX="18.0" layoutY="46.0" prefHeight="345.0" prefWidth="336.0" style="-fx-background-color: #fff; -fx-border-color: #eee; -fx-background-radius: 10px; -fx-border-width: 2; -fx-border-radius: 10px;">
          <children>
-            <TextField fx:id="guestNameField" editable="false" layoutX="35.0" layoutY="40.0" prefHeight="35.0" prefWidth="263.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
+            <TextField fx:id="guestNameField" editable="false" layoutX="19.0" layoutY="40.0" prefHeight="35.0" prefWidth="288.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font></TextField>
-            <Label layoutX="35.0" layoutY="21.0" text="Guest Name">
+            <Label layoutX="19.0" layoutY="21.0" text="Guest Name">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="roomNoField" editable="false" layoutX="35.0" layoutY="101.0" prefHeight="35.0" prefWidth="146.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
+            <TextField fx:id="roomNoField" editable="false" layoutX="19.0" layoutY="101.0" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font></TextField>
-            <Label layoutX="35.0" layoutY="85.0" text="Room No.">
+            <Label layoutX="19.0" layoutY="85.0" text="Room No.">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="35.0" layoutY="146.0" text="Select Extra Time ">
+            <Label layoutX="19.0" layoutY="146.0" text="Select Extra Time ">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="197.0" layoutY="146.0" text="Payment Methos">
+            <Label layoutX="194.0" layoutY="146.0" text="Payment Methods">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="cashField" alignment="CENTER" disable="true" layoutX="35.0" layoutY="226.0" prefHeight="35.0" prefWidth="66.0" style="-fx-background-color: #ff5353; -fx-text-fill: #fff;">
+            <TextField fx:id="cashField" alignment="CENTER" disable="true" layoutX="19.0" layoutY="226.0" onKeyReleased="#validateAllInputFields" prefHeight="35.0" prefWidth="66.0" style="-fx-background-color: #ddd;" text="0.00">
                <font>
-                  <Font name="Poppins Black" size="13.0" />
+                  <Font name="Poppins Regular" size="13.0" />
                </font></TextField>
-            <Label layoutX="37.0" layoutY="211.0" text="Cash">
+            <Label layoutX="21.0" layoutY="211.0" text="Cash">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="momoField" alignment="CENTER" disable="true" layoutX="111.0" layoutY="226.0" prefHeight="35.0" prefWidth="66.0" style="-fx-background-color: #ff5353; -fx-text-fill: #fff;">
+            <TextField fx:id="momoField" alignment="CENTER" disable="true" layoutX="97.0" layoutY="226.0" onKeyReleased="#validateAllInputFields" prefHeight="35.0" prefWidth="77.0" style="-fx-background-color: #ddd;" text="0.00">
                <font>
-                  <Font name="Poppins Black" size="13.0" />
+                  <Font name="Poppins Regular" size="13.0" />
                </font></TextField>
-            <Label layoutX="114.0" layoutY="211.0" text="Momo">
+            <Label layoutX="100.0" layoutY="211.0" text="Momo">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="transactionIdField" alignment="CENTER" disable="true" layoutX="188.0" layoutY="227.0" prefHeight="35.0" prefWidth="111.0" style="-fx-background-color: #ff5353; -fx-text-fill: #fff;">
+            <TextField fx:id="transactionIdField" alignment="CENTER" disable="true" layoutX="191.0" layoutY="227.0" onKeyReleased="#validateAllInputFields" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #ddd;" text="0000000">
                <font>
-                  <Font name="Poppins Black" size="13.0" />
+                  <Font name="Poppins Regular" size="13.0" />
                </font></TextField>
-            <Label layoutX="191.0" layoutY="211.0" text="Transaction Id">
+            <Label layoutX="194.0" layoutY="211.0" text="Transaction Id">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="payableDisplay" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="283.0" prefHeight="46.0" prefWidth="66.0" style="-fx-background-color: #9affb0; -fx-background-radius: 5;" text="0.00" textAlignment="CENTER" textFill="#03742b">
+            <Label fx:id="payableDisplay" alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="288.0" prefHeight="46.0" prefWidth="66.0" style="-fx-background-color: #9affb0; -fx-background-radius: 5;" text="0.00" textAlignment="CENTER" textFill="#03742b">
                <font>
                   <Font name="Roboto Bold" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="45.0" layoutY="267.0" text="Payable">
+            <Label layoutX="29.0" layoutY="268.0" text="Payable">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="exitTimeDisplay" alignment="CENTER" contentDisplay="CENTER" layoutX="116.0" layoutY="283.0" prefHeight="46.0" prefWidth="183.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="#575757">
+            <Label fx:id="exitTimeDisplay" alignment="CENTER" contentDisplay="CENTER" layoutX="100.0" layoutY="288.0" prefHeight="46.0" prefWidth="212.0" style="-fx-background-color: #ffcccc; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="#b30000">
                <font>
                   <Font name="Roboto Bold" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="118.0" layoutY="267.0" text="New Exit Time">
+            <Label layoutX="103.0" layoutY="270.0" text="Exit Time" textFill="#b10000">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="bookingIdField" editable="false" layoutX="195.0" layoutY="101.0" prefHeight="35.0" prefWidth="105.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
+            <TextField fx:id="bookingIdField" editable="false" layoutX="123.0" layoutY="101.0" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font></TextField>
-            <Label layoutX="197.0" layoutY="85.0" text="Booking Id">
+            <Label layoutX="127.0" layoutY="85.0" text="Booking Id">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <MFXLegacyComboBox fx:id="durationSelector" layoutX="35.0" layoutY="162.0" onAction="#durationSelected" prefHeight="37.0" prefWidth="146.0" promptText="Duration*" style="-fx-font-size: 12; -fx-background-color: #eee; -fx-font-weight: bold; -fx-text-fill: #ff0000;" visibleRowCount="5" />
-            <MFXLegacyComboBox fx:id="PayMethodSelector" layoutX="196.0" layoutY="162.0" onAction="#paymentMethodSelected" prefHeight="37.0" prefWidth="105.0" promptText="cash/momo*" style="-fx-font-size: 12; -fx-background-color: #eee; -fx-font-weight: bold; -fx-text-fill: #ff0000;" visibleRowCount="5" />
+            <MFXLegacyComboBox fx:id="durationSelector" layoutX="19.0" layoutY="162.0" onAction="#durationSelected" prefHeight="37.0" prefWidth="157.0" promptText="Duration*" style="-fx-font-size: 10; -fx-background-color: #eee; -fx-font-weight: bold; -fx-text-fill: #ff0000;" visibleRowCount="5" />
+            <MFXLegacyComboBox fx:id="PayMethodSelector" layoutX="193.0" layoutY="162.0" onAction="#paymentMethodSelected" prefHeight="37.0" prefWidth="120.0" promptText="cash/momo*" style="-fx-font-size: 10; -fx-background-color: #eee; -fx-font-weight: bold; -fx-text-fill: #ff0000;" visibleRowCount="5" />
+            <Label fx:id="overTimeLabel" alignment="CENTER" layoutX="229.0" layoutY="100.0" prefHeight="35.0" prefWidth="77.0" style="-fx-background-color: #eee;" text="00:00:00" textFill="#be0707">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label layoutX="232.0" layoutY="85.0" text="Overtime">
+               <font>
+                  <Font name="Roboto" size="12.0" />
+               </font>
+            </Label>
          </children>
          <effect>
             <DropShadow>
@@ -114,12 +123,12 @@
             <Font name="Roboto Bold" size="20.0" />
          </font>
       </Label>
-      <MFXButton fx:id="cancelButton" layoutX="189.0" layoutY="399.0" onAction="#closeStage" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: #eee;" text="Cancel" textFill="#4a4848">
+      <MFXButton fx:id="cancelButton" layoutX="189.0" layoutY="401.0" onAction="#closeStage" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: #eee;" text="Cancel" textFill="#4a4848">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>
       </MFXButton>
-      <MFXButton fx:id="saveButton" layoutX="110.0" layoutY="402.0" prefHeight="25.0" prefWidth="66.0" rippleColor="#007fce" style="-fx-background-color: #00aadd;" text="Save" textFill="WHITE">
+      <MFXButton fx:id="saveButton" defaultButton="true" disable="true" layoutX="110.0" layoutY="404.0" prefHeight="25.0" prefWidth="66.0" rippleColor="#007fce" style="-fx-background-color: #00aadd;" text="Save" textFill="WHITE">
          <font>
             <Font name="Poppins Regular" size="13.0" />
          </font>

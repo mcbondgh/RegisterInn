@@ -209,9 +209,9 @@ public class Homepage extends MainModel implements Initializable{
         try {
             Blob imageBlob = (Blob) fetchBusinessInfo().get(8);
             byte[] imageByte = imageBlob.getBytes(1, (int) imageBlob.length());
-            OutputStream stream = new FileOutputStream("F:\\InnRegister\\InnRegister\\src\\main\\resources\\inn\\images\\placeholder.jpg");
+            OutputStream stream = new FileOutputStream("G:\\My Drive\\RegisterInn\\src\\main\\resources\\inn\\images\\placeholder.jpg");
             stream.write(imageByte);
-            Image image = new Image("F:\\InnRegister\\InnRegister\\src\\main\\resources\\inn\\images\\placeholder.jpg");
+            Image image = new Image("G:\\My Drive\\RegisterInn\\src\\main\\resources\\inn\\images\\placeholder.jpg");
             heroImageDisplay.setImage(image);
             String bsi_name = (String) fetchBusinessInfo().get(0);
             Date establishedDate = (Date) fetchBusinessInfo().get(6);

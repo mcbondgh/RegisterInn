@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="signInForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="430.0" style="-fx-background-color: #0a83f4;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.Index">
+<AnchorPane fx:id="signInForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="608.0" style="-fx-background-color: #eee;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.Index">
    <children>
-      <Pane layoutX="46.0" layoutY="45.0" prefHeight="379.0" prefWidth="339.0" style="-fx-border-radius: 0 0 10 10; -fx-background-color: #fff; -fx-background-radius: 10;">
+      <Pane fx:id="loginPane" layoutX="307.0" layoutY="78.0" prefHeight="349.0" prefWidth="294.0" style="-fx-border-radius: 0 0 10 10; -fx-background-color: #fff; -fx-background-radius: 10;">
          <children>
-            <Label layoutX="23.0" layoutY="134.0" prefHeight="19.0" prefWidth="95.0" text="Username" textFill="#a8a8a8">
+            <Label layoutX="23.0" layoutY="102.0" prefHeight="19.0" prefWidth="95.0" text="Username" textFill="#a8a8a8">
                <font>
                   <Font name="Roboto" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="23.0" layoutY="200.0" prefHeight="19.0" prefWidth="95.0" text="Password" textFill="#a8a8a8">
+            <Label layoutX="23.0" layoutY="172.0" prefHeight="19.0" prefWidth="95.0" text="Password" textFill="#a8a8a8">
                <font>
                   <Font name="Roboto" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameField" layoutX="23.0" layoutY="157.0" prefHeight="35.0" prefWidth="294.0" promptText="eg mcbondgh" style="-fx-background-color: #eee;">
+            <TextField fx:id="usernameField" layoutX="23.0" layoutY="125.0" prefHeight="35.0" prefWidth="250.0" promptText="eg mcbondgh" style="-fx-background-color: #eee;">
                <font>
                   <Font name="Roboto Medium" size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="passwordField" layoutX="23.0" layoutY="222.0" prefHeight="35.0" prefWidth="294.0" promptText="Password" style="-fx-background-color: #eee;">
+            <PasswordField fx:id="passwordField" layoutX="23.0" layoutY="194.0" prefHeight="35.0" prefWidth="250.0" promptText="Password" style="-fx-background-color: #eee;">
                <font>
                   <Font name="Roboto Medium" size="14.0" />
                </font>
             </PasswordField>
-            <Button fx:id="signinButton" accessibleRoleDescription="BUTTON" defaultButton="true" layoutX="75.0" layoutY="281.0" mnemonicParsing="false" onAction="#signinButtonAction" prefHeight="28.0" prefWidth="100.0" style="-fx-background-color: #0a83f4;" text="Sign In" textFill="#fffffffc">
+            <Button fx:id="signinButton" accessibleRoleDescription="BUTTON" defaultButton="true" layoutX="45.0" layoutY="243.0" mnemonicParsing="false" onAction="#signinButtonAction" prefHeight="28.0" prefWidth="100.0" style="-fx-background-color: #68076eed;" text="Sign In" textFill="#fffffffc">
                <font>
                   <Font name="Tahoma Bold" size="12.0" />
                </font>
@@ -40,7 +49,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="cancelButton" accessibleRoleDescription="BUTTON" layoutX="187.0" layoutY="281.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="28.0" prefWidth="100.0" style="-fx-background-color: #ddd;" text="Close" textFill="#747474fc">
+            <Button fx:id="cancelButton" accessibleRoleDescription="BUTTON" layoutX="157.0" layoutY="243.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="28.0" prefWidth="100.0" style="-fx-background-color: #ddd;" text="Close" textFill="#747474fc">
                <font>
                   <Font name="Tahoma Bold" size="12.0" />
                </font>
@@ -48,7 +57,21 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Label fx:id="businessNameLabel" alignment="CENTER" layoutY="-1.0" prefHeight="105.0" prefWidth="339.0" style="-fx-background-radius: 10 10 0 0; -fx-background-color: #f8f8f8;" text="YOUR BUSINESS NAME HERE " textAlignment="CENTER" textFill="#0f68b5" wrapText="true">
+            <Pane layoutY="323.0" prefHeight="36.0" prefWidth="294.0" style="-fx-background-color: #f8f8f8; -fx-background-radius: 0 0 10 10;">
+               <children>
+                  <Hyperlink fx:id="resetPassword" disable="true" layoutX="182.0" layoutY="7.0" onAction="#passwordResetLink" text="Reset Password" textFill="#68076e">
+                     <font>
+                        <Font name="Tahoma" size="12.0" />
+                     </font>
+                  </Hyperlink>
+                  <Hyperlink fx:id="activateBtn" layoutX="16.0" layoutY="7.0" onAction="#resetInnRegister" text="Activate Inn Register" textFill="#68076e">
+                     <font>
+                        <Font name="Tahoma" size="12.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </Pane>
+            <Label fx:id="LoginLabel" alignment="CENTER" prefHeight="77.0" prefWidth="294.0" style="-fx-background-radius: 10 10 0 0; -fx-background-color: #f8f8f8;" text="LOGIN" textAlignment="CENTER" textFill="#68076e" wrapText="true">
                <font>
                   <Font name="Roboto Black" size="20.0" />
                </font>
@@ -56,20 +79,6 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
                </padding>
             </Label>
-            <Pane layoutY="348.0" prefHeight="36.0" prefWidth="339.0" style="-fx-background-color: #f8f8f8; -fx-background-radius: 0 0 10 10;">
-               <children>
-                  <Hyperlink fx:id="resetPassword" layoutX="240.0" layoutY="7.0" onAction="#passwordResetLink" text="Reset Password" underline="true">
-                     <font>
-                        <Font name="Tahoma" size="12.0" />
-                     </font>
-                  </Hyperlink>
-                  <Hyperlink fx:id="activateBtn" layoutX="12.0" layoutY="7.0" onAction="#resetInnRegister" text="Activate Inn Register">
-                     <font>
-                        <Font name="Tahoma" size="12.0" />
-                     </font>
-                  </Hyperlink>
-               </children>
-            </Pane>
          </children>
          <effect>
             <DropShadow height="63.83" radius="30.927500000000002" spread="0.19" width="61.88">
@@ -79,6 +88,21 @@
             </DropShadow>
          </effect>
       </Pane>
-      <Label layoutX="84.0" layoutY="450.0" text="Powered by MC's Republic | Copyright (c) 2023" textFill="#e0e0e0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#68076e" height="486.0" layoutX="-8.0" layoutY="-10.0" stroke="TRANSPARENT" strokeType="INSIDE" width="305.0" />
+      <Label fx:id="businessNameLabel" alignment="CENTER" layoutX="2.0" layoutY="-2.0" prefHeight="144.0" prefWidth="294.0" text="YOUR BUSINESS NAME HERE  AND ANY OTHER INFO" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Roboto Black" size="20.0" />
+         </font>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+         </padding>
+      </Label>
+      <Label layoutX="16.0" layoutY="437.0" text="Powered by MC's Republic | Copyright (c) 2023" textFill="#9c9c9c" />
+      <Circle fill="WHITE" layoutX="149.0" layoutY="270.0" radius="100.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="50.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/inn%20Logo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -274,26 +274,51 @@
                      <children>
                         <Pane layoutX="381.0" layoutY="41.0" prefHeight="40.0" prefWidth="692.0" style="-fx-background-color: #f4f4f4;">
                            <children>
-                              <TextField fx:id="namePlaceHolder" editable="false" layoutX="10.0" layoutY="-1.0" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: NONE;" text="[NAME]">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="amountPlaceHolder" editable="false" layoutX="91.0" layoutY="-1.0" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: NONE;" text="[AMOUNT]">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="numberPlaceHolder" editable="false" layoutX="189.0" layoutY="-2.0" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: NONE;" text="[NUMBER]">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="paymentMethodPlaceHolder" editable="false" layoutX="282.0" layoutY="-1.0" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: NONE;" text="[PAYMENT METHOD]">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextField>
+                              <GridPane hgap="1.0" layoutX="8.0" layoutY="5.0" prefHeight="30.0" prefWidth="620.0" vgap="1.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.33334350585938" minWidth="10.0" prefWidth="68.0" />
+                                  <ColumnConstraints maxWidth="241.33334350585938" minWidth="10.0" prefWidth="85.66666666666666" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="271.66668701171875" minWidth="10.0" prefWidth="80.33329264322919" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="401.33333333333337" minWidth="10.0" prefWidth="151.66664632161456" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="222.66668701171875" minWidth="0.3333536783854356" prefWidth="66.99995930989581" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="202.00002034505206" minWidth="30.0" prefWidth="159.66670735677087" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <TextField fx:id="namePlaceHolder" editable="false" prefHeight="29.0" prefWidth="69.0" style="-fx-background-color: NONE;" text="[NAME]">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="amountPlaceHolder" editable="false" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: NONE;" text="[AMOUNT]" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="numberPlaceHolder" editable="false" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: NONE;" text="[NUMBER]" GridPane.columnIndex="2">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="paymentMethodPlaceHolder" editable="false" prefHeight="29.0" prefWidth="126.0" style="-fx-background-color: NONE;" text="[PAYMENT METHOD]" GridPane.columnIndex="3">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="paymentMethodPlaceHolder1" editable="false" prefHeight="29.0" prefWidth="85.0" style="-fx-background-color: NONE;" text="[ROOM]" GridPane.columnIndex="4">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="paymentMethodPlaceHolder11" editable="false" prefHeight="29.0" prefWidth="67.0" style="-fx-background-color: NONE;" text="[ITEM]" GridPane.columnIndex="5">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </GridPane>
                            </children>
                         </Pane>
                         <Pane layoutX="309.0" layoutY="87.0" prefHeight="417.0" prefWidth="768.0" style="-fx-background-color: #f4f4f4; -fx-border-radius: 10; -fx-background-radius: 10;">
@@ -390,6 +415,27 @@
                         <AnchorPane layoutX="58.0" layoutY="-29.0" prefHeight="170.66666666666666" prefWidth="1092.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <WebView fx:id="webviewSection" layoutX="10.0" layoutY="4.0" prefHeight="505.0" prefWidth="1073.0" />
+                              <Pane fx:id="showConnectionPane" layoutX="264.0" layoutY="49.0" prefHeight="336.0" prefWidth="595.0" style="-fx-background-color: #fff;" visible="false">
+                                 <children>
+                                    <ImageView fitHeight="249.0" fitWidth="323.0" layoutX="158.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../images/wrong-date-time.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Label alignment="CENTER" layoutX="5.0" layoutY="263.0" prefHeight="26.0" prefWidth="577.0" text="Sorry, you seem to be offline. Please check your network" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <effect>
+                                    <DropShadow>
+                                       <color>
+                                          <Color red="0.9385964870452881" green="0.9385964870452881" blue="0.9385964870452881" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Pane>
                            </children></AnchorPane>
                      </children>
                   </AnchorPane>

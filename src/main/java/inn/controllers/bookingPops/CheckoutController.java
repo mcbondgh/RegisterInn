@@ -1,7 +1,8 @@
 package inn.controllers.bookingPops;
 
+import com.jfoenix.controls.JFXCheckBox;
+import inn.controllers.Homepage;
 import inn.controllers.booking.Booking;
-import inn.controllers.dashboard.Homepage;
 import inn.models.BookingModel;
 import inn.prompts.UserAlerts;
 import inn.prompts.UserNotification;
@@ -25,28 +26,37 @@ public class CheckoutController extends BookingModel implements Initializable {
 
 /***********************************************************************************************************************
  ********************************** IMPLEMENTATION OF ACTION EVENT METHODS FOR CHECKIN *********************************/
-    public static String guestName, roomNo, checkinTime, dueTime, overTime, TimeSpent, checkoutTime;
+    public static String guestName, roomNo, overTime, checkoutTime;
     public static int bookingId;
 
     @FXML private MFXButton cancelButton, checkoutButton;
     @FXML private TextField guestNameField, roomNoField, bookingIdField;
-    @FXML private Label checkInTimeField, DueTimeField, overtimeField, remainingTimeField, checkoutTimeField;
+    @FXML private Label  overtimeField, checkoutTimeField;
+    @FXML private JFXCheckBox overtimeBillCheckBox;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         guestNameField.setText(guestName);
         roomNoField.setText(roomNo);
         bookingIdField.setText(String.valueOf(bookingId));
-        checkInTimeField.setText(checkinTime);
-        DueTimeField.setText(dueTime);
         checkoutTimeField.setText(checkoutTime);
         overtimeField.setText(overTime);
+
+        calculateOvertimeCost();
+
     }
+
 
 
 
     /******************************************************************************************************************
      ********************************** IMPLEMENTATION OF OTHER SPECIAL METHODS ***************************************/
+    private void calculateOvertimeCost() {
+//        String getOvertime = overtimeField.getText();
+//        LocalTime localTime = LocalTime.parse(getOvertime);
+//        System.out.println(localTime);
+    }
+
 
 
     /*******************************************************************************************************************
@@ -72,7 +82,7 @@ public class CheckoutController extends BookingModel implements Initializable {
         if (userAlerts.confirmationAlert()) {
             int flag = 0;
             flag = createNewCheckout(checkInId, clientName, roomNo, checkouTime, overTime, currentUserId);
-            flag = flag + updateCheckInStatus(checkInId, 0);
+            flag = flag + updateCheckInStatus(checkInId);
             flag = flag + updateRoomStatus(roomId, 0);
             if (flag == 3) {
                 checkoutButton.getScene().getWindow().hide();

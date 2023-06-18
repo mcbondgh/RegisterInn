@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="377.0" style="-fx-background-color: #fff;"  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.bookingPops.CheckoutController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="377.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.bookingPops.CheckoutController">
    <children>
       <Pane layoutX="18.0" layoutY="46.0" prefHeight="350.0" prefWidth="336.0" style="-fx-background-color: #fff; -fx-border-color: #eee; -fx-background-radius: 10px; -fx-border-width: 2; -fx-border-radius: 10px;">
          <effect>
@@ -30,42 +31,22 @@
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="checkInTimeField" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="149.0" prefHeight="46.0" prefWidth="131.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="#575757">
+            <Label fx:id="overtimeField" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="238.0" prefHeight="46.0" prefWidth="126.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="RED">
                <font>
                   <Font name="Roboto Bold" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="41.0" layoutY="133.0" text="Check In Time">
+            <Label layoutX="40.0" layoutY="220.0" text="Overtime">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="DueTimeField" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="149.0" prefHeight="46.0" prefWidth="121.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="#575757">
-               <font>
-                  <Font name="Roboto Bold" size="17.0" />
-               </font>
-            </Label>
-            <Label layoutX="182.0" layoutY="133.0" text="Due Time">
-               <font>
-                  <Font name="Roboto" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="overtimeField" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="221.0" prefHeight="46.0" prefWidth="263.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="RED">
-               <font>
-                  <Font name="Roboto Bold" size="17.0" />
-               </font>
-            </Label>
-            <Label layoutX="41.0" layoutY="205.0" text="Overtime">
-               <font>
-                  <Font name="Roboto" size="12.0" />
-               </font>
-            </Label>
-            <TextField fx:id="roomNoField" editable="false" layoutX="35.0" layoutY="90.0" prefHeight="35.0" prefWidth="131.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
+            <TextField fx:id="roomNoField" editable="false" layoutX="38.0" layoutY="90.0" prefHeight="35.0" prefWidth="131.0" style="-fx-background-color: #eee; -fx-text-fill: #b12900;">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </TextField>
-            <Label layoutX="35.0" layoutY="74.0" text="Room No.">
+            <Label layoutX="40.0" layoutY="74.0" text="Room No.">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
@@ -80,14 +61,20 @@
                   <Font name="Roboto" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="checkoutTimeField" alignment="CENTER" contentDisplay="CENTER" layoutX="33.0" layoutY="295.0" prefHeight="46.0" prefWidth="263.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="#626262">
+            <Label fx:id="checkoutTimeField" alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="155.0" prefHeight="46.0" prefWidth="263.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="00:00:00" textAlignment="CENTER" textFill="#626262">
                <font>
                   <Font name="Roboto Bold" size="32.0" />
                </font>
             </Label>
-            <Label layoutX="119.0" layoutY="279.0" text="Checkout Time" textFill="#ae0000">
+            <Label layoutX="121.0" layoutY="139.0" text="Checkout Time" textFill="#ae0000">
                <font>
                   <Font name="Roboto Bold" size="13.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="overtimeBillCheckBox" disable="true" layoutX="176.0" layoutY="217.0" text="Overtime Bill" />
+            <Label fx:id="overtimeBillLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="238.0" prefHeight="46.0" prefWidth="121.0" style="-fx-background-color: #eee; -fx-background-radius: 5;" text="0.00" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font name="Roboto Bold" size="17.0" />
                </font>
             </Label>
          </children>

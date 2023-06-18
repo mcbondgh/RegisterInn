@@ -80,7 +80,7 @@ public class AuthenPasswordReset extends InnActivationModel implements Initializ
             confirmPasswordField.setStyle(null);
             comparePasswordLabel.setVisible(false);
 
-            String inputValue = sysActivatorOBJ.passwordEncryptor(newPasswordField.getText());
+            String inputValue = SysActivator.passwordEncryptor(newPasswordField.getText());
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "please confirm to update authentication key else cancel to abort");
             alert.setHeaderText("ARE YOU SURE YOU WANT TO SAVE NEW AUTHENTICATION KEY PASSWORD?");
@@ -122,7 +122,7 @@ public class AuthenPasswordReset extends InnActivationModel implements Initializ
         for(String value : modelOBJ.getSystemActivationPassword()) {
             encryptedPassword = value;
         }
-        return sysActivatorOBJ.passwordVerify(encryptedPassword, currentPasswordField.getText());
+        return SysActivator.passwordVerify(encryptedPassword, currentPasswordField.getText());
     }
 
     boolean comparePasswords() {
@@ -135,7 +135,7 @@ public class AuthenPasswordReset extends InnActivationModel implements Initializ
         newPasswordField.clear();
         confirmPasswordField.clear();
         resetPasswordBtn.setDisable(true);
-//        FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource("Modules/dashboard/resetAuthenPassword.fxml"));
+//        FXMLLoader = new FXMLLoader(StartInn.class.getResource("Modules/dashboard/resetAuthenPassword.fxml"));
 //        Parent root = fxmlLoader.load();
 //        generalOBJ = fxmlLoader.getController();
     }

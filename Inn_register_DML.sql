@@ -83,7 +83,7 @@
     ON sm.sendBy = us.id;
     
     -- TABLE JOIN FOR CHECK _IN FOR SELECTING ONLY TODAY'S TRANSACTIONS ONLY
-    SELECT checkin_id, roomNo, checkin_time, due_time, check_in_status, allotedTime, ci.date_created FROM checkin as ci
+    SELECT checkin_id, roomNo, checkin_time, due_time, check_in_status, allotedTime, ci.date_created as checkin_date FROM checkin as ci
 	INNER JOIN rooms as r
 		ON ci.room_id = r.id
 	INNER JOIN roomprices as rp
@@ -95,6 +95,65 @@
     INNER JOIN users as u
 		ON si.added_by = u.id 
     WHERE(isDeleted = 0) ORDER BY internal_item_name ASC;
+    
+    -- TABLE JOIN FOR CHECKOUT TABLE VIEW...
+    SELECT ci.checkin_id, guest_name, guest_number, r.roomNo, rp.name, pt.payment_method, total_bill, due_time, checkin_time, co.checkout_time, overtime, checkin_comment, username, ci.date_created FROM guests AS g
+		JOIN checkin as ci
+                    ON ci.checkin_id = g.checkin_id
+                    JOIN rooms as r
+                    ON ci.room_id = r.id
+                    JOIN roomprices as rp
+                    ON duration_id = rp.id
+                    JOIN payment_transaction as pt
+                    ON ci.checkin_id = pt.checkin_id
+                    JOIN checkout AS co
+                    ON ci.checkin_id = co.checkin_id
+                    JOIN users as u
+                    ON ci.booked_by = u.id
+                   WHERE DATE(ci.date_created) BETWEEN '2023-05-05'  AND '2023-05-06' ;
+    
+    -- TABLE JOIN FOR STOCK LEVEL 
+    SELECT pi.id, productName, stockLevel, sellingPrice FROM stocklevels AS sl
+    INNER JOIN productItems AS pi 
+		ON sl.productId = pi.id
+	INNER JOIN productprices AS pp
+		ON pi.id = pp.productid
+	WHERE stockLevel > 0;
+    
+    
+    -- TABLE JOIN TO GET SALES SUMMARY;
+    SELECT DISTINCT(sales_id), pi.productName, s.item_quantity, s.item_cost, s.sales_date, username FROM sales_transaction AS s
+    INNER JOIN productItems AS pi ON s.item_id = pi.id
+    INNER JOIN users AS u INNER JOIN sales_payments as sp
+    ON u.id = payment_added_by 
+    WHERE payment_added_by = 1 and s.sales_trans_id = sp.sales_trans_id AND DATE(s.sales_date) BETWEEN 2023-05-14 AND CURRENT_DATE();
+    
+    -- TABLE JOIN FORM EXTRA TIME 
+    SELECT booking_id, rm.id AS room_id, roomNo, ext.date_created, exit_time, name FROM extra_time AS ext
+    INNER JOIN roomPrices AS rp
+		ON duration_id = rp.id
+	INNER JOIN rooms AS rm 
+    INNER JOIN checkin AS ci
+		ON rm.id = ci.room_id
+	WHERE booking_id = ci.checkin_id;
+    
+    
+    -- TABLE JOIN TO GET INTERNAL REQUEST TITMS BASES ON REQUESTED ITEMS ONLY 
+    SELECT request_id, internal_item_name, request_status, requested_quantity, requested_date, username FROM internal_stock_request AS isr
+INNER JOIN internal_stock_items isi
+	ON itemId = stock_id
+INNER JOIN users AS u
+	ON requested_by = u.id
+WHERE request_status = 0;
+	
+    -- TABLE JOIN FOR SELECTING INTERNAL REQUEST ITEMS BASED ON ITEM CATEGORY.
+SELECT itemId, internal_item_name, remaining_quantity, requested_quantity FROM internal_stock_items
+INNER JOIN internal_stock_request ON
+itemId = stock_id
+WHERE(internal_item_category = "WASHING SOAP" AND remaining_quantity > 0 AND remaining_quantity = 0);
+    
+    SELECT itemId, internal_item_name, remaining_quantity, is_requested FROM internal_stock_items
+    WHERE(internal_item_category = "WASHING SOAP" AND remaining_quantity > 0);
     
     
     SELECT itemId, internal_item_name, remaining_quantity FROM internal_stock_items
@@ -109,9 +168,14 @@
     
 	SELECT concat(lastname,' ', firstname) as fullname, gender FROM employees ORDER BY lastname ;
 	
+    SELECT SUM(total_bill) as total_sales FROM sales_payments WHERE (payment_added_by = 1 AND DATE(payment_date) = CURRENT_DATE());
+    
     SELECT * FROM employees WHERE(status = 1 AND CONCAT(lastname,' ', firstname) = lower('MCBOND EMELIA'));
     SELECT * FROM employees WHERE(status = 1 AND CONCAT(lastname,' ', firstname) = 'MCBOND EMELIA');
-   
+    
+    SELECT SUM(total_bill) AS amount FROM payment_transaction WHERE added_by = 2 AND DATE(date_created) = CURRENT_DATE();
+    
+   SELECT payment_id as pi FROM sales_payments ORDER BY pi DESC LIMIT 1; 
     
     SELECT * FROM roles;
 
@@ -131,6 +195,7 @@
     TRUNCATE TABLE guests;
     TRUNCATE TABLE checkin;
     TRUNCATE TABLE payment_transaction;
+    Truncate Table checkout;
 
 -- ALTER TABLE AND UPDATE STATEMENTS
 	UPDATE business_info SET bsi_name = "GUEST HOUSE", updated_date = current_timestamp();
@@ -192,7 +257,15 @@ SELECT DISTINCT(lower(username)) FROM users;
    -- 31/03/2023
    ALTER TABLE roomprices ADD COLUMN allotedTime INT AFTER price;
    
+   -- 08/05/2023
+   ALTER TABLE productitems
+   MODIFY COLUMN activeStatus BOOLEAN DEFAULT 1;
    ALTER TABLE roomsCategory RENAME roomPrices;
+   
+   -- 10/05/23
+   ALTER TABLE sales_transaction CHANGE sales_id sales_id BIGINT AUTO_INCREMENT PRIMARY KEY ;
+   ALTER TABLE sales_transaction DROP primary key;
+   
    
 	DESCRIBE inn_register.employees;
     DESCRIBE employees;
@@ -217,6 +290,8 @@ VALUES('dsdseewe', '2022-1-1');
 
 INSERT INTO ProductStock(ProductName, ProductDescription, ProductBrand, Category, Supplier, Notes, ExpiryDate, UnitQuantity, PackQuantity, QtyPerPack, productQuantity, AddedBy)
 VALUES('VITAMILK', 'SD', 'DSD', 'D', 'DSD',  'DSDSD', '2020-10-20', 5, 5, 5, 5, 1);
+
+-- INSERT INTO sms_api_key(api_key, sender_name) VALUES('5c926b098c1087dac3f6', 'InnRegister');
 
 -- DROP TABLES SECTION ---
 DROP TABLE activation_key; 

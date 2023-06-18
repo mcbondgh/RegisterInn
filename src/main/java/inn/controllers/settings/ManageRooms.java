@@ -3,9 +3,9 @@ package inn.controllers.settings;
 import inn.StartInn;
 import inn.models.ManageRoomsModel;
 import inn.prompts.UserNotification;
-import inn.tableViews.ManageRoomsData;
-import inn.tableViews.RoomPricesData;
-import inn.tableViews.RoomsData;
+import inn.fetchedData.ManageRoomsData;
+import inn.fetchedData.RoomPricesData;
+import inn.fetchedData.RoomsData;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +41,8 @@ public class ManageRooms extends ManageRoomsModel implements Initializable {
     @FXML private Button saveRoomButton, deleteRoomButton;
     @FXML private TextField roomNumberField, roomCategoryField;
     @FXML private ComboBox<String> categoryComboBox;
+
+
 
     /*******************************************************************************************************************
      ROOMS TABLEVIEW NODES EJECTION */

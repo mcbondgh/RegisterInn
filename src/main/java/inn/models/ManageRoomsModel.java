@@ -1,12 +1,15 @@
 package inn.models;
 
-import inn.tableViews.ManageRoomsData;
+import inn.fetchedData.ManageRoomsData;
+import inn.fetchedData.OvertimeData;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ManageRoomsModel extends MainModel {
 
@@ -138,4 +141,63 @@ public class ManageRoomsModel extends MainModel {
         return roomItems;
     }
 
-}
+
+
+    //THIS METHOD WHEN INVOKED TAKES IN CATEGORY NAME AS AN ARGUMENT AND INSERTS SAME FROM THE roomsCategory TABLE.
+    public int addNewRoomsCategory(String categoryName, Double price, int allotedTime) {
+        int flag = 0;
+        try {
+            String insertQuery = "INSERT INTO roomprices VALUES(DEFAULT, '"+categoryName+"', DEFAULT, '"+price+"', '"+allotedTime+"', DEFAULT)";
+            prepare = CONNECTOR().prepareStatement(insertQuery);
+            flag = prepare.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    //THIS METHOD WHEN INVOKED TAKES IN CATEGORY NAME AS AN ARGUMENT AND DELETES SAME FROM THE roomsCategory TABLE.
+    public int deleteRoomsCategory(String categoryName) {
+        int flag = 0;
+        try {
+            String deleteQuery = "DELETE FROM roomprices WHERE(name = '"+categoryName+"')";
+            prepare = CONNECTOR().prepareStatement(deleteQuery);
+            flag = prepare.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+    protected int saveOvertimeValue(String title, double cost) {
+        int flag = 0;
+        try {
+            String insertQuery = "INSERT INTO overTimeCost VALUES(DEFAULT, ?, ?, DEFAULT)";
+            prepare = CONNECTOR().prepareStatement(insertQuery);
+            prepare.setString(1, title);
+            prepare.setDouble(2, cost);
+            flag = prepare.executeUpdate();
+        }catch (SQLException ignored) {}
+        return flag;
+    }
+    protected ArrayList<OvertimeData> getOvertimeValues() {
+        ArrayList<OvertimeData> data = new ArrayList<>();
+        try {
+            prepare = CONNECTOR().prepareStatement("SELECT * FROM overtimecost;");
+            result = prepare.executeQuery();
+            while (result.next()) {
+               data.add(new OvertimeData(result.getInt(1), result.getString(2), result.getDouble(3), result.getTimestamp(4)));
+            }
+        }catch (SQLException ignored) {}
+        return data;
+    }
+
+
+
+
+
+
+
+
+
+
+}//end of class...

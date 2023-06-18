@@ -14,15 +14,13 @@ public class StartInn extends Application implements Initializable {
     public void initialize(URL location, ResourceBundle resourceBundle) {
 
     }
-
     @Override
     public void start(Stage stage) throws IOException {
         MultiStages multiStages = new MultiStages();
         try {
-            //WE SHALL MAKE SOME NEW CHANGES HERE LATER IN THE PROJECT...
-            multiStages.LoginForm();
+                multiStages.LoginForm();
         }catch (IndexOutOfBoundsException e) {
-            ErrorLogger errorLogger = new ErrorLogger();
+            inn.ErrorLogger errorLogger = new inn.ErrorLogger();
             errorLogger.log(e.getMessage());
             multiStages.wrongDateTimeStage();
         }

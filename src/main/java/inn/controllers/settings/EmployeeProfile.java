@@ -1,10 +1,14 @@
 package inn.controllers.settings;
 
 import inn.controllers.configurations.DefPassword;
+import inn.enumerators.AlertTypesEnum;
 import inn.models.EmpProfileModel;
 import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;
-import inn.tableViews.IdTypesData;
+import inn.prompts.UserAlerts;
+import inn.fetchedData.IdTypesData;
+import inn.fetchedData.UsersData;
+import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -21,6 +25,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -29,6 +34,8 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
     MultiStages multiStagesOBJ = new MultiStages();
     ResourceModel resourceModelOBJ = new ResourceModel();
     DefPassword defPasswordOBJ = new DefPassword();
+
+    UserAlerts userAlerts;
 
     File imageFile = null;
     FileInputStream inputStream = null;
@@ -55,7 +62,8 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
     @FXML
     private ImageView uploadProfile;
     @FXML
-    private ComboBox<String> employeeBox, genderBox, idTypeBox, userRoleBox, designationBox;
+    private ComboBox<String>  genderBox, idTypeBox, userRoleBox, designationBox;
+    @FXML private MFXFilterComboBox<String> employeeBox;
     @FXML
     private DatePicker dateField;
     @FXML
@@ -84,7 +92,6 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
             uploadProfile.setImage(image);
             imageNameField.setText(fileName);
         } catch (NullPointerException e) {
-            System.out.println("No file selected.");
             Logger.getAnonymousLogger();
         }
     }
@@ -104,12 +111,14 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
         Alert alert = new Alert(Alert.AlertType.NONE);
         try {
            if (checkEmployeeBox()) {
-               alert.setAlertType(Alert.AlertType.WARNING);
-               alert.setTitle("No Employee Selected");
-               alert.setHeaderText("YOU HAVE NOT SELECTED AN EMPLOYEE, DO SO TO UPDATE RECORD");
-               alert.setContentText("make sure you have selected an employee from the 'Select Employee Here' to specify a valid employee");
-               alert.setResult(ButtonType.OK);
-               alert.show();
+//               alert.setAlertType(Alert.AlertType.WARNING);
+//               alert.setTitle("No Employee Selected");
+//               alert.setHeaderText("YOU HAVE NOT SELECTED AN EMPLOYEE, DO SO TO UPDATE RECORD");
+//               alert.setContentText("make sure you have selected an employee from the 'Select Employee Here' to specify a valid employee");
+//               alert.setResult(ButtonType.OK);
+//               alert.show();
+               userAlerts = new UserAlerts("NO EMPLOYEE SELECTED", "PLEASE SELECT AN EMPLOYEE TO UPDATE RECORD", "make sure you have selected an employee from the 'Select Employee Here' to specify a valid employee");
+               userAlerts.chooseAlert(AlertTypesEnum.WARNING);
             } if (numberField.getText().isBlank() || firstnameField.getText().isBlank() || lastnameField.getText().isBlank() || emailField.getText().isBlank() || idNumberField.getText().isBlank() || addressField.getText().isBlank()) {
                 alert.setAlertType(Alert.AlertType.WARNING);
                 alert.setTitle("Empty Field(s)");
@@ -118,7 +127,6 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                 updateProfileBtn.setDisable(true);
                 uploadImageBtn.setDisable(true);
                 deleteProfileBtn.setDisable(true);
-
            }
            else {
                if (userRoleBox.isDisabled() || userRoleBox.getValue() == null) {
@@ -166,9 +174,18 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
             e.printStackTrace();
         }
     }
+
+
     @FXML
     void selectEmployeeOnAction() throws FileNotFoundException {
         ArrayList<Object> result = fetchFullEmployeeDetails(employeeBox.getValue());
+        String employeeAddedBy = "";
+        int addedBy = (int) result.get(13);
+        for (UsersData users : fetchAllUsers()) {
+            if (Objects.equals(users.getId(), addedBy)) {
+                employeeAddedBy = users.getUsername();
+            }
+        }
         try {
                 idField.setText(result.get(0).toString());
                 firstnameField.setText(result.get(1).toString());
@@ -182,17 +199,17 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                 dateField.setValue(LocalDate.parse(result.get(9).toString()));
                 designationBox.setValue(result.get(10).toString());
                 salaryField.setText(result.get(12).toString());
-                addedByField.setText(result.get(13).toString());
+                addedByField.setText(employeeAddedBy);
                 updatedDate.setText(result.get(14).toString());
                 Blob imageBlob = (Blob) result.get(11);
                 byte[] imageByte = imageBlob.getBytes(1, (int) imageBlob.length());
-                OutputStream stream = new FileOutputStream("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
+                OutputStream stream = new FileOutputStream("G:\\My Drive\\RegisterInn\\src\\main\\resources\\inn\\uploads\\empImage.jpg");
                 stream.write(imageByte);
-                Image profileImage = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
+                Image profileImage = new Image("G:\\My Drive\\RegisterInn\\src\\main\\resources\\inn\\uploads\\empImage.jpg");
                 uploadProfile.setImage(profileImage);
                 stream.close();
         } catch (NullPointerException e) {
-                Image defaultImage = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\users.jpg");
+                Image defaultImage = new Image("G:\\My Drive\\RegisterInn\\src\\main\\resources\\inn\\images\\users.jpg");
                 uploadProfile.setImage(defaultImage);
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
@@ -213,7 +230,6 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
             }
     }
 
-
     @FXML
     void deleteButtonClicked() {
         try {
@@ -228,6 +244,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
                 deleteEmployeeRecord(emp_id);
                 multiStagesOBJ.showSuccessPrompt();
                 clearFields();
+                fillEmployeeBox();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -289,6 +306,7 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
      *******************************************************************************************************************/
 
     void fillEmployeeBox() {
+        employeeBox.getItems().clear();
         employeeBox.setItems(fetchEmployeeFullnames());
     }
 

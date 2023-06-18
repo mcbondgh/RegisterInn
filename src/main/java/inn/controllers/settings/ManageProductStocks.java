@@ -1,14 +1,21 @@
 package inn.controllers.settings;
 
 
-import inn.controllers.dashboard.Homepage;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import inn.ErrorLogger;
+import inn.controllers.Homepage;
+import inn.controllers.configurations.FormatLocalDateTime;
 import inn.enumerators.AlertTypesEnum;
+import inn.fetchedData.*;
 import inn.models.ManageStocksModel;
 import inn.multiStage.MultiStages;
 import inn.prompts.UserAlerts;
 import inn.prompts.UserNotification;
-import inn.tableViews.*;
+import inn.tableViewClasses.InternalStocksData;
+import inn.tableViewClasses.ProductPricesData;
+import inn.tableViewClasses.ProductsStockData;
+import inn.tableViewClasses.StoresTableData;
 import inn.threads.ProductItemTask;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
@@ -17,6 +24,7 @@ import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -35,6 +43,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 public class ManageProductStocks extends ManageStocksModel implements Initializable {
 
@@ -54,7 +63,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML private Button saveStockCategoryButton, updateStockCategoryButton, deleteStockCategoryButton;
     @FXML private MFXButton updateStockLevelButton;
     @FXML private Label requiredIndicator, selectedProductNameDisplay, selectedStockTypeDisplay;
-    @FXML private TextField productNameField, filterStockLevelTable;
+    @FXML private TextField productNameField, searchStockLevelField, searchPriceTableItems;
     @FXML private Button priceUpdateButton;
 
 
@@ -75,6 +84,8 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML private Label priceProductNameDisplay, priceStockTypeDisplay;
     @FXML private MFXTextField updatePurchasedPriceField, updateSellingPriceField;
     @FXML private Label updateProductProfitDisplay;
+
+    @FXML private Label requestCountLabel;
 
 
     //******************* >> STORES TABLE VIEW
@@ -171,6 +182,10 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         fillProductCategorySelector();
         fillProductSupplierSelector();
         fillInternalStocksComboBox();
+        loadRequestListView();
+        requestCountLabel.setText(String.valueOf(countRequestedItems()));
+        cancelRequestedItemButtonClicked();
+
     }
 
 
@@ -516,7 +531,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         internalStockNameColumn.setCellValueFactory(new PropertyValueFactory<>("internalItemName"));
         internalStockItemTypeColumn.setCellValueFactory(new PropertyValueFactory<>("internalItemCategory"));
         internalStockRemainingQtyColumn.setCellValueFactory(new PropertyValueFactory<>("remainingQuantity"));
-        internalStockRemainingQtyColumn.setStyle("-fx-text-fill: #ff0000; -fx-alignment:center; -fx-font-weight:bold");
+        internalStockRemainingQtyColumn.setStyle("-fx-text-fill: #00a82ade; -fx-alignment:center; -fx-font-weight:bold");
         internalStockCurrentQtyColumn.setCellValueFactory(new PropertyValueFactory<>("currentQuantity"));
         internalStockPreviousQtyColumn.setCellValueFactory(new PropertyValueFactory<>("previousQuantity"));
         internalStockTotalCostColumn.setCellValueFactory(new PropertyValueFactory<>("totalCostPrice"));
@@ -557,20 +572,43 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         try {
             stockLevelTableView.getItems().clear();
             FilteredList<StockLevelData> filteredList =  new FilteredList<>(fetchStockLevelDetails(), p -> true);
-            filterStockLevelTable.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchStockLevelField.textProperty().addListener((observable, oldValue, newValue) -> {
                 filteredList.setPredicate(stockLevelData -> {
                     if (newValue.isEmpty() || newValue.isBlank()) {
                         return true;
                     }
                     String searchKeyWord = newValue.toLowerCase();
-                    if (stockLevelData.getStockItemName().toString().toLowerCase().contains(searchKeyWord)) {
+                    if (stockLevelData.getStockItemName().getText().toLowerCase().contains(searchKeyWord)) {
                         return true;
-                    } return true;
+                    } return stockLevelData.getStockItemName().getText().toLowerCase().contains(searchKeyWord);
                 });
             });
             SortedList<StockLevelData> sortedResult = new SortedList<>(filteredList);
             sortedResult.comparatorProperty().bind(stockLevelTableView.comparatorProperty());
             stockLevelTableView.setItems(sortedResult);
+        }catch (Exception ignored) {}
+    }
+
+    @FXML void filterStockPriceTable(KeyEvent event) {
+        try {
+            pricesTableView.getItems().clear();
+            FilteredList<ProductPricesData> filteredList =  new FilteredList<>(fetchProductPricesDetails(), p -> true);
+            searchPriceTableItems.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredList.setPredicate(productPricesData -> {
+                    if (newValue.isEmpty() || newValue.isBlank()) {
+                        return true;
+                    }
+                    String searchKeyWord = newValue.toLowerCase();
+                    if (productPricesData.getProductName().toLowerCase().contains(searchKeyWord)) {
+                        return true;
+                    } else if (productPricesData.getUsername().toLowerCase().contains(searchKeyWord)) {
+                        return true;
+                    } else return productPricesData.getUsername().toLowerCase().contains(searchKeyWord);
+                });
+            });
+            SortedList<ProductPricesData> sortedResult = new SortedList<>(filteredList);
+            sortedResult.comparatorProperty().bind(pricesTableView.comparatorProperty());
+            pricesTableView.setItems(sortedResult);
         }catch (Exception ignored) {}
     }
 
@@ -1171,7 +1209,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML void validateInternalStockAmountField(KeyEvent keypressed) {
         try {
             if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE || keypressed.getCode() == KeyCode.PERIOD)) {
-                internalStockAmountField.clear();
+                internalStockAmountField.deletePreviousChar();
             }
         }catch (NumberFormatException e) {
             internalStockAmountField.setText(String.valueOf(0.00));
@@ -1180,7 +1218,7 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
     @FXML void validateInternalStockQtyFields(KeyEvent keypressed) {
         try{
             if (!(keypressed.getCode().isDigitKey() || keypressed.getCode().isArrowKey() || keypressed.getCode() == KeyCode.BACK_SPACE )) {
-                internalStockQtyField.clear();
+                internalStockQtyField.deletePreviousChar();
             }
         }catch (NumberFormatException e) {
             internalStockQtyField.setText(String.valueOf(0));
@@ -1190,6 +1228,28 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
         saveInternalStockButton.setDisable(isInternalStockQtyEmpty() || isInternalStockComboBoxEmpty() || isInternalStockItemNameEmpty());
     }
 
+    @FXML void filterInternalStockItem() {
+        try {
+            internalStocksTableView.getItems().clear();
+            FilteredList<InternalStocksData> filteredList =  new FilteredList<>(fetchInternalStocksDetails(), p -> true);
+            searchInternalStockItem.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredList.setPredicate(internalStockData -> {
+                    if (newValue.isEmpty() || newValue.isBlank()) {
+                        return true;
+                    }
+                    String searchKeyWord = newValue.toLowerCase();
+                    if (internalStockData.getInternalItemName().toLowerCase().contains(searchKeyWord)) {
+                        return true;
+                    } else if (internalStockData.getInternalItemCategory().toLowerCase().contains(searchKeyWord)) {
+                        return true;
+                    } else return internalStockData.getInternalItemName().toLowerCase().contains(searchKeyWord);
+                });
+            });
+            SortedList<InternalStocksData> sortedResult = new SortedList<>(filteredList);
+            sortedResult.comparatorProperty().bind(internalStocksTableView.comparatorProperty());
+            internalStocksTableView.setItems(sortedResult);
+        }catch (Exception ignored) {}
+    }
 
     /*********************************************************************************************************
      ******                  IMPLEMENTATION OF ACTION EVENTS FOR INTERNAL STOCK TAB
@@ -1271,6 +1331,144 @@ public class ManageProductStocks extends ManageStocksModel implements Initializa
 
 
 
+    /*********************************************************************************************************
+     ******                  INTERNAL STOCK REQUEST FXML NODE EJECTION ******
+     *********************************************************************************************************/
 
+    @FXML
+    JFXListView<String> requestedItemsListView;
+    @FXML TextField requestIdField, requestedStockIdField, itemNameField, requestedStatusField, requestedByField, requestQuantityField, requestedDateField;
+    @FXML
+    JFXButton approveRequestButton, cancelRequestButton;
+
+
+
+
+
+    /*********************************************************************************************************
+     ******                  ACTION EVENT METHODS IMPLEMENTATION FOR REQUEST ITEMS. ******
+     *********************************************************************************************************/
+    @FXML
+    void validateQuantityField(KeyEvent event) {
+        try {
+            int itemQuantity = Integer.parseInt(requestQuantityField.getText());
+            if(!(event.getCode().isDigitKey() || event.getCode().isArrowKey() || event.getCode().equals(KeyCode.BACK_SPACE))) {
+                requestQuantityField.deletePreviousChar();
+            }
+            for (InternalStocksData item : fetchInternalStocksDetails()) {
+                if (Objects.equals(itemNameField.getText(), item.getInternalItemName())) {
+                    if (itemQuantity > item.getRemainingQuantity()) {
+                        requestQuantityField.deletePreviousChar();
+                        userAlertOBJ = new UserAlerts("INVALID QUANTITY", "SORRY, ITEM AVAILABLE QUANTITY is " + item.getRemainingQuantity() +" YOU CANNOT REQUEST MORE THAN THIS NUMBER. ", "please adjust your request quantity else leave as default.");
+                        userAlertOBJ.chooseAlert(AlertTypesEnum.ERROR);
+                        break;
+                    }
+                }
+            }
+        }catch (Exception e) {
+           requestQuantityField.deletePreviousChar();
+        }
+    }
+
+    @FXML void checkQuantityFieldForEmptyField() {
+        approveRequestButton.setDisable(requestQuantityField.getText().isBlank() || requestedItemsListView.getItems().isEmpty());
+    }
+    void loadRequestListView() {
+        requestedItemsListView.getItems().clear();
+        for (RequestedItemsData item : fetchAllRequestedItems()) {
+            requestedItemsListView.getItems().add(item.getInternal_item_name());
+        }
+    }
+
+    @FXML void getSelectedRequestedItem() {
+
+        String selectedItemName = requestedItemsListView.getSelectionModel().getSelectedItem();
+
+        for (RequestedItemsData data : fetchAllRequestedItems()) {
+            if (selectedItemName.equals(data.getInternal_item_name())) {
+                if (Objects.equals(data.getInternal_item_name(), selectedItemName)) {
+                    requestIdField.setText(String.valueOf(data.getRequest_id()));
+                    itemNameField.setText(data.getInternal_item_name());
+                    requestedStatusField.setText(data.getRequest_status());
+                    requestedByField.setText(data.getUsername());
+                    requestedDateField.setText(data.getRequested_date());
+                    requestQuantityField.setText(String.valueOf(data.getRequested_quantity()));
+                    requestedStockIdField.setText(String.valueOf(data.getStock_id()));
+                }
+            }
+        }//end of for loop...
+    }//end of method
+
+    void clearRequestFields() {
+        requestIdField.clear();
+        requestQuantityField.clear();
+        requestedStockIdField.clear();
+        requestedStatusField.clear();
+        itemNameField.clear();
+        requestedDateField.clear();
+        requestedByField.clear();
+    }
+
+    @FXML void approveRequestButtonClicked(ActionEvent event) {
+        int stockId = Integer.parseInt(requestedStockIdField.getText());
+        int requestId = Integer.parseInt(requestIdField.getText());
+        int requestedQuantity = Integer.parseInt(requestQuantityField.getText());
+        int userId = getUserIdByUsername(Homepage.activeUsername);
+        String itemName = itemNameField.getText();
+        String approvedDate = FormatLocalDateTime.formatDateTime(LocalDateTime.now());
+        int availableQuantity = 0;
+
+        for (InternalStocksData item : fetchInternalStocksDetails()) {
+            if (Objects.equals(itemName, item.getInternalItemName())) {
+                availableQuantity = item.getRemainingQuantity();
+                break;
+            }
+        }
+
+        int remainingQuantity =  (availableQuantity - requestedQuantity);
+
+        userAlertOBJ = new UserAlerts("APPROVE REQUEST", "ARE YOU SURE YOU WANT TO APPROVE REQUEST FOR '" + itemName + "'?",
+                "please confirm your action to approve item else CANCEL to abort.");
+        if (userAlertOBJ.confirmationAlert()) {
+            int flag = updateInternalStockItem(stockId, remainingQuantity);
+            flag = flag + updateRequestTable(requestId, userId, approvedDate);
+            if (flag>1) {
+                notify.successNotification("ITEM APPROVAL SUCCESSFUL", "You have successfully approved requested Item for dispensation from the store.");
+                loadRequestListView();
+                requestCountLabel.setText(String.valueOf(countRequestedItems()));
+                clearRequestFields();
+            } else {
+                notify.errorNotification("APPROVAL FAILED", "Approval for item " + itemName + " failed, please try again or contact system administrator");
+
+            }
+
+        }
+    }//end of method.
+
+    void cancelRequestedItemButtonClicked() {
+        cancelRequestButton.setOnAction(action -> {
+            int stockId = Integer.parseInt(requestedStockIdField.getText());
+            int requestId = Integer.parseInt(requestIdField.getText());
+            int userId = getUserIdByUsername(Homepage.activeUsername);
+            String itemName = itemNameField.getText();
+
+            userAlertOBJ = new UserAlerts("DISAPPROVE REQUEST", "ARE YOU SURE YOU WANT TO CANCEL REQUEST FOR '" + itemName + "'?",
+                    "please confirm your action to disapprove item request else CANCEL to abort.");
+            if (userAlertOBJ.confirmationAlert()) {
+                int flag = updateInternalStockItemOnCancelled(stockId);
+                flag = flag + updateRequestTableOnCancelled(requestId, userId);
+                if (flag > 1) {
+                    notify.successNotification("ITEM APPROVAL SUCCESSFUL", "You have successfully approved requested Item for dispensation from the store.");
+                    loadRequestListView();
+                    requestCountLabel.setText(String.valueOf(countRequestedItems()));
+                    clearRequestFields();
+                } else {
+                    notify.errorNotification("CANCEL FAILED", "Disapproval for item " + itemName + " failed, please try again or contact system administrator");
+                    logger = new ErrorLogger();
+                    logger.log(Level.SEVERE.getLocalizedName());
+                }
+            }
+        });//end of lambda expression
+    }//end of method
 
 }//END OF CLASS

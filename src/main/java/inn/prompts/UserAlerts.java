@@ -17,6 +17,11 @@ public class UserAlerts {
         this.alertContent = alertContent;
     }
 
+    public UserAlerts(String alertTitle, String alertHeader) {
+        this.alertTitle = alertTitle;
+        this.alertHeader = alertHeader;
+    }
+
     public boolean confirmationAlert() {
         boolean flag = false;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, alertContent);

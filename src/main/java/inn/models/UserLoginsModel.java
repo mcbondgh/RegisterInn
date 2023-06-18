@@ -31,14 +31,14 @@ public class UserLoginsModel extends MainModel {
         return count;
     }
 
-    public int updatePassword(@NamedArg("username") String username, @NamedArg("newPassword") String newPassword, @NamedArg("confirm Password") String confirmPassword) {
+    public int updatePassword(@NamedArg("username") int userId, @NamedArg("newPassword") String newPassword, @NamedArg("confirm Password") String confirmPassword) {
         int flag = 0;
         try {
-            String updateQuery = "UPDATE users SET password = ?, confirm_password = ? WHERE(username = ?);";
+            String updateQuery = "UPDATE users SET password = ?, confirm_password = ? WHERE(id = ?);";
             prepare = CONNECTOR().prepareStatement(updateQuery);
             prepare.setString(1, newPassword);
             prepare.setString(2, confirmPassword);
-            prepare.setString(3, username);
+            prepare.setInt(3, userId);
             flag = prepare.executeUpdate();
         } catch (SQLException ex) {
             logger = new ErrorLogger();

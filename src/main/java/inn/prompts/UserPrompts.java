@@ -1,7 +1,7 @@
 package inn.prompts;
 
 import inn.models.ManageStocksModel;
-import inn.tableViews.StoresTableData;
+import inn.tableViewClasses.StoresTableData;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;

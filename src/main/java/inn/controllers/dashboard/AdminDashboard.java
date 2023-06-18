@@ -14,7 +14,8 @@ public class AdminDashboard extends MainModel implements Initializable  {
 
 
 
-    @FXML private Label occupiedRoomsLabel, availableRoomsLabel;
+    @FXML private Label occupiedRoomsLabel, availableRoomsLabel, todayBookingLabel, outOfStockLabel;
+    @FXML private Label availableItemsLabel, totalEmployeesLabel, itemRequestLabel, lowOnStockLabel;
 
 
     @Override
@@ -23,5 +24,13 @@ public class AdminDashboard extends MainModel implements Initializable  {
         String availableValue = String.valueOf(countFreeRooms());
         occupiedRoomsLabel.setText(occupiedValue);
         availableRoomsLabel.setText(availableValue);
+        todayBookingLabel.setText(String.valueOf(countTotalBookings()));
+
+        int totalEmployees = (int) fetchBusinessInfo().get(7);
+        outOfStockLabel.setText(String.valueOf(countOutOfStock()));
+        availableItemsLabel.setText(String.valueOf(countAvailableItems()));
+        totalEmployeesLabel.setText(String.valueOf(totalEmployees));
+        lowOnStockLabel.setText(String.valueOf(countLowOnStock()));
+        itemRequestLabel.setText(String.valueOf(countRequestedItems()));
     }
 }

@@ -3,17 +3,17 @@ package inn.controllers.inventory;
 import inn.controllers.configurations.FormatLocalDateTime;
 import inn.controllers.dashboard.Homepage;
 import inn.enumerators.AlertTypesEnum;
+import inn.fetchedData.StocksCategoryData;
 import inn.models.InventoryModel;
 import inn.prompts.UserAlerts;
 import inn.prompts.UserNotification;
-import inn.tableViews.InventoryRequestData;
-import inn.tableViews.StocksCategoryData;
 import inn.threads.InternalRequestTask;
 import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import inn.tableViewClasses.InventoryRequestData;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -133,9 +133,7 @@ public class Inventory  extends InventoryModel implements Initializable{
                                 notify = new UserNotification();
                                 notify.successNotification("ITEM REQUEST.", "Item request successfully queued.");
                             }
-
                         }
-
                     } catch (NumberFormatException ex) {
                             ex.printStackTrace();
                             userAlerts = new UserAlerts("INVALID INPUT", "Please input digits only for request quantity", "parameter accepts number values only");

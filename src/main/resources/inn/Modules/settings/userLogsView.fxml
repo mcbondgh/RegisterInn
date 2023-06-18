@@ -6,7 +6,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="userLogsPane" prefHeight="539.0" prefWidth="832.0" style="-fx-border-radius: 8px;"  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.settings.UserLogsAndBackup">
+<Pane fx:id="userLogsPane" prefHeight="539.0" prefWidth="832.0" style="-fx-border-radius: 8px;"  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.settings.DatabaseBackup">
    <children>
       <TableView fx:id="userLogsTableView" layoutX="79.0" layoutY="60.0" prefHeight="460.0" prefWidth="721.0">
         <columns>

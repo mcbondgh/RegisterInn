@@ -19,7 +19,7 @@ public class SysActivator{
     public SysActivator() {}
 
     //THIS METHOD WHEN INVOKED SHALL RETURN A 16 CHARACTER RANDOM ACTIVATION KEY IN ADDITION TO SYSTEM alias fetched from the database.
-    protected  String activationKeyGenerator() {
+    protected String activationKeyGenerator() {
         String bisAlias = activationOBJ.businessAlias();
         String key = "";
         Random random = new Random();
@@ -39,14 +39,15 @@ public class SysActivator{
     /** THIS METHOD WHEN CALLED SHALL TAKE A USER'S INPUT AS AN ARGUMENT AND RETURN A HASHED
      * REPRESENTATIVE OF THE USER'S INPUT.
      */
-    public String passwordEncryptor(@NotNull @NamedArg("User's Password")String userInput) {
+    public static String passwordEncryptor(@NotNull @NamedArg("User's Password")String userInput) {
         Base64.Encoder encoder = Base64.getEncoder();
         return encoder.encodeToString(userInput.getBytes());
     }
 
-    /** THIS METHOD WHEN INVOKED SHALL TAKE TWO ARGUMENTS AND RETURN TRUE IF THEY MATCH ELSE FALSE.
-     */
-    public boolean passwordVerify(@NamedArg("EncryptedPassword") String hashCode, @NamedArg("UserText")String plainText) {
+    /**
+     * THIS METHOD WHEN INVOKED SHALL TAKE TWO ARGUMENTS AND RETURN TRUE IF THEY MATCH ELSE FALSE.
+     **/
+    public static boolean passwordVerify(@NamedArg("EncryptedPassword") String hashCode, @NamedArg("UserText")String plainText) {
         boolean flag = false;
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] hashedByte = decoder.decode(hashCode);
@@ -57,6 +58,11 @@ public class SysActivator{
         return flag;
     }
 
-
+    //THIS METHOD WHEN CALLED SHALL DECODE AND RETURN THE HASHED PASSWORD IN PLAIN TEXT.
+    public static String passwordConvector(@NamedArg("EncryptedPassword") String hashCode) {
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] hashedByte = decoder.decode(hashCode);
+        return new String(hashedByte);
+    }
 
 }//END OF CLASS

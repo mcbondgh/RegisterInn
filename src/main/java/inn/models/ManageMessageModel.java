@@ -28,14 +28,14 @@ public class ManageMessageModel extends MainModel {
         }
         return flag;
     }
-    protected int saveNewMessageTemplate(String templateTitle, String templateBody, byte createdBy, Timestamp dateCreated) {
+    protected int saveNewMessageTemplate(String templateTitle, String templateBody, int createdBy, Timestamp dateCreated) {
         int flag = 0;
         try {
             String insertQuery = "INSERT INTO messageTemplates(templateTitle, templateBody, createdBy, dateCreated) VALUES(?, ?, ?, ?)";
             prepare = CONNECTOR().prepareStatement(insertQuery);
             prepare.setString(1, templateTitle);
             prepare.setString(2, templateBody);
-            prepare.setByte(3, createdBy);
+            prepare.setInt(3, createdBy);
             prepare.setTimestamp(4, dateCreated);
             flag =  prepare.executeUpdate();
         }catch (SQLException ex) {

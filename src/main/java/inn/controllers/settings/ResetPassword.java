@@ -1,5 +1,6 @@
 package inn.controllers.settings;
 
+import inn.controllers.Homepage;
 import inn.controllers.configurations.SysActivator;
 import inn.models.MainModel;
 import inn.prompts.UserAlerts;
@@ -25,7 +26,6 @@ public class ResetPassword extends MainModel implements Initializable {
     SysActivator activator = new SysActivator();
     UserNotification notify = new UserNotification();
     UserAlerts alerts;
-
     public void initialize(java.net.URL url, ResourceBundle resourceBundle) { }
 
     //Default Constructor;
@@ -66,7 +66,6 @@ public class ResetPassword extends MainModel implements Initializable {
             timer.schedule(timerTask, 1, 2000);
         }
 
-
     /********************************* ACTION EVENT METHOD IMPLEMENTATION *********************************************/
     @FXML void searchOnKeyTyped() {
         String username = usernameField.getText();
@@ -98,14 +97,14 @@ public class ResetPassword extends MainModel implements Initializable {
                 retypeLabel.setVisible(false);
             }
         }
-
     }
     @FXML void resetButtonClicked() throws InterruptedException {
+        int userId = getUserIdByUsername(Homepage.activeUsername);
         String username = usernameField.getText();
         String password = activator.passwordEncryptor(newPasswordField.getText());
         alerts = new UserAlerts("UPDATE PASSWORD", "ARE YOU SURE YOU WANT TO UPDATE YOUR PASSWORD?", "Please confirm your process with YES, else CANCEL to abort.");
         if (alerts.confirmationAlert()) {
-            int flag = updateLogins.updatePassword(username, password, password);
+            int flag = updateLogins.updatePassword(userId, password, password);
             if (flag > 0) {
                displaySuccessMessageWithTimer();
             }

@@ -1,6 +1,8 @@
 package inn.models;
 
-import javafx.scene.control.Alert;
+import inn.ErrorLogger;
+import inn.enumerators.AlertTypesEnum;
+import inn.prompts.UserAlerts;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +11,8 @@ import java.sql.SQLException;
 
 public class EmpProfileModel extends MainModel {
 
+    UserAlerts userAlerts;
+    ErrorLogger logger;
 
     //THIS METHOD WHEN INVOKED WILL ACCEPT AN EMPLOYEE'S DETAILS AS AN ARGUMENT AND UPDATE SAME RECORD IN THE employees TABLE BASED ON employee's id.
     public void updateEmployeeRecord(int emp_id, String firstN, String lastN, String gen, String mail, String number, String address, String id_tpye, String idNo, String desg, InputStream image, double sal) throws SQLException, IOException {
@@ -30,19 +34,17 @@ public class EmpProfileModel extends MainModel {
             prepare.setInt(12, emp_id);
             prepare.executeUpdate();
         }catch (DataTruncation e) {
-            Alert alert  = new Alert(Alert.AlertType.ERROR, "update for specified employee failed, please report to the system admin");
-            alert.setTitle("FAILED UPDATE");
-            alert.setHeaderText("IMAGE SIZE IS TOO LARGE. IMAGE SHOULD BE 50KB OR BELOW.");
-            alert.showAndWait();
-            e.printStackTrace();
+            userAlerts = new UserAlerts("FAILED UPLOAD", "IMAGE SIZE IS TOO LARGE. IMAGE SHOULD BE 50kb OR BELOW", "update for speciifed employee failed, please report to the system admin.");
+            userAlerts.chooseAlert(AlertTypesEnum.ERROR);
         } catch (Exception e) {
-           throw e;
+           logger = new ErrorLogger();
+           logger.log(e.getMessage());
         }
     }
 
     public void deleteEmployeeRecord(int emp_id) {
         try {
-            String deleteQuery = "DELETE FROM employees WHERE(id = ?)";
+            String deleteQuery = "UPDATE employees SET is_deleted = 1 WHERE(id = ?)";
             prepare = CONNECTOR().prepareStatement(deleteQuery);
             prepare.setInt(1, emp_id);
             prepare.execute();

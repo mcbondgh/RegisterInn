@@ -1,7 +1,7 @@
 package inn.models;
 
-import inn.tableViews.ArchivedTableData;
-import inn.tableViews.EmployeesData;
+import inn.fetchedData.ArchivedTableData;
+import inn.fetchedData.EmployeesData;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -96,7 +96,7 @@ public class General extends MainModel implements Initializable {
      SPECIAL METHODS IMPLEMENTATION*/
     public void FlipView(String fxmlFileName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StartInn.class.getResource(fxmlFileName));
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), settingsPane);
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(700), settingsPane);
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         settingsPane.setCenter(fxmlLoader.load());
@@ -153,21 +153,17 @@ public class General extends MainModel implements Initializable {
     //THIS METHOD IS AN ACTION EVENT WHEN INVOKED WILL UPLOAD A HERO IMAGE UNTO THE IMAGE VIEWER AND GET THE ABSOLUTE FILE PATH.
     @FXML
     void browseImageOnAction() {
+        Image image = null;
         try {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
             fileChooser.setTitle("SELECT HERO IMAGE");
             selectedFile = fileChooser.showOpenDialog(uploadImageBtn.getScene().getWindow());
             filePath = selectedFile.getAbsolutePath();
-            Image image = new Image(filePath);
+            image = new Image(filePath);
             heroImage.setImage(image);
-            System.out.println(inputStream().toString());
-        } catch (NullPointerException | FileNotFoundException e) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "it is optional to set a hero image for your business.");
-            alert.setTitle("No Image Selected");
-            alert.setHeaderText("YOU SELECTED NO IMAGE AS YOUR HERO IMAGE.🙂");
-
-            alert.show();
+        } catch (NullPointerException e) {
+            heroImage.setImage(image);
         }
     }
 
@@ -175,10 +171,11 @@ public class General extends MainModel implements Initializable {
     InputStream inputStream() throws FileNotFoundException {
         try {
             stream = new FileInputStream(selectedFile);
-        } catch (NullPointerException | FileNotFoundException ignored) {
+        } catch (NullPointerException | FileNotFoundException e) {
              selectedFile = new File(heroImage.getImage().getUrl());
              stream = new FileInputStream(selectedFile);
         }
+        System.out.println(stream);
        return stream;
     }
 
@@ -249,19 +246,20 @@ public class General extends MainModel implements Initializable {
 
     @FXML
     void activationBtnClicked() throws IOException {
-        FlipView("Modules/Settings/systemActivationStage.fxml");
+        FlipView("Modules/settings/systemActivationStage.fxml");
     }
     @FXML void userLogsBtnClicked() throws IOException {
-        FlipView("Modules/Settings/userLogsView.fxml");
+        FlipView("Modules/settings/userLogsView.fxml");
     }
     @FXML void systemInfoBtnClicked() throws  IOException {
         settingsPane.setCenter(infoPane);
     }
     @FXML public void AuthenKeyBtnClicked() throws IOException {
-        FlipView("Modules/Settings/resetAuthenPassword.fxml");
+        FlipView("Modules/settings/resetAuthenPassword.fxml");
     }
     @FXML public void backUpButtonOnClick() throws IOException{
-        FlipView("Modules/Settings/backUpView.fxml");
+        FlipView("Modules/settings/backUpView.fxml");
+//        FlipView("dbconfig/databaseStage.fxml");
     }
 
     //<------------------------MOUSE HOVER EFFECT FIELD FOR ALL BUTTONS. -------------------------------->
@@ -327,13 +325,13 @@ public class General extends MainModel implements Initializable {
             setManagerEmailField((String) fetchBusinessInfo().get(12));
             Blob imageBlob = (Blob) fetchBusinessInfo().get(8);
             byte[] imageByte = imageBlob.getBytes(1, (int) imageBlob.length());
-            OutputStream stream = new FileOutputStream("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
+            OutputStream stream = new FileOutputStream("F:\\InnRegister\\InnRegister\\src\\main\\resources\\inn\\uploads\\imagexyz.jpg");
             stream.write(imageByte);
-            Image profileImage = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
+            Image profileImage = new Image("F:\\InnRegister\\InnRegister\\src\\main\\resources\\inn\\uploads\\imagexyz.jpg");
             heroImage.setImage(profileImage);
             stream.close();
         } catch (NullPointerException e) {
-            Image defaultImage = new Image("E:\\JAVA APPLICATIONS\\InnRegister V2\\InnRegister\\src\\main\\resources\\inn\\images\\imagexyz.jpg");
+            Image defaultImage = new Image("F:\\InnRegister\\InnRegister\\src\\main\\resources\\inn\\uploads\\imagexyz.jpg");
             heroImage.setImage(defaultImage);
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);

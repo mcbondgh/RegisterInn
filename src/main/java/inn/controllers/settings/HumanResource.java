@@ -3,9 +3,9 @@ package inn.controllers.settings;
 import inn.controllers.configurations.DefPassword;
 import inn.models.ResourceModel;
 import inn.multiStage.MultiStages;
-import inn.tableViews.ArchivedTableData;
-import inn.tableViews.EmployeesData;
-import inn.tableViews.IdTypesData;
+import inn.fetchedData.ArchivedTableData;
+import inn.fetchedData.EmployeesData;
+import inn.fetchedData.IdTypesData;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -209,7 +209,7 @@ public class HumanResource extends ResourceModel implements Initializable {
     //AUTHENTICATE THE SALARY FIELD TO ACCEPT ONLY double/int values.
     public void CheckSalaryValue(@NotNull("not null") KeyEvent event) {
         if (!(event.getCode().isDigitKey() || event.getCode().isArrowKey() || event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.PERIOD)) {
-            salaryField.clear();
+            salaryField.deletePreviousChar();
         }
     }
 

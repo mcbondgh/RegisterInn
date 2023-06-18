@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXToggleNode?>
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
@@ -15,6 +16,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -30,7 +32,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="1092.0" style="-fx-background-color: #fff; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.booking.Booking">
+<AnchorPane fx:id="bookingAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="616.0" prefWidth="1120.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn.controllers.booking.Booking">
    <effect>
       <DropShadow height="8.855" radius="4.63375" spread="0.04" width="11.68">
          <color>
@@ -39,7 +41,7 @@
       </DropShadow>
    </effect>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1092.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1120.0">
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
@@ -56,9 +58,9 @@
                </stops>
             </LinearGradient>
          </fill></Rectangle>
-      <Text fill="WHITE" layoutX="154.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOKING" wrappingWidth="182.80338287353516">
+      <Text fill="WHITE" layoutX="137.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOKING" wrappingWidth="182.80338287353516">
          <font>
-            <Font name="Poppins Bold" size="36.0" />
+            <Font name="Poppins Bold" size="20.0" />
          </font>
       </Text>
       <ImageView fitHeight="44.0" fitWidth="49.0" layoutX="82.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
@@ -67,13 +69,13 @@
          </image>
       </ImageView>
       <Accordion layoutX="288.0" layoutY="63.0" />
-      <TabPane fx:id="bookingsTab" layoutX="2.0" layoutY="50.0" prefHeight="537.0" prefWidth="1092.0" style="-fx-background-color: #fff;" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="bookingsTab" layoutY="50.0" onMouseMoved="#checkInTableClicked" prefHeight="562.0" prefWidth="1120.0" style="-fx-background-color: #fff;" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="checkInTab" style="-fx-background-color: #fff; -fx-padding: 3 10; -fx-font-weight: bold; -fx-font-size: 10;" text="CHECK IN">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="517.0" prefWidth="1092.0" style="-fx-background-color: #f6fcff;">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="521.0" prefWidth="1120.0" style="-fx-background-color: #fff;">
                      <children>
-                        <Pane layoutX="307.0" layoutY="8.0" onMouseMoved="#inputValuesChanged" prefHeight="493.0" prefWidth="477.0" style="-fx-border-color: #ddd; -fx-border-radius: 10px; -fx-background-color: #f6fcff; -fx-background-radius: 10px;">
+                        <Pane layoutX="307.0" layoutY="12.0" onMouseMoved="#inputValuesChanged" prefHeight="493.0" prefWidth="477.0" style="-fx-border-color: #ddd; -fx-border-radius: 10px; -fx-background-color: #f6fcff; -fx-background-radius: 10px;">
                            <children>
                               <Pane fx:id="cashPane" layoutY="269.0" prefHeight="74.0" prefWidth="478.0" style="-fx-background-color: #eee; -fx-background-radius: 5;">
                                  <children>
@@ -124,11 +126,11 @@
                                           <Font name="Poppins Bold" size="16.0" />
                                        </font>
                                     </MFXTextField>
-                                    <MFXTextField fx:id="guestNumberField" floatMode="DISABLED" floatingText="Guest Name" floatingTextGap="2.0" minHeight="-Infinity" onKeyReleased="#validateGuestMobileNumber" prefHeight="37.0" prefWidth="213.0" promptText="Mobile Number" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                    <TextField fx:id="guestNumberField" onKeyReleased="#validateGuestMobileNumber" prefHeight="37.0" prefWidth="213.0" promptText="0230000001" GridPane.columnIndex="1">
                                        <font>
                                           <Font name="Poppins Bold" size="16.0" />
                                        </font>
-                                    </MFXTextField>
+                                    </TextField>
                                     <MFXLegacyComboBox fx:id="idCombobox" prefHeight="37.0" prefWidth="213.0" promptText="National Id Type" style="-fx-font-size: 14; -fx-background-color: #eee; -fx-font-weight: bold;" unfocusedLineColor="#800b4c" visibleRowCount="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <MFXTextField fx:id="idNumberField" floatMode="DISABLED" floatingText="Guest Name" floatingTextGap="2.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="213.0" promptText="ID Number" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <font>
@@ -137,12 +139,12 @@
                                     </MFXTextField>
                                  </children>
                               </GridPane>
-                              <Label alignment="CENTER" layoutX="1.0" layoutY="1.0" prefHeight="30.0" prefWidth="476.0" style="-fx-background-color: #fff; -fx-background-radius: 10 10 0 0;" text="GUEST DETAILS" textAlignment="CENTER" textFill="#8f8f8f" wrapText="true">
+                              <Label alignment="CENTER" layoutX="1.0" layoutY="1.0" prefHeight="30.0" prefWidth="475.0" style="-fx-background-color: #fff; -fx-background-radius: 10 10 0 0;" text="GUEST DETAILS" textAlignment="CENTER" textFill="#8f8f8f" wrapText="true">
                                  <font>
                                     <Font name="Lucida Bright Demibold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" layoutX="1.0" layoutY="131.0" prefHeight="35.0" prefWidth="476.0" style="-fx-background-color: #fff;" text="ROOM &amp; PAYMENT DETAILS" textAlignment="CENTER" textFill="#888888" wrapText="true">
+                              <Label alignment="CENTER" layoutX="1.0" layoutY="130.0" prefHeight="35.0" prefWidth="476.0" style="-fx-background-color: #fff;" text="ROOM &amp; PAYMENT DETAILS" textAlignment="CENTER" textFill="#888888" wrapText="true">
                                  <font>
                                     <Font name="Lucida Bright Demibold" size="14.0" />
                                  </font>
@@ -233,19 +235,19 @@
                            <effect>
                               <DropShadow>
                                  <color>
-                                    <Color red="0.640350878238678" green="0.640350878238678" blue="0.640350878238678" />
+                                    <Color red="0.6666666865348816" green="0.6666666865348816" blue="0.6666666865348816" />
                                  </color>
                               </DropShadow>
                            </effect>
                         </Pane>
-                        <Label alignment="CENTER" layoutX="30.0" layoutY="7.0" prefHeight="44.0" prefWidth="223.0" style="-fx-background-color: #b32d53;" text="Check In Your Guest" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" layoutX="32.0" layoutY="7.0" prefHeight="44.0" prefWidth="220.0" style="-fx-background-color: #b32d53;" text="Check In Your Guest" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Roboto Black" size="14.0" />
                            </font>
                         </Label>
                         <Pane layoutX="140.0" layoutY="59.0" prefHeight="64.0" prefWidth="113.0" style="-fx-background-color: #fff; -fx-background-radius: 5;">
                            <children>
-                              <Label fx:id="displayOccupiedRoomsLabel" layoutX="10.0" layoutY="16.0" prefHeight="48.0" prefWidth="89.0" text="1000" textFill="#d43200">
+                              <Label fx:id="displayOccupiedRoomsLabel" layoutX="10.0" layoutY="16.0" prefHeight="48.0" prefWidth="89.0" text="0" textFill="#d43200">
                                  <font>
                                     <Font name="Poppins Bold" size="34.0" />
                                  </font>
@@ -266,12 +268,12 @@
                         </Pane>
                         <Pane layoutX="32.0" layoutY="59.0" prefHeight="63.0" prefWidth="104.0" style="-fx-background-color: #fff; -fx-background-radius: 5;">
                            <children>
-                              <Label fx:id="displayFreeRoomsLabel" layoutX="13.0" layoutY="16.0" prefHeight="37.0" prefWidth="81.0" text="1000" textFill="#00b12f">
+                              <Label fx:id="displayFreeRoomsLabel" layoutX="13.0" layoutY="16.0" prefHeight="37.0" prefWidth="81.0" text="0" textFill="#005db0">
                                  <font>
                                     <Font name="Poppins Bold" size="34.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="16.0" layoutY="3.0" text="FREE ROOMS" textFill="#0fe243">
+                              <Label layoutX="16.0" layoutY="3.0" text="FREE ROOMS" textFill="#1090e0">
                                  <font>
                                     <Font name="Humnst777 BT Roman" size="12.0" />
                                  </font>
@@ -285,7 +287,7 @@
                               </DropShadow>
                            </effect>
                         </Pane>
-                        <Pane layoutX="30.0" layoutY="135.0" prefHeight="200.0" prefWidth="225.0" style="-fx-background-color: #fff; -fx-background-radius: 8px;">
+                        <Pane layoutX="30.0" layoutY="135.0" prefHeight="164.0" prefWidth="225.0" style="-fx-background-color: #fff; -fx-background-radius: 8px;">
                            <effect>
                               <DropShadow>
                                  <color>
@@ -294,18 +296,37 @@
                               </DropShadow>
                            </effect>
                            <children>
-                              <MFXCheckbox fx:id="sendMessageCheckBox" layoutX="22.0" layoutY="14.0" text="Send Guest Message" />
+                              <Pane fx:id="bookingAmountPane" layoutX="13.0" layoutY="65.0" prefHeight="81.0" prefWidth="200.0" style="-fx-border-color: #ddd; -fx-border-radius: 5;">
+                                 <children>
+                                    <Label fx:id="bookingAmountLabel" layoutX="56.0" layoutY="32.0" prefHeight="44.0" prefWidth="134.0" text="0.00" textFill="#02ac3b">
+                                       <font>
+                                          <Font name="Poppins Black" size="21.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="17.0" layoutY="15.0" text="TODAY'S CHECKIN">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="19.0" layoutY="37.0" prefHeight="35.0" prefWidth="38.0" text="Gh₵:" textFill="#02ac3b">
+                                       <font>
+                                          <Font name="Poppins Regular" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <MFXCheckbox fx:id="sendMessageCheckBox" layoutX="22.0" layoutY="14.0" lineSpacing="100.0" prefHeight="44.0" prefWidth="151.0" text="Send Guest Message" textOverrun="CENTER_WORD_ELLIPSIS" />
                            </children>
                         </Pane>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="checkOutTab" style="-fx-background-color: #fff; -fx-padding: 3 10; -fx-font-weight: bold; -fx-font-size: 10;" text="VIEW CHEKIN/CHECKOUT">
+          <Tab fx:id="checkOutTab" style="-fx-background-color: #fff; -fx-padding: 3 10; -fx-font-weight: bold; -fx-font-size: 10;" text="CHECK OUT/EXTRA TIME">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="1092.0">
                      <children>
-                        <MFXLegacyTableView fx:id="checkInTableView" fixedCellSize="30.0" layoutX="135.0" layoutY="61.0" onMouseClicked="#checkInTableClicked" prefHeight="439.0" prefWidth="822.0" style="-fx-background-color: #fff; -FX-FONT-SIZE: 14px; -fx-font-weight: bold; -fx-font-family: poppins;" tableMenuButtonVisible="true">
+                        <MFXLegacyTableView fx:id="checkInTableView" fixedCellSize="30.0" layoutX="31.0" layoutY="63.0" prefHeight="439.0" prefWidth="1030.0" style="-fx-background-color: #fff; -FX-FONT-SIZE: 14; -fx-font-weight: bold; -fx-font-family: poppins;" tableMenuButtonVisible="true">
                            <effect>
                               <DropShadow height="38.52" radius="21.192500000000003" width="48.25">
                                  <color>
@@ -314,24 +335,77 @@
                               </DropShadow>
                            </effect>
                            <columns>
-                              <TableColumn fx:id="checkinID" prefWidth="70.0" text="BOOK ID" />
-                              <TableColumn fx:id="roomNumberColumn" maxWidth="120.0" minWidth="60.0" prefWidth="100.0" text="ROOM NO." />
-                              <TableColumn fx:id="checkInTimeColumn" maxWidth="120.0" minWidth="80.0" prefWidth="120.0" text="CHECK IN TIME" />
-                              <TableColumn fx:id="dueTimeColumn" maxWidth="120.0" minWidth="100.0" prefWidth="120.0" text="DUE TIME" />
-                              <TableColumn fx:id="statusColumn" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" style="-fx-alignment: center;" text="STATUS" />
-                              <TableColumn fx:id="hoursColumn" maxWidth="55.0" minWidth="55.0" prefWidth="55.0" style="-fx-alignment: center;" text="HOURS" />
-                              <TableColumn fx:id="actionColumnField" maxWidth="144.66668701171875" minWidth="80.0" prefWidth="90.0" style="-FX-FONT-SIZE: 14; -fx-alignment: center; -fx-font-weight: bold;" text="ADD TIME" />
-                              <TableColumn fx:id="checkOutButtonColumn" maxWidth="155.33331298828125" minWidth="80.0" prefWidth="90.0" style="-FX-FONT-SIZE: 14; -fx-alignment: center; -fx-font-weight: bold;" text="ACTION" />
+                              <TableColumn fx:id="checkinID" prefWidth="89.99999618530273" style="-fx-alignment: center;" text="BOOK ID" />
+                              <TableColumn fx:id="roomNumberColumn" maxWidth="196.0" minWidth="60.0" prefWidth="139.99996948242188" style="-fx-alignment: center;" text="ROOM NO." />
+                              <TableColumn fx:id="checkInDateColumn" maxWidth="324.66668701171875" minWidth="100.0" prefWidth="202.66665649414062" style="-fx-alignment: center;" text="CHECK IN DATE" />
+                              <TableColumn fx:id="dueDateColumn" maxWidth="324.66668701171875" minWidth="94.00003051757812" prefWidth="192.6666259765625" style="-fx-alignment: center; -fx-background-color: #eee2;" text=" DUE DATE" />
+                              <TableColumn fx:id="statusColumn" maxWidth="285.3333740234375" minWidth="47.3333740234375" prefWidth="86.66668701171875" style="-fx-alignment: center;" text="STATUS" />
+                              <TableColumn fx:id="hoursColumn" maxWidth="243.3333740234375" minWidth="53.99993896484375" prefWidth="98.00006103515625" style="-fx-alignment: center;" text="HOURS" />
+                              <TableColumn fx:id="actionColumnField" maxWidth="260.00006103515625" minWidth="54.6666259765625" prefWidth="92.66668701171875" style="-FX-FONT-SIZE: 14; -fx-alignment: center; -fx-font-weight: bold;" text="ADD TIME" />
+                              <TableColumn fx:id="checkOutButtonColumn" maxWidth="246.6666259765625" minWidth="70.0" prefWidth="87.3333740234375" style="-FX-FONT-SIZE: 14; -fx-alignment: center; -fx-font-weight: bold;" text="ACTION" />
                            </columns>
                            <padding>
                               <Insets bottom="8.0" left="8.0" right="8.0" />
                            </padding>
                         </MFXLegacyTableView>
-                        <Label alignment="CENTER" layoutX="136.0" layoutY="6.0" prefHeight="44.0" prefWidth="253.0" style="-fx-background-color: #b32d53;" text="Checkout And Extra Time" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" layoutX="33.0" layoutY="6.0" prefHeight="44.0" prefWidth="253.0" style="-fx-background-color: #b32d53;" text="Checkout And Extra Time" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Roboto Black" size="14.0" />
                            </font>
                         </Label>
+                        <Pane layoutX="838.0" layoutY="6.0" prefHeight="50.0" prefWidth="174.0" style="-fx-background-color: #fff; -fx-background-radius: 5;">
+                           <children>
+                              <Label fx:id="displayExtraTimeCount" alignment="CENTER" contentDisplay="CENTER" layoutX="133.0" layoutY="8.0" prefHeight="34.0" prefWidth="33.0" style="-fx-background-radius: 50; -fx-border-radius: 50; -fx-background-color: #ff0000;" text="0" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <JFXToggleNode fx:id="viewExtraTimeButton" layoutX="9.0" layoutY="10.0" onAction="#extraTimeButtonToggled" prefHeight="33.0" prefWidth="119.0" style="-fx-border-color: #ddd; -fx-border-radius: 5;" text="View Extra Time" textFill="#595959">
+                                 <selectedColor>
+                                    <Color red="0.5438596606254578" green="0.5438596606254578" blue="0.5438596606254578" opacity="0.6299999952316284" />
+                                 </selectedColor>
+                                 <unSelectedColor>
+                                    <Color red="0.25438597798347473" green="0.25438597798347473" blue="0.25438597798347473" opacity="0.0" />
+                                 </unSelectedColor>
+                                 <font>
+                                    <Font name="System Bold" size="11.0" />
+                                 </font>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="toggleExtraCheckOutTables" />
+                                 </toggleGroup>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXToggleNode>
+                           </children>
+                           <effect>
+                              <DropShadow>
+                                 <color>
+                                    <Color red="0.8333333134651184" green="0.8333333134651184" blue="0.8333333134651184" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Pane>
+                        <MFXLegacyTableView fx:id="extraTimeTable" fixedCellSize="35.0" layoutX="145.0" layoutY="63.0" prefHeight="428.0" prefWidth="770.0" style="-fx-font-family: poppins; -fx-font-size: 14; -fx-alignment: center;" visible="false">
+                           <columns>
+                              <TableColumn fx:id="extraBookingIdColumn" prefWidth="107.99998474121094" style="-fx-alignment: center; -fx-header-color: #ff9a9aa1;" text="BOOKING ID" />
+                              <TableColumn fx:id="extraRoomNoColumn" prefWidth="77.33331298828125" text="ROOM NO" visible="false" />
+                              <TableColumn fx:id="extraTimeColumn" prefWidth="159.33334350585938" text="EXTRA TIME" />
+                              <TableColumn fx:id="ExitTimeColumn" prefWidth="175.33334350585938" text="EXIT TIME" />
+                              <TableColumn fx:id="extraBookingTypeColumn" prefWidth="187.99993896484375" text="BOOKING TYPE" />
+                              <TableColumn fx:id="extraCheckOutButtonColumn" editable="false" prefWidth="94.66670735677087" style="-fx-font-size: 11;" text="CHECKOUT" />
+                           </columns>
+                           <effect>
+                              <DropShadow>
+                                 <color>
+                                    <Color red="0.7894737124443054" green="0.7894737124443054" blue="0.7894737124443054" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </MFXLegacyTableView>
                      </children>
                   </AnchorPane>
             </content>
@@ -340,43 +414,51 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #f6fcff;">
                      <children>
-                        <MFXLegacyTableView fx:id="summaryTabelView" fixedCellSize="35.0" layoutX="7.0" layoutY="65.0" prefHeight="431.0" prefWidth="1077.0" tableMenuButtonVisible="true">
+                        <Pane layoutX="228.0" layoutY="7.0" prefHeight="50.0" prefWidth="447.0" style="-fx-background-color: #eee; -fx-background-radius: 4px;">
+                           <effect>
+                              <DropShadow radius="9.5125" width="19.05">
+                                 <color>
+                                    <Color red="0.7456140518188477" green="0.7295050621032715" blue="0.7295050621032715" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Pane>
+                        <MFXLegacyTableView fx:id="summaryTabelView" fixedCellSize="35.0" layoutX="7.0" layoutY="65.0" prefHeight="431.0" prefWidth="1077.0" style="-fx-font-size: 14; -fx-font-family: poppins; -fx-alignment: center;">
                            <columns>
-                              <TableColumn prefWidth="58.6666898727417" text="BOOK ID" />
-                              <TableColumn prefWidth="144.66661834716797" text="GUEST NAME" />
-                              <TableColumn prefWidth="144.66661834716797" text="MOBILE NUMBER" />
-                              <TableColumn prefWidth="92.0" text="ROOM NO." />
-                              <TableColumn prefWidth="107.33334350585938" text="BOOKING TYPE" />
-                              <TableColumn prefWidth="107.33334350585938" text="PAYMENT MTHD" />
-                              <TableColumn prefWidth="107.33334350585938" text="AMOUNT" />
-                              <TableColumn prefWidth="107.33334350585938" text="CHECK IN TIME" />
-                              <TableColumn prefWidth="107.33334350585938" text="CHECK OUT TIME" />
-                              <TableColumn prefWidth="107.33334350585938" text="NOTES" />
-                              <TableColumn prefWidth="107.33334350585938" text="BOOKED BY" />
-                              <TableColumn prefWidth="107.33334350585938" text="BOOKING DATE" />
+                              <TableColumn fx:id="summaryIdColumn" prefWidth="58.6666898727417" text="BOOK ID" />
+                              <TableColumn fx:id="guestNameColumn" prefWidth="144.66661834716797" text="GUEST NAME" />
+                              <TableColumn fx:id="mobileNumberColumn" prefWidth="144.66661834716797" text="MOBILE NUMBER" />
+                              <TableColumn fx:id="summaryRoomNoColumn" prefWidth="92.0" text="ROOM NO." />
+                              <TableColumn fx:id="bookingTypeColumn" prefWidth="107.33334350585938" text="BOOKING TYPE" />
+                              <TableColumn fx:id="summaryBookedDateColumn" minWidth="120.0" prefWidth="107.33334350585938" text="BOOKING DATE" />
+                              <TableColumn fx:id="summaryDueDateColumn" prefWidth="107.33334350585938" style="-fx-alignment: center;" text="DUE DATE" />
+                              <TableColumn fx:id="summaryCheckoutDateColumn" prefWidth="107.33334350585938" text="CHECK OUT DATE" />
+                              <TableColumn fx:id="overtimeColumn" prefWidth="107.33334350585938" style="-fx-text-fill: #ff0000; -fx-text-base-color: #ff0000;" text="OVERTIME" />
+                              <TableColumn fx:id="notesColumn" prefWidth="107.33334350585938" text="NOTES" />
+                              <TableColumn fx:id="bookedByColumn" prefWidth="107.33334350585938" text="BOOKED BY" visible="false" />
                            </columns></MFXLegacyTableView>
-                        <Label alignment="CENTER" layoutX="7.0" layoutY="10.0" prefHeight="44.0" prefWidth="215.0" style="-fx-background-color: #b32d53;" text="Today's Booking Summary" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" layoutX="7.0" layoutY="6.0" prefHeight="50.0" prefWidth="215.0" style="-fx-background-color: #b32d53;" text="Today's Booking Summary" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Roboto Black" size="14.0" />
                            </font>
                         </Label>
-                        <MFXDatePicker fx:id="startDatePicker" allowEdit="false" layoutX="242.0" layoutY="13.0" prefHeight="38.0" prefWidth="142.0" promptText="Start Date">
+                        <MFXDatePicker fx:id="startDatePicker" allowEdit="false" layoutX="242.0" layoutY="13.0" prefHeight="38.0" prefWidth="151.0" promptText="Start Date">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </MFXDatePicker>
-                        <MFXDatePicker fx:id="endDatePicker" allowEdit="false" layoutX="404.0" layoutY="13.0" prefHeight="38.0" prefWidth="142.0" promptText="End Date">
+                        <MFXDatePicker fx:id="endDatePicker" allowEdit="false" layoutX="413.0" layoutY="13.0" prefHeight="38.0" prefWidth="145.0" promptText="End Date">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </MFXDatePicker>
-                        <MFXButton fx:id="generateSummaryButton" layoutX="568.0" layoutY="22.0" style="-fx-background-color: #b32d53;" text="Generate" textFill="WHITE" />
+                        <MFXButton fx:id="generateSummaryButton" contentDisplay="CENTER" layoutX="583.0" layoutY="19.0" onAction="#generateSummaryButtonClicked" style="-fx-background-color: #b32d53;" text="Generate" textFill="WHITE" />
                      </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
       </TabPane>
-      <MFXButton fx:id="refreshBookingTables" layoutX="990.0" layoutY="54.0" style="-fx-background-color: #b32d53;" text="🔁 Refresh" textFill="WHITE" />
+      <MFXButton fx:id="refreshBookingTables" layoutX="990.0" layoutY="54.0" onAction="#refreshBookingButtonClicked" style="-fx-background-color: #b32d53;" text="🔁 Refresh" textFill="WHITE" />
    </children>
    <opaqueInsets>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
