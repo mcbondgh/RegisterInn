@@ -27,8 +27,6 @@ public class Accounting extends MainModel implements Initializable{
     }
 
 
-
-
     /**********************************************************************************************************
      *                  FXML FILE EJECTIONS.
      ***********************************************************************************************************/
@@ -46,8 +44,6 @@ public class Accounting extends MainModel implements Initializable{
     @FXML private DatePicker dateSelector;
     @FXML private MFXButton addButton, cancelButton;
     @FXML private Pane expenditurePane;
-
-
 
     /**********************************************************************************************************
      *                  IMPLEMENTATION OF TRUE OR FALSE METHODS.
