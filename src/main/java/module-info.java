@@ -8,12 +8,15 @@ module inn {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
 //    requires eu.hansolo.tilesfx;
-    requires com.almasb.fxgl.all;
+//    requires com.almasb.fxgl.all;
     requires java.sql;
     requires annotations;
     requires com.fasterxml.jackson.databind;
     requires com.jfoenix;
     requires MaterialFX;
+//    requires io;
+    requires itextpdf;
+//    requires kernel;
 
 
     exports inn;

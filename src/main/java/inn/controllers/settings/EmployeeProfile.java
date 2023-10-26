@@ -84,10 +84,10 @@ public class EmployeeProfile extends EmpProfileModel implements Initializable {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choose Employee Image");
-            fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+            fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.gif"));
             imageFile = fileChooser.showOpenDialog(updateProfileBtn.getScene().getWindow());
             fileName = imageFile.getName();
-            filePath = imageFile.getAbsolutePath();
+            filePath = imageFile.getPath();
             Image image = new Image(filePath);
             uploadProfile.setImage(image);
             imageNameField.setText(fileName);

@@ -12,7 +12,8 @@ import org.controlsfx.control.action.Action;
 public class UserNotification {
     Notifications notifications = Notifications.create();
     public void  successNotification(String title, String text) {
-        Image logo = new Image("G:\\My Drive\\RegisterInn\\src\\main\\resources\\inn\\images\\successIcon.png");
+        String iconPath = "G:\\My Drive\\RegisterInn\\src\\main\\resources\\inn\\images\\successIcon.png";
+        Image logo = new Image(iconPath);
         notifications.graphic(new ImageView(logo));
         notifications.title(title);
         notifications.text(text);

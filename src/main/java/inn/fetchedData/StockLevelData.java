@@ -113,8 +113,7 @@ public class StockLevelData {
         return previousQuantityPerBox;
     }
 
-    public void setPreviousQuantityPerBox(int previousQuantityPerBox) {
-        this.previousQuantityPerBox = previousQuantityPerBox;
+    public void setPreviousQuantityPerBox(int previousQuantityPerBox) {this.previousQuantityPerBox = previousQuantityPerBox;
     }
 
     public int getGage() {

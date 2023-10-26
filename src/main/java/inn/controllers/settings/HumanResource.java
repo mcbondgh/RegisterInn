@@ -6,6 +6,7 @@ import inn.multiStage.MultiStages;
 import inn.fetchedData.ArchivedTableData;
 import inn.fetchedData.EmployeesData;
 import inn.fetchedData.IdTypesData;
+//import inn.tableViews.ArchivedTableData;
 import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,7 +63,6 @@ public class HumanResource extends ResourceModel implements Initializable {
     @FXML private TableColumn<ArchivedTableData, String> statusColumn1;
     @FXML private TableColumn<ArchivedTableData, String> salaryColumn1;
     @FXML private TableColumn<ArchivedTableData, Button> restoreColumn;
-
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
